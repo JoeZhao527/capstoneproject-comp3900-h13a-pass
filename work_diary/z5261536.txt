@@ -1,1 +1,6 @@
+Week1
+Group formed. We decided our group name as PASS and choose to do the project Value Eats. I created the Jira account and wrote the user stories with the other group members. I also discueesd with the team that which software tools(language) we would use for the backend and frontend for the project. (backend:python, fontend: html/css/js)
+User stories connextra format: As a [who] I want to [what] so that [why].
 
+Week2
+We discussed the User stories together, add epics to each story. We also allocated the project work to each members.
