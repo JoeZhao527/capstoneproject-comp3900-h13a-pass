@@ -1,2 +1,9 @@
 week 1
-set up the group
+formed the group, and had 3 meetings. Decided the project, create and edited user stories.
+
+week 2
+self study html, css and javascript. Edited user story, had 1 meeting, split work, me and Edward work on frontend proposal,
+Jay and Nicolas work on backend design, Karen works on database design
+
+week 3
+further self study on javascript, write some documentation for frontend design
