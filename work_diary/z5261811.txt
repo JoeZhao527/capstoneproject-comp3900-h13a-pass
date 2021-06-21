@@ -6,4 +6,5 @@ self study html, css and javascript. Edited user story, had 1 meeting, split wor
 Jay and Nicolas work on backend design, Karen works on database design
 
 week 3
-further self study on javascript, write some documentation for frontend design
+further self study on javascript, write some documentation for frontend design, draw the ui, discuss some functionailty and
+database design with teammates
