@@ -1,0 +1,112 @@
+:root {
+    --primary-color: lightcoral;
+    --btn-color: lightcoral;
+    --btn-hover-color: rgb(245, 163, 163);
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.container {
+    display: flex;
+}
+
+.content {
+    margin: 5rem 0.5rem 3rem 5rem;
+    background-color: lightgray;
+    width: 40rem;
+    padding: 2rem;
+}
+.img {
+    margin: 5rem 5rem 3rem 0.5rem;
+    background-color: lightgray;
+    width: 50%;
+    padding: 2rem;
+}
+
+#head {
+    width: 38rem;
+    height: 20rem;
+    line-height: 20rem;
+    background-color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.sign-up-form label{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+}
+
+.sign-up-form input {
+    height: 2.5rem;
+    width: 36rem;
+    font-size: 16px;
+}
+
+#fname, #lname {
+    width: 18rem;
+}
+
+#description {
+    height: 8rem;
+}
+.sign-up-form {
+    display: grid;
+    width: 70%;
+    grid-gap: 2rem;
+}
+
+.sign-up-form div{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.sign-up-form div:first-child{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-row-gap: 2rem;
+}
+
+#cuisine {
+    width: 16rem;
+    margin-right: 1rem;
+}
+
+#add-cuisine {
+    display: inline;
+    width: 8rem;
+}
+
+#cuisines {
+    height: 7rem;
+    width: 36rem;
+    background-color: gray;
+    padding: 0.5rem;
+}
+
+#submit {
+    background-color: var(--btn-color);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    width: 36rem;
+    height: 3.5rem;
+    text-align: center;
+    border-style: hidden;
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+
+#submit:hover {
+    background-color: rgb(245, 163, 163);
+}

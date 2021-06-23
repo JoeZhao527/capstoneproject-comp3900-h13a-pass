@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/login.css">
+    <title> Value Eat Login </title>
+</head>
+<body>
+    <div class="container">
+        <!-- left part of login page, including back home button and login section-->
+        <div id="left">
+            <button class="back-home"><i class="arrow left"></i> back to home</button><br />
+            <img id="login-img" src="../images/login_img.jpeg" alt="a login image">
+            <section class="content">
+                <section class="tabs">
+                    <div class="tab-container">
+                        <button id="diner" class="tab">Diner</button>
+                        <button id="eatery" class="tab">Eatery</button>
+                    </div>
+                </section>
+                <div class="form-container">
+                    <p id="msg"></p>
+                    <form class="login-form">
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" class="input-bar">
+                        </div>
+                        <div>
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" class="input-bar">
+                        </div>
+                        <input class="btn" type="submit" value="Login">
+                        <a href="">Forgot password?</a>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <!-- right part of login page, a picture shows some value_eat relvent picture-->
+        <div id="right"><p>LOGIN NOW!</p></div>
+    </div>
+    <script src="../scripts/login.js"></script>
+</body>
+</html>

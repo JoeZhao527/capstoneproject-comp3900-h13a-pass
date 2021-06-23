@@ -1,0 +1,144 @@
+:root {
+    --primary-color: lightcoral;
+    --btn-color: lightcoral;
+    --btn-hover-color: rgb(245, 163, 163);
+}
+
+body {
+    overflow-x: hidden;
+}
+
+#login-img{
+    width: 25rem;
+    height: 10rem;
+    margin-bottom: -5rem;
+    margin-left: 4.5rem;
+}
+
+.tab-container {
+	display: grid;
+    grid-template-columns: 12rem 12rem;
+    grid-template-rows: 2rem;
+    grid-gap: 1.5rem;
+    margin-top: 5rem;
+}
+
+.tab {
+    background-color: white;
+    border: none;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: larger;
+}
+
+#diner {
+    border-bottom: var(--btn-color) 4px solid;
+}
+
+
+.tab:hover{
+    cursor: pointer;
+}
+
+.login-form div label{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+}
+
+.login-form .input-bar {
+    height: 2.5rem;
+    width: 25rem;
+    font-size: 16px;
+}
+
+.login-form div {
+    margin-bottom: 30px;
+}
+
+.form-container {
+    margin-top: 2rem;
+}
+
+input, label {
+    display: block;
+}
+
+.btn {
+    background-color: var(--btn-color);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    width: 25.5rem;
+    height: 2.5rem;
+    text-align: center;
+    border-style: hidden;
+    margin-top: 40px;
+    margin-bottom: 25px;
+
+}
+
+.btn:hover {
+    background-color: rgb(245, 163, 163);
+}
+
+a {
+    color: var(--btn-color);
+}
+a:hover{
+    color: var(--btn-hover-color);
+}
+
+.container {
+    display: flex;
+}
+
+.content {
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+
+#right {
+    width: 100%;
+    height: 49rem;
+    margin-top: -2rem;
+    margin-bottom: -2rem;
+    /* this background image should be replace by ourself's image
+    background-image: url("../images/login_side_img.png");
+    */
+    background-color: black;
+}
+
+#right p{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 100px;
+    font-weight: bolder;
+    color: white;
+    margin-top: 12rem;
+    margin-left: 5rem;
+}
+
+/* back home button*/
+.back-home {
+    background-color: white;
+    border: none;
+}
+
+.back-home:hover {
+    cursor: pointer;
+    color: var(--btn-hover-color);
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+#msg {
+    color: var(--primary-color);
+}
