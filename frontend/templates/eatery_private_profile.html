@@ -3,9 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Eatery Profile</title>
+    <link rel="stylesheet" href="../styles/eatery_private_profile.css">
 </head>
 <body>
+    <nav id="nav-bar">
+        <button id="home">Value Eat</button>
+        <input type="text" id="search">
+        <button id="logout">Logout</button>
+        <button id="back">Back</button>
+    </nav>
+    <main id="main">
+        <h1>Eatery Profile</h1>
+        <hr />
+        <section class="container">
+            <!-- default view-->
+            <ul id="eatery-info">
+                <div>
+                    <li id="fname">first name:</li>
+                    <li id="lname">last name:</li>
+                    <li id="ename">eatery name:</li>
+                </div>
+                <div>
+                    <li id="email">email:</li>
+                    <li id="phone">phone:</li>
+                </div>
+                <div>
+                    <li id="address">address:</li>
+                    <li id="cuisines">cuisines:</li>
+                    <li id="descrip">description:</li>
+                </div>
+                <div>
+                    <li id="menu">menu:</li>
+                    <li id="photo">photos:</li>
+                </div>
+            </ul>
+            <div id="edit">
+                <button id="reset-pass">reset password</a>
+                <button id="edit-profile">edit</button>
+            </div>
+        </section>
+        
+        <h2>Add Vouchers</h2>
+        <section class="container">
+            <div id="voucher-switch">
+                <button id="schedule-btn">add schedule</button>
+                <button id="voucher-btn">add voucher</button>
+            </div>
+            <div id="by-schedule">
+                <ul id="schedule"></ul>
+            </div>
+            <div id="by-voucher">
+                <ul id="schedule"></ul>
+            </div>
+            <button id="add">add schedule</button>
+        </section>
     
+        <h2>Reservation</h2>
+        <section class="container">
+            <ul id="book-head">
+                <li>diner</li>
+                <li>date</li>
+                <li>time</li>
+                <li>discount</li>
+                <li>code</li>
+            </ul>
+            <div id="reservations">
+    
+            </div>
+        </section>
+    </main>
+    <section id='edit-page'>
+        <button class='close'>close</button>
+        <h1>eatery edit profile page</h1>
+    </section>
+    
+    <footer class="footer">
+
+    </footer>
+    <script src="../scripts/eatery_private_profile.js"></script>
 </body>
 </html>

@@ -1,0 +1,139 @@
+:root {
+    --primary-color: grey;
+    --btn-color: white;
+    --btn-hover-color: lightskyblue;
+    --container-color: lightgrey;
+    --primary-font-fam: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --primary-font-size: 20px;
+}
+
+main {
+    margin-top: 8rem;
+}
+
+/* nav bar */
+#nav-bar {
+    background-color: var(--primary-color);
+    padding: 25px;
+    margin-left: -10px;
+    width: 100%;
+    top: 0;
+    position: fixed;
+}
+
+#nav-bar button:hover{
+    cursor: pointer;
+    color: var(--btn-hover-color);
+}
+
+#nav-bar button {
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    background-color: var(--primary-color);
+    width: 6rem;
+    height: 3rem;
+    margin-top: -0.5rem;
+    margin-right: 1rem;
+    float: right;
+}
+
+#nav-bar button:nth-child(3) {
+    margin-right: 3rem;
+}
+
+#nav-bar button:first-child {
+    font-size: larger;
+    font-style: italic;
+    width: 8rem;
+    float: left;
+    margin-right: 4rem;
+}
+
+#nav-bar input {
+    width: 32rem;
+    height: 1.6rem;
+}
+
+/* container */
+.container {
+    background-color: var(--container-color);
+    margin: 1.5rem;
+    padding: 1rem;
+    padding-bottom: 6rem;
+    font-family: var(--primary-font-fam);
+    font-size: 20px;
+}
+
+.container button {
+    font: 16px, var(--primary-font-fam);
+    margin-right: 2rem;
+    border: none;
+    width: 10rem;
+    height: 3rem;
+}
+
+.container button:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+/* basic information */
+#eatery-info > div > li{
+    display: inline-block;
+    width: 20rem;
+    margin-bottom: 2rem;
+}
+
+#edit {
+    float: right;
+    margin-top: 1rem;
+}
+
+
+/* add schedule & vouchers */
+#voucher-switch button {
+    margin: 0;
+    font: var(--primary-font-size), var(--primary-font-fam);
+    width: 15rem;
+    height: 2.5rem;
+    background-color: var(--primary-container-color);
+    border: none;
+    border-bottom: var(--btn-color) 4px solid;
+}
+
+#voucher-switch button:hover {
+    cursor: pointer;
+    color: var(--btn-hover-color);
+}
+
+#add {
+    float: right;
+    margin-top: 1rem;
+}
+
+/* reservation */
+#book-head > li{
+    display: inline-block;
+    width: 11rem;
+    text-align: center;
+    border-left: solid;
+    border-bottom: solid;
+}
+
+#reservation > ul > li{
+    display: inline-block;
+    width: 12rem;
+    text-align: center;
+}
+
+/* subpage */
+#edit-page {
+    display: none;
+    background-color: var(--container-color);
+    top: 3rem;
+    left:25%;
+    position: fixed;
+    width: 50%;
+    height: 80%;
+}
