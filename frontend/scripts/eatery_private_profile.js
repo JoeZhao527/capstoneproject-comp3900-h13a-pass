@@ -52,17 +52,7 @@ back_btn.onclick = () => {
     window.location.href = '../templates/eatery_home.html';
 }
 
-/* edit profile */
-const edit_btn = document.getElementById('edit-profile');
-const edit_page = document.getElementById('edit-page');
-
-edit_btn.onclick = () => {
-    openSubpage(edit_page)
-};
-
-const close_edit = edit_page.getElementsByClassName('close')[0];
-console.log(close_edit)
-
+/* subpage operations */
 // close subpage
 function closeSubpage(page) {
     page.style.display = 'none';
@@ -77,6 +67,90 @@ function openSubpage(page) {
     nav_bar.style.display = 'none';
 }
 
+/* edit profile */
+const edit_btn = document.getElementById('edit-profile');
+const edit_page = document.getElementById('edit-page');
+const close_edit = edit_page.getElementsByClassName('close')[0];
+
+edit_btn.onclick = () => {
+    openSubpage(edit_page)
+};
+
 close_edit.onclick = () => {
     closeSubpage(edit_page);
+}
+
+/* select add type */
+const turn_schedule_btn = document.getElementById('schedule-btn');
+const turn_voucher_btn = document.getElementById('voucher-btn');
+const schedule = document.getElementById('by-schedule');
+const voucher = document.getElementById('by-voucher');
+
+function displayScheduleList() {
+    turn_schedule_btn.style.setProperty('border-bottom', 'white 4px solid');
+    turn_voucher_btn.style.setProperty('border-bottom', 'none');
+    schedule.style.display = 'inline';
+    voucher.style.display = 'none';
+}
+
+function displayVoucherList() {
+    turn_voucher_btn.style.setProperty('border-bottom', 'white 4px solid');
+    turn_schedule_btn.style.setProperty('border-bottom', 'none');
+    schedule.style.display = 'none';
+    voucher.style.display = 'inline';
+}
+
+turn_schedule_btn.onclick = () => {
+    displayScheduleList();
+}
+
+turn_voucher_btn.onclick = () => {
+    displayVoucherList();
+}
+
+displayScheduleList();
+
+/* add schedule */
+const add_schedule_btn = document.getElementById('add-schedule-btn');   // add schedule button in main
+const add_schedule_page = document.getElementById('add-schedule');      // subpage container
+const close_schedule = document.getElementsByClassName('close')[1];     // close button in subpage
+const schedule_form = document.getElementById('schedule-form');         // form in subpage
+const schedule_elem = schedule_form.elements;                           // form elements
+const schedule_submit = document.getElementById('submit-schedule');     // submit button in subpage
+
+let schedule_data = {}
+
+// open and close schedule page
+add_schedule_btn.onclick = () => {
+    openSubpage(add_schedule_page);
+};
+
+close_schedule.onclick = () => {
+    closeSubpage(add_schedule_page);
+}
+
+// submit form listener, store data
+schedule_form.onsubmit = (e) => {
+    e.preventDefault();
+    Array.from(schedule_elem).forEach(function(e) {
+        if (e.type !== 'submit') {
+            schedule_data[e.id] = e.value;
+        }
+    })
+    closeSubpage(add_schedule_page);
+    addScheduleItem();
+}
+
+// add item into schedule list
+const schedule_ul = document.getElementById('schedule');
+
+function addScheduleItem() {
+    let schedule_item = document.createElement('ul');
+    for (const [key, value] of Object.entries(schedule_data)) {
+        console.log(key, value);
+        let schedule_li = document.createElement('li');
+        schedule_li.appendChild(document.createTextNode(value));
+        schedule_item.appendChild(schedule_li);
+    }
+    schedule_ul.appendChild(schedule_item);
 }

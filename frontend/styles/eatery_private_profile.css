@@ -78,6 +78,14 @@ main {
     cursor: pointer;
 }
 
+.list-head > li{
+    display: inline-block;
+    width: 11rem;
+    text-align: center;
+    border-left: solid;
+    border-bottom: solid;
+}
+
 /* basic information */
 #eatery-info > div > li{
     display: inline-block;
@@ -107,19 +115,32 @@ main {
     color: var(--btn-hover-color);
 }
 
-#add {
+#schedule li {
+    display: inline-block;
+    width: 10rem;
+    text-align: center;
+    margin-right: 1rem;
+}
+
+#schedule ul {
+    border: 3px solid;
+    width: 95%;
+    height: 2rem;
+    margin-bottom: 1rem;
+}
+
+#add-schedule-btn {
+    float: right;
+    margin-top: 1rem;
+}
+
+#add-voucher-btn {
     float: right;
     margin-top: 1rem;
 }
 
 /* reservation */
-#book-head > li{
-    display: inline-block;
-    width: 11rem;
-    text-align: center;
-    border-left: solid;
-    border-bottom: solid;
-}
+
 
 #reservation > ul > li{
     display: inline-block;
@@ -128,12 +149,68 @@ main {
 }
 
 /* subpage */
-#edit-page {
+.subpage {
     display: none;
     background-color: var(--container-color);
     top: 3rem;
-    left:25%;
     position: fixed;
+}
+
+/* edit profile subpage */
+#edit-page {
+    left:25%;
     width: 50%;
     height: 80%;
 }
+
+
+/* add schedule subpage */
+#add-schedule {
+    left:25%;
+    width: 50%;
+    height: 80%;
+}
+
+#add-schedule .close {
+    display: block;
+}
+
+#add-schedule > h1 {
+    text-align: center;
+}
+
+#schedule-form > ul{
+    margin-top: 3rem;
+    list-style: none;
+}
+
+#schedule-form li {
+    display: inline-block;
+    width: 13rem;
+    margin-left: 5%;
+    margin-bottom: 2rem;
+}
+
+#schedule-form label {
+    font: var(--primary-font-size) var(--primary-font-fam);
+    margin-right: 1rem;
+}
+
+#schedule-form input,select {
+    height: 2rem;
+    font-size: large;
+}
+
+#schedule select:hover {
+    cursor: pointer;
+}
+
+.submit {
+    margin-left: 25%;
+    width: 20rem;
+    height: 4rem;
+    text-align: center;
+    font: var(--primary-font-size) var(--primary-font-fam);
+}
+
+

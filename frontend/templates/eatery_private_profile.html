@@ -47,21 +47,31 @@
         <h2>Add Vouchers</h2>
         <section class="container">
             <div id="voucher-switch">
-                <button id="schedule-btn">add schedule</button>
-                <button id="voucher-btn">add voucher</button>
+                <button id="schedule-btn">schedules</button>
+                <button id="voucher-btn">vouchers</button>
             </div>
             <div id="by-schedule">
-                <ul id="schedule"></ul>
+                <ul id="schedule-head" class="list-head">
+                    <li>weekday</li>
+                    <li>meal type</li>
+                    <li>start time</li>
+                    <li>end time</li>
+                    <li>voucher num</li>
+                    <li>discount(%)</li>
+                </ul>
+                <ul id="schedule">
+                </ul>
+                <button id="add-schedule-btn">add schedule</button>
             </div>
             <div id="by-voucher">
-                <ul id="schedule"></ul>
+                <ul id="voucher"></ul>
+                <button id="add-voucher-btn">add voucher</button>
             </div>
-            <button id="add">add schedule</button>
         </section>
     
         <h2>Reservation</h2>
         <section class="container">
-            <ul id="book-head">
+            <ul id="book-head" class="list-head">
                 <li>diner</li>
                 <li>date</li>
                 <li>time</li>
@@ -73,11 +83,64 @@
             </div>
         </section>
     </main>
-    <section id='edit-page'>
+    <!-- subpages-->
+    <section id='edit-page' class="subpage">
         <button class='close'>close</button>
         <h1>eatery edit profile page</h1>
     </section>
     
+    <section id="add-schedule" class="subpage">
+        <button class='close'>close</button>
+        <h1>Add Schedule</h1>
+        <form id="schedule-form">
+            <ul>
+                <div>
+                    <li>
+                        <label for="weekday">Weekday: </label>
+                        <select id="weekday" name="weekday">
+                            <option value="Monday">Mon</option>
+                            <option value="Tuesday">Tue</option>
+                            <option value="Wednesday">Wed</option>
+                            <option value="Thursday">Thu</option>
+                            <option value="Friday">Fri</option>
+                            <option value="Saturday">Sat</option>
+                            <option value="Sunday">Sun</option>
+                        </select>
+                    </li>
+                    <li>
+                        <label for="type">Meal type: </label>
+                        <select id="type" name="type">
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                        </select>
+                    </li>
+                </div>
+                <div>
+                    <li>
+                        <label for="start">Start: </label>
+                        <input type="time" id="start" name="start" min="00:00" max="23:59" required>
+                    </li>
+                    <li>
+                        <label for="end">End: </label>
+                        <input type="time" id="end" name="end" min="00:00" max="23:59" required>
+                    </li>
+                </div>
+                <div>
+                    <li>                    
+                        <label for="amount">Voucher Num: </label>
+                        <input type="number" id="amount" name="amount" min="1" max="100" required>
+                    </li>
+                    <li>
+                        <label for="discount">Discount(%): </label>
+                        <input type="number" id="discount" min="0" max="100" required>
+                    </li>
+                </div>
+            </ul>
+            <input type="submit" id="submit-schedule" name="submit" class="submit" value="add">
+        </form>
+    </section>
+
     <footer class="footer">
 
     </footer>
