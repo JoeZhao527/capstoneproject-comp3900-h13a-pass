@@ -4,7 +4,7 @@ const sign_up_btn = document.getElementsByClassName("sign-up");
 const home_btn = document.querySelector(".home");
 const logout_btn = document.querySelector(".logout");
 const profile_btn = document.getElementsByClassName("profile");
-console.log(sign_up_btn[0], sign_up_btn[1])
+
 /* add listeners to buttons */
 login_btn.addEventListener('click', function() {
     window.location.href = '../templates/login.html';
@@ -27,7 +27,7 @@ logout_btn.addEventListener('click', function() {
 
 Array.from(profile_btn).forEach(element => {
     element.addEventListener('click', function() {
-        alert('profile page is not implemented yet');
+       window.location.href = "../templates/eatery_private_profile.html";
     });        
 });
 

@@ -2,6 +2,7 @@ const add_cuisine_btn = document.getElementById('add-cuisine');
 const list = document.getElementById('cuisines');
 const submit_btn = document.getElementById('submit');
 const form = document.forms["sign-up-form"].getElementsByTagName("input");
+const backhome = document.getElementById('back-home')
 let cuisines = []
 let data = {}
 
@@ -83,3 +84,8 @@ function cuisineBtn(value) {
     return btn;
 }
 
+/* backhome button */
+backhome.addEventListener('click', function() {
+    clear();
+    window.location.href = '../templates/eatery_home.html';
+})
