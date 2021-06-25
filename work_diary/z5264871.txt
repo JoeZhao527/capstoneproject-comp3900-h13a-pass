@@ -1,1 +1,10 @@
 Week 1
+Joined the group and then joined the Jira. I created some user stories based on the project objectives and discussed what our approach was
+to the project with the group.
+
+Week 2
+Went over all the created user stories as a group to choose the best ones. The work was split to frontend, backend and database between group.
+Revised a bit on python and flask
+
+Week 3
+Added a few functions for the backend design. Discussed implementation with group members and worked and finished the proposal with the group.
