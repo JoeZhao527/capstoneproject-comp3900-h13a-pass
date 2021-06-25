@@ -63,23 +63,26 @@ add_cuisine_btn.addEventListener('click', function(e) {
     console.log(cuisines)
 });
 
-// cuisine tag style
-const cuisine_style = "height: 2.5rem; width: 5rem; margin: 0.5rem; border: none; " + 
-                    "font-family: 'Courier New', Courier, monospace;";
-
 function cuisineListener(btn) {
-    btn.addEventListener('click', function(e) {
+    let context = btn.innerHTML
+    btn.onclick = () => {
         list.removeChild(btn);
-        let idx = cuisines.indexOf(btn.innerHTML);
+        let idx = cuisines.indexOf(context);
         if (idx > -1) { cuisines.splice(idx, 1) }
-    })
+    }
+
+    btn.onmouseover = () => {
+        btn.innerHTML = 'Delete';
+    }
+
+    btn.onmouseleave = () => {
+        btn.innerHTML = context;
+    }
 }
 
 function cuisineBtn(value) {
     let btn = document.createElement('button');
     btn.appendChild(document.createTextNode(value));
-    btn.style.cssText = cuisine_style;
-    
     cuisineListener(btn);
     return btn;
 }

@@ -147,7 +147,7 @@ const schedule_ul = document.getElementById('schedule');
 function addScheduleItem() {
     let schedule_item = document.createElement('ul');
     for (const [key, value] of Object.entries(schedule_data)) {
-        console.log(key, value);
+        console.log(key, value, typeof value);
         let schedule_li = document.createElement('li');
         schedule_li.appendChild(document.createTextNode(value));
         schedule_item.appendChild(schedule_li);

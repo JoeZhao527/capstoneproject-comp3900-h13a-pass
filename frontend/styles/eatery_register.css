@@ -95,6 +95,20 @@
     padding: 0.5rem;
 }
 
+#cuisines > button {
+    height: 2.5rem;
+    width: 5rem;
+    margin: 0.5rem;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#cuisines > button:hover {
+    background-color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 #submit {
     background-color: var(--btn-color);
     font-family: 'Courier New', Courier, monospace;
