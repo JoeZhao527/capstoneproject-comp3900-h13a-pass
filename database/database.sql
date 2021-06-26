@@ -57,6 +57,12 @@ create table Reviews {
     primary key (diner_id, eatery_id, review_id)
 };
 
+create table Offers {
+    schedule_id    integer references Schedules(schedule_id),
+    voucher_id  integer references Vouchers(voucher_id),
+    primary key (diner_id, voucher_id)
+}
+
 create table Bookings {
     diner_id    integer references Diners(diner_id),
     voucher_id  integer references Vouchers(voucher_id),
