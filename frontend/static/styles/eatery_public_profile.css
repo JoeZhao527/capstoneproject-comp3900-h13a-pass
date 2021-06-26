@@ -42,3 +42,31 @@
     width: 32rem;
     height: 1.6rem;
 }
+
+.imgBox{
+    border-top: 2px solid cadetblue;
+    width: 50%;
+    height: 500px;
+    margin: 0 auto;
+
+}
+
+.imgBox img{
+    width: 60%;
+    height: 300px;
+    margin: 0 auto;
+    padding-top: 30px;
+
+}
+
+.img1{
+    display: block;
+}
+
+.img2{
+    display: none;
+}
+
+.img3{
+    display: none;
+}

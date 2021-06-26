@@ -4,24 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eatery Details</title>
-<<<<<<< HEAD
     <link rel="stylesheet" href="../static/styles/eatery_public_profile.css">
-=======
-    <link rel="stylesheet" href="../styles/eatery_public_profile.css">
->>>>>>> 1c73eab163064efe8d9bd6db724987d832e56dcc
 </head>
 <body>
     <nav id="nav-bar">
         <button class="home">Value Eat</button>
-        <input type="text" id="search">
+        <input type="text" placeholder = "Find your eatery" id="search">
         <button class="login nav-btn">Login</button>
         <button class="sign-up nav-btn">Sign up</button>
         <button class="profile nav-btn">Profile</button>
         <button class="logout nav-btn">Logout</button>
     </nav>
-<<<<<<< HEAD
+
+    <div class = "imgBox">
+            <div><img id="img-slide img1" src="../static/images/food_1.jpg" alt="a login image"></div>
+            <div><img id="img-slide img2" src="../static/images/food_2.jpg" alt="a login image"></div>
+            <div><img id="img-slide img3" src="../static/images/food_2.jpg" alt="a login image"></div>
+        
+    </div>
+    <script type="text/javascript">
+        var index=0;
+        //改变图片
+        function ChangeImg() {
+            index++;
+            var a=document.getElementsByClassName("img-slide");
+            if(index>=a.length) index=0;
+            for(var i=0;i<a.length;i++){
+                a[i].style.display='none';
+            }
+            a[index].style.display='block';
+        }
+        //设置定时器，每隔两秒切换一张图片
+        setInterval(ChangeImg,2000);
+    </script>
+
+    <div class="box">
+             <div class="content">
+                <div><img id="food_1" src="../static/images/food_1.jpg" alt="a login image"></div>
+                <div><img id="food_2" src="../static/images/food_2.jpg" alt="a login image"></div>
+                <div><img id="food_3" src="../static/images/food_2.jpg" alt="a login image"></div>
+             </div>
+             <div class="control">
+                 <!-- <span class="control-bar current"></span> -->
+                 <!-- <span class="control-bar"></span>
+                 <span class="control-bar"></span>
+                 <span class="control-bar"></span>
+                 <span class="control-bar"></span>
+                 <span class="control-bar"></span>
+                 <span class="control-bar"></span> -->
+             </div>
+     
+            <span id="pre"></span>
+             <span id="next"></span>
+         </div>
+
     
-=======
->>>>>>> 1c73eab163064efe8d9bd6db724987d832e56dcc
+
+    <script src="../static/scripts/eatery_home.js"></script>
 </body>
 </html>
