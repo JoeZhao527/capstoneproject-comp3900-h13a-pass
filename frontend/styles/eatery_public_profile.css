@@ -1,0 +1,44 @@
+:root {
+    --primary-color: grey;
+    --btn-color: white;
+    --btn-hover-color: lightskyblue;
+}
+
+/* nav bar */
+#nav-bar {
+    background-color: var(--primary-color);
+    padding: 25px;
+    margin: -10px;
+}
+
+#nav-bar button:hover{
+    cursor: pointer;
+    color: var(--btn-hover-color);
+}
+.nav-btn {
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    background-color: var(--primary-color);
+    width: 6rem;
+    height: 3rem;
+    margin-left: 0.5rem;
+    margin-top: -0.5rem;
+    float: right;
+}
+.home {
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: larger;
+    font-style: italic;
+    background-color: var(--primary-color);
+    width: 8rem;
+    height: 2rem;
+    margin-right: 4rem;
+    float: left;
+}
+#search {
+    width: 32rem;
+    height: 1.6rem;
+}
