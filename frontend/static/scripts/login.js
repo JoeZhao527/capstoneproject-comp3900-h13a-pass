@@ -83,8 +83,11 @@ home.addEventListener('click', function(e) {
  * @returns user token if login success, else false
  */
 function send(data) {
-    // TODO
-    return "user_token"
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'login', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(data);
+    return xhr.response;
 }
 
 /**
