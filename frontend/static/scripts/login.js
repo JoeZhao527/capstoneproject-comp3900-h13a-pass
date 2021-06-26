@@ -1,3 +1,6 @@
+// paths
+const eatery_home = '/';
+
 // get buttons
 const diner_btn = document.getElementById("diner");
 const eatery_btn = document.getElementById("eatery");
@@ -62,7 +65,7 @@ form.addEventListener('submit', function(e) {
                 alert("diner login is not implemented yet");
                 window.sessionStorage.removeItem("token");
             } else {
-                window.location.href = "../templates/eatery_home.html";
+                window.location.href = eatery_home;
             }
         }
         clearInput();
@@ -71,7 +74,7 @@ form.addEventListener('submit', function(e) {
 
 // back home event listener
 home.addEventListener('click', function(e) {
-    window.location.href = "../templates/eatery_home.html"
+    window.location.href = eatery_home
 })
 
 /* data sending and receving functions */

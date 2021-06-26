@@ -1,3 +1,6 @@
+// paths
+const eatery_home = '/';
+
 /* main and nav bar*/
 const main = document.getElementById('main');
 const nav_bar = document.getElementById('nav-bar');
@@ -43,13 +46,13 @@ home_btn.addEventListener('click', function() {
 const logout_btn = document.getElementById('logout');
 logout_btn.addEventListener('click', function() {
     sessionStorage.removeItem('token');
-    window.location.href = '../templates/eatery_home.html';
+    window.location.href = eatery_home;
 })
 
 // back eatery home
 const back_btn = document.getElementById('back');
 back_btn.onclick = () => {
-    window.location.href = '../templates/eatery_home.html';
+    window.location.href = eatery_home;
 }
 
 /* subpage operations */
