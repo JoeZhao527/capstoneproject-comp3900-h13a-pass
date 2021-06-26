@@ -1,3 +1,6 @@
+// paths
+const eatery_home = '/'
+
 const add_cuisine_btn = document.getElementById('add-cuisine');
 const list = document.getElementById('cuisines');
 const submit_btn = document.getElementById('submit');
@@ -21,7 +24,7 @@ submit_btn.addEventListener('click', function(e) {
     if (token) {
         sessionStorage.setItem('token', token);
         console.log('data')
-        window.location.href = '../templates/eatery_home.html';
+        window.location.href = eatery_home;
     } else {
         alert('sign up failed')
     }
@@ -90,5 +93,5 @@ function cuisineBtn(value) {
 /* backhome button */
 backhome.addEventListener('click', function() {
     clear();
-    window.location.href = '../templates/eatery_home.html';
+    window.location.href = eatery_home;
 })

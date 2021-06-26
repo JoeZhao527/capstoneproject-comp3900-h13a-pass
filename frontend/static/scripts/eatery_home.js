@@ -1,3 +1,7 @@
+// paths
+const eatery_register = '/eatery/register';
+const eatery_private_profile = '/eatery_private_profile';
+
 // get buttons
 const login_btn = document.querySelector(".login");
 const sign_up_btn = document.getElementsByClassName("sign-up");
@@ -7,12 +11,12 @@ const profile_btn = document.getElementsByClassName("profile");
 
 /* add listeners to buttons */
 login_btn.addEventListener('click', function() {
-    window.location.href = '../templates/login.html';
+    window.location.href = '/login';
 })
 
 Array.from(sign_up_btn).forEach(element => {
     element.addEventListener('click', function() {
-        window.location.href = "../templates/eatery_register.html";
+        window.location.href = eatery_register;
     })
 })
 
@@ -27,7 +31,7 @@ logout_btn.addEventListener('click', function() {
 
 Array.from(profile_btn).forEach(element => {
     element.addEventListener('click', function() {
-       window.location.href = "../templates/eatery_private_profile.html";
+       window.location.href = eatery_private_profile;
     });        
 });
 
