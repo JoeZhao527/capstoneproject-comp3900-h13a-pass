@@ -3,8 +3,16 @@ import random
 import jwt
 import re
 import hashlib
+import smtplib
+from email.message import EmailMessage
+
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+
+database = {
+    'userlist': [],
+    'sessionlist': []
+}
 
 # function for generating a token by given uid
 def generate_token(u_id):
@@ -14,15 +22,27 @@ def generate_token(u_id):
     token = jwt.encode({'user_id': u_id}, secret, algorithm='HS256')
     return token
 
-# function for hashing a password to protect the secuity
+# function for hashing a password to protect the security
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 # function for checking if the email is used (1)
 def if_email_exist(email):
+    userlist = database['userlist']
+    for user in userlist:
+        if user['email'] == email:
+            return True
     return False
+# function for getting the user by email
+def get_user_by_email(email):
+    userlist = database['userlist']
+    for user in userlist:
+        if user['email'] == email:
+            return user
+    return None
 
-def diner_register(email, password, first_name, last_name, phone):
+# a function that create a new account for the eatery by given valid email, password, name and phone
+def eatery_register(email, password, first_name, last_name, phone):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
@@ -46,12 +66,14 @@ def diner_register(email, password, first_name, last_name, phone):
     # hash the password for security
     hashed_password = hash_password(password)
     
-    # generate user_id and token, uid = 500000+user_number
-    u_id = 500000
+    # generate user_id and token, uid = 500000+user_number (2)
+    userlist = database['userlist']
+    u_id = 500000 + len(userlist)
     token = generate_token(u_id)
     
-    # create an eatery and store in the database (2) !!!!
-    store_eatery(u_id, email, hashed_password, first_name, last_name, phone)
+    # create an eatery and store in the database (3) !!!!
+    new_user = {'u_id': u_id, 'email': email, 'password': hashed_password, 'first_name': first_name, 'last_name': last_name, 'phone': phone}
+    userlist.append(new_user)
 
     return {'u_id': u_id, 'token': token}
 
@@ -67,17 +89,17 @@ def auth_login(email, passowrd):
         raise InputError("Email does not belong to a user")
 
     # email belong to a user, get the user from database
-    user = User.get_user_by_email(email)
+    user = get_user_by_email(email)
     # check if the input password match the user's password
     # if not mach
-    if user.password != hash_password(passowrd):
+    if user['password'] != hash_password(passowrd):
         raise InputError("Password Incorrect")
     # if password match, generate new token and set the user's state to login
     else:
-        token = generate_token(user.u_id)
-        user.if_logged_in = True
+        token = generate_token(user['u_id'])
+        # user.if_logged_in = True
         
-        return {'u_id': u_id, 'token': token}
+        return {'u_id': user['u_id'], 'token': token}
 # given an active token, invalidates the token to log the user out
 # if a vaid token is given, and the user is successfully logged out -> true, otherwise -> false
 def auth_logout(token):
@@ -90,5 +112,62 @@ def auth_logout(token):
     return {"is_success": False}
 
 
+# given an email address of a registered user, send them an email contain a specific reset code
+# user trying to rest the password
+def auth_password_request(email):
+    # check if the email is valid
+    if not re.search(VALID_EMAIL, email):
+        raise InputError("Email invalid")
+    # check if the email is registered
+    if not if_email_exist(email):
+        raise InputError("Email does not belong to a user")
+    else:
+        user = get_user_by_email(email)
+        mix = string.ascii_letters + string.digits
+        code = ''.join(random.choice(mix) for i in range(20))
+        user['reset_code'] = code
+    
+    # set up the SMTP server
+    # set the email server and send the 'reset_code' to the "email"
+    address = "comp3900h13apass@gmail.com"
+    password = "H13APASS"
+
+    # set up the SMTP server
+    setup = smtplib.SMTP(host='smtp.gmail.com', port=587)
+    setup.starttls()
+    setup.login(address, password)
+
+    # create a message template
+    msg = EmailMessage()
+    msg['From'] = address
+    msg['To'] = email
+    msg['Subject'] = code
+
+    setup.send_message(msg)
+    setup.quit()
+
+    return {}
+
+def auth_password_reset(reset_code, new_password):
+    # reset_code is not a valid reset_code
+    if not if_reset_code_exist(reset_code):
+        raise InputError("Reset_code is invalid")
+    else:
+        if len(passowrd) < 6:
+            raise InputError("Invalid password")
+        else:
+            user = User.get_user_by_reset_code(reset_code)
+            hashed_password = hash_password(new_password)
+            user.passowrd = hashed_password
+            user.reset_code = ""
+    return {}
+
 if __name__ == "__main__":
-    print(generate_token(123))
+    result1 = eatery_register("jianjunjchen@gmail.com", "393630Cjj", "Jay", "Chen", "0470397745")
+    result2 = eatery_register("Mercy.D@gmail.com", "393630Cjj", "Jay", "Chen", "0470397745")
+    result3 = auth_login("jianjunjchen@gmail.com", "393630Cjj")
+    print(result1)
+    print(result3)
+    print(database)
+    auth_password_request("jianjunjchen@gmail.com")
+    
