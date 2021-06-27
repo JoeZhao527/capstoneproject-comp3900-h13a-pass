@@ -1,4 +1,4 @@
-
+from server import db
 def add_schedule(token, weekday, start, end, discount, voucher_num, eatery_id):
     '''
     Checks discount 

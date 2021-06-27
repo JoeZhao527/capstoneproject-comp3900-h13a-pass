@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 #from flask_sqlalchemy import SQLAlchemy
 
 # create Application
@@ -10,5 +11,9 @@ db_path = 'value_eat.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(db_path)
 db = SQLAlchemy(app)
 '''
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///valueEats.db'
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
 
 from server import routes
