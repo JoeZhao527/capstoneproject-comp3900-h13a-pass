@@ -78,12 +78,16 @@ class Schedule(db.Model):
     no_vouchers = db.Column(db.Integer, nullable=False) 
     weekday = db.Column(db.String(10), nullable=False)   # Mon to Sun
     discount = db.Column(db.Float, nullable=False)
+    start = db.Column(db.Integer(), nullable=False)
+    end = db.Column(db.Integer(), nullable=False)
     
-    def __init__(self, eatery_id, no_vouchers, weekday, discount):
+    def __init__(self, eatery_id, no_vouchers, weekday, discount, start, end):
         self.eatery_id = eatery_id
         self.no_vouchers = no_vouchers
         self.weekday = weekday
         self.discount = discount
+        self.start = start
+        self.end = end
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
