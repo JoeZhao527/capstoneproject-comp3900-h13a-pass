@@ -15,48 +15,41 @@
         <button class="profile nav-btn">Profile</button>
         <button class="logout nav-btn">Logout</button>
     </nav>
+    <div class="slidershow middle">
 
-    <div class = "imgBox">
-            <div><img id="img-slide img1" src="../static/images/food_1.jpg" alt="a login image"></div>
-            <div><img id="img-slide img2" src="../static/images/food_2.jpg" alt="a login image"></div>
-            <div><img id="img-slide img3" src="../static/images/food_2.jpg" alt="a login image"></div>
-        
-    </div>
-    <script type="text/javascript">
-        var index=0;
-        //改变图片
-        function ChangeImg() {
-            index++;
-            var a=document.getElementsByClassName("img-slide");
-            if(index>=a.length) index=0;
-            for(var i=0;i<a.length;i++){
-                a[i].style.display='none';
-            }
-            a[index].style.display='block';
-        }
-        //设置定时器，每隔两秒切换一张图片
-        setInterval(ChangeImg,2000);
-    </script>
-
-    <div class="box">
-             <div class="content">
-                <div><img id="food_1" src="../static/images/food_1.jpg" alt="a login image"></div>
-                <div><img id="food_2" src="../static/images/food_2.jpg" alt="a login image"></div>
-                <div><img id="food_3" src="../static/images/food_2.jpg" alt="a login image"></div>
-             </div>
-             <div class="control">
-                 <!-- <span class="control-bar current"></span> -->
-                 <!-- <span class="control-bar"></span>
-                 <span class="control-bar"></span>
-                 <span class="control-bar"></span>
-                 <span class="control-bar"></span>
-                 <span class="control-bar"></span>
-                 <span class="control-bar"></span> -->
-             </div>
-     
-            <span id="pre"></span>
-             <span id="next"></span>
-         </div>
+        <div class="slides">
+          <input type="radio" name="r" id="r1" checked>
+          <input type="radio" name="r" id="r2">
+          <input type="radio" name="r" id="r3">
+          <input type="radio" name="r" id="r4">
+          <input type="radio" name="r" id="r5">
+          <div class="slide s1">
+            <img src="../static/images/food_1.jpg" alt="">
+          </div>
+          <div class="slide">
+            <img src="../static/images/food_2.jpg" alt="">
+          </div>
+          <div class="slide">
+            <img src="../static/images/food_3.jpg" alt="">
+          </div>
+          <div class="slide">
+            <img src="../static/images/food_4.jpg" alt="">
+          </div>
+          <div class="slide">
+            <img src="../static/images/food_5.jpg" alt="">
+          </div>
+        </div>
+  
+        <div class="navigation">
+          <label for="r1" class="bar"></label>
+          <label for="r2" class="bar"></label>
+          <label for="r3" class="bar"></label>
+          <label for="r4" class="bar"></label>
+          <label for="r5" class="bar"></label>
+        </div>
+      </div>
+    
+    
 
     
 
