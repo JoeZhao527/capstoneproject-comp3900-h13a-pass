@@ -19,6 +19,19 @@ class Eatery(db.Model):
     description = db.Column(db.String(200))
     token = db.Column(db.String(50), unique=True)
 
+    def __init__(self, first_name, last_name, email, password, phone_number, eatery_name, address, menu, description, token):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.password = password
+        self.phone_number = phone_number
+        self.eatery_name = eatery_name
+        self.address = address
+        self.menu = menu
+        self.description = description
+        self.token = token
+
+
 
 class Diner(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -79,4 +92,7 @@ def add_item(item):
     db.session.add(item)
     db.session.commit()
 
+def create_eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, description, token):
+    eatery = Eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, description, token)
+    add_item(eatery)
 
