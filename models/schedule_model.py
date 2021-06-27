@@ -7,5 +7,6 @@ class Schedule(db.Model):
     start = db.Column(db.String(), nullable=False)
     end = db.Column(db.String(), nullable=False)
     eatery_id = db.Column(db.Integer(), nullable=False, unique=True)
+    schedule_id = db.Column(db.Integer(), nullable=False, unique=True)
     def __repr__(self):
-        return f'Schedule {self.eatery_id}'
+        return f'Schedule {self.schedule_id}'
