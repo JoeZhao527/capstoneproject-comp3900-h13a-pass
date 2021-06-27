@@ -1,14 +1,14 @@
 '''
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-# datetime for voucher time range
-import datetime
 
 #app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///valueEats.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 '''
+# datetime for voucher time range
+import datetime
 from server import db
 
 class Eatery(db.Model):
@@ -142,8 +142,8 @@ CREATE DOMAIN Discount AS
    CHECK (VALUE > 0 AND VALUE <= 100);
 """
 
+db.drop_all()
 db.create_all()
-
 
 def add_item(item):
     db.session.add(item)

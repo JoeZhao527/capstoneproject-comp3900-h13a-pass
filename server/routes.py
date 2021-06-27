@@ -9,7 +9,7 @@ def home():
     return render_template('eatery_home.html')
 
 @app.route('/eatery/register')
-def eatery_register():
+def eatery_register_load():
     return render_template('eatery_register.html')
 
 @app.route('/login', methods=['GET'])
@@ -19,8 +19,26 @@ def login_page():
 @app.route('/login', methods=['POST'])
 def login_info():
     data = json.loads(request.data)
-    return data
+    try:
+        res = auth_login(data['email'], data['password'])
+        return res['token']
+    except InputError:
+        print(InputError.message)
+        return ''
 
+@app.route('/eatery/register', methods=['POST'])
+def eatery_register_check():
+    data = json.loads(request.data)
+    try:
+        res = eatery_register(data['email'], data['password'],
+                            data['fname'], data['lname'],data['phone'],
+                            data['ename'], data['address'], data['menu'],
+                            data['description'])
+        return res['token']
+    except InputError:
+        print(InputError.message)
+        return ''
+        
 @app.route('/eatery_private_profile', methods=['GET'])
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')

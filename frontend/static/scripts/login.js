@@ -39,8 +39,11 @@ eatery_btn.addEventListener('click',function(e) {
 // submit form event listener
 form.addEventListener('submit', function(e) {
     e.preventDefault();
+    if (data.utype === 'diner') {
+        alert("diner login is not implemented yet");
+    }
     // if there are empty field, pop an error message
-    if (email.value === `` || password.value === ``) {
+    else if (email.value === `` || password.value === ``) {
         msg.innerHTML = "please enter all fields";
         setTimeout(() => {
             msg.innerHTML = null;
@@ -51,7 +54,7 @@ form.addEventListener('submit', function(e) {
         data.password = password.value;
         
         let token = send(jsonData())
-        if (token === null) {
+        if (token === '') {
             // if login or password is invalid, show an error message and clear input
             msg.innerHTML = "invalid email or password";
             setTimeout(() => {
@@ -61,12 +64,7 @@ form.addEventListener('submit', function(e) {
         } else {
             // if login success, store token and direct to main
             window.sessionStorage.setItem("token", token);
-            if (data.utype == "diner") {
-                alert("diner login is not implemented yet");
-                window.sessionStorage.removeItem("token");
-            } else {
-                window.location.href = eatery_home;
-            }
+            window.location.href = eatery_home;
         }
         clearInput();
     }

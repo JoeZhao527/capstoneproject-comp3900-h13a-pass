@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(db_path)
 db = SQLAlchemy(app)
 '''
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///valueEats.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../backend/valueEats.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 

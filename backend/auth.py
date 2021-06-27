@@ -6,9 +6,8 @@ import hashlib
 import smtplib
 from email.message import EmailMessage
 
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from user_db import *
+from .user_db import *
+from exceptions.errors import *
 
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
@@ -79,7 +78,7 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     token = generate_token(userid)
     
     # create an eatery and store in the database, return the eatery_id
-    eatery_id = create_eatery(first_name, last_name, email, password, phone, eatery_name, address, menu, description, token)
+    eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, description, token)
     return {'eatery_id': eatery_id, 'token': token}
 
 # login function
@@ -94,7 +93,7 @@ def auth_login(email, passowrd):
         raise InputError("Email does not belong to a user")
 
     # email belong to a eatery, get the eatery from database
-    eatery = Eatery.query.filter_by(email=email)
+    eatery = Eatery.query.filter_by(email=email).first()
     # check if the input password match the user's password
     # if not match
     if eatery.password != hash_password(passowrd):
