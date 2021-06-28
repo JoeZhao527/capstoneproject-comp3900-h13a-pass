@@ -151,7 +151,7 @@
 
 .heading {
     position:absolute;
-    top: 880px;
+    top: 900px;
     margin-left: 180px;
     margin-top: 20px;
     margin-bottom: 60px;
@@ -172,7 +172,7 @@
 }
 
 #voucherPart{
-    top: 950px;
+    top: 700px;
     height:fit-content
 }
 
@@ -214,7 +214,7 @@
   }
 
 #comments{
-    top: 1140px;
+    top: 900px;
 }
 
 #vt{
@@ -229,4 +229,8 @@
     margin-left: 180px;
     margin-top: 20px;
     margin-bottom: 60px;
+}
+
+#voucherPart td{
+    cursor: pointer;
 }

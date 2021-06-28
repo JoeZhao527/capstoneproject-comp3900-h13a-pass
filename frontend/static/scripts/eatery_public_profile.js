@@ -94,7 +94,7 @@ const turn_details_btn = document.getElementById('details-btn');
 
 const description = document.getElementById('description');
 const menu = document.getElementById('menu');
-const eaterydetails = document.getElementById('eatery-details');
+const eaterydetails = document.getElementById('eaterydetails');
 
 function displayDescriptionList() {
     turn_description_btn.style.setProperty('border-bottom', 'white 4px solid');
@@ -136,3 +136,53 @@ turn_details_btn.onclick = () => {
 }
 
 displayDescriptionList();
+
+
+const turn_breakfast_btn = document.getElementById("Breakfast-btn")
+const turn_lunch_btn = document.getElementById('Lunch-btn');
+const turn_dinner_btn = document.getElementById('Dinner-btn');
+
+const breakfast = document.getElementById('breakfast');
+const lunch = document.getElementById('lunch');
+const dinner = document.getElementById('dinner');
+
+function displayBreakfastList() {
+    turn_breakfast_btn.style.setProperty('border-bottom', 'white 4px solid');
+    turn_lunch_btn.style.setProperty('border-bottom', 'none');
+    turn_dinner_btn.style.setProperty('border-bottom', 'none');
+    breakfast.style.display = 'inline';
+    lunch.style.display = 'none';
+    dinner.style.display = 'none';
+}
+
+function displayLunchList() {
+    turn_breakfast_btn.style.setProperty('border-bottom', 'none');
+    turn_lunch_btn.style.setProperty('border-bottom', 'white 4px solid');
+    turn_dinner_btn.style.setProperty('border-bottom', 'none');
+    breakfast.style.display = 'none';
+    lunch.style.display = 'inline';
+    dinner.style.display = 'none';
+}
+
+function displayDinnerList() {
+    turn_breakfast_btn.style.setProperty('border-bottom', 'none');
+    turn_lunch_btn.style.setProperty('border-bottom', 'none');
+    turn_dinner_btn.style.setProperty('border-bottom', 'white 4px solid');
+    breakfast.style.display = 'none';
+    lunch.style.display = 'none';
+    dinner.style.display = 'inline';
+}
+
+turn_breakfast_btn.onclick = () => {
+    displayBreakfastList();
+}
+
+turn_lunch_btn.onclick = () => {
+    displayLunchList();
+}
+
+turn_dinner_btn.onclick = () => {
+    displayDinnerList();
+}
+
+displayBreakfastList();
