@@ -47,6 +47,7 @@
     height: 1.6rem;
   }
   
+  
   body{
     margin: 0;
     padding: 0;
@@ -123,20 +124,21 @@
     left: 50%;
     top: 530px;
     transform: translate(-50%,-50%);
+    margin-bottom: 60px;
   }
 
   .container {
     width:80%;
-    height: 70px;
     background-color: var(--container-color);
     margin: 1.5rem;
     padding: 1rem;
     padding-bottom: 6rem;
     font-family: var(--primary-font-fam);
     font-size: 20px;
-    position: absolute;
+    position: relative;
     left:50%;
     transform: translate(-50%,-50%);
+
 }
 
 .container button {
@@ -145,6 +147,15 @@
     border: none;
     width: 10rem;
     height: 3rem;
+}
+
+.heading {
+    position:absolute;
+    top: 900px;
+    margin-left: 180px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    
 }
 
 .container button:hover {
@@ -161,7 +172,7 @@
 }
 
 #voucherPart{
-    top: 950px;
+    top: 700px;
     height:fit-content
 }
 
@@ -180,13 +191,7 @@
   color: rgb(0, 0, 0);
   width: 9%;
   height: 9%;
-  
   background-color: rgb(156, 156, 156);
-  
-  -webkit-transition: background-color .2s ease-out;
-  -moz-transition: background-color .2s ease-out;
-  -ms-transition: background-color .2s ease-out;
-  -o-transition: background-color .2s ease-out;
   transition: background-color .2s ease-out;
   background-clip: padding-box; /* Fix bleeding */
   -moz-border-radius: 3px;
@@ -194,8 +199,6 @@
   border-radius: 3px;
 
 }
-
-
 
 #time-switch button:hover{
     background-color: #eee;
@@ -207,18 +210,27 @@
     position: relative;
     top: 1px;
     text-shadow: none;
-    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
   }
 
-  #comments{
-      top: 1240px;
-  }
+#comments{
+    top: 900px;
+}
 
-  #vt{
-      top: 1200px;
-  }
-  .container text{
-      vertical-align: bottom;
-  }
+#vt{
+    top: 1200px;
+}
+.container text{
+    vertical-align: bottom;
+}
+.comment-heading{
+    position:relative;
+    top: 880px;
+    margin-left: 180px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+#voucherPart td{
+    cursor: pointer;
+}
