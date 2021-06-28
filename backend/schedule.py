@@ -1,10 +1,16 @@
+# crutial import for backend to run py itself
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import server
 from server import db
 from .user_db import *
-from exceptions.errors import *
+from backend.errors import *
+from backend.data_access import create_Schedule
+from backend.user_db import *
 
 days = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun']
 
-def add_schedule(token, weekday, start, end, discount, voucher_num, eatery_id):
+def add_schedule(eatery_id, no_vouchers, weekday, start, end, discount, meal_type):
     # Checks discount 
     # Checks if a valid eatery_id
     # Checks if token is valid (decode)?
@@ -16,12 +22,9 @@ def add_schedule(token, weekday, start, end, discount, voucher_num, eatery_id):
         raise InputError("Invalid weekday")
     if end <= start:
         raise InputError("End time cannot be before start time")
-
-    schedule = Schedule(eatery_id, voucher_num, weekday, start, end, discount)
-    schedule_id = schedule.id
-    db.session.add(schedule)
-    db.session.commit()
-    return { schedule_id }
+    
+    schedule_id = create_Schedule(eatery_id, no_vouchers, weekday, start, end, discount, meal_type)
+    return schedule_id
 
 def update_schedule(token, weekday, start, end, discount, voucher_num, eatery_id, schedule_id):
     # Checks discount
@@ -45,13 +48,13 @@ def update_schedule(token, weekday, start, end, discount, voucher_num, eatery_id
     return {}
 
 
-def remove_schedule(token, weekday, schedule_id):
+def remove_schedule(token, weekday, eatery_id, schedule_id):
     # If invalid schedule id
     if not db.session.query(db.session.query(Schedule).filter_by(id=schedule_id)).scalar():
         raise InputError("Invalid schedule")
     if weekday not in days:
         raise InputError("Invalid weekday")
 
-    db.session.query(Schedule).filter_by(id=schedule_id).delete()
+    db.session.query(Schedule).filter_by(eatery_id=eatery_id, id=schedule_id).first().delete()
     db.session.commit()
     return {}

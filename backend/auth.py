@@ -6,8 +6,14 @@ import hashlib
 import smtplib
 from email.message import EmailMessage
 
-from .user_db import *
-from exceptions.errors import *
+# crutial import for backend to run py itself
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import server
+
+from backend.user_db import Eatery
+from backend.data_access import create_eatery, get_eatery_by_token, update_eatery_token
+from backend.errors import *
 
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
@@ -32,6 +38,7 @@ def eatery_email_used(email):
         return True
     return False
 
+'''
 # function for adding item in the database
 def add_item(item):
     db.session.add(item)
@@ -42,6 +49,7 @@ def create_eatery(first_name, last_name, email, password, phone, eatery_name, ad
     eatery = Eatery(first_name, last_name, email, password, phone, eatery_name, address, menu, description, token)
     add_item(eatery)
     return eatery.id
+'''
 
 # a function that create a new account for the eatery by given valid email, password, name and phone
 def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, description):
@@ -101,17 +109,17 @@ def auth_login(email, passowrd):
     # if password match, generate new token and set the user's state to login
     else:
         token = generate_token(eatery.id)
-        # user.if_logged_in = True
-        
+        # update token to database
+        update_eatery_token(token, eatery)
         return {'eatery_id': eatery.id, 'token': token}
 # given an active token, invalidates the token to log the user out
 # if a vaid token is given, and the user is successfully logged out -> true, otherwise -> false
 def auth_logout(token):
-    eatery = Eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token).first()
     # if there is a user with the token, token valid
     if eatery is not None:
         # user.if_logged_in = False
-        user.token = None
+        eatery.token = None
         return {"logout_success": True}
     return {"logout_success": False}
 
@@ -167,6 +175,11 @@ def auth_password_reset(reset_code, new_password):
             eatery.passowrd = hashed_password
             eatery.reset_code = ""
     return {}
+
+def get_eatery(token):
+    eatery = get_eatery_by_token(token)
+    # TODO: check if eatery is got by this token, otherwise returns an empty string
+    return eatery
 
 if __name__ == "__main__":
     print(generate_token(123))

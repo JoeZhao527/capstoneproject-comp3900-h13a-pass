@@ -1,57 +1,91 @@
-from server import db
-from .user_db import *
-from exceptions.errors import *
-from datetime import date, datetime, time
+# crutial import for backend to run py itself
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import server
 
-def add_voucher(token, voucher_date, start, end, discount, eatery_id):
-    # Check if discount exceeds 100
-    if discount > 100:
-        raise InputError("Discount cannot be greater than 100")
-    # Checks if it is a valid time-range
-    if end <= start:
-        raise InputError("Invalid time range")
-    # Check if present time is already passed the given date and time range.
-    if voucher_date < date.today():
-        raise InputError("Already past the vouchers date")
-    if not start <= datetime.now().time() <= end:
-        raise InputError("Current time is not in vouchers time-range")
+from backend.auth import *
+from backend.user_db import *
 
-    voucher = Voucher(eatery_id, date, start, end, discount)
-    voucher_id = voucher.id
-    db.session.add(voucher)
+from datetime import date, datetime
+
+# function for cheking valid eatery
+def valid_eatery(eatery_id, token):
+    eatery = Eatery.query.filter_by(eatery_id=eatery_id, token=token)
+    # no eatery with given id or given token in the data
+    if eatery is None:
+        return False
+    return True
+
+# function for creating an voucher item and add into the voucher table
+def create_voucher(eatery_id, date, start_time, end_time, discount):
+    new_voucher = Voucher(eatery_id, date, start_time, end_time, discount)
+    add_item(new_voucher)
+    return new_voucher
+
+
+# function for adding item in the database
+def add_item(item):
+    db.session.add(item)
     db.session.commit()
-    # GENERATE CODE
-    code = ""
+
+# function for deleting item in the database
+def delete_item(item):
+    db.session.delete(item)
+    db.session.commit()
+
+# function for generating voucher
+def add_voucher(token, date, start, end, discount, eatery_id):
+    # check if eatery is valid by check the eatery id and token
+    if not valid_eatery(eatery_id, token):
+        raise InputError("Invalid token")
+    # check if the voucher date and time is valid
+    if date < date.today() or start < datetime.now().tine or end < datetime.now():
+        raise InputError("Voucher Time invalid")
     
-    return { voucher_id, code }
+    # check if the discount is normal (between 0-1)
+    if discount > 1:
+        raise InputError("Voucher discount invalid")
 
-def update_voucher(token, voucher_id, voucher_date, start, end, discount, if_used):
-    # Check if discount exceeds 100
-    if discount > 100:
-        raise InputError("Discount cannot be greater than 100")
-    # Checks if it is a valid time-range
-    if end <= start:
-        raise InputError("Invalid time range")
-    # Check if present time is already passed the given date and time range.
-    if voucher_date < date.today():
-        raise InputError("Already past the vouchers date")
-    if not start <= datetime.now().time() <= end:
-        raise InputError("Current time is not in vouchers time-range")
+    # eatery and the other info are valid
+    # create the voucher (convert the date into weekday)
+    voucher = create_voucher(eatery_id, date, start, end, discount)
+    voucher.if_used = False
+    voucher.if_booked = False
+    weekday = date.weekday() # datetime.datime.today().weekday()
+    voucher.weekday = weekday
 
-    voucher = db.session.query(Voucher).filter_by(id=voucher_id)
-    voucher.date = voucher_id
-    voucher.start_time = start
-    voucher.end_time = end
+    return {'voucher_id': voucher.id}
+
+# function for updating the voucher
+def update_voucher(token, voucher_id, date, start, end, discount):
+ # check if token is valid
+    eatery = Eatery.query.filter_by(token=token)
+    if eatery is None:
+        raise InputError("Invalid token")
+    voucher = Voucher.query.filter_by(voucher_id=voucher_id, eatery_id=eatery.id)
+
+    voucher.date = date
+    voucher.start = start
+    voucher.end = end
     voucher.discount = discount
+    weekday = date.weekday() # datetime.datime.today().weekday()
+    voucher.weekday = weekday
     db.session.commit()
 
-    return {}
 
-def remove_voucher(token, voucher_id):
-    if not db.session.query(Voucher).filter_by(id=voucher_id).scalar():
-        raise InputError("Invalid voucher id")
 
-    db.session.query(Voucher).filter_by(id=voucher_id).delete()
-    db.session.commit()
+# function for deleting the voucher
+def delete_voucher(token, voucher_id):
+    # check if token is valid
+    eatery = Eatery.query.filter_by(token=token)
+    if eatery is None:
+        raise InputError("Invalid token")
+    voucher = Voucher.query.filter_by(voucher_id=voucher_id, eatery_id=eatery.id)
+    delete_item(voucher)
 
-    return {}
+
+
+
+
+
+

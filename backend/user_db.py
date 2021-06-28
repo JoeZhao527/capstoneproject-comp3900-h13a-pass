@@ -1,15 +1,14 @@
-'''
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+# crutial import for backend to run py itself
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import server
 
-#app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///valueEats.db'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-'''
 # datetime for voucher time range
 import datetime
 from server import db
+
+# clean up cache
+db.metadata.clear()
 
 class Eatery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,8 +72,11 @@ class Voucher(db.Model):
     end_time = db.Column(db.Time, nullable=False)
     discount = db.Column(db.Float, nullable=False)
     if_used = db.Column(db.Boolean)
+    if_booked = db.Column(db.Boolean)     # add 
+    weekday = db.Column(db.String(10))    # dereived from date
+
     
-    def __init__(self, eatery_id, date, start_time, end_time, discount):
+    def __init__(self, eatery_id, date, start_time, end_time, discount, weekday):
         self.eatery_id = eatery_id
         self.date = date
         self.start_time = start_time
@@ -82,6 +84,8 @@ class Voucher(db.Model):
         self.discount = discount
         # self.diner_id = None
         # self.if_used = False
+        # self.if_booked = False
+        # self.weekday = date -> weekday
 
 
 class Schedule(db.Model):
@@ -92,14 +96,16 @@ class Schedule(db.Model):
     start_time = db.Column(db.Time, nullable=False)
     end_time = db.Column(db.Time, nullable=False)
     discount = db.Column(db.Float, nullable=False)
-    
-    def __init__(self, eatery_id, no_vouchers, weekday, start_time, end_time, discount):
+    meal_type = db.Column(db.String(10), nullable=False) # breakfast, lunch, dinner
+
+    def __init__(self, eatery_id, no_vouchers, weekday, start_time, end_time, discount, meal_type):
         self.eatery_id = eatery_id
         self.no_vouchers = no_vouchers
         self.weekday = weekday
         self.start_time = start_time
         self.end_time = end_time
         self.discount = discount
+        self.meal_type = meal_type
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -142,28 +148,6 @@ CREATE DOMAIN Discount AS
    CHECK (VALUE > 0 AND VALUE <= 100);
 """
 
+# clear up and create tables when the app run
 db.drop_all()
 db.create_all()
-
-def add_item(item):
-    db.session.add(item)
-    db.session.commit()
-
-def create_eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, description, token):
-    eatery = Eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, description, token)
-    add_item(eatery)
-    return eatery.id
-
-def create_Voucher(eatery_id, date, start_time, end_time, discount):
-    voucher = Voucher(eatery_id, date, start_time, end_time, discount)
-    add_item(voucher)
-    return voucher.id
-
-
-if __name__ == "__main__":
-    #result1 = create_eatery("Jay", "Chen", "jianjunjsz@gmail.com", "393630Cjj", "0470397745", "Chef Chen", "unsw hall", "", "", "asfcasdwqasscss")
-    result2 = create_Voucher(2, datetime.date(2021, 11, 27), datetime.time(8, 30), datetime.time(9, 30), 0.5)
-    voucher = Voucher.query.filter_by(eatery_id=2).first()
-    print(voucher.discount)
-    print(voucher.id)
-    print("lol")
