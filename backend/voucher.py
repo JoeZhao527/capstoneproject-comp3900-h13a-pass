@@ -10,7 +10,7 @@ def valid_eatery(eatery_id, token):
 
 # function for creating an voucher item and add into the voucher table
 def create_voucher(eatery_id, date, start_time, end_time, discount):
-    new_voucher = Voucher(eatery_id, date, start_time, end_time, discount)
+    new_voucher = Voucher(eatey_id, date, start_time, end_time, discount)
     add_item(new_voucher)
     return new_voucher
 
