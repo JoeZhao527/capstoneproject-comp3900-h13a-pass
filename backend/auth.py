@@ -6,19 +6,17 @@ import hashlib
 import smtplib
 from email.message import EmailMessage
 
+from .user_db import *
+from exceptions.errors import *
+
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
 
-database = {
-    'userlist': [],
-    'sessionlist': []
-}
-
 # function for generating a token by given uid
 def generate_token(u_id):
-    # generate SECRET by using radom string--> len(random String) == 25
+    # generate SECRET by using radom string--> len(random String) == 20
     letters = string.ascii_letters
-    secret = ''.join(random.choice(letters) for i in range(25))
+    secret = ''.join(random.choice(letters) for i in range(20))
     token = jwt.encode({'user_id': u_id}, secret, algorithm='HS256')
     return token
 
@@ -26,30 +24,34 @@ def generate_token(u_id):
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# function for checking if the email is used (1)
-def if_email_exist(email):
-    userlist = database['userlist']
-    for user in userlist:
-        if user['email'] == email:
-            return True
+# function for checking if the email is used by an eatery
+def eatery_email_used(email):
+    eatery = Eatery.query.filter_by(email=email).first()
+    # someone eatery used this email,
+    if eatery is not None:
+        return True
     return False
-# function for getting the user by email
-def get_user_by_email(email):
-    userlist = database['userlist']
-    for user in userlist:
-        if user['email'] == email:
-            return user
-    return None
+
+# function for adding item in the database
+def add_item(item):
+    db.session.add(item)
+    db.session.commit()
+
+# function for creating an eatery item and add into the eatery table
+def create_eatery(first_name, last_name, email, password, phone, eatery_name, address, menu, description, token):
+    eatery = Eatery(first_name, last_name, email, password, phone, eatery_name, address, menu, description, token)
+    add_item(eatery)
+    return eatery.id
 
 # a function that create a new account for the eatery by given valid email, password, name and phone
-def eatery_register(email, password, first_name, last_name, phone):
+def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, description):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
-    # check if the email addess is being used by another user
-    if if_email_exist(email):
+    # check if the email addess is being used by another eatery
+    if eatery_email_used(email):
         raise InputError("Email being used")
-    # check if the password entered is less than 6 character or empty
+    # check if the password entered is less than 6 character(or empty)
     if len(password) < 6:
         raise InputError("Password invalid")
     # check if first name or last name is empty
@@ -63,19 +65,21 @@ def eatery_register(email, password, first_name, last_name, phone):
     if len(last_name) > 50:
         raise InputError("Last name invalid")
 
+    # check the eatery_name, address, menu, desciption...
+    # TODO
+
+
     # hash the password for security
     hashed_password = hash_password(password)
     
-    # generate user_id and token, uid = 500000+user_number (2)
-    userlist = database['userlist']
-    u_id = 500000 + len(userlist)
-    token = generate_token(u_id)
+    # generate user_id and token, uid = 500000+ num_of_users
+    num_eateries = len(Eatery.query.all())
+    userid = 500000 + num_eateries
+    token = generate_token(userid)
     
-    # create an eatery and store in the database (3) !!!!
-    new_user = {'u_id': u_id, 'email': email, 'password': hashed_password, 'first_name': first_name, 'last_name': last_name, 'phone': phone}
-    userlist.append(new_user)
-
-    return {'u_id': u_id, 'token': token}
+    # create an eatery and store in the database, return the eatery_id
+    eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, description, token)
+    return {'eatery_id': eatery_id, 'token': token}
 
 # login function
 # given a registered user's email and password
@@ -84,32 +88,32 @@ def auth_login(email, passowrd):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
-    # check if the email is registered
-    if not if_email_exist(email):
+    # check if the email is registered(used)
+    if not eatery_email_used(email):
         raise InputError("Email does not belong to a user")
 
-    # email belong to a user, get the user from database
-    user = get_user_by_email(email)
+    # email belong to a eatery, get the eatery from database
+    eatery = Eatery.query.filter_by(email=email).first()
     # check if the input password match the user's password
-    # if not mach
-    if user['password'] != hash_password(passowrd):
+    # if not match
+    if eatery.password != hash_password(passowrd):
         raise InputError("Password Incorrect")
     # if password match, generate new token and set the user's state to login
     else:
-        token = generate_token(user['u_id'])
+        token = generate_token(eatery.id)
         # user.if_logged_in = True
         
-        return {'u_id': user['u_id'], 'token': token}
+        return {'eatery_id': eatery.id, 'token': token}
 # given an active token, invalidates the token to log the user out
 # if a vaid token is given, and the user is successfully logged out -> true, otherwise -> false
 def auth_logout(token):
-    user = User.get_user_by_token(token)
-    # if there is to user corresponding to token
-    if user is not None:
-        user.if_logged_in = False
+    eatery = Eatery.query.filter_by(token=token)
+    # if there is a user with the token, token valid
+    if eatery is not None:
+        # user.if_logged_in = False
         user.token = None
-        return {"is_success": True}
-    return {"is_success": False}
+        return {"logout_success": True}
+    return {"logout_success": False}
 
 
 # given an email address of a registered user, send them an email contain a specific reset code
@@ -118,14 +122,14 @@ def auth_password_request(email):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
-    # check if the email is registered
-    if not if_email_exist(email):
+    # check if the email is not registered
+    if not eatery_email_used(email):
         raise InputError("Email does not belong to a user")
     else:
-        user = get_user_by_email(email)
+        eatery = Eatery.query.filter_by(email=email)
         mix = string.ascii_letters + string.digits
         code = ''.join(random.choice(mix) for i in range(20))
-        user['reset_code'] = code
+        eatery.reset_code = code
     
     # set up the SMTP server
     # set the email server and send the 'reset_code' to the "email"
@@ -149,25 +153,20 @@ def auth_password_request(email):
     return {}
 
 def auth_password_reset(reset_code, new_password):
-    # reset_code is not a valid reset_code
-    if not if_reset_code_exist(reset_code):
+    # find a user with the same reset code
+    eatery = Eatery.query.filter_by(reset_code=reset_code)
+    # if reset code invalid
+    if eatery is None:
         raise InputError("Reset_code is invalid")
+    # reset code valid, change the password of eatery
     else:
-        if len(passowrd) < 6:
+        if len(new_password) < 6:
             raise InputError("Invalid password")
         else:
-            user = User.get_user_by_reset_code(reset_code)
             hashed_password = hash_password(new_password)
-            user.passowrd = hashed_password
-            user.reset_code = ""
+            eatery.passowrd = hashed_password
+            eatery.reset_code = ""
     return {}
 
 if __name__ == "__main__":
-    result1 = eatery_register("jianjunjchen@gmail.com", "393630Cjj", "Jay", "Chen", "0470397745")
-    result2 = eatery_register("Mercy.D@gmail.com", "393630Cjj", "Jay", "Chen", "0470397745")
-    result3 = auth_login("jianjunjchen@gmail.com", "393630Cjj")
-    print(result1)
-    print(result3)
-    print(database)
-    auth_password_request("jianjunjchen@gmail.com")
-    
+    print(generate_token(123))

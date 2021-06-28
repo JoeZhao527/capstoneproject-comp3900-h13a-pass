@@ -118,14 +118,27 @@ main {
 #schedule li {
     display: inline-block;
     width: 10rem;
+    height: 2rem;
     text-align: center;
     margin-right: 1rem;
+}
+
+#schedule button {
+    clear: both;
+    display: inline-block;
+    width: 6rem;
+    height: 2rem;
+    margin-top: 0.5rem;
+}
+
+#schedule button:hover {
+    background-color: red;
 }
 
 #schedule ul {
     border: 3px solid;
     width: 95%;
-    height: 2rem;
+    height: 3rem;
     margin-bottom: 1rem;
 }
 

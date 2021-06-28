@@ -21,7 +21,7 @@ submit_btn.addEventListener('click', function(e) {
     });
     data['cuisines'] = cuisines;
     let token = register();
-    if (token) {
+    if (token !== '') {
         sessionStorage.setItem('token', token);
         console.log('data')
         window.location.href = eatery_home;
@@ -35,10 +35,11 @@ submit_btn.addEventListener('click', function(e) {
  * use the data to check if registeration success
  */
 function register() {
-    JSON.stringify(data);
     // send data and receive token
-    let token = 'eatery_token'
-    return token;
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery/register', false);
+    xhr.send(JSON.stringify(data))
+    return xhr.response;
 }
 
 /* clean up cuisines, data and inputs */

@@ -1,7 +1,6 @@
-from sqlalchemy import *
-from datetime import date, datetime
-
-days = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun']
+from server import db
+from .user_db import *
+from exceptions.errors import *
 
 def add_schedule(token, weekday, start, end, discount, voucher_num, eatery_id):
     # Checks discount 
@@ -9,10 +8,10 @@ def add_schedule(token, weekday, start, end, discount, voucher_num, eatery_id):
     # Checks if token is valid (decode)?
     if discount > 100:
         raise InputError("Discount cannot be greater than 100")
-    if not db.session.query(db.exists().where(Eatery.id == eatery_id).scalar():
+    if not db.session.query(db.exists().where(Eatery.id == eatery_id)).scalar():
         raise InputError("Eatery_id does not exist")
 
-    schedule = Schedule(eatery_id, voucher_num, weekday, discount, start, end)
+    schedule = Schedule(eatery_id, voucher_num, weekday, start, end, discount)
     schedule_id = schedule.id
     db.session.add(schedule)
     db.session.commit()

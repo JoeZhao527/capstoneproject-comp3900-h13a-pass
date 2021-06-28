@@ -129,6 +129,7 @@ add_schedule_btn.onclick = () => {
 };
 
 close_schedule.onclick = () => {
+    schedule_form.reset();
     closeSubpage(add_schedule_page);
 }
 
@@ -140,20 +141,75 @@ schedule_form.onsubmit = (e) => {
             schedule_data[e.id] = e.value;
         }
     })
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery/profile/private/add_schedule', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(schedule_data));
+
+    if (xhr.response) {
+        addScheduleItem(xhr.response);
+    }
+
+    schedule_form.reset();
     closeSubpage(add_schedule_page);
-    addScheduleItem();
+    schedule_data = {}
 }
 
 // add item into schedule list
 const schedule_ul = document.getElementById('schedule');
 
-function addScheduleItem() {
+function addScheduleItem(id) {
     let schedule_item = document.createElement('ul');
+    // add data to schedule
     for (const [key, value] of Object.entries(schedule_data)) {
         console.log(key, value, typeof value);
         let schedule_li = document.createElement('li');
         schedule_li.appendChild(document.createTextNode(value));
         schedule_item.appendChild(schedule_li);
     }
+    // add delete button to schedule
+    
+    addEditBtn(schedule_item, id);
+    addDeleteBtn(schedule_item, id);
     schedule_ul.appendChild(schedule_item);
+}
+
+/**
+ * @param item parent of li
+ * add the li with a button delete button inside to item
+ */
+function addDeleteBtn(item, _id) {
+    let btn = document.createElement('button');
+    btn.innerHTML = 'Delete';
+    btn.onclick = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('DELETE', '/eatery/profile/remove_schedule', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ id: _id }));
+        if (xhr.response === 'true') {
+            schedule_ul.removeChild(item);
+        } else {
+            alert('delete failed');
+        }
+    }
+    item.appendChild(btn);
+}
+
+/**
+ * @param item parent of li
+ * add the li with a edit button to item
+ */
+function addEditBtn(item, id) {
+    let btn = document.createElement('button');
+    btn.innerHTML = 'Edit';
+    btn.onclick = () => {
+        console.log("edit clicked");
+    }
+    btn.onmouseover = () => {
+        btn.style.backgroundColor = 'lightskyblue';
+    }
+    btn.onmouseleave = () => {
+        btn.style.backgroundColor = 'white';
+    }
+    item.appendChild(btn);
 }
