@@ -87,3 +87,52 @@ function displayText() {
 }
 // check user onloading
 checkUser();
+
+const turn_description_btn = document.getElementById("description-btn")
+const turn_menu_btn = document.getElementById('menu-btn');
+const turn_details_btn = document.getElementById('details-btn');
+
+const description = document.getElementById('description');
+const menu = document.getElementById('menu');
+const eaterydetails = document.getElementById('eatery-details');
+
+function displayDescriptionList() {
+    turn_description_btn.style.setProperty('border-bottom', 'white 4px solid');
+    turn_menu_btn.style.setProperty('border-bottom', 'none');
+    turn_details_btn.style.setProperty('border-bottom', 'none');
+    description.style.display = 'inline';
+    menu.style.display = 'none';
+    eaterydetails.style.display = 'none';
+}
+
+function displayMenuList() {
+    turn_description_btn.style.setProperty('border-bottom', 'none');
+    turn_menu_btn.style.setProperty('border-bottom', 'white 4px solid');
+    turn_details_btn.style.setProperty('border-bottom', 'none');
+    description.style.display = 'none';
+    menu.style.display = 'inline';
+    eaterydetails.style.display = 'none';
+}
+
+function displayDetailsList() {
+    turn_description_btn.style.setProperty('border-bottom', 'none');
+    turn_menu_btn.style.setProperty('border-bottom', 'none');
+    turn_details_btn.style.setProperty('border-bottom', 'white 4px solid');
+    description.style.display = 'none';
+    menu.style.display = 'none';
+    eaterydetails.style.display = 'inline';
+}
+
+turn_description_btn.onclick = () => {
+    displayDescriptionList();
+}
+
+turn_menu_btn.onclick = () => {
+    displayMenuList();
+}
+
+turn_details_btn.onclick = () => {
+    displayDetailsList();
+}
+
+displayDescriptionList();
