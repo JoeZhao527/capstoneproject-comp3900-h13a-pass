@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
 from server import db
-from exceptions.errors import *
+from backend.errors import *
 from backend.data_access import create_Schedule, Schedule
 
 def add_schedule(eatery_id, no_vouchers, weekday, start, end, discount, meal_type):

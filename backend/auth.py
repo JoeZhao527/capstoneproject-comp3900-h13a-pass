@@ -13,7 +13,7 @@ import server
 
 from backend.user_db import Eatery
 from backend.data_access import create_eatery, get_eatery_by_token, update_eatery_token
-from exceptions.errors import *
+from backend.errors import *
 
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
