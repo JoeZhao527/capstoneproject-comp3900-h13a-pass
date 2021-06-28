@@ -213,9 +213,12 @@
   }
 
   #comments{
-      top: 1300px;
+      top: 1240px;
   }
 
   #vt{
       top: 1200px;
+  }
+  .container text{
+      vertical-align: bottom;
   }
