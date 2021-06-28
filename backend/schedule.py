@@ -5,7 +5,8 @@ import server
 
 from server import db
 from backend.errors import *
-from backend.data_access import create_Schedule, Schedule
+from backend.data_access import create_Schedule
+from backend.user_db import *
 
 def add_schedule(eatery_id, no_vouchers, weekday, start, end, discount, meal_type):
     '''

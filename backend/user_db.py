@@ -1,12 +1,3 @@
-'''
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-#app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///valueEats.db'
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-'''
 # crutial import for backend to run py itself
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -15,6 +6,9 @@ import server
 # datetime for voucher time range
 import datetime
 from server import db
+
+# clean up cache
+db.metadata.clear()
 
 class Eatery(db.Model):
     id = db.Column(db.Integer, primary_key=True)
