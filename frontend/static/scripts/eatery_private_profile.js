@@ -13,27 +13,38 @@ const info_item = document.getElementById('eatery-info').getElementsByTagName('l
 
 // get eatery's info by its token
 function getEateryData() {
-    let token = sessionStorage.getItem('token');
-    let _data = {
-        fname: 'joe',
-        lname: 'zhao',
-        ename: 'eatery_name',
-        email: '1016859319@qq.com',
-        phone: '0452568128',
-        address: 'address, 2052 UNSW',
+    let _token = sessionStorage.getItem('token');
+    let _data = {}
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery_private_profile/info', true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            for (const [key, value] of Object.entries(JSON.parse(this.response))) {
+                _data[key] = value;
+            }
+            dirty_fix_data(_data)
+            loadEateryData(_data);
+        }
     }
-    return _data
+    xhr.send(`{"token":"${_token}"}`);
+}
+
+function dirty_fix_data(_data) {
+    _data['fname'] = _data['first_name']
+    _data['lname'] = _data['last_name']
+    _data['ename'] = _data['eatery_name']
 }
 
 // load eatery data to profile
 function loadEateryData(_data) {
     Array.from(info_item).forEach(e => {
-        e.innerHTML = e.innerHTML+'\xa0\xa0\xa0\xa0\xa0'+_data[e.id]
+        if (_data[e.id] !== 'undefined') {
+            e.innerHTML = e.innerHTML+'\xa0\xa0\xa0\xa0\xa0'+_data[e.id]
+        }
     });
 }
 
-let data = getEateryData();
-loadEateryData(data);
+getEateryData();
 
 /* buttons */
 // diner home page
@@ -45,9 +56,26 @@ home_btn.addEventListener('click', function() {
 // logout
 const logout_btn = document.getElementById('logout');
 logout_btn.addEventListener('click', function() {
-    sessionStorage.removeItem('token');
-    window.location.href = eatery_home;
+    if (logout()) {
+        sessionStorage.removeItem('token');
+        window.location.href = eatery_home;
+    } else {
+        alert('logout failed for unknown reasons')
+    }
 })
+
+/**
+ * send logout request to backend
+ */
+ function logout() {
+    let token = window.sessionStorage.getItem('token');
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/logout', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(`{"token":"${token}"}`);
+    console.log(xhr.response);
+    return xhr.response
+}
 
 // back eatery home
 const back_btn = document.getElementById('back');
@@ -129,6 +157,7 @@ add_schedule_btn.onclick = () => {
 };
 
 close_schedule.onclick = () => {
+    schedule_form.reset();
     closeSubpage(add_schedule_page);
 }
 
@@ -140,20 +169,75 @@ schedule_form.onsubmit = (e) => {
             schedule_data[e.id] = e.value;
         }
     })
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery/profile/private/add_schedule', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(schedule_data));
+
+    if (xhr.response) {
+        addScheduleItem(xhr.response);
+    }
+
+    schedule_form.reset();
     closeSubpage(add_schedule_page);
-    addScheduleItem();
+    schedule_data = {}
 }
 
 // add item into schedule list
 const schedule_ul = document.getElementById('schedule');
 
-function addScheduleItem() {
+function addScheduleItem(id) {
     let schedule_item = document.createElement('ul');
+    // add data to schedule
     for (const [key, value] of Object.entries(schedule_data)) {
         console.log(key, value, typeof value);
         let schedule_li = document.createElement('li');
         schedule_li.appendChild(document.createTextNode(value));
         schedule_item.appendChild(schedule_li);
     }
+    // add delete button to schedule
+    
+    addEditBtn(schedule_item, id);
+    addDeleteBtn(schedule_item, id);
     schedule_ul.appendChild(schedule_item);
+}
+
+/**
+ * @param item parent of li
+ * add the li with a button delete button inside to item
+ */
+function addDeleteBtn(item, _id) {
+    let btn = document.createElement('button');
+    btn.innerHTML = 'Delete';
+    btn.onclick = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('DELETE', '/eatery/profile/remove_schedule', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ id: _id }));
+        if (xhr.response === 'true') {
+            schedule_ul.removeChild(item);
+        } else {
+            alert('delete failed');
+        }
+    }
+    item.appendChild(btn);
+}
+
+/**
+ * @param item parent of li
+ * add the li with a edit button to item
+ */
+function addEditBtn(item, id) {
+    let btn = document.createElement('button');
+    btn.innerHTML = 'Edit';
+    btn.onclick = () => {
+        console.log("edit clicked");
+    }
+    btn.onmouseover = () => {
+        btn.style.backgroundColor = 'lightskyblue';
+    }
+    btn.onmouseleave = () => {
+        btn.style.backgroundColor = 'white';
+    }
+    item.appendChild(btn);
 }
