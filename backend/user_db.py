@@ -73,8 +73,11 @@ class Voucher(db.Model):
     end_time = db.Column(db.Time, nullable=False)
     discount = db.Column(db.Float, nullable=False)
     if_used = db.Column(db.Boolean)
+    if_booked = db.Column(db.Boolean)     # add 
+    weekday = db.Column(db.String(10))    # dereived from date
+
     
-    def __init__(self, eatery_id, date, start_time, end_time, discount):
+    def __init__(self, eatery_id, date, start_time, end_time, discount, weekday):
         self.eatery_id = eatery_id
         self.date = date
         self.start_time = start_time
@@ -82,6 +85,8 @@ class Voucher(db.Model):
         self.discount = discount
         # self.diner_id = None
         # self.if_used = False
+        # self.if_booked = False
+        # self.weekday = date -> weekday
 
 
 class Schedule(db.Model):
