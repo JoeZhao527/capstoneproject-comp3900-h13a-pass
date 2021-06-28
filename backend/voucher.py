@@ -1,3 +1,11 @@
+# crutial import for backend to run py itself
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import server
+
+from backend.auth import *
+from backend.user_db import *
+
 from datetime import date, datetime
 
 # function for cheking valid eatery
@@ -10,7 +18,7 @@ def valid_eatery(eatery_id, token):
 
 # function for creating an voucher item and add into the voucher table
 def create_voucher(eatery_id, date, start_time, end_time, discount):
-    new_voucher = Voucher(eatey_id, date, start_time, end_time, discount)
+    new_voucher = Voucher(eatery_id, date, start_time, end_time, discount)
     add_item(new_voucher)
     return new_voucher
 
@@ -51,7 +59,7 @@ def add_voucher(token, date, start, end, discount, eatery_id):
 # function for updating the voucher
 def update_voucher(token, voucher_id, date, start, end, discount):
  # check if token is valid
-    eatery = eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token)
     if eatery is None:
         raise InputError("Invalid token")
     voucher = Voucher.query.filter_by(voucher_id=voucher_id, eatery_id=eatery.id)
@@ -69,7 +77,7 @@ def update_voucher(token, voucher_id, date, start, end, discount):
 # function for deleting the voucher
 def delete_voucher(token, voucher_id):
     # check if token is valid
-    eatery = eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token)
     if eatery is None:
         raise InputError("Invalid token")
     voucher = Voucher.query.filter_by(voucher_id=voucher_id, eatery_id=eatery.id)

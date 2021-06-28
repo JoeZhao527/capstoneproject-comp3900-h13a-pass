@@ -6,8 +6,13 @@ import hashlib
 import smtplib
 from email.message import EmailMessage
 
-from .user_db import Eatery
-from .data_access import create_eatery, get_eatery_by_token, update_eatery_token
+# crutial import for backend to run py itself
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import server
+
+from backend.user_db import Eatery
+from backend.data_access import create_eatery, get_eatery_by_token, update_eatery_token
 from exceptions.errors import *
 
 

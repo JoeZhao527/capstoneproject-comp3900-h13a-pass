@@ -1,4 +1,9 @@
-from .user_db import *
+# crutial import for backend to run py itself
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import server
+
+from backend.user_db import *
 
 # add and commit an item to database
 def add_item(item):
