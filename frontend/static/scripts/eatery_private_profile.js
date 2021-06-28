@@ -13,27 +13,38 @@ const info_item = document.getElementById('eatery-info').getElementsByTagName('l
 
 // get eatery's info by its token
 function getEateryData() {
-    let token = sessionStorage.getItem('token');
-    let _data = {
-        fname: 'joe',
-        lname: 'zhao',
-        ename: 'eatery_name',
-        email: '1016859319@qq.com',
-        phone: '0452568128',
-        address: 'address, 2052 UNSW',
+    let _token = sessionStorage.getItem('token');
+    let _data = {}
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery_private_profile/info', true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            for (const [key, value] of Object.entries(JSON.parse(this.response))) {
+                _data[key] = value;
+            }
+            dirty_fix_data(_data)
+            loadEateryData(_data);
+        }
     }
-    return _data
+    xhr.send(`{"token":"${_token}"}`);
+}
+
+function dirty_fix_data(_data) {
+    _data['fname'] = _data['first_name']
+    _data['lname'] = _data['last_name']
+    _data['ename'] = _data['eatery_name']
 }
 
 // load eatery data to profile
 function loadEateryData(_data) {
     Array.from(info_item).forEach(e => {
-        e.innerHTML = e.innerHTML+'\xa0\xa0\xa0\xa0\xa0'+_data[e.id]
+        if (_data[e.id] !== 'undefined') {
+            e.innerHTML = e.innerHTML+'\xa0\xa0\xa0\xa0\xa0'+_data[e.id]
+        }
     });
 }
 
-let data = getEateryData();
-loadEateryData(data);
+getEateryData();
 
 /* buttons */
 // diner home page
@@ -45,9 +56,26 @@ home_btn.addEventListener('click', function() {
 // logout
 const logout_btn = document.getElementById('logout');
 logout_btn.addEventListener('click', function() {
-    sessionStorage.removeItem('token');
-    window.location.href = eatery_home;
+    if (logout()) {
+        sessionStorage.removeItem('token');
+        window.location.href = eatery_home;
+    } else {
+        alert('logout failed for unknown reasons')
+    }
 })
+
+/**
+ * send logout request to backend
+ */
+ function logout() {
+    let token = window.sessionStorage.getItem('token');
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/logout', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(`{"token":"${token}"}`);
+    console.log(xhr.response);
+    return xhr.response
+}
 
 // back eatery home
 const back_btn = document.getElementById('back');
