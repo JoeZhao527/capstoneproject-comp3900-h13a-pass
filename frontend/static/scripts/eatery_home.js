@@ -25,8 +25,12 @@ home_btn.addEventListener('click', function() {
 })
 
 logout_btn.addEventListener('click', function() {
-    window.sessionStorage.removeItem('token');
-    checkUser();
+    if (logout()) {
+        window.sessionStorage.removeItem('token');
+        checkUser();
+    } else {
+        alert('logout failed for unknown reason');
+    }
 })
 
 Array.from(profile_btn).forEach(element => {
@@ -34,6 +38,19 @@ Array.from(profile_btn).forEach(element => {
        window.location.href = eatery_private_profile;
     });        
 });
+
+/**
+ * send logout request to backend
+ */
+function logout() {
+    let token = window.sessionStorage.getItem('token');
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/logout', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(`{"token":"${token}"}`);
+    console.log(xhr.response);
+    return xhr.response
+}
 
 
 /**

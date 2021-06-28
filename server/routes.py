@@ -2,6 +2,7 @@ from server import app
 from flask import render_template, request
 from backend.auth import *
 from backend.schedule import *
+
 import json
 
 @app.route('/')
@@ -26,8 +27,15 @@ def login_info():
         print(InputError.message)
         return ''
 
+@app.route('/logout', methods=['PUT'])
+def eatery_logout():
+    data = json.loads(request.data)
+    res = auth_logout(data['token'])
+    return 'true' if res['logout_success'] else ''
+
 @app.route('/eatery/register', methods=['POST'])
 def eatery_register_check():
+    print(request.data)
     data = json.loads(request.data)
     try:
         res = eatery_register(data['email'], data['password'],
@@ -43,10 +51,19 @@ def eatery_register_check():
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')
 
+@app.route('/eatery_private_profile/info', methods=['POST'])
+def eatery_private_profile_info():
+    data = json.loads(request.data)
+    res = get_eatery_by_token(data['token'])
+    # returns json string if res is not empty, otherwise returns an empty string
+    print(res)
+    return json.dumps(res)
+
+    
 @app.route('/eatery/profile/private/add_schedule', methods=['POST'])
 def eatery_add_schedule():
     info = json.loads(request.data)
-    #success = add_schedule(token=info['token'], weekday=info['weekday'], discount_number=info['discount_number'], start=info['start'], end=info['end'], eatery_id=info['eatery_id']) 
+    #res = add_schedule(token=info['token'], weekday=info['weekday'], discount_number=info['discount_number'], start=info['start'], end=info['end'], eatery_id=info['eatery_id']) 
     print(info)
     return '1'
 
