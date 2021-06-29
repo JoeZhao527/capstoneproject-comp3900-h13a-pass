@@ -7,6 +7,7 @@ from backend.auth import *
 from backend.user_db import *
 
 from datetime import date, datetime
+from server import db
 
 # function for cheking valid eatery
 def valid_eatery(eatery_id, token):
@@ -39,7 +40,7 @@ def add_voucher(token, date, start, end, discount, eatery_id):
     if not valid_eatery(eatery_id, token):
         raise InputError("Invalid token")
     # check if the voucher date and time is valid
-    if date < date.today() or start < datetime.now().tine or end < datetime.now():
+    if date < date.today() or (date == date.today() and end < datetime.now()):
         raise InputError("Voucher Time invalid")
     
     # check if the discount is normal (between 0-1)
@@ -53,10 +54,11 @@ def add_voucher(token, date, start, end, discount, eatery_id):
     voucher.if_booked = False
     weekday = date.weekday() # datetime.datime.today().weekday()
     voucher.weekday = weekday
+    db.session.commit()
 
     return {'voucher_id': voucher.id}
 
-# function for updating the voucher
+# function for updating the voucher, date-> weekday, start time, end time, discount etc.
 def update_voucher(token, voucher_id, date, start, end, discount):
  # check if token is valid
     eatery = Eatery.query.filter_by(token=token)

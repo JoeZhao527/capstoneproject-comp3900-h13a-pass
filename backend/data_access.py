@@ -2,7 +2,7 @@
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
-
+from server import db
 from backend.user_db import *
 
 # add and commit an item to database
@@ -11,8 +11,8 @@ def add_item(item):
     db.session.commit()
 
 # insert an eatery to database
-def create_eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, description, token):
-    eatery = Eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, description, token)
+def create_eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, description, token):
+    eatery = Eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, description, token)
     add_item(eatery)
     return eatery.id
 

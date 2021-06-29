@@ -20,11 +20,12 @@ class Eatery(db.Model):
     eatery_name = db.Column(db.String(50), nullable=False)
     address = db.Column(db.String(50), nullable=False)
     menu = db.Column(db.String(50))
+    cuisine = db.Column(db.String(50))
     description = db.Column(db.String(200))
     token = db.Column(db.String(200), unique=True)
     reset_code = db.Column(db.String(25))
 
-    def __init__(self, first_name, last_name, email, password, phone, eatery_name, address, menu, description, token):
+    def __init__(self, first_name, last_name, email, password, phone, eatery_name, address, menu, cuisine, description, token):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -33,6 +34,7 @@ class Eatery(db.Model):
         self.eatery_name = eatery_name
         self.address = address
         self.menu = menu
+        self.cuisine = cuisine
         self.description = description
         self.token = token
 
