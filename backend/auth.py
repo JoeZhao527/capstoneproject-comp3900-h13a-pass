@@ -13,7 +13,8 @@ import server
 
 from backend.user_db import Eatery
 from backend.data_access import create_eatery, get_eatery_by_token, update_eatery_token
-from backend.errors import *
+from backend.errors import InputError
+from server import db
 
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
@@ -52,7 +53,7 @@ def create_eatery(first_name, last_name, email, password, phone, eatery_name, ad
 '''
 
 # a function that create a new account for the eatery by given valid email, password, name and phone
-def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, description):
+def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, description):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
@@ -73,9 +74,15 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     if len(last_name) > 50:
         raise InputError("Last name invalid")
 
-    # check the eatery_name, address, menu, desciption...
-    # TODO
-
+    # check if the eatery_name, address, menu, desciption is valid...
+    if len(eatery_name) > 50:
+        raise InputError("Eatery name invalid")
+    if len(address) > 50:
+        raise InputError("Eatery address invalid")
+    if len(menu) > 50:
+        raise InputError("Eatery menu invalid")
+    if len(description) > 50:
+        raise InputErrpr("description invalid")
 
     # hash the password for security
     hashed_password = hash_password(password)
@@ -86,7 +93,7 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     token = generate_token(userid)
     
     # create an eatery and store in the database, return the eatery_id
-    eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, description, token)
+    eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, cuisine, description, token)
     return {'eatery_id': eatery_id, 'token': token}
 
 # login function
@@ -119,7 +126,9 @@ def auth_logout(token):
     # if there is a user with the token, token valid
     if eatery is not None:
         # user.if_logged_in = False
+        # end the active token of eatery
         eatery.token = None
+        db.session.commit()
         return {"logout_success": True}
     return {"logout_success": False}
 
@@ -138,6 +147,7 @@ def auth_password_request(email):
         mix = string.ascii_letters + string.digits
         code = ''.join(random.choice(mix) for i in range(20))
         eatery.reset_code = code
+        db.session.commit()
     
     # set up the SMTP server
     # set the email server and send the 'reset_code' to the "email"
@@ -171,15 +181,57 @@ def auth_password_reset(reset_code, new_password):
         if len(new_password) < 6:
             raise InputError("Invalid password")
         else:
+            # change the password and empty the reset code
             hashed_password = hash_password(new_password)
             eatery.passowrd = hashed_password
             eatery.reset_code = ""
+            db.session.commit()
     return {}
-
+"""
 def get_eatery(token):
     eatery = get_eatery_by_token(token)
     # TODO: check if eatery is got by this token, otherwise returns an empty string
     return eatery
+"""
+# function for checking if the token is valid
+def valid_token(token):
+    eatery = Eatery.query.filter_by(token=token)
+    if eatery is None:
+        return False
+    return True
+
+# function for updating the eatery profile (eaterie's info), can seperate the function if necessary
+def eatery_profile_update(token, email, first_name, last_name, phone, eatery_name, address, menu, cuisine, description):
+    if not valid_token(token):
+        raise InputError("Invalid token")
+    # get eatery by token, update the info
+    eatery = Eatery.query.filter_by(token=token).first()
+    eatery.email = email
+    eatery.first_name = first_name
+    eatery.last_name = last_name
+    eatery.phone = phone
+    eatery.eatery_name = eatery_name
+    eatery.address = address
+    eatery.menu = menu
+    eatery.cuisine = cuisine
+    eatery.desciption = description
+    db.session.commit()
+"""
+def eatery_profile_setname(token, first_name, last_name):
+    if not valid_token(token):
+        raise InputError("Invalid token")
+def eatery_profile_setmail(token, email):
+    if not valid_token(token):
+        raise InputError("Invalid token")
+def eatery_profile_setphone(token, phone):
+    if not valid_token(token):
+        raise InputError("Invalid token")
+def eatery_profile_seteatery():
+    if not valid_token(token):
+        raise InputError("Invalid token")
+def eatery_profile_update_image()：
+"""
+
 
 if __name__ == "__main__":
     print(generate_token(123))
