@@ -1,16 +1,18 @@
 :root {
-    --primary-color: grey;
+    --primary-color: rgb(75, 179, 240);
     --btn-color: white;
     --btn-hover-color: lightskyblue;
 }
 
 /* nav bar */
 #nav-bar {
-    background-color: var(--primary-color);
+    background-color:rgb(75, 179, 240);
     padding: 25px;
     margin: -10px;
 }
-
+#body {
+    background-color: cyan;
+}
 #nav-bar button:hover{
     cursor: pointer;
     color: var(--btn-hover-color);
@@ -47,6 +49,7 @@
 
 /* main */
 .main {
+    
     background-image: none;
     text-align: center;
 }
