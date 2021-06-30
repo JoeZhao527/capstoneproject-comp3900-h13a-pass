@@ -5,8 +5,6 @@ from backend.schedule import *
 
 import json
 
-
-
 @app.route('/')
 def home():
     return render_template('eatery_home.html')
@@ -29,6 +27,29 @@ def login_info():
     except InputError:
         print(InputError.message)
         return ''
+
+@app.route('/reset_pass', methods=['GET'])
+def reset_pass_page():
+    return render_template('reset_pass.html')
+
+@app.route('/reset_pass', methods=['POST'])
+def reset_pass_send_email():
+    email = request.data.decode('ascii')
+    print(email)
+    try:
+        auth_password_request(email=email)
+    except InputError:
+        return 'failed'
+    return ''
+
+@app.route('/reset_pass', methods=['PUT'])
+def reset_pass():
+    data = json.loads(request.data)
+    try:
+        auth_password_reset(data['code'], data['new_pass'])
+        return ''
+    except InputError:
+        return 'reset failed'
 
 @app.route('/logout', methods=['PUT'])
 def eatery_logout():

@@ -180,3 +180,9 @@ function closeLogin() {
 function showLogin() {
     login_sec.style.display = 'inline';
 }
+
+// forgot password
+const forgot_pass = document.getElementById('pass');
+forgot_pass.onclick = () => {
+    window.location.href = "/reset_pass"
+}
