@@ -8,20 +8,21 @@
     width: 25px;
     height: 25px;
     border: 1px solid;
-    background: #ca1a1a;
+    background: lightgray;
     border-radius: 25px;
     font-size: 13px;
     font-weight: bold;
-    color: #e9f4fb;
+    color: black;
     font-weight: 500;
     cursor: pointer;
     outline: none;
+    border: none;
     margin: -10px 0 0 -10px;
 }
 
 #back-home:hover {
     background-color: #c93c3c;
-    transition: .5s;
+    color: white;
 }
 
 .container {

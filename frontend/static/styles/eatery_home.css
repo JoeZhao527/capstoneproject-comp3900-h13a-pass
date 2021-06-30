@@ -1,32 +1,41 @@
 :root {
-    --primary-color: rgb(75, 179, 240);
+    --primary-color: rgb(119, 158, 180);
     --btn-color: white;
     --btn-hover-color: lightskyblue;
 }
 
 /* nav bar */
 #nav-bar {
-    background-color:rgb(75, 179, 240);
+    background-color:var(--primary-color);
     padding: 25px;
     margin: -10px;
+    box-shadow: 0 0 15px 0 black;
 }
-#body {
-    background-color: cyan;
-}
+
 #nav-bar button:hover{
     cursor: pointer;
-    color: var(--btn-hover-color);
+    color: black;
+    transition: 0.2s;
+    box-shadow: 3px 3px 3px 3px black;
 }
 .nav-btn {
     border: none;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bolder;
+    font-weight: 600;
+    font-size: 16px;
+    color: black;
     background-color: var(--primary-color);
     width: 6rem;
-    height: 3rem;
-    margin-left: 0.5rem;
+    height: 2.5rem;
+    margin-right: 3rem;
     margin-top: -0.5rem;
     float: right;
+}
+
+.sign-up {
+    font-weight: 600;
+    color: black;
+    background-color: white;
+    border: 2px black solid;
 }
 
 #search {
@@ -38,13 +47,18 @@
     border: none;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bolder;
-    font-size: larger;
+    font-size: 20px;
     font-style: italic;
     background-color: var(--primary-color);
     width: 8rem;
     height: 2rem;
     margin-right: 4rem;
     float: left;
+}
+
+.home:hover {
+    background-color: white;
+    transition: 0.4s;
 }
 
 /* main */
