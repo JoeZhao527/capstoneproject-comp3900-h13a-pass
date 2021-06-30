@@ -5,6 +5,8 @@ from backend.schedule import *
 
 import json
 
+
+
 @app.route('/')
 def home():
     return render_template('eatery_home.html')

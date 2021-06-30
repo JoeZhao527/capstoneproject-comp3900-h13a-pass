@@ -125,7 +125,7 @@ document.onmousedown = (e) => {
 
 login_form.onsubmit = (event) => {
     Array.from(login_form).forEach(e => {
-        if(e.type !== `button` && e.type !== `submit` && e.name) {
+        if(e.type !== 'button' && e.type !== 'submit' && e.name) {
             data[e.name] = e.value;
         }
     });
@@ -134,7 +134,7 @@ login_form.onsubmit = (event) => {
     else {
         let token = login();
         if (token) {
-            sessionStorage.setItem('token', token);
+            window.sessionStorage.setItem('token', token);
         } else {
             alert('login failed');
         }
