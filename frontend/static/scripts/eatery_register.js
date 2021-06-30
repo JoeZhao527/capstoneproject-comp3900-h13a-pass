@@ -19,7 +19,7 @@ submit_btn.addEventListener('click', function(e) {
             data[e.name] = e.value;
         }
     });
-    data['cuisines'] = cuisines;
+    data['cuisines'] = cuisines.join(',');
     let token = register();
     if (token !== '') {
         sessionStorage.setItem('token', token);

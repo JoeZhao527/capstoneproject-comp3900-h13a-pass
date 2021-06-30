@@ -9,11 +9,14 @@ const home_btn = document.querySelector(".home");
 const logout_btn = document.querySelector(".logout");
 const profile_btn = document.getElementsByClassName("profile");
 
-/* add listeners to buttons */
-login_btn.addEventListener('click', function() {
-    window.location.href = '/login';
-})
+const login_sec = document.getElementById('login-page');
+const login_form = document.getElementById('login-form');
+const eatery_btn = document.getElementById('eatery');
+const diner_btn = document.getElementById('diner');
 
+let data = { email: "", password: "", utype: "eatery" };
+
+/* add listeners to buttons */
 Array.from(sign_up_btn).forEach(element => {
     element.addEventListener('click', function() {
         window.location.href = eatery_register;
@@ -27,7 +30,7 @@ home_btn.addEventListener('click', function() {
 logout_btn.addEventListener('click', function() {
     if (logout()) {
         window.sessionStorage.removeItem('token');
-        checkUser();
+        loadPage();
     } else {
         alert('logout failed for unknown reason');
     }
@@ -58,8 +61,9 @@ function logout() {
  * if user logged in, show logged in page
  * otherwise show unlogged in page
  */
-function checkUser() {
+function loadPage() {
     let token = window.sessionStorage.getItem('token')
+
     if (token === null) {
         displayDefault();
     } else {
@@ -103,4 +107,76 @@ function displayText() {
     
 }
 // check user onloading
-checkUser();
+loadPage();
+
+/* login form */
+login_btn.addEventListener('click', function() {
+    //window.location.href = '/login';
+    showLogin();
+})
+
+document.onmousedown = (e) => {
+    if ((!login_sec.contains(e.target)) && 
+        login_sec.style.display === 'inline'&&
+        (!login_btn.contains(e.target))) {
+        login_sec.style.display = 'none';
+    }
+}
+
+login_form.onsubmit = (event) => {
+    Array.from(login_form).forEach(e => {
+        if(e.type !== `button` && e.type !== `submit` && e.name) {
+            data[e.name] = e.value;
+        }
+    });
+    console.log(data);
+    if (data['utype'] === 'diner') {alert('diner is not implemented yet')}
+    else {
+        let token = login();
+        if (token) {
+            sessionStorage.setItem('token', token);
+        } else {
+            alert('login failed');
+        }
+        loadPage();
+    }
+    closeLogin();
+}
+
+function login() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'login', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
+    return xhr.response;
+}
+
+eatery_btn.onclick = () => {
+    displayTab('eatery');
+}
+
+diner_btn.onclick = () => {
+    displayTab('diner');
+}
+
+displayTab('eatery');
+
+function displayTab(user) {
+    if (user === 'diner') {
+        diner_btn.style.setProperty('border-bottom', '#2691d9 3px solid');
+        eatery_btn.style.setProperty('border-bottom', 'none');
+        data['utype'] = 'diner'
+    } else {
+        eatery_btn.style.setProperty('border-bottom', '#2691d9 3px solid');
+        diner_btn.style.setProperty('border-bottom', 'none');
+        data['utype'] = 'eatery'
+    }
+}
+
+function closeLogin() {
+    login_sec.style.display = 'none';
+}
+
+function showLogin() {
+    login_sec.style.display = 'inline';
+}

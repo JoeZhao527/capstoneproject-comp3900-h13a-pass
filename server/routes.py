@@ -22,6 +22,7 @@ def login_info():
     data = json.loads(request.data)
     try:
         res = auth_login(data['email'], data['password'])
+        print(res)
         return res['token']
     except InputError:
         print(InputError.message)
@@ -29,6 +30,7 @@ def login_info():
 
 @app.route('/logout', methods=['PUT'])
 def eatery_logout():
+    print(request.data)
     data = json.loads(request.data)
     res = auth_logout(data['token'])
     return 'true' if res['logout_success'] else ''
@@ -41,7 +43,7 @@ def eatery_register_check():
         res = eatery_register(data['email'], data['password'],
                             data['fname'], data['lname'],data['phone'],
                             data['ename'], data['address'], data['menu'],
-                            data['description'])
+                            data['cuisines'], data['description'])
         return res['token']
     except InputError:
         print(InputError.message)
