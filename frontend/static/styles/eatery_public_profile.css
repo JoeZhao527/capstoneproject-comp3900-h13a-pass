@@ -1,4 +1,6 @@
-
+*{
+  padding:0;
+}
 :root {
     --primary-color: grey;
     --btn-color: white;
