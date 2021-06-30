@@ -7,62 +7,65 @@
     <link rel="stylesheet" href="../static/styles/eatery_register.css">
 </head>
 <body>
-    <button id="back-home" class="back-home"><i class="arrow left"></i> back to home</button>
     <section class="container">
         <div class="content">
+            <button id="back-home" class="back-home">X</button>
+            <h1>Register Form</h1>
             <form id="sign-up-form" class="sign-up-form" name="sign-up-form">
-                <div class="txt_field">
+                <div class="txt_field left">
                     <input type="text" name="fname" id="fname" required>
                     <span></span>
                     <label for="fname">first name:</label>
                 </div>
-                <div class="txt_field">
+                <div class="txt_field right">
                     <input type="text" name="lname" id="lname" required>
                     <span></span>
                     <label for="lname">last name:</label>
                 </div>
-                <div class="txt_field">
+                <div class="txt_field left">
                     <input type="email" name="email" id="email" required>
                     <span></span>
                     <label for="email">email:</label>
                 </div>
-                <div class="txt_field">
+                <div class="txt_field right">
                     <input type="text" name="phone" id="phone" required>
                     <span></span>
                     <label for="phone">phone:</label>
                 </div>
-                <div class="txt_field">
+                <div class="txt_field left">
                     <input type="text" name="password" id="password" required>
                     <span></span> 
                     <label for="password">password:</label>
                 </div>
-                <div class="txt_field">
+                <div class="txt_field right">
                     <input type="text" name="ename" id="ename" required>
                     <span></span>
                     <label for="ename">eatery name:</label>
                 </div>
-                <div>
-                    <label for="cuisines">cuisines:</label>
+                <h4>cuisine types</h4>
+                <div class="btn_field whole">
                     <span id="cuisines"></span>
                 </div>
-                <div>
-                    <div>
-                        <input type="text" id="cuisine">
-                        <input type="button" value="add cuisine" id="add-cuisine">
-                    </div>
+                <div class="txt_field left">
+                    <input type="text" id="cuisine" required>
+                    <span></span>
+                    <label for="cuisine">enter one cuisine:</label>
                 </div>
-                <div class="txt_field">
+                <div class="btn_field right">
+                    <button id="add-cuisine">add cuisine</button>
+                </div>
+                <div class="txt_field whole">
                     <input type="text" name="address" id="address" required>
                     <span></span>
                     <label for="address">address:</label>
                 </div>
-                <div class="txt_field">
+                <div class="file_field whole" style="display: none;">
+                    <label for="menu">menu:</label>
                     <input type="file" name="menu" id="menu">
                     <span></span>
-                    <label for="menu">menu:</label>
                 </div>
-                <div class="txt_field">
-                    <input type="text" name="description" id="description">
+                <div class="txt_field whole">
+                    <input type="text" name="description" id="description" required>
                     <span></span>
                     <label for="description">description:</label>
                 </div>
