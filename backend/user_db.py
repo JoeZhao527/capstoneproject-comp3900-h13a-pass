@@ -23,7 +23,7 @@ class Eatery(db.Model):
     cuisine = db.Column(db.String(50))
     description = db.Column(db.String(200))
     token = db.Column(db.String(200), unique=True)
-    reset_code = db.Column(db.String(25))
+    reset_code = db.Column(db.String(20))
 
     def __init__(self, first_name, last_name, email, password, phone, eatery_name, address, menu, cuisine, description, token):
         self.first_name = first_name
@@ -75,15 +75,16 @@ class Voucher(db.Model):
     discount = db.Column(db.Float, nullable=False)
     if_used = db.Column(db.Boolean)
     if_booked = db.Column(db.Boolean)     # add 
-    weekday = db.Column(db.String(10))    # dereived from date
-
+    weekday = db.Column(db.Integer)    # dereived from date from 0 to 6
+    code = db.Column(db.String(20))    # verify code to check if the user has booked the voucher and not used
     
-    def __init__(self, eatery_id, date, start_time, end_time, discount, weekday):
+    def __init__(self, eatery_id, date, start_time, end_time, discount, code):
         self.eatery_id = eatery_id
         self.date = date
         self.start_time = start_time
         self.end_time = end_time
         self.discount = discount
+        self.code = code
         # self.diner_id = None
         # self.if_used = False
         # self.if_booked = False
@@ -94,20 +95,20 @@ class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     eatery_id = db.Column(db.Integer, db.ForeignKey('eatery.id'))
     no_vouchers = db.Column(db.Integer, nullable=False) 
-    weekday = db.Column(db.String(10), nullable=False)   # Mon to Sun
+    weekday = db.Column(db.Integer, nullable=False)   # Mon to Sun (0 to 6)
     start_time = db.Column(db.Time, nullable=False)
     end_time = db.Column(db.Time, nullable=False)
     discount = db.Column(db.Float, nullable=False)
-    meal_type = db.Column(db.String(10), nullable=False) # breakfast, lunch, dinner
+    # meal_type = db.Column(db.String(10), nullable=False) # breakfast, lunch, dinner
 
-    def __init__(self, eatery_id, no_vouchers, weekday, start_time, end_time, discount, meal_type):
+    def __init__(self, eatery_id, no_vouchers, weekday, start_time, end_time, discount):
         self.eatery_id = eatery_id
         self.no_vouchers = no_vouchers
         self.weekday = weekday
         self.start_time = start_time
         self.end_time = end_time
         self.discount = discount
-        self.meal_type = meal_type
+        # self.meal_type = meal_type
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
