@@ -82,7 +82,7 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     if len(menu) > 50:
         raise InputError("Eatery menu invalid")
     if len(description) > 50:
-        raise InputErrpr("description invalid")
+        raise InputError("description invalid")
 
     # hash the password for security
     hashed_password = hash_password(password)
