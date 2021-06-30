@@ -18,6 +18,9 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount, m
     # Checks discount 
     # Checks if a valid eatery_id
     # Checks if token is valid (decode)?
+    valid_token = Eatery.query.filter_by(token=token, id=eatery_id)
+    if valid_token is None:
+        raise InputError("Invalid token")
     if discount > 100:
         raise InputError("Discount cannot be greater than 100")
     if not db.session.query(Eatery).filter_by(id=eatery_id).scalar():
@@ -43,10 +46,13 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount, m
 
     return {'schedule_id': schedule_id}
 
-def update_schedule(token, weekday, start, end, discount, voucher_num, eatery_id, schedule_id):
+def update_schedule(token, weekday, start, end, discount, voucher_num, eatery_id, schedule_id, meal_type):
     # Checks discount
     # Checks if token is valid
     # Checks if schedule and eatery id is valid
+    valid_token = Eatery.query.filter_by(token=token, id=eatery_id)
+    if valid_token is None:
+        raise InputError("Invalid token")
     if discount > 100:
         raise InputError("Discount cannot be greater than 100")
     if not db.session.query(db.session.query(Schedule).filter_by(id=schedule_id, eatery_id=eatery_id)).scalar():
@@ -61,12 +67,16 @@ def update_schedule(token, weekday, start, end, discount, voucher_num, eatery_id
     schedule.discount = discount
     schedule.start = start
     schedule.end = end
+    schedule.meal_type = meal_type
     db.session.commit()
     return {}
 
 
 def remove_schedule(token, weekday, eatery_id, schedule_id):
     # If invalid schedule id
+    valid_token = Eatery.query.filter_by(token=token, id=eatery_id)
+    if valid_token is None:
+        raise InputError("Invalid token")
     if not db.session.query(db.session.query(Schedule).filter_by(id=schedule_id)).scalar():
         raise InputError("Invalid schedule")
     if weekday not in weekdays:
