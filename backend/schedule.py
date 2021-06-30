@@ -3,7 +3,7 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 from server import db
-from .user_db import *
+from backend.user_db import *
 from backend.errors import *
 from backend.data_access import create_Schedule
 from backend.user_db import *
