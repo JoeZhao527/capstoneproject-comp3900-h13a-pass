@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles/reset_pass.css">
+    <title>Reset Password</title>
+</head>
+<body>
+    <section class="center">
+        <button id="back" class="back">X</button>
+        <h1>Reset Password Form</h1>
+        <form id="email-form">
+            <p id="msg1" class="msg"></p>
+            <div class="txt_field">
+                <input type="text" name="email" required>
+                <span></span>
+                <label>Email</label>
+            </div>
+            <input type="submit" value="send reset code">
+        </form>
+        <form id="reset-form">
+            <p id="msg2" class="msg"></p>
+            <div class="txt_field">
+                <input type="text" name="code" required>
+                <span></span>
+                <label>Enter your reset code</label>
+            </div>
+            <div class="txt_field">
+                <input type="text" name="new_pass" required>
+                <span></span>
+                <label>New Password</label>
+            </div>
+            <div class="pass">If no email received, click here to retry</div>
+            <input type="submit" value="reset password">
+        </form>
+        <form id="reset-done">
+            <h3>Successfully reset password!</h3>
+            <input type="submit" value="back to home">
+        </form>
+    </section>
+    <script src="../static/scripts/reset_pass.js"></script>
+</body>
+</html>
