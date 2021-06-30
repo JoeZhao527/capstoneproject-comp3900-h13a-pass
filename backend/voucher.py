@@ -8,6 +8,8 @@ from backend.user_db import *
 
 from datetime import date, datetime
 from server import db
+import string
+import random
 
 # function for cheking valid eatery
 def valid_eatery(eatery_id, token):
@@ -18,8 +20,8 @@ def valid_eatery(eatery_id, token):
     return True
 
 # function for creating an voucher item and add into the voucher table
-def create_voucher(eatery_id, date, start_time, end_time, discount):
-    new_voucher = Voucher(eatery_id, date, start_time, end_time, discount)
+def create_voucher(eatery_id, date, start_time, end_time, discount, weekday, code):
+    new_voucher = Voucher(eatery_id, date, start_time, end_time, discount, weekday, code)
     add_item(new_voucher)
     return new_voucher
 
@@ -46,32 +48,35 @@ def add_voucher(token, date, start, end, discount, eatery_id):
     # check if the discount is normal (between 0-1)
     if discount > 1:
         raise InputError("Voucher discount invalid")
+    
+    # creating a radom verify code for eatery and user to cehck the voucher
+    mix = string.ascii_letters + string.digits
+    code = ''.join(random.choice(mix) for i in range(20))
 
     # eatery and the other info are valid
     # create the voucher (convert the date into weekday)
-    voucher = create_voucher(eatery_id, date, start, end, discount)
+    voucher = create_voucher(eatery_id, date, start, end, discount, code)
     voucher.if_used = False
     voucher.if_booked = False
-    weekday = date.weekday() # datetime.datime.today().weekday()
-    voucher.weekday = weekday
+    voucher.weekday = date.weekday() # datetime.datime.today().weekday()
     db.session.commit()
 
     return {'voucher_id': voucher.id}
 
 # function for updating the voucher, date-> weekday, start time, end time, discount etc.
 def update_voucher(token, voucher_id, date, start, end, discount):
- # check if token is valid
+    # check if token is valid
     eatery = Eatery.query.filter_by(token=token)
     if eatery is None:
         raise InputError("Invalid token")
-    voucher = Voucher.query.filter_by(voucher_id=voucher_id, eatery_id=eatery.id)
+    # get the token by the vouchr_id(eatery_id just in case)
+    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id)
 
     voucher.date = date
     voucher.start = start
     voucher.end = end
     voucher.discount = discount
-    weekday = date.weekday() # datetime.datime.today().weekday()
-    voucher.weekday = weekday
+    voucher.weekday = date.weekday() # datetime.datime.today().weekday()
     db.session.commit()
 
 
@@ -82,7 +87,8 @@ def delete_voucher(token, voucher_id):
     eatery = Eatery.query.filter_by(token=token)
     if eatery is None:
         raise InputError("Invalid token")
-    voucher = Voucher.query.filter_by(voucher_id=voucher_id, eatery_id=eatery.id)
+    # get the voucher and delete it 
+    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id)
     delete_item(voucher)
 
 
