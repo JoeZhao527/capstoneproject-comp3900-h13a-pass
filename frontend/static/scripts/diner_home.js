@@ -1,6 +1,7 @@
 // paths
 const diner_register = '/diner/register';
 const diner_private_profile = '/diner_private_profile';
+const diner_home = '/diner/home';
 
 // get buttons
 const login_btn = document.querySelector(".login");
@@ -11,6 +12,7 @@ const profile_btn = document.getElementsByClassName("profile");
 
 const login_sec = document.getElementById('login-page');
 const login_form = document.getElementById('login-form');
+const eatery_btn = document.getElementById('eatery');
 const diner_btn = document.getElementById('diner');
 
 let data = { email: "", password: "", utype: "diner" };
@@ -23,7 +25,7 @@ Array.from(sign_up_btn).forEach(element => {
 })
 
 home_btn.addEventListener('click', function() {
-    alert("diner home is not implemented yet");
+    window.location.href = diner_home;
 })
 
 logout_btn.addEventListener('click', function() {
@@ -129,16 +131,16 @@ login_form.onsubmit = (event) => {
         }
     });
     console.log(data);
-    /*if (data['utype'] === 'diner') {alert('diner is not implemented yet')}
-    else {
-        let token = login();
-        if (token) {
-            window.sessionStorage.setItem('token', token);
-        } else {
-            alert('login failed');
-        }
-        loadPage();
-    }*/
+    // if (data['utype'] === 'diner') {alert('diner is not implemented yet')}
+    // else {
+    //     let token = login();
+    //     if (token) {
+    //         window.sessionStorage.setItem('token', token);
+    //     } else {
+    //         alert('login failed');
+    //     }
+    //     loadPage();
+    // }
     let token = login();
         if (token) {
             window.sessionStorage.setItem('token', token);
@@ -157,8 +159,8 @@ function login() {
     return xhr.response;
 }
 
-diner_btn.onclick = () => {
-    displayTab('diner');
+eatery_btn.onclick = () => {
+    displayTab('eatery');
 }
 
 diner_btn.onclick = () => {
@@ -170,12 +172,12 @@ displayTab('diner');
 function displayTab(user) {
     if (user === 'diner') {
         diner_btn.style.setProperty('border-bottom', '#2691d9 3px solid');
-        diner_btn.style.setProperty('border-bottom', 'none');
+        eatery_btn.style.setProperty('border-bottom', 'none');
         data['utype'] = 'diner'
     } else {
-        diner_btn.style.setProperty('border-bottom', '#2691d9 3px solid');
+        eatery_btn.style.setProperty('border-bottom', '#2691d9 3px solid');
         diner_btn.style.setProperty('border-bottom', 'none');
-        data['utype'] = 'diner'
+        data['utype'] = 'eatery'
     }
 }
 

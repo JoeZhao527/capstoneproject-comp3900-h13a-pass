@@ -9,6 +9,10 @@ import json
 def home():
     return render_template('eatery_home.html')
 
+@app.route('/diner/home')
+def diner_home_load():
+    return render_template('diner_home.html')
+
 @app.route('/diner/register')
 def diner_register_load():
     return render_template('diner_register.html')
