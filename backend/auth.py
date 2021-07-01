@@ -96,6 +96,8 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, cuisine, description, token)
     return {'eatery_id': eatery_id, 'token': token}
 
+def diner_register(email, password, first_name, last_name, phone):
+    return{1}
 # login function
 # given a registered user's email and password
 # generates a valid token for the user to remain authenticated

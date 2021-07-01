@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Diner Sign Up</title>
+        <link rel="stylesheet" href="../static/styles/diner_register.css">
+    </head>
+
+    <body>
+        <section class="container">
+            <div class="content">
+                <button id="back-home" class="back-home">X</button>
+                <h1>Register Form</h1>
+                <form id="sign-up-form" class="sign-up-form" name="sign-up-form">
+                    <div class="txt_field whole">
+                        <input type="text" name="fname" id="fname" required>
+                        <span></span>
+                        <label for="fname">First Name:</label>
+                    </div>
+                    <div class="txt_field whole">
+                        <input type="text" name="lname" id="lname" required>
+                        <span></span>
+                        <label for="lname">Last Name:</label>
+                    </div>
+                    <div class="txt_field whole">
+                        <input type="email" name="email" id="email" required>
+                        <span></span>
+                        <label for="email">Email:</label>
+                    </div>
+                    <div class="txt_field whole">
+                        <input type="text" name="phone" id="phone" required>
+                        <span></span>
+                        <label for="phone">Phone:</label>
+                    </div>
+                    <div class="txt_field whole">
+                        <input type="password" name="password" id="password" required>
+                        <span></span> 
+                        <label for="password">Password:</label>
+                    </div>
+                    
+                    
+                    <input type="submit" id="submit" value="sign up">
+                </form>
+            </div>
+            <div class="img"></div>
+        </section>
+        <script src="../static/scripts/diner_register.js"></script>
+    </body>
+</html>
