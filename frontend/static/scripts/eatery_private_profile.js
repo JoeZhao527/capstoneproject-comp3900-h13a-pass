@@ -169,13 +169,17 @@ schedule_form.onsubmit = (e) => {
             schedule_data[e.id] = e.value;
         }
     })
+    schedule_data['token'] = sessionStorage.getItem('token');
+
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/eatery/profile/private/add_schedule', false);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(schedule_data));
-
+    console.log(schedule);
     if (xhr.response) {
         addScheduleItem(xhr.response);
+    } else {
+        alert('you tried to added an invalid schedule');
     }
 
     schedule_form.reset();
@@ -187,6 +191,8 @@ schedule_form.onsubmit = (e) => {
 const schedule_ul = document.getElementById('schedule');
 
 function addScheduleItem(id) {
+    console.log(schedule_data)
+    delete schedule_data.container['token'];
     let schedule_item = document.createElement('ul');
     // add data to schedule
     for (const [key, value] of Object.entries(schedule_data)) {
@@ -210,11 +216,12 @@ function addDeleteBtn(item, _id) {
     let btn = document.createElement('button');
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
+        let token = sessionStorage.getItem('token');
         let xhr = new XMLHttpRequest();
         xhr.open('DELETE', '/eatery/profile/remove_schedule', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({ id: _id }));
-        if (xhr.response === 'true') {
+        xhr.send(JSON.stringify({ token: token, id: _id }));
+        if (!xhr.response) {
             schedule_ul.removeChild(item);
         } else {
             alert('delete failed');

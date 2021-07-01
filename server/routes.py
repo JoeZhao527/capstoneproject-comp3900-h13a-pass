@@ -2,7 +2,7 @@ from server import app
 from flask import render_template, request
 from backend.auth import *
 from backend.schedule import *
-
+from backend.data_access import *
 import json
 
 @app.route('/')
@@ -88,11 +88,14 @@ def eatery_private_profile_info():
 @app.route('/eatery/profile/private/add_schedule', methods=['POST'])
 def eatery_add_schedule():
     info = json.loads(request.data)
+    token = info['token']
+    eatery_id = get_eatery_id(token)
     try:
-        res = add_schedule(token=info['token'], eatery_id=info['eatery_id'], 
-                        voucher_num=info['voucher_num'], weekday=info['weekday'],
+        res = add_schedule(token, eatery_id=eatery_id, 
+                        no_vouchers=info['amount'], weekday=info['weekday'],
                         start=info['start'], end=info['end'], 
-                        discount=info['discount'], meal_type=info['meal_type']) 
+                        discount=info['discount'],)
+        print(res)
         return res['schedule_id']
     except InputError:
         print(InputError.message)
@@ -119,10 +122,9 @@ def eatery_update_schedule():
 def eatery_delete_schedule():
     try:
         info = json.loads(request.data)
-        remove_schedule(token=info['token'], weekday=info['weekday'], 
-                        eatery_id=info['eatery_id'], schedule_id=info['schedule_id'])
+        remove_schedule(token=info['token'], schedule_id=info['id'])
         print(info)
-        return {}
+        return ''
     except InputError:
         print(InputError.message)
-        return ''
+        return 'failed'

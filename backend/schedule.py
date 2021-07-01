@@ -8,9 +8,9 @@ from backend.errors import *
 from backend.data_access import create_Schedule
 from backend.user_db import *
 from backend.voucher import *
-from datetime import date, timedelta
+from datetime import date, timedelta, time
+
 import schedule
-import time
 
 weekdays = {
     'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6
@@ -23,6 +23,7 @@ def delete_item(item):
 
 
 def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
+    start, end = convert_time(start), convert_time(end)
     # check if token is valid
     eatery = Eatery.query.filter_by(token=token)
     if eatery is None:
@@ -33,15 +34,12 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
     # check time range
     if end <= start:
         raise InputError("End time cannot be before start time")
-    # checks discount
-    if discount > 1:
-        raise InputError("Discount cannot be greater than 1")
     
     # create schedule item and add into db
     schedule_id = create_Schedule(eatery_id, no_vouchers, weekday, start, end, discount)
     
     # calculate the date for the voucher add this week or nxt week by given a weekday
-    interval = date.today().weekday - weekdays[weekday]
+    interval = date.today().weekday() - weekdays[weekday]
     # today's weekday is after the given weekday, add the voucher to the next weekday
     if interval > 0:
         voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
@@ -50,7 +48,7 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
         voucher_date = date.today() + timedelta(abs(interval))
 
     # Add vouchers with given voucher number
-    for _ in range(no_vouchers):
+    for _ in range(int(no_vouchers)):
         add_voucher(token, voucher_date, start, end, discount, eatery_id)
 
     return {'schedule_id': schedule_id}
@@ -72,6 +70,7 @@ while True:
 
 # function for updating the schedule
 def update_schedule(token, schedule_id, no_vouchers, weekday, start, end, discount):
+    start, end = convert_time(start), convert_time(end)
     # check if token is valid
     eatery = Eatery.query.filter_by(token=token)
     if eatery is None:
@@ -113,5 +112,10 @@ def remove_schedule(token, schedule_id):
     delete_item(schedule)
     return {}
 
-#if __name__ == "__main__":
+def convert_time(s):
+    h, m = s.split(':')[0], s.split(':')[1]
+    return time(int(h), int(m))
+
+if __name__ == "__main__":
+    print(convert_time('00:00'))
     
