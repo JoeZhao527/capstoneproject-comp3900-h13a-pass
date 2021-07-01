@@ -176,11 +176,11 @@ schedule_form.onsubmit = (e) => {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(schedule_data));
     console.log(schedule);
-    if (xhr.response) {
-        addScheduleItem(xhr.response);
+    if (true) {
     } else {
         alert('you tried to added an invalid schedule');
     }
+    addScheduleItem(1);
 
     schedule_form.reset();
     closeSubpage(add_schedule_page);
@@ -192,14 +192,15 @@ const schedule_ul = document.getElementById('schedule');
 
 function addScheduleItem(id) {
     console.log(schedule_data)
-    delete schedule_data.container['token'];
     let schedule_item = document.createElement('ul');
     // add data to schedule
     for (const [key, value] of Object.entries(schedule_data)) {
-        console.log(key, value, typeof value);
-        let schedule_li = document.createElement('li');
-        schedule_li.appendChild(document.createTextNode(value));
-        schedule_item.appendChild(schedule_li);
+        if (key !== 'token') {
+            console.log(key, value, typeof value);
+            let schedule_li = document.createElement('li');
+            schedule_li.appendChild(document.createTextNode(value));
+            schedule_item.appendChild(schedule_li);
+        }
     }
     // add delete button to schedule
     
@@ -221,7 +222,7 @@ function addDeleteBtn(item, _id) {
         xhr.open('DELETE', '/eatery/profile/remove_schedule', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({ token: token, id: _id }));
-        if (!xhr.response) {
+        if (true) {
             schedule_ul.removeChild(item);
         } else {
             alert('delete failed');
