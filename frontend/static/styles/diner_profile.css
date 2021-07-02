@@ -1,9 +1,16 @@
 :root {
-    --primary-color: rgb(119, 158, 180);
+    --primary-color: rgb(75, 179, 240);
     --btn-color: white;
     --btn-hover-color: lightskyblue;
+    --container-color: rgb(183, 244, 255);
+    --primary-font-fam: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --primary-font-size: 20px;
 }
 
+
+main{
+    margin-bottom: 8rem;
+}
 /* nav bar */
 #nav-bar {
     background-color: var(--primary-color);
@@ -79,3 +86,180 @@
     border-left: solid;
     border-bottom: solid;
 }
+
+
+
+/* container */
+.container {
+    background-color: var(--container-color);
+    margin: 1.5rem;
+    padding: 1rem;
+    padding-bottom: 6rem;
+    font-family: var(--primary-font-fam);
+    font-size: 20px;
+}
+
+.container button {
+    background-color: rgb(224, 246, 255);
+    font: 16px, var(--primary-font-fam);
+    margin-right: 2rem;
+    border: none;
+    width: 10rem;
+    height: 3rem;
+}
+
+.container button:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.list-head > li{
+    display: inline-block;
+    width: 11rem;
+    text-align: center;
+    border-left: solid;
+    border-bottom: solid;
+}
+
+/* basic information */
+#diner-info > div > li{
+    display: inline-block;
+    width: 20rem;
+    margin-bottom: 2rem;
+}
+
+#edit {
+    float: right;
+    margin-top: 1rem;
+}
+
+
+/* add schedule & vouchers */
+#active-switch button {
+    margin: 0;
+    font: var(--primary-font-size), var(--primary-font-fam);
+    width: 15rem;
+    height: 2.5rem;
+    background-color: var(--primary-container-color);
+    border: none;
+    border-bottom: var(--btn-color) 4px solid;
+}
+
+#active-switch button:hover {
+    cursor: pointer;
+    color: var(--btn-hover-color);
+}
+
+#active li {
+    display: inline-block;
+    width: 10rem;
+    height: 2rem;
+    text-align: center;
+    margin-right: 1rem;
+}
+
+#active button {
+    clear: both;
+    display: inline-block;
+    width: 6rem;
+    height: 2rem;
+    margin-top: 0.5rem;
+}
+
+#active button:hover {
+    background-color: red;
+}
+
+#active ul {
+    border: 3px solid;
+    width: 95%;
+    height: 3rem;
+    margin-bottom: 1rem;
+}
+
+#add-active-btn {
+    float: right;
+    margin-top: 1rem;
+}
+
+#add-voucher-btn {
+    float: right;
+    margin-top: 1rem;
+}
+
+/* reservation */
+
+
+#reservation > ul > li{
+    display: inline-block;
+    width: 12rem;
+    text-align: center;
+}
+
+/* subpage */
+.subpage {
+    display: none;
+    background-color: var(--container-color);
+    top: 3rem;
+    position: fixed;
+}
+
+/* edit profile subpage */
+#edit-page {
+    left:25%;
+    width: 50%;
+    height: 80%;
+}
+
+
+/* add schedule subpage */
+#add-schedule {
+    left:25%;
+    width: 50%;
+    height: 80%;
+}
+
+#add-schedule .close {
+    display: block;
+}
+
+#add-schedule > h1 {
+    text-align: center;
+}
+
+#schedule-form > ul{
+    margin-top: 3rem;
+    list-style: none;
+}
+
+#schedule-form li {
+    display: inline-block;
+    width: 13rem;
+    margin-left: 5%;
+    margin-bottom: 2rem;
+}
+
+#schedule-form label {
+    font: var(--primary-font-size) var(--primary-font-fam);
+    margin-right: 1rem;
+}
+
+#schedule-form input,select {
+    height: 2rem;
+    font-size: large;
+}
+
+#schedule select:hover {
+    cursor: pointer;
+}
+
+.submit {
+    margin-left: 25%;
+    width: 20rem;
+    height: 4rem;
+    text-align: center;
+    font: var(--primary-font-size) var(--primary-font-fam);
+}
+
+
+
