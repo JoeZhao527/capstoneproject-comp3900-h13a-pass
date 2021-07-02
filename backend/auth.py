@@ -201,12 +201,11 @@ def valid_token(token):
     return True
 
 # function for updating the eatery profile (eaterie's info), can seperate the function if necessary
-def eatery_profile_update(token, email, first_name, last_name, phone, eatery_name, address, menu, cuisine, description):
+def eatery_profile_update(token, first_name, last_name, phone, eatery_name, address, menu, cuisine, description):
     if not valid_token(token):
         raise InputError("Invalid token")
     # get eatery by token, update the info
     eatery = Eatery.query.filter_by(token=token).first()
-    eatery.email = email
     eatery.first_name = first_name
     eatery.last_name = last_name
     eatery.phone = phone
@@ -216,6 +215,7 @@ def eatery_profile_update(token, email, first_name, last_name, phone, eatery_nam
     eatery.cuisine = cuisine
     eatery.desciption = description
     db.session.commit()
+    return get_eatery_by_token(token)
 """
 def eatery_profile_setname(token, first_name, last_name):
     if not valid_token(token):

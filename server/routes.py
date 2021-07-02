@@ -74,7 +74,7 @@ def eatery_register_check():
         
 @app.route('/eatery_private_profile', methods=['GET'])
 def eatery_private_profile():
-    return render_template('eatery_private_profile.html')
+    return render_template('index.html')
 
 @app.route('/eatery_private_profile/info', methods=['POST'])
 def eatery_private_profile_info():
@@ -84,6 +84,17 @@ def eatery_private_profile_info():
     print(res)
     return json.dumps(res)
 
+@app.route('/eatery_private_profile/update', methods=['PUT'])
+def eatery_private_profile_update():
+    data = json.loads(request.data)
+    print(data)
+    try:
+        print(eatery_profile_update(data['first_name'], data['last_name'],data['phone'],
+                            data['eater_name'], data['address'], data['menu'],
+                            data['cuisines'], data['description']))
+        return ''
+    except:
+        return 'failed'
     
 @app.route('/eatery/profile/private/add_schedule', methods=['POST'])
 def eatery_add_schedule():

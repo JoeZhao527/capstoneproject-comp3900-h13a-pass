@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/styles/index.css">
+</head>
+<body>
+    <nav id="nav-bar">
+        <button id="logout">logout</button>
+    </nav>
+    <main>
+        <section id="side-bar" class="side-bar">
+            <div id="to-profile"><img src="../static/images/profile_icon.png"> Profile</div>
+            <div id="to-schedule"><img src="../static/images/schedule_icon.png"> Schedule</div>
+            <div id="to voucher"><img src="../static/images/voucher_icon.png"> Voucher</div>
+            <div id="to-reserve"><img src="../static/images/reservation_icon.png"> Reservation</div>
+        </section>
+        <section class="container">
+            <div id="profile" class="page">
+                <div id="profile-section">
+                    <form id="profile-form">
+                        <div class="txt_field left">
+                            <label for="first_name">first name:</label>
+                            <input type="text" name="first_name" id="first_name" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field right">
+                            <label for="last_name">last name:</label>
+                            <input type="text" name="last_name" id="last_name" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field left">
+                            <label for="phone">phone:</label>
+                            <input type="text" name="phone" id="phone" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field right">
+                            <label for="eatery_name">eatery name:</label>
+                            <input type="text" name="eatery_name" id="eatery_name" required>
+                            <span></span>
+                        </div>
+                        <h4>cuisine types</h4>
+                        <div class="btn_field whole">
+                            <span id="cuisines"></span>
+                        </div>
+                        <div class="txt_field left">
+                            <label for="cuisine">enter cuisine:</label>
+                            <input type="text" id="cuisine">
+                            <span></span>
+                            <button id="add-cuisine">+</button>
+                        </div>
+                        <div class="txt_field whole">
+                            <label for="address">address:</label>
+                            <input type="text" name="address" id="address" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field whole">
+                            <label for="description">description:</label>
+                            <input type="text" name="description" id="description">
+                            <span></span>
+                        </div>
+                        
+                        <input type="submit" id="submit" value="Update Profile">
+                    </form>
+                </div>
+                <div id="iamge-section">
+                    <div id="image-container">
+                        <h1>images</h1>
+                    </div>
+                    <div id="image-upload">
+                        <h1>upload images</h1>
+                    </div>
+                    <div id="image-trash">
+                        <h1>drag here to delete</h1>
+                    </div>
+                </div>
+                <div id="menu-section">
+                    <div id="menu-view">
+                        <h1>menu view</h1>
+                    </div>
+                    <div id="menu-upload">
+                        <h1>menu upload</h1>
+                    </div>
+                </div>
+            </div>
+            <div id="view-voucher" class="page">
+                <table id="vouchers">
+                    <tr>
+                        <th>date</th>
+                        <th>weekday</th>
+                        <th>period</th>
+                        <th>discount</th>
+                        <th>amount</th>
+                        <th>delete</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="add-voucher">
+                <form id="add-voucher-form">
+                    <div>
+                        <label>Date: </label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div>
+                        <label>Start: </label>
+                        <input type="time" id="voucher-start" name="start" min="00:00" max="23:59" required>
+                    </div>
+                    <div>
+                        <label>End: </label>
+                        <input type="time" id="voucher-end" name="end" min="00:00" max="23:59" required>
+                    </div>
+                    <div>
+                        <label>Discount(%): </label>
+                        <input type="number" id="voucher-discount" min="0" max="100" required>
+                    </div>
+                    <div>
+                        <label>Voucher Num: </label>
+                        <input type="number" id="voucher-amount" name="amount" min="1" max="100" required>
+                    </div>
+                    <input type="submit" id="add-voucher-btn" name="submit" class="submit" value="add">
+                </form>
+            </div>
+            <div id="view-schedule" class="page">
+                <table id="schedules">
+                    <tr>
+                        <th>weekday</th>
+                        <th>period</th>
+                        <th>discount</th>
+                        <th>amount</th>
+                        <th>delete</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="add-schedule">
+                <form id="add-schedule-form">
+                    <div>
+                        <label>Weekday: </label>
+                        <select id="weekday" name="weekday">
+                            <option value="Monday">Mon</option>
+                            <option value="Tuesday">Tue</option>
+                            <option value="Wednesday">Wed</option>
+                            <option value="Thursday">Thu</option>
+                            <option value="Friday">Fri</option>
+                            <option value="Saturday">Sat</option>
+                            <option value="Sunday">Sun</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Start: </label>
+                        <input type="time" id="schedule-start" name="start" min="00:00" max="23:59" required>
+                    </div>
+                    <div>
+                        <label>End: </label>
+                        <input type="time" id="schedule-end" name="end" min="00:00" max="23:59" required>
+                    </div>
+                    <div>
+                        <label>Discount(%): </label>
+                        <input type="number" id="schedule-discount" min="0" max="100" required>
+                    </div>
+                    <div>
+                        <label>Voucher Num: </label>
+                        <input type="number" id="schedule-amount" name="amount" min="1" max="100" required>
+                    </div>
+                    <input type="submit" id="add-schedule-btn" name="submit" class="submit" value="add">
+                </form>
+            </div>
+            <div id="reservation" class="page">
+            </div>
+        </section>
+    </main>
+    <script src="../static/scripts/index.js"></script>
+</body>
+</html>
