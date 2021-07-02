@@ -101,11 +101,11 @@ def update_schedule(token, schedule_id, no_vouchers, weekday, start, end, discou
 # function for removing the schedule
 def remove_schedule(token, schedule_id):
     # check if token is valid
-    eatery = Eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
         raise InputError("Invalid token")
     # check if the schedule id is valid
-    schedule = Schedule.query.filter_by(id=schedule_id, eatery_id=eatery.id)
+    schedule = Schedule.query.filter_by(id=schedule_id, eatery_id=eatery.id).first()
     if schedule is None:
         raise InputError("Invalid schedule")
 

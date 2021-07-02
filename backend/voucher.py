@@ -13,15 +13,15 @@ import random
 
 # function for cheking valid eatery
 def valid_eatery(eatery_id, token):
-    eatery = Eatery.query.filter_by(eatery_id=eatery_id, token=token)
+    eatery = Eatery.query.filter_by(id=eatery_id, token=token)
     # no eatery with given id or given token in the data
     if eatery is None:
         return False
     return True
 
 # function for creating an voucher item and add into the voucher table
-def create_voucher(eatery_id, date, start_time, end_time, discount, weekday, code):
-    new_voucher = Voucher(eatery_id, date, start_time, end_time, discount, weekday, code)
+def create_voucher(eatery_id, date, start_time, end_time, discount, code):
+    new_voucher = Voucher(eatery_id, date, start_time, end_time, discount, code)
     add_item(new_voucher)
     return new_voucher
 
@@ -44,10 +44,6 @@ def add_voucher(token, date, start, end, discount, eatery_id):
     # check if the voucher date and time is valid
     if date < date.today() or (date == date.today() and end < datetime.now()):
         raise InputError("Voucher Time invalid")
-    
-    # check if the discount is normal (between 0-1)
-    if discount > 1:
-        raise InputError("Voucher discount invalid")
     
     # creating a radom verify code for eatery and user to cehck the voucher
     mix = string.ascii_letters + string.digits

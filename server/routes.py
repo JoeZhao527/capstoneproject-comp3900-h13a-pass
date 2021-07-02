@@ -74,7 +74,7 @@ def eatery_register_check():
         
 @app.route('/eatery_private_profile', methods=['GET'])
 def eatery_private_profile():
-    return render_template('index.html')
+    return render_template('eatery_private_profile.html')
 
 @app.route('/eatery_private_profile/info', methods=['POST'])
 def eatery_private_profile_info():
@@ -88,28 +88,30 @@ def eatery_private_profile_info():
 def eatery_private_profile_update():
     data = json.loads(request.data)
     print(data)
+    print('got')
     try:
-        print(eatery_profile_update(data['first_name'], data['last_name'],data['phone'],
-                            data['eater_name'], data['address'], data['menu'],
-                            data['cuisines'], data['description']))
+        res = eatery_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
+                            data['eatery_name'], data['address'], data['menu'],
+                            data['cuisines'], data['description'])
+        print(res)
         return ''
-    except:
+    except InputError:
         return 'failed'
     
-@app.route('/eatery/profile/private/add_schedule', methods=['POST'])
+@app.route('/eatery_private_profile/add_schedule', methods=['POST'])
 def eatery_add_schedule():
+    print(request.data)
     info = json.loads(request.data)
     token = info['token']
     eatery_id = get_eatery_id(token)
     try:
-        res = add_schedule(token, eatery_id=eatery_id, 
-                        no_vouchers=info['amount'], weekday=info['weekday'],
-                        start=info['start'], end=info['end'], 
-                        discount=info['discount'],)
-        print(res)
-        return res['schedule_id']
+        res = add_schedule(token=token, eatery_id=eatery_id, 
+                        no_vouchers=info['schedule-amount'], weekday=info['weekday'],
+                        start=info['schedule-start'], end=info['schedule-end'], 
+                        discount=info['schedule-discount'],)
+        print(str(res['schedule_id']))
+        return str(res['schedule_id'])
     except InputError:
-        print(InputError.message)
         return ''
 
 @app.route('/eatery/profile/update_schedule', methods=['GET', 'PUT'])
