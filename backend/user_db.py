@@ -70,12 +70,12 @@ class Voucher(db.Model):
     eatery_id = db.Column(db.Integer, db.ForeignKey('eatery.id'))
     diner_id = db.Column(db.Integer, db.ForeignKey('diner.id'))
     date = db.Column(db.Date, nullable=False)
+    weekday = db.Column(db.Integer)    # dereived from date from 0 to 6
     start_time = db.Column(db.Time, nullable=False)
     end_time = db.Column(db.Time, nullable=False)
     discount = db.Column(db.Float, nullable=False)
     if_used = db.Column(db.Boolean)
     if_booked = db.Column(db.Boolean)     # add 
-    weekday = db.Column(db.Integer)    # dereived from date from 0 to 6
     code = db.Column(db.String(20))    # verify code to check if the user has booked the voucher and not used
     
     def __init__(self, eatery_id, date, start_time, end_time, discount, code):
@@ -93,12 +93,12 @@ class Voucher(db.Model):
 
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    eatery_id = db.Column(db.Integer, db.ForeignKey('eatery.id'))
-    no_vouchers = db.Column(db.Integer, nullable=False) 
     weekday = db.Column(db.Integer, nullable=False)   # Mon to Sun (0 to 6)
     start_time = db.Column(db.Time, nullable=False)
     end_time = db.Column(db.Time, nullable=False)
     discount = db.Column(db.Float, nullable=False)
+    no_vouchers = db.Column(db.Integer, nullable=False) 
+    eatery_id = db.Column(db.Integer, db.ForeignKey('eatery.id'))
     # meal_type = db.Column(db.String(10), nullable=False) # breakfast, lunch, dinner
 
     def __init__(self, eatery_id, no_vouchers, weekday, start_time, end_time, discount):
@@ -152,5 +152,4 @@ CREATE DOMAIN Discount AS
 """
 
 # clear up and create tables when the app run
-db.drop_all()
 db.create_all()

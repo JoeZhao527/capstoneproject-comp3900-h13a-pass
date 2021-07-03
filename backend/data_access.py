@@ -23,7 +23,7 @@ def create_Voucher(eatery_id, date, start_time, end_time, discount):
     return voucher.id
 
 # insert a schedule to database
-def create_Schedule(eatery_id, no_vouchers, weekday, start, end, discount):
+def create_schedule(eatery_id, no_vouchers, weekday, start, end, discount):
     schedule = Schedule(eatery_id, no_vouchers, weekday, start, end, discount)
     add_item(schedule)
     return schedule.id

@@ -166,13 +166,34 @@ function updateProfile(data) {
     return xhr.response;
 }
 
+/* add item */
+function createItem(data, id, addDelete) {
+    let item = document.createElement('tr');
+    for (const [key, value] of Object.entries(data)) {
+        const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code']
+        if (!hidden_attr.includes(key)) {
+            console.log(key, value, typeof value);
+            let td = document.createElement('td');
+            td.appendChild(document.createTextNode(value));
+            item.appendChild(td);
+        }
+    }
+    addDelete(item, id);
+    return item;
+}
+
+function mapWeekday(n) {
+    const weekday = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    return weekday[n]
+}
+
 /* add schedule */
 const add_schedule_btn = document.getElementById('add-schedule-btn');   // add schedule button in view schedule
 const add_schedule_page = document.getElementById('add-schedule');      // subpage container
 const schedule_form = document.getElementById('schedule-form');         // form in subpage
 const schedule_elem = schedule_form.elements;                           // form elements
 const schedule_submit = document.getElementById('submit-schedule');     // submit button in subpage
-const schedules = document.getElementById('schedules')
+const schedules = document.getElementById('schedules')                  // schedules table
 let schedule_data = {}
 
 // open add schedule page
@@ -206,21 +227,10 @@ function addScheduleREquest(data) {
 }
 
 function addScheduleItem(data, id) {
-    console.log(data, id)
-    let item = document.createElement('tr');
-    for (const [key, value] of Object.entries(data)) {
-        if (key !== 'token') {
-            console.log(key, value, typeof value);
-            let td = document.createElement('td');
-            td.appendChild(document.createTextNode(value));
-            item.appendChild(td);
-        }
-    }
-    addDeleteBtn(item, id);
-    schedules.appendChild(item);
+    schedules.appendChild(createItem(data,id,addDeleteScheduleBtn));
 }
 
-function addDeleteBtn(item, id) {
+function addDeleteScheduleBtn(item, id) {
     let btn = document.createElement('button');
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
@@ -237,6 +247,22 @@ function addDeleteBtn(item, id) {
     item.appendChild(btn);
 }
 
+function loadSchedules() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery/profile/get_schedule', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            for (const data of JSON.parse(this.response)['schedules']) {
+                addScheduleItem(data, data['id']);
+            }
+        }
+    }
+    xhr.send(`{ "token":"${token}" }`)
+    // add data to schedule list
+}
+
+loadSchedules();
 
 
 /* add voucher */
@@ -245,14 +271,51 @@ const add_voucher_page = document.getElementById('add-voucher');
 const voucher_form = document.getElementById('voucher-form');
 const voucher_elem = voucher_form.elements;
 const voucher_submit = document.getElementById('submit-voucher');
-
+const vouchers = document.getElementById('vouchers');
+console.log(vouchers);
 // open add voucher page
 add_voucher_btn.onclick = () => {
     add_voucher_page.style.display = 'inline';
 };
 
+function addVoucherItem(data, id) {
+    vouchers.appendChild(createItem(data, id, addDeleteVoucherBtn));
+}
 
+function addDeleteVoucherBtn(item, id) {
+    let btn = document.createElement('button');
+    btn.innerHTML = 'Delete';
+    btn.onclick = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('DELETE', '/eatery/profile/remove_voucher', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ token: token, id: id }));
+        if (!this.response) {
+            vouchers.removeChild(item);
+        } else {
+            alert('delete failed');
+        }
+    }
+    item.appendChild(btn);
+}
 
+function loadVouchers() {
+    console.log('here')
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery/profile/get_voucher', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            for (const data of JSON.parse(this.response)['vouchers']) {
+                addVoucherItem(data, data['id']);
+            }
+        }
+    }
+    xhr.send(`{ "token":"${token}" }`)
+    // add data to schedule list
+}
+
+loadVouchers();
 
 
 

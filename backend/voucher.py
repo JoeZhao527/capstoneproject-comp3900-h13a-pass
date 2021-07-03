@@ -6,11 +6,12 @@ import server
 from backend.auth import *
 from backend.user_db import *
 
-from datetime import date, datetime
+from datetime import date, datetime, time
 from server import db
 import string
 import random
 
+weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 # function for cheking valid eatery
 def valid_eatery(eatery_id, token):
     eatery = Eatery.query.filter_by(id=eatery_id, token=token)
@@ -54,7 +55,7 @@ def add_voucher(token, date, start, end, discount, eatery_id):
     voucher = create_voucher(eatery_id, date, start, end, discount, code)
     voucher.if_used = False
     voucher.if_booked = False
-    voucher.weekday = date.weekday() # datetime.datime.today().weekday()
+    voucher.weekday = weekdays[date.weekday()] # datetime.datime.today().weekday()
     db.session.commit()
 
     return {'voucher_id': voucher.id}
@@ -80,16 +81,38 @@ def update_voucher(token, voucher_id, date, start, end, discount):
 # function for deleting the voucher
 def delete_voucher(token, voucher_id):
     # check if token is valid
-    eatery = Eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
         raise InputError("Invalid token")
     # get the voucher and delete it 
-    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id)
+    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
     delete_item(voucher)
 
+# get all eatery's vouchers by eatery's token
+def get_eatery_voucher(token):
+    eatery = Eatery.query.filter_by(token=token).first()
+    # check if eatery exist
+    if eatery is None:
+        raise InputError("Invalid token")
 
+    voucher_list = []
 
+    # get all the schedeule query
+    # store the schedules into list
+    for voucher in Voucher.query.filter_by(eatery_id=eatery.id).all():
+        item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
+        # convert the start and end time to string
+        item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+        item['date'] = convert_date_to_string(item['date'])
+        voucher_list.append(item)
+    return { "vouchers": voucher_list }
 
+def convert_time(s):
+    h, m = s.split(':')[0], s.split(':')[1]
+    return time(int(h), int(m))
 
+def convert_time_to_string(t):
+    return str(t)[:-3]
 
-
+def convert_date_to_string(d):
+    return str(d)
