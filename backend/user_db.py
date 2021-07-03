@@ -152,4 +152,5 @@ CREATE DOMAIN Discount AS
 """
 
 # clear up and create tables when the app run
+db.drop_all()
 db.create_all()

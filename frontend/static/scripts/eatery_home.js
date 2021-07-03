@@ -124,6 +124,7 @@ document.onmousedown = (e) => {
 }
 
 login_form.onsubmit = (event) => {
+    event.preventDefault();
     Array.from(login_form).forEach(e => {
         if(e.type !== 'button' && e.type !== 'submit' && e.name) {
             data[e.name] = e.value;
@@ -135,12 +136,16 @@ login_form.onsubmit = (event) => {
         let token = login();
         if (token) {
             window.sessionStorage.setItem('token', token);
+            loadPage();
+            closeLogin();
         } else {
-            alert('login failed');
+            document.getElementById('login-msg').innerHTML = 'invalid email or password';
+            login_form.reset();
+            setTimeout(() => {
+                document.getElementById('login-msg').innerHTML = '';
+            }, 3000);
         }
-        loadPage();
     }
-    closeLogin();
 }
 
 function login() {

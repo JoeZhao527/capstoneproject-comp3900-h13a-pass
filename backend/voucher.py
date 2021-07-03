@@ -38,7 +38,9 @@ def delete_item(item):
     db.session.commit()
 
 # function for generating voucher
-def add_voucher(token, date, start, end, discount, eatery_id):
+def add_voucher(token, eatery_id, date, start, end, discount):
+    start, end = convert_time(start), convert_time(end)
+    date = convert_string_to_date(date)
     # check if eatery is valid by check the eatery id and token
     if not valid_eatery(eatery_id, token):
         raise InputError("Invalid token")
@@ -107,12 +109,20 @@ def get_eatery_voucher(token):
         voucher_list.append(item)
     return { "vouchers": voucher_list }
 
+def convert_string_to_date(s):
+    if isinstance(s, str):
+        y, m, d = s.split('-')[0], s.split('-')[1], s.split('-')[2]
+        return date(int(y), int(m), int(d))
+    return s
+
 def convert_time(s):
-    h, m = s.split(':')[0], s.split(':')[1]
-    return time(int(h), int(m))
+    if isinstance(s, str):
+        h, m = s.split(':')[0], s.split(':')[1]
+        return time(int(h), int(m))
+    return s
 
 def convert_time_to_string(t):
-    return str(t)[:-3]
+    return str(t)[:-3] if not isinstance(t, str) else t
 
 def convert_date_to_string(d):
-    return str(d)
+    return str(d) if not isinstance(d, str) else d

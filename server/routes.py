@@ -103,8 +103,6 @@ def eatery_private_profile_info():
 @app.route('/eatery_private_profile/update', methods=['PUT'])
 def eatery_private_profile_update():
     data = json.loads(request.data)
-    print(data)
-    print('got')
     try:
         res = eatery_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
                             data['eatery_name'], data['address'], data['menu'],
@@ -124,9 +122,26 @@ def eatery_add_schedule():
                         no_vouchers=info['schedule-amount'], weekday=info['weekday'],
                         start=info['schedule-start'], end=info['schedule-end'], 
                         discount=info['schedule-discount'])
-        return str(res['schedule_id'])
-    except InputError:
         return ''
+    except InputError:
+        return 'failed'
+
+@app.route('/eatery_private_profile/add_voucher', methods=['POST'])
+def eatery_add_voucher():
+    print(request.data)
+    info = json.loads(request.data)
+    token = info['token']
+    eatery_id = get_eatery_id(token)
+    no_vouchers = int(info['voucher-amount'])
+    try:
+        res = []
+        for i in range(no_vouchers):
+            res.append(add_voucher(token=token, eatery_id=eatery_id, date=info['date'],
+                        start=info['voucher-start'], end=info['voucher-end'], 
+                        discount=info['voucher-discount']))
+        return ''
+    except InputError:
+        return 'failed'
 
 @app.route('/eatery/profile/update_schedule', methods=['PUT'])
 def eatery_update_schedule():

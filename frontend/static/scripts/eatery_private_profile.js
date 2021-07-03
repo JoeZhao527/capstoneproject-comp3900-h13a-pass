@@ -220,7 +220,15 @@ function addScheduleREquest(data) {
     xhr.open('POST', '/eatery_private_profile/add_schedule', true);
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            addScheduleItem(data, parseInt(this.response));
+            if (!this.response) {
+                loadSchedules();
+            }
+            else {
+                document.getElementById('schedule-msg').innerHTML = 'invaild schedule';
+                setTimeout(() => {
+                    document.getElementById('schedule-msg').innerHTML = '';
+                }, 2000);
+            }
         }
     }
     xhr.send(JSON.stringify(data));
@@ -248,6 +256,7 @@ function addDeleteScheduleBtn(item, id) {
 }
 
 function loadSchedules() {
+    clearSchedules();
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/eatery/profile/get_schedule', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -262,6 +271,10 @@ function loadSchedules() {
     // add data to schedule list
 }
 
+function clearSchedules() {
+    schedules.innerHTML = '<tr class="th"><th>weekday</th><th>start</th><th>end</th><th>discount</th><th>amount</th><th></th></tr>'
+}
+
 loadSchedules();
 
 
@@ -272,11 +285,43 @@ const voucher_form = document.getElementById('voucher-form');
 const voucher_elem = voucher_form.elements;
 const voucher_submit = document.getElementById('submit-voucher');
 const vouchers = document.getElementById('vouchers');
-console.log(vouchers);
+const voucher_data = {}
 // open add voucher page
 add_voucher_btn.onclick = () => {
     add_voucher_page.style.display = 'inline';
 };
+
+voucher_form.onsubmit = (e) => {
+    e.preventDefault();
+    Array.from(voucher_elem).forEach(function(e) {
+        if (e.type !== 'submit') {
+            voucher_data[e.id] = e.value;
+        }
+    })
+    voucher_data['token'] = sessionStorage.getItem('token');
+    addVoucherRequest(voucher_data);
+    voucher_form.reset();
+    add_voucher_page.display = 'none';
+    voucher_data = {};
+}
+
+function addVoucherRequest(data) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery_private_profile/add_voucher', true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (!this.response) {
+                loadVouchers();
+            } else {
+                document.getElementById('voucher-msg').innerHTML = 'invaild voucher';
+                setTimeout(() => {
+                    document.getElementById('voucher-msg').innerHTML = '';
+                }, 2000);
+            }
+        }
+    }
+    xhr.send(JSON.stringify(data));
+}
 
 function addVoucherItem(data, id) {
     vouchers.appendChild(createItem(data, id, addDeleteVoucherBtn));
@@ -301,6 +346,7 @@ function addDeleteVoucherBtn(item, id) {
 
 function loadVouchers() {
     console.log('here')
+    clearVouchers();
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/eatery/profile/get_voucher', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -313,6 +359,10 @@ function loadVouchers() {
     }
     xhr.send(`{ "token":"${token}" }`)
     // add data to schedule list
+}
+
+function clearVouchers() {
+    vouchers.innerHTML = '<tr><th>date</th><th>weekday</th><th>start</th><th>end</th><th>discount</th></tr>'
 }
 
 loadVouchers();

@@ -48,10 +48,10 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
     # today's weekday is before or on the given weekday, add the voucher on the weekday this week
     else:
         voucher_date = date.today() + timedelta(abs(interval))
-
+    print(type(voucher_date))
     # Add vouchers with given voucher number
     for _ in range(int(no_vouchers)):
-        add_voucher(token, voucher_date, start, end, discount, eatery_id)
+        add_voucher(token, eatery_id, voucher_date, start, end, discount)
 
     return {'schedule_id': schedule_id}
 
