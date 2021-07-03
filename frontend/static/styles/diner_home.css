@@ -1,0 +1,72 @@
+:root {
+    --primary-color: rgb(119, 158, 180);
+    --btn-color: white;
+    --btn-hover-color: lightskyblue;
+}
+
+/* nav bar */
+#nav-bar {
+    background-color:var(--primary-color);
+    padding: 25px;
+    margin: -10px;
+    box-shadow: 0 0 15px 0 black;
+}
+
+#nav-bar button:hover{
+    cursor: pointer;
+    color: black;
+    transition: 0.2s;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.nav-btn {
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: black;
+    background-color: var(--primary-color);
+    width: 6rem;
+    height: 2.5rem;
+    margin-right: 3rem;
+    margin-top: -0.5rem;
+    float: right;
+}
+
+.sign-up, .profile {
+    font-weight: 600;
+    color: black;
+    background-color: white;
+    border: 1px black solid;
+    transition: 0.2s;
+}
+
+.sign-up:hover, .profile:hover {
+    background-color: var(--btn-hover-color);
+}
+
+#search {
+    width: 32rem;
+    height: 1.6rem;
+}
+
+.home {
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: 20px;
+    font-style: italic;
+    background-color: var(--primary-color);
+    width: 8rem;
+    height: 2rem;
+    margin-right: 4rem;
+    float: left;
+}
+
+.home:hover {
+    background-color: white;
+    transition: 0.4s;
+}
+
+/* container */
+.container {
+    display: flex;
+}
