@@ -1,74 +1,45 @@
-// paths
-const eatery_home = '/';
+// path
+const eatery_home = '/'
 
-/* main and nav bar*/
-const main = document.getElementById('main');
-const nav_bar = document.getElementById('nav-bar');
+// token
+let token = sessionStorage.getItem('token');
 
-// debug line
-console.log(sessionStorage.getItem('token'));
+/* side bar swicth page logic */
+const side_bar = document.getElementById('side-bar')
+const switchs = side_bar.getElementsByTagName('div');
+const pages = document.getElementsByClassName('page');
 
-/* eatery profile info */
-const info_item = document.getElementById('eatery-info').getElementsByTagName('li');
-
-// get eatery's info by its token
-function getEateryData() {
-    let _token = sessionStorage.getItem('token');
-    let _data = {}
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery_private_profile/info', true);
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200 || this.status == 304) {
-            for (const [key, value] of Object.entries(JSON.parse(this.response))) {
-                _data[key] = value;
-            }
-            dirty_fix_data(_data)
-            loadEateryData(_data);
-        }
+for (let i = 0; i < switchs.length; i++) {
+    switchs[i].onclick = () => {
+        displayPage(pages[i]);
     }
-    xhr.send(`{"token":"${_token}"}`);
 }
 
-function dirty_fix_data(_data) {
-    _data['fname'] = _data['first_name']
-    _data['lname'] = _data['last_name']
-    _data['ename'] = _data['eatery_name']
+function displayPage(page) {
+    for (const p of pages) {
+        if (p === page) {p.style.display = 'block'}
+        else {p.style.display = 'none'}
+    }
 }
 
-// load eatery data to profile
-function loadEateryData(_data) {
-    Array.from(info_item).forEach(e => {
-        if (_data[e.id] !== 'undefined') {
-            e.innerHTML = e.innerHTML+'\xa0\xa0\xa0\xa0\xa0'+_data[e.id]
-        }
-    });
-}
+displayPage(pages[0]);
 
-getEateryData();
-
-/* buttons */
-// diner home page
-const home_btn = document.getElementById('home');
-home_btn.addEventListener('click', function() {
-    alert('diner home page not implmented yet');
-});
-
-// logout
+/* logout */
 const logout_btn = document.getElementById('logout');
-logout_btn.addEventListener('click', function() {
+
+logout_btn.onclick = () => {
     if (logout()) {
         sessionStorage.removeItem('token');
         window.location.href = eatery_home;
     } else {
-        alert('logout failed for unknown reasons')
+        alert('logout failed');
     }
-})
+}
 
 /**
  * send logout request to backend
  */
  function logout() {
-    let token = window.sessionStorage.getItem('token');
     let xhr = new XMLHttpRequest();
     xhr.open('PUT', '/logout', false);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -77,91 +48,138 @@ logout_btn.addEventListener('click', function() {
     return xhr.response
 }
 
-// back eatery home
-const back_btn = document.getElementById('back');
-back_btn.onclick = () => {
-    window.location.href = eatery_home;
+/* content */
+
+// profile
+const profile_form = document.getElementById('profile-form');
+const profile_item = profile_form.getElementsByTagName('input');
+
+// get eatery's info by its token
+function getEateryData() {
+    let _data = {}
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery_private_profile/info', true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            for (const [key, value] of Object.entries(JSON.parse(this.response))) {
+                _data[key] = value;
+            }
+            console.log(_data);
+            loadEateryData(_data);
+        }
+    }
+    xhr.send(`{"token":"${token}"}`);
 }
 
-/* subpage operations */
-// close subpage
-function closeSubpage(page) {
-    page.style.display = 'none';
-    main.style.display = 'inline';
-    nav_bar.style.display = 'inline';
+// load eatery data to profile
+function loadEateryData(data) {
+    Array.from(profile_item).forEach(e => {
+        if (e.name) {
+            e.value = data[e.name]
+        }
+    });
+    console.log(data, data['cuisine'])
+    if(data['cuisine']) {loadCuisines(data['cuisine'].split(','))}
 }
 
-// open subpage
-function openSubpage(page) {
-    page.style.display = 'inline';
-    main.style.display = 'none';
-    nav_bar.style.display = 'none';
+/* add cuisine */
+const cuisines = []
+const cuisine = document.getElementById('cuisine')
+const add_cuisine_btn = document.getElementById('add-cuisine')
+const cuisine_list = document.getElementById('cuisines');
+
+add_cuisine_btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    let cuisine = document.getElementById("cuisine");
+    if(cuisine.value !== `` && cuisines.includes(cuisine.value) == false) {
+        cuisine_list.appendChild(cuisineBtn(cuisine.value));
+        cuisines.push(cuisine.value);
+    }
+    cuisine.value = ``;
+    console.log(cuisines)
+});
+
+function cuisineBtn(value) {
+    let btn = document.createElement('button');
+    btn.appendChild(document.createTextNode(value));
+    cuisineListener(btn);
+    return btn;
 }
 
-/* edit profile */
-const edit_btn = document.getElementById('edit-profile');
-const edit_page = document.getElementById('edit-page');
-const close_edit = edit_page.getElementsByClassName('close')[0];
+function cuisineListener(btn) {
+    let context = btn.innerHTML
+    btn.onclick = () => {
+        cuisine_list.removeChild(btn);
+        let idx = cuisines.indexOf(context);
+        if (idx > -1) { cuisines.splice(idx, 1) }
+    }
 
-edit_btn.onclick = () => {
-    openSubpage(edit_page)
-};
+    btn.onmouseover = () => {
+        btn.innerHTML = 'Delete';
+    }
 
-close_edit.onclick = () => {
-    closeSubpage(edit_page);
+    btn.onmouseleave = () => {
+        btn.innerHTML = context;
+    }
 }
 
-/* select add type */
-const turn_schedule_btn = document.getElementById('schedule-btn');
-const turn_voucher_btn = document.getElementById('voucher-btn');
-const schedule = document.getElementById('by-schedule');
-const voucher = document.getElementById('by-voucher');
-
-function displayScheduleList() {
-    turn_schedule_btn.style.setProperty('border-bottom', 'white 4px solid');
-    turn_voucher_btn.style.setProperty('border-bottom', 'none');
-    schedule.style.display = 'inline';
-    voucher.style.display = 'none';
+function loadCuisines(c) {
+    for (let i = 0; i < c.length; i++) {
+        cuisine_list.appendChild(cuisineBtn(c[i]));
+        cuisines.push(c[i])
+    }
 }
 
-function displayVoucherList() {
-    turn_voucher_btn.style.setProperty('border-bottom', 'white 4px solid');
-    turn_schedule_btn.style.setProperty('border-bottom', 'none');
-    schedule.style.display = 'none';
-    voucher.style.display = 'inline';
+getEateryData();
+
+/* update profile */
+const update = document.getElementById('submit');
+
+profile_form.onsubmit = (e) => {
+    e.preventDefault();
+    let data = {}
+    console.log(profile_form)
+    Array.from(profile_form).forEach(e => {
+        if(e.type !== `button` && e.type !== `submit` && e.name) {
+            data[e.name] = e.value;
+        }
+    });
+    data['cuisines'] = cuisines.join(',');
+    data['token'] = token;
+    // menu
+    data['menu'] = ''
+    console.log(data)
+    if (updateProfile(data) === '') {
+        console.log('success')
+    } else {
+        alert('sign up failed')
+    }
 }
 
-turn_schedule_btn.onclick = () => {
-    displayScheduleList();
+function updateProfile(data) {
+    // send data and receive token
+    console.log(data)
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/eatery_private_profile/update', false);
+    xhr.send(JSON.stringify(data))
+    console.log('here');
+    return xhr.response;
 }
-
-turn_voucher_btn.onclick = () => {
-    displayVoucherList();
-}
-
-displayScheduleList();
 
 /* add schedule */
-const add_schedule_btn = document.getElementById('add-schedule-btn');   // add schedule button in main
+const add_schedule_btn = document.getElementById('add-schedule-btn');   // add schedule button in view schedule
 const add_schedule_page = document.getElementById('add-schedule');      // subpage container
-const close_schedule = document.getElementsByClassName('close')[1];     // close button in subpage
 const schedule_form = document.getElementById('schedule-form');         // form in subpage
 const schedule_elem = schedule_form.elements;                           // form elements
 const schedule_submit = document.getElementById('submit-schedule');     // submit button in subpage
-
+const schedules = document.getElementById('schedules')
 let schedule_data = {}
 
-// open and close schedule page
+// open add schedule page
 add_schedule_btn.onclick = () => {
-    openSubpage(add_schedule_page);
+    add_schedule_page.style.display = 'inline';
 };
 
-close_schedule.onclick = () => {
-    schedule_form.reset();
-    closeSubpage(add_schedule_page);
-}
-
-// submit form listener, store data
 schedule_form.onsubmit = (e) => {
     e.preventDefault();
     Array.from(schedule_elem).forEach(function(e) {
@@ -170,60 +188,48 @@ schedule_form.onsubmit = (e) => {
         }
     })
     schedule_data['token'] = sessionStorage.getItem('token');
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery/profile/private/add_schedule', false);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(schedule_data));
-    console.log(schedule);
-    if (true) {
-    } else {
-        alert('you tried to added an invalid schedule');
-    }
-    addScheduleItem(1);
-
+    addScheduleREquest(schedule_data);
     schedule_form.reset();
-    closeSubpage(add_schedule_page);
-    schedule_data = {}
+    add_schedule_page.display = 'none';
+    schedule_data = {};
 }
 
-// add item into schedule list
-const schedule_ul = document.getElementById('schedule');
-
-function addScheduleItem(id) {
-    console.log(schedule_data)
-    let schedule_item = document.createElement('ul');
-    // add data to schedule
-    for (const [key, value] of Object.entries(schedule_data)) {
-        if (key !== 'token') {
-            console.log(key, value, typeof value);
-            let schedule_li = document.createElement('li');
-            schedule_li.appendChild(document.createTextNode(value));
-            schedule_item.appendChild(schedule_li);
+function addScheduleREquest(data) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery_private_profile/add_schedule', true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            addScheduleItem(data, parseInt(this.response));
         }
     }
-    // add delete button to schedule
-    
-    addEditBtn(schedule_item, id);
-    addDeleteBtn(schedule_item, id);
-    schedule_ul.appendChild(schedule_item);
+    xhr.send(JSON.stringify(data));
 }
 
-/**
- * @param item parent of li
- * add the li with a button delete button inside to item
- */
-function addDeleteBtn(item, _id) {
+function addScheduleItem(data, id) {
+    console.log(data, id)
+    let item = document.createElement('tr');
+    for (const [key, value] of Object.entries(data)) {
+        if (key !== 'token') {
+            console.log(key, value, typeof value);
+            let td = document.createElement('td');
+            td.appendChild(document.createTextNode(value));
+            item.appendChild(td);
+        }
+    }
+    addDeleteBtn(item, id);
+    schedules.appendChild(item);
+}
+
+function addDeleteBtn(item, id) {
     let btn = document.createElement('button');
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
-        let token = sessionStorage.getItem('token');
         let xhr = new XMLHttpRequest();
         xhr.open('DELETE', '/eatery/profile/remove_schedule', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({ token: token, id: _id }));
-        if (true) {
-            schedule_ul.removeChild(item);
+        xhr.send(JSON.stringify({ token: token, id: id }));
+        if (!this.response) {
+            schedules.removeChild(item);
         } else {
             alert('delete failed');
         }
@@ -231,21 +237,45 @@ function addDeleteBtn(item, _id) {
     item.appendChild(btn);
 }
 
-/**
- * @param item parent of li
- * add the li with a edit button to item
- */
-function addEditBtn(item, id) {
-    let btn = document.createElement('button');
-    btn.innerHTML = 'Edit';
-    btn.onclick = () => {
-        console.log("edit clicked");
+
+
+/* add voucher */
+const add_voucher_btn = document.getElementById('add-voucher-btn');
+const add_voucher_page = document.getElementById('add-voucher');
+const voucher_form = document.getElementById('voucher-form');
+const voucher_elem = voucher_form.elements;
+const voucher_submit = document.getElementById('submit-voucher');
+
+// open add voucher page
+add_voucher_btn.onclick = () => {
+    add_voucher_page.style.display = 'inline';
+};
+
+
+
+
+
+
+// close subpage
+document.onmousedown = (e) => {
+    if (getCurrPage() === 'view-voucher') {
+        if ((!add_voucher_page.contains(e.target)) && 
+            add_voucher_page.style.display === 'inline'&&
+            (!add_voucher_page.contains(e.target))) {
+            add_voucher_page.style.display = 'none';
+        }
+    } else if (getCurrPage() === 'view-schedule'){
+        if ((!add_schedule_page.contains(e.target)) && 
+            add_schedule_page.style.display === 'inline'&&
+            (!add_schedule_btn.contains(e.target))) {
+            add_schedule_page.style.display = 'none';
+        }
+    }   
+}
+
+// get the current active page
+function getCurrPage() {
+    for (const p of pages) {
+        if (p.style.display === 'block') {return p.id;}
     }
-    btn.onmouseover = () => {
-        btn.style.backgroundColor = 'lightskyblue';
-    }
-    btn.onmouseleave = () => {
-        btn.style.backgroundColor = 'white';
-    }
-    item.appendChild(btn);
 }
