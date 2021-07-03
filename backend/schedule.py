@@ -1,11 +1,13 @@
 # crutial import for backend to run py itself
 import os, sys
+
+from sqlalchemy.orm import query
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 from server import db
 from backend.user_db import *
 from backend.errors import *
-from backend.data_access import create_Schedule
+from backend.data_access import create_schedule, get_eatery_id
 from backend.user_db import *
 from backend.voucher import *
 from datetime import date, timedelta, time
@@ -36,7 +38,7 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
         raise InputError("End time cannot be before start time")
     
     # create schedule item and add into db
-    schedule_id = create_Schedule(eatery_id, no_vouchers, weekday, start, end, discount)
+    schedule_id = create_schedule(eatery_id, no_vouchers, weekday, start, end, discount)
     
     # calculate the date for the voucher add this week or nxt week by given a weekday
     interval = date.today().weekday() - weekdays[weekday]
@@ -112,10 +114,31 @@ def remove_schedule(token, schedule_id):
     delete_item(schedule)
     return {}
 
+# get all eatery's schedule by eatery's token
+def get_eatery_schedule(token):
+    eatery = Eatery.query.filter_by(token=token).first()
+    # check if eatery exist
+    if eatery is None:
+        raise InputError("Invalid token")
+
+    schedule_list = []
+
+    # get all the schedeule query
+    # store the schedules into list
+    for schedule in Schedule.query.filter_by(eatery_id=eatery.id).all():
+        item = dict((col, getattr(schedule, col)) for col in schedule.__table__.columns.keys())
+        # convert the start and end time to string
+        item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+        schedule_list.append(item)
+    return { "schedules": schedule_list }
+
 def convert_time(s):
     h, m = s.split(':')[0], s.split(':')[1]
     return time(int(h), int(m))
 
+def convert_time_to_string(t):
+    return str(t)[:-3]
+    
 if __name__ == "__main__":
     print(convert_time('00:00'))
     
