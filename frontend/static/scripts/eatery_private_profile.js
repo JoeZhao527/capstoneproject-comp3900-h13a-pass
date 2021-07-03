@@ -17,8 +17,10 @@ for (let i = 0; i < switchs.length; i++) {
 
 function displayPage(page) {
     for (const p of pages) {
-        if (p === page) {p.style.display = 'block'}
-        else {p.style.display = 'none'}
+        if (p === page) {
+            p.style.display = 'block'
+            if (getCurrPage() === 'view-voucher') {loadVouchers();}
+        } else {p.style.display = 'none'}
     }
 }
 
