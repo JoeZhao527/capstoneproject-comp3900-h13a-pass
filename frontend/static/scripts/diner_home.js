@@ -2,6 +2,7 @@
 const diner_register = '/diner/register';
 const diner_private_profile = '/diner/private_profile';
 const diner_home = '/diner/home';
+const eatery_home = '/';
 
 // get buttons
 const login_btn = document.querySelector(".login");
@@ -14,10 +15,13 @@ const login_sec = document.getElementById('login-page');
 const login_form = document.getElementById('login-form');
 const eatery_btn = document.getElementById('eatery');
 const diner_btn = document.getElementById('diner');
+const eatery_home_btn = document.getElementsByClassName('eatery');
 
 let data = { email: "", password: "", utype: "diner" };
 
 /* add listeners to buttons */
+
+
 Array.from(sign_up_btn).forEach(element => {
     element.addEventListener('click', function() {
         window.location.href = diner_register;
@@ -26,6 +30,10 @@ Array.from(sign_up_btn).forEach(element => {
 
 home_btn.addEventListener('click', function() {
     window.location.href = diner_home;
+})
+
+eatery_home_btn.addEventListener('click', function() {
+    window.location.href = eatery_home;
 })
 
 logout_btn.addEventListener('click', function() {
