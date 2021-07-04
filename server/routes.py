@@ -169,7 +169,8 @@ def eatery_delete_schedule():
     print('delete schedule')
     try:
         info = json.loads(request.data)
-        remove_schedule(token=info['token'], schedule_id=info['id'])
+        for id in info['id']:
+            remove_schedule(token=info['token'], schedule_id=id)
         return ''
     except InputError:
         print(InputError.message)
@@ -180,7 +181,8 @@ def eatery_delete_voucher():
     print('delete voucher')
     try:
         info = json.loads(request.data)
-        delete_voucher(token=info['token'], voucher_id=info['id'])
+        for id in info['id']:
+            delete_voucher(token=info['token'], voucher_id=id)
         return ''
     except InputError:
         print(InputError.message)
