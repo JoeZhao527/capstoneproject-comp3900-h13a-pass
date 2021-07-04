@@ -1,6 +1,7 @@
 // paths
 const eatery_register = '/eatery/register';
 const eatery_private_profile = '/eatery_private_profile';
+const diner_home = '/diner/home';
 
 // get buttons
 const login_btn = document.querySelector(".login");
@@ -24,7 +25,7 @@ Array.from(sign_up_btn).forEach(element => {
 })
 
 home_btn.addEventListener('click', function() {
-    alert("diner home is not implemented yet");
+    window.location.href = diner_home;
 })
 
 logout_btn.addEventListener('click', function() {

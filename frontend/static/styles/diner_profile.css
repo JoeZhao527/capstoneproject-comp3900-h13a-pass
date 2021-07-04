@@ -1,265 +1,239 @@
 :root {
-    --primary-color: rgb(75, 179, 240);
-    --btn-color: white;
-    --btn-hover-color: lightskyblue;
-    --container-color: rgb(183, 244, 255);
-    --primary-font-fam: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    --primary-font-size: 20px;
+    --primary-color: rgb(119, 158, 180);
+    --btn-color: #2691d9;
 }
 
-
-main{
-    margin-bottom: 8rem;
-}
 /* nav bar */
 #nav-bar {
-    background-color: var(--primary-color);
+    background-color:var(--primary-color);
     padding: 25px;
-    margin-left: -10px;
-    width: 100%;
-    top: 0;
-    position: fixed;
+    margin: -10px -10px 0 -10px;
+    height: 1.5rem;
+    box-shadow: 0 0 15px 0 black;
 }
 
 #nav-bar button:hover{
     cursor: pointer;
-    color: var(--btn-hover-color);
+    color: black;
+    transition: 0.2s;
+    box-shadow: 1px 1px 1px 1px black;
 }
-
 #nav-bar button {
     border: none;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bolder;
+    font-weight: 600;
+    font-size: 16px;
+    color: black;
     background-color: var(--primary-color);
     width: 6rem;
-    height: 3rem;
-    margin-top: -0.5rem;
-    margin-right: 1rem;
-    float: right;
-}
-
-#nav-bar button:nth-child(3) {
-    margin-right: 3rem;
-}
-
-#nav-bar button:first-child {
-    font-size: larger;
-    font-style: italic;
-    width: 8rem;
-    float: left;
-    margin-right: 4rem;
-}
-
-#nav-bar input {
-    width: 32rem;
-    height: 1.6rem;
-}
-
-/* container */
-.container {
-    background-color: var(--container-color);
-    margin: 1.5rem;
-    padding: 1rem;
-    padding-bottom: 6rem;
-    font-family: var(--primary-font-fam);
-    font-size: 20px;
-}
-
-.container button {
-    background-color: rgb(224, 246, 255);
-    font: 16px, var(--primary-font-fam);
-    margin-right: 2rem;
-    border: none;
-    width: 10rem;
-    height: 3rem;
-}
-
-.container button:hover {
-    background-color: lightblue;
-    cursor: pointer;
-}
-
-.list-head > li{
-    display: inline-block;
-    width: 11rem;
-    text-align: center;
-    border-left: solid;
-    border-bottom: solid;
-}
-
-
-
-/* container */
-.container {
-    background-color: var(--container-color);
-    margin: 1.5rem;
-    padding: 1rem;
-    padding-bottom: 6rem;
-    font-family: var(--primary-font-fam);
-    font-size: 20px;
-}
-
-.container button {
-    background-color: rgb(224, 246, 255);
-    font: 16px, var(--primary-font-fam);
-    margin-right: 2rem;
-    border: none;
-    width: 10rem;
-    height: 3rem;
-}
-
-.container button:hover {
-    background-color: lightblue;
-    cursor: pointer;
-}
-
-.list-head > li{
-    display: inline-block;
-    width: 11rem;
-    text-align: center;
-    border-left: solid;
-    border-bottom: solid;
-}
-
-/* basic information */
-#diner-info > div > li{
-    display: inline-block;
-    width: 20rem;
-    margin-bottom: 2rem;
-}
-
-#edit {
-    float: right;
-    margin-top: 1rem;
-}
-
-
-/* add schedule & vouchers */
-#active-switch button {
-    margin: 0;
-    font: var(--primary-font-size), var(--primary-font-fam);
-    width: 15rem;
     height: 2.5rem;
-    background-color: var(--primary-container-color);
-    border: none;
-    border-bottom: var(--btn-color) 4px solid;
+    margin-right: 3rem;
+    margin-top: -0.5rem;
+    float: right;
 }
 
-#active-switch button:hover {
-    cursor: pointer;
-    color: var(--btn-hover-color);
+main {
+    display: flex;
 }
 
-#active li {
+/* side bar */
+.side-bar {
+    width: 20rem;
+    margin-top: 20px;
+}
+
+.side-bar div {
     display: inline-block;
-    width: 10rem;
-    height: 2rem;
-    text-align: center;
-    margin-right: 1rem;
-}
-
-#active button {
-    clear: both;
-    display: inline-block;
-    width: 6rem;
-    height: 2rem;
-    margin-top: 0.5rem;
-}
-
-#active button:hover {
-    background-color: red;
-}
-
-#active ul {
-    border: 3px solid;
-    width: 95%;
     height: 3rem;
+    width: 17rem;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    padding: 1rem 0 1rem 2rem;
+    vertical-align: center;
     margin-bottom: 1rem;
 }
 
-#add-active-btn {
-    float: right;
-    margin-top: 1rem;
-}
-
-#add-voucher-btn {
-    float: right;
-    margin-top: 1rem;
-}
-
-/* reservation */
-
-
-#reservation > ul > li{
+.side-bar > div > img {
     display: inline-block;
-    width: 12rem;
-    text-align: center;
-}
-
-/* subpage */
-.subpage {
-    display: none;
-    background-color: var(--container-color);
-    top: 3rem;
-    position: fixed;
-}
-
-/* edit profile subpage */
-#edit-page {
-    left:25%;
-    width: 50%;
     height: 80%;
+    vertical-align: middle;
 }
 
-
-/* add schedule subpage */
-#add-schedule {
-    left:25%;
-    width: 50%;
-    height: 80%;
+.side-bar > div:hover {
+    cursor: pointer;
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
 }
 
-#add-schedule .close {
-    display: block;
+/* pages */
+
+.container {
+    height: 100%;
+    width: 100%;
 }
 
-#add-schedule > h1 {
-    text-align: center;
+/* profile */
+.page {
+    padding-left: 20px;
+}
+.page > div{
+    float: left;
 }
 
-#schedule-form > ul{
-    margin-top: 3rem;
-    list-style: none;
+#profile > div {
+    padding: 30px;
+    margin: 14px;
+    border-radius: 2.5rem;
 }
 
-#schedule-form li {
+#profile  div:hover {
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
+}
+
+#profile-form label {
     display: inline-block;
-    width: 13rem;
-    margin-left: 5%;
-    margin-bottom: 2rem;
+    font-weight: bolder;
+    font-size: 18px;
+    width: 120px;
+    height: 30px;
 }
 
-#schedule-form label {
-    font: var(--primary-font-size) var(--primary-font-fam);
-    margin-right: 1rem;
+#profile-form input {
+    display: inline-block;
+    width: 300px;
+    height: 30px;
 }
 
-#schedule-form input,select {
-    height: 2rem;
-    font-size: large;
+#profile-form label, #profile-form input {
+    margin-top: 15px;
 }
 
-#schedule select:hover {
+
+#submit {
+    width: 100% !important;
+    height: 40px !important;
+    border: 1px solid;
+    background: var(--btn-color);;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+
+/* add schedule form */
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 15px 15px 15px 15px rgba(0,0,0,0.05);
+    display: flex;
+}
+
+.center h1{
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid silver;
+}
+
+.center form{
+    padding: 0 40px 100px 40px;
+    box-sizing: border-box;
+}
+
+.center form div{
+    margin:0 0 2rem 3rem;
+}
+
+.center form label {
+    display: inline-block;
+    font-weight: bolder;
+    font-size: 18px;
+    width: 160px;
+    height: 30px;
+}
+
+.center form input, .center form select {
+    display: inline-block;
+    width: 250px;
+    height: 30px;
+}
+
+.center input[type="submit"] {
+    width: 60%;
+    height: 50px;
+    border: 1px solid;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    margin: 3rem 0 3rem 0;
+}
+
+.center input[type="submit"]:hover {
+    border-color: var(--btn-color);
+    border: -2px;
+    transition: .2s;
+}
+
+table {
+    border-collapse: collapse;
+}
+tr { 
+    border: solid;
+    border-width: 0.5px 0;
+}
+
+.page table {
+    font-size: 18px;
+}
+
+.page table tr th{
+    padding: 30px 120px 30px 0;
+}
+
+.page table tr {
+    border-bottom: 2px solid;
+}
+
+.page table .th:hover {
+    box-shadow: none;
+}
+
+.page table button {
+    font-size: 18px;
+    height: 100%;
+    width: 100%;
+    color: gray;
+    border: none;
+}
+
+.page table button:hover {
+    background-color: red;
+    color: white;
     cursor: pointer;
 }
 
-.submit {
-    margin-left: 25%;
-    width: 20rem;
-    height: 4rem;
-    text-align: center;
-    font: var(--primary-font-size) var(--primary-font-fam);
+.page > button {
+    margin-top: 5rem;
+    width: 10rem;
+    height: 50px;
+    border: 1px solid;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
 }
-
-
-
