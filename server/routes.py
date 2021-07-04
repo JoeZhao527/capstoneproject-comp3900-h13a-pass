@@ -18,6 +18,11 @@ def diner_home_load():
 def diner_register_load():
     return render_template('diner_register.html')
 
+@app.route('/diner/private_profile')
+def diner_private_profile_load():
+    return render_template('diner_profile.html')
+
+
 @app.route('/eatery/register')
 def eatery_register_load():
     return render_template('eatery_register.html')

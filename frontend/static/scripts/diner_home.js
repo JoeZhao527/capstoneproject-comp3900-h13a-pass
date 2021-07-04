@@ -1,6 +1,6 @@
 // paths
 const diner_register = '/diner/register';
-const diner_private_profile = '/diner_private_profile';
+const diner_private_profile = '/diner/private_profile';
 const diner_home = '/diner/home';
 
 // get buttons

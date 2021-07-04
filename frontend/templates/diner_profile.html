@@ -6,68 +6,87 @@
     <title>Diner Profile</title>
     <link rel="stylesheet" href="../static/styles/diner_profile.css">
 </head>
-<nav id="nav-bar">
-    <button id="home">Value Eat</button>
-    <input type="text" id="search">
-    <button id="logout">Logout</button>
-    <button id="back">Back</button>
-</nav>
-
 
 <body>
-    <main id="main">
-        <h1>Diner Profile</h1>
-        <hr/>
-        <section class="container">
-            <!-- default view-->
-            <ul id="diner-info">
-                <div>
-                    <li id="fname">first name:</li>
-                    <li id="lname">last name:</li>
-                    <li id="ename">diner name:</li>
-                </div>
-                <div>
-                    <li id="email">email:</li>
-                    <li id="phone">phone:</li>
-                </div>
-                <div>
-                    <li id="address">address:</li>
-            </ul>
-            <div id="edit">
-                <button id="reset-pass">reset password</a>
-                <button id="edit-profile">edit</button>
-            </div>
+    <nav id="nav-bar">
+        <button id="logout">logout</button>
+    </nav>
+    <main>
+        <section id="side-bar" class="side-bar">
+            <div id="to-profile"><img src="../static/images/profile_icon.png"> Profile</div>
+            <div id="to-active"><img src="../static/images/voucher_icon.png"> Active Voucher</div>
+            <div id="to-previous"><img src="../static/images/voucher_icon.png"> Previous Voucher</div>
         </section>
-        
-        <h2>Bookings</h2>
         <section class="container">
-            <div id="voucher-switch">
-                <button id="active-btn">Active bookings</button>
-                <button id="previous-btn">Previous Bookings</button>
-            </div>
-            <div id="by-active">
-                <ul id="active-head" class="list-head">
-                    <li>Eatery</li>
-                    <li>Day</li>
-                    <li>Time</li>
-                    <li>Discount</li>
-                    <li>Code</li>
-                </ul>
-                <ul id="active">
-                </ul>
+            <div id="profile" class="page">
+                <div id="profile-section">
+                    <form id="profile-form">
+                        <div class="txt_field left">
+                            <label for="first_name">first name:</label>
+                            <input type="text" name="first_name" id="first_name" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field right">
+                            <label for="last_name">last name:</label>
+                            <input type="text" name="last_name" id="last_name" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field left">
+                            <label for="phone">phone:</label>
+                            <input type="text" name="phone" id="phone" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field right">
+                            <label for="eatery_name">eatery name:</label>
+                            <input type="text" name="eatery_name" id="eatery_name" required>
+                            <span></span>
+                        </div>
+                        
+                        
+                        <input type="submit" id="submit" value="Update Profile">
+                    </form>
+                </div>
+                <div id="iamge-section">
+                    <div id="image-container">
+                        <h1>images</h1>
+                    </div>
+                    <div id="image-upload">
+                        <h1>upload images</h1>
+                    </div>
+                    <div id="image-trash">
+                        <h1>drag here to delete</h1>
+                    </div>
+                </div>
                 
             </div>
-            <div id="by-previous">
-                <ul id="previous"></ul>
+            <div id="view-active" class="page">
+                <h1>Active Vouchers</h1>
+                <table id="schedules">
+                    <tr class="th">
+                        <th>Eatery</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Discount</th>
+                        <th>Code</th>
+                    </tr>
+                </table>
             </div>
+            <div id="view-previous" class="page">
+                <h1>Previous Vouchers</h1>
+                <table id="vouchers">
+                    <tr>
+                        <th>Eatery</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Discount</th>
+                        <th>Code</th>
+                    </tr>
+                </table>
+            </div>
+            
+            
         </section>
-
     </main>
-    <!-- subpages-->
-    <section id='edit-page' class="subpage">
-        <button class='close'>close</button>
-        <h1>diner edit profile page</h1>
-    </section>
     
 
 

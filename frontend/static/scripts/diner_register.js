@@ -1,5 +1,5 @@
 // paths
-const eatery_home = '/'
+const diner_home = '/diner/home';
 
 const submit_btn = document.getElementById('submit');
 const form = document.forms["sign-up-form"].getElementsByTagName("input");
@@ -20,7 +20,7 @@ submit_btn.addEventListener('click', function(e) {
     if (token !== '') {
         sessionStorage.setItem('token', token);
         console.log('data')
-        window.location.href = eatery_home;
+        window.location.href = diner_home;
     } else {
         alert('sign up failed')
     }
@@ -36,8 +36,8 @@ function register() {
     xhr.send(JSON.stringify(data))
     return xhr.response;
 }
+
 /* backhome button */
 backhome.addEventListener('click', function() {
-    clear();
-    window.location.href = eatery_home;
+    window.location.href = diner_home;
 })
