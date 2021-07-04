@@ -46,7 +46,6 @@ logout_btn.onclick = () => {
     xhr.open('PUT', '/logout', false);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(`{"token":"${token}"}`);
-    console.log(xhr.response);
     return xhr.response
 }
 
@@ -66,7 +65,6 @@ function getEateryData() {
             for (const [key, value] of Object.entries(JSON.parse(this.response))) {
                 _data[key] = value;
             }
-            console.log(_data);
             loadEateryData(_data);
         }
     }
@@ -80,7 +78,6 @@ function loadEateryData(data) {
             e.value = data[e.name]
         }
     });
-    console.log(data, data['cuisine'])
     if(data['cuisine']) {loadCuisines(data['cuisine'].split(','))}
 }
 
@@ -98,7 +95,6 @@ add_cuisine_btn.addEventListener('click', function(e) {
         cuisines.push(cuisine.value);
     }
     cuisine.value = ``;
-    console.log(cuisines)
 });
 
 function cuisineBtn(value) {
@@ -140,7 +136,6 @@ const update = document.getElementById('submit');
 profile_form.onsubmit = (e) => {
     e.preventDefault();
     let data = {}
-    console.log(profile_form)
     Array.from(profile_form).forEach(e => {
         if(e.type !== `button` && e.type !== `submit` && e.name) {
             data[e.name] = e.value;
@@ -150,7 +145,6 @@ profile_form.onsubmit = (e) => {
     data['token'] = token;
     // menu
     data['menu'] = ''
-    console.log(data)
     if (updateProfile(data) === '') {
         console.log('success')
     } else {
@@ -160,11 +154,9 @@ profile_form.onsubmit = (e) => {
 
 function updateProfile(data) {
     // send data and receive token
-    console.log(data)
     let xhr = new XMLHttpRequest();
     xhr.open('PUT', '/eatery_private_profile/update', false);
     xhr.send(JSON.stringify(data))
-    console.log('here');
     return xhr.response;
 }
 
@@ -174,11 +166,16 @@ function createItem(data, id, addDelete) {
     for (const [key, value] of Object.entries(data)) {
         const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code']
         if (!hidden_attr.includes(key)) {
-            console.log(key, value, typeof value);
             let td = document.createElement('td');
             td.appendChild(document.createTextNode(value));
             item.appendChild(td);
         }
+    }
+    // only voucher has date, use this to check the type of node
+    if ('date' in data) {
+        let td = document.createElement('td');
+        td.appendChild(document.createTextNode(id.length));
+        item.appendChild(td);
     }
     addDelete(item, id);
     return item;
@@ -237,7 +234,7 @@ function addScheduleREquest(data) {
 }
 
 function addScheduleItem(data, id) {
-    schedules.appendChild(createItem(data,id,addDeleteScheduleBtn));
+    schedules.appendChild(createItem(data,[id],addDeleteScheduleBtn));
 }
 
 function addDeleteScheduleBtn(item, id) {
@@ -287,7 +284,8 @@ const voucher_form = document.getElementById('voucher-form');
 const voucher_elem = voucher_form.elements;
 const voucher_submit = document.getElementById('submit-voucher');
 const vouchers = document.getElementById('vouchers');
-const voucher_data = {}
+let voucher_data = {}
+let voucher_list = []
 // open add voucher page
 add_voucher_btn.onclick = () => {
     add_voucher_page.style.display = 'inline';
@@ -346,17 +344,49 @@ function addDeleteVoucherBtn(item, id) {
     item.appendChild(btn);
 }
 
+function groupVouchers(data) {
+    // incoming data is ungrouped with an item in voucher list
+    let grouped = false;
+    for (const voucher of voucher_list) {
+        let same = true
+        // for each item in the voucher list, check if the item is identical with the incoming data
+        for (const [key, value] of Object.entries(voucher['data'])) {
+            // the 2 data has a different attribute, the 2 items are different
+            if (key !== 'code' && key !== 'id' && value !== data[key]) {
+                same = false;
+                break;
+            }
+        }
+        // if a same data is found, group them, and set grouped as true
+        // otherwise find the next item
+        if (same) {
+            voucher['id'].push(data['id'])
+            grouped = true;
+            break;
+        }
+    }
+    return grouped;
+}
+
 function loadVouchers() {
-    console.log('here')
     clearVouchers();
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/eatery/profile/get_voucher', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            voucher_list = []
             for (const data of JSON.parse(this.response)['vouchers']) {
-                addVoucherItem(data, data['id']);
+                if (!groupVouchers(data)) {
+                    // if voucher cannot be grouped with an exist one, add it to the list
+                    voucher_list.push({ data: data, id: [data['id']] });
+                }
             }
+            for (const item of voucher_list) {
+                console.log('here');
+                addVoucherItem(item['data'], item['id'])
+            }
+            console.log(voucher_list)
         }
     }
     xhr.send(`{ "token":"${token}" }`)
@@ -364,7 +394,7 @@ function loadVouchers() {
 }
 
 function clearVouchers() {
-    vouchers.innerHTML = '<tr><th>date</th><th>weekday</th><th>start</th><th>end</th><th>discount</th></tr>'
+    vouchers.innerHTML = '<tr><th>date</th><th>weekday</th><th>start</th><th>end</th><th>discount</th><th>amount</th></tr>'
 }
 
 loadVouchers();
