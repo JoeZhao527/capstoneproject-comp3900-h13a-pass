@@ -10,6 +10,11 @@ def add_item(item):
     db.session.add(item)
     db.session.commit()
 
+# delete and commit an item
+def delete_item(item):
+    db.session.delete(item)
+    db.session.commit()
+
 # insert an eatery to database
 def create_eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, description, token):
     eatery = Eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, description, token)
@@ -43,3 +48,13 @@ def get_eatery_by_token(token):
 def update_eatery_token(token, eatery):
     eatery.token = token
     db.session.commit()
+
+# upload an image
+def store_image(eatery_id, image):
+    img = Image(eatery_id, image)
+    add_item(img)
+    return img.id
+
+def get_image(eatery_id):
+    images = Image.query.filter_by(eatery_id=eatery_id).all()
+    return [dict((col, getattr(img, col)) for col in img.__table__.columns.keys()) for img in images]
