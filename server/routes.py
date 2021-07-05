@@ -1,9 +1,11 @@
+from flask import Response
 from server import app
 from flask import render_template, request
 from backend.auth import *
 from backend.schedule import *
 from backend.data_access import *
 from backend.voucher import *
+from backend.image import *
 import json
 
 @app.route('/')
@@ -94,7 +96,7 @@ def diner_register_check():
         print(InputError.message)
         return ''
 
-@app.route('/eatery_private_profile', methods=['GET'])
+@app.route('/eatery_private_profile', methods=['GET', 'POST'])
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')
 
@@ -202,3 +204,30 @@ def eatery_get_voucher():
     res = get_eatery_voucher(token)
     print(res)
     return json.dumps(res)
+
+@app.route('/eatery_private_profile/upload_image', methods=['POST'])
+def eatery_upload_image():
+    data = json.loads(request.data)
+    try:
+        image_id = upload_image(token=data['token'], img=data['image'])
+        print(image_id)
+        return ''
+    except InputError:
+        return 'failed'
+
+@app.route('/eatery_private_profile/get_image', methods=['POST'])
+def eatery_get_image():
+    data = json.loads(request.data)
+    token = data['token']
+    res = get_eatery_image(token=token)
+    return json.dumps({'data':res})
+
+@app.route('/eatery/profile/delete_image', methods=['DELETE'])
+def eatery_delete_image():
+    try:
+        info = json.loads(request.data)
+        delete_image(token=info['token'], image_id=info['id'])
+        return ''
+    except InputError:
+        print(InputError.message)
+        return 'failed'

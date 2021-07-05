@@ -399,8 +399,6 @@ function clearVouchers() {
 
 loadVouchers();
 
-
-
 // close subpage
 document.onmousedown = (e) => {
     if (getCurrPage() === 'view-voucher') {
@@ -424,3 +422,94 @@ function getCurrPage() {
         if (p.style.display === 'block') {return p.id;}
     }
 }
+
+
+const input = document.getElementById('image');
+const image_box = document.getElementById('image-container');
+const image_msg = document.getElementById('image-msg');
+input.addEventListener('change', handleFiles, false);
+
+function handleFiles(e) {
+    if (isImage(e.target.files[0])) {
+        let reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onloadend = function () {
+            let data = { token: token, image: reader.result }
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/eatery_private_profile/upload_image', true);
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.onreadystatechange = () => {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (!this.response) {
+                        load_image();
+                    } else {
+                        image_msg.innerHTML = 'image failed to upload, try another one'
+                        setTimeout(() => {
+                            image_msg.innerHTML = ''
+                        }, 2000)
+                    }
+                }
+            }
+            xhr.send(JSON.stringify(data));
+        }
+    } else {
+        image_msg.innerHTML = 'please upload .png and .jpeg only!'
+        setTimeout(() => {
+            image_msg.innerHTML = ''
+        }, 2000)
+    }
+}
+
+function isImage(file) {
+    const acceptedImageTypes = ['image/jpeg', 'image/png'];
+    return file && acceptedImageTypes.includes(file['type'])
+}
+
+
+function load_image() {
+    image_box.innerHTML = ''
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/eatery_private_profile/get_image', true);
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let image_list = JSON.parse(this.response)['data']
+            for(const item of image_list) {
+                let div =createImage(item['image'], item['id'])
+                image_box.appendChild(div);
+            }
+        }
+    }
+    xhr.send(`{"token":"${token}"}`)
+}
+
+function createImage(src, img_id) {
+    // container for delete button and image
+    let div = document.createElement('div');
+    // image
+    let img = new Image();
+    img.src = src;
+    // button
+    let btn = document.createElement('button');
+    btn.innerHTML = 'delete'
+    btn.onclick = () => {
+        deleteImage(token, img_id, div)
+    }
+    div.appendChild(img);
+    div.appendChild(btn);
+    return div
+}
+
+function deleteImage(token, id, div) {
+    let xhr = new XMLHttpRequest();
+        xhr.open('DELETE', '/eatery/profile/delete_image', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ token: token, id: id }));
+        if (!this.response) {
+            image_box.removeChild(div);
+        } else {
+            alert('delete failed');
+        }
+}
+
+load_image();

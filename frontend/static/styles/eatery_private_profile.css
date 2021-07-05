@@ -37,7 +37,7 @@ main {
 
 /* side bar */
 .side-bar {
-    width: 20rem;
+    width: 20%;
     margin-top: 20px;
 }
 
@@ -79,10 +79,12 @@ main {
     padding-left: 20px;
 }
 .page > div{
-    float: right;
+    display: inline-block;
+    vertical-align:top;
 }
 
 #profile > div {
+    width: 40%;
     padding: 30px;
     margin: 14px;
     border-radius: 2.5rem;
@@ -167,6 +169,50 @@ main {
     outline: none;
 }
 
+/* iamges uplaod */
+#image-container > div{
+    display: inline-block;
+    width: 200px !important;
+}
+#image-container > div > img{
+    display: block;
+    width: 180px;
+    height: 180px;
+    margin: 10px;
+}
+
+#image-container > div > img:hover{
+    width: 190px;
+    height: 190px;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+#image-container > div > button {
+    display: block;
+    background-color: rgb(189, 183, 183);
+    width: 60px !important;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#image-container > div > button:hover {
+    background-color: red;
+    cursor: pointer;
+    color: white;
+}
+
+#image-upload {
+    margin-bottom: 20px;
+}
+
+#image-msg {
+    color: red;
+}
 /* add schedule form */
 .center {
     position: absolute;

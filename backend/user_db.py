@@ -59,7 +59,7 @@ class Diner(db.Model):
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     eatery_id = db.Column(db.Integer, db.ForeignKey('eatery.id'))
-    image = db.Column(db.String(50), nullable=False)
+    image = db.Column(db.Text, nullable=False)
     
     def __init__(self, eatery_id, image):
         self.eatery_id = eatery_id
@@ -152,5 +152,4 @@ CREATE DOMAIN Discount AS
 """
 
 # clear up and create tables when the app run
-db.drop_all()
 db.create_all()
