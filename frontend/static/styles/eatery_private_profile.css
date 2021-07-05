@@ -209,6 +209,10 @@ main {
 #image-upload {
     margin-bottom: 20px;
 }
+
+#image-msg {
+    color: red;
+}
 /* add schedule form */
 .center {
     position: absolute;

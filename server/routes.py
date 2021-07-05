@@ -208,9 +208,12 @@ def eatery_get_voucher():
 @app.route('/eatery_private_profile/upload_image', methods=['POST'])
 def eatery_upload_image():
     data = json.loads(request.data)
-    image_id = upload_image(token=data['token'], img=data['image'])
-    print(image_id)
-    return {}
+    try:
+        image_id = upload_image(token=data['token'], img=data['image'])
+        print(image_id)
+        return ''
+    except InputError:
+        return 'failed'
 
 @app.route('/eatery_private_profile/get_image', methods=['POST'])
 def eatery_get_image():

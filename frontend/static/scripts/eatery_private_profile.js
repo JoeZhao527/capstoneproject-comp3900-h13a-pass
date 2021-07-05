@@ -426,24 +426,43 @@ function getCurrPage() {
 
 const input = document.getElementById('image');
 const image_box = document.getElementById('image-container');
+const image_msg = document.getElementById('image-msg');
 input.addEventListener('change', handleFiles, false);
 
 function handleFiles(e) {
-    let reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onloadend = function () {
-        let data = { token: token, image: reader.result }
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/eatery_private_profile/upload_image', true);
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.onreadystatechange = () => {
-            if (this.readyState === 4 && this.status === 200) {
-                console.log(this.response);
+    if (isImage(e.target.files[0])) {
+        let reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onloadend = function () {
+            let data = { token: token, image: reader.result }
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/eatery_private_profile/upload_image', true);
+            xhr.setRequestHeader('Content-Type', 'application/json')
+            xhr.onreadystatechange = () => {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (!this.response) {
+                        load_image();
+                    } else {
+                        image_msg.innerHTML = 'image failed to upload, try another one'
+                        setTimeout(() => {
+                            image_msg.innerHTML = ''
+                        }, 2000)
+                    }
+                }
             }
+            xhr.send(JSON.stringify(data));
         }
-        xhr.send(JSON.stringify(data));
+    } else {
+        image_msg.innerHTML = 'please upload .png and .jpeg only!'
+        setTimeout(() => {
+            image_msg.innerHTML = ''
+        }, 2000)
     }
-    get_image();
+}
+
+function isImage(file) {
+    const acceptedImageTypes = ['image/jpeg', 'image/png'];
+    return file && acceptedImageTypes.includes(file['type'])
 }
 
 
