@@ -15,7 +15,7 @@ const login_sec = document.getElementById('login-page');
 const login_form = document.getElementById('login-form');
 const eatery_btn = document.getElementById('eatery');
 const diner_btn = document.getElementById('diner');
-const eatery_home_btn = document.getElementsByClassName('eatery');
+const eatery_home_btn = document.getElementsByClassName('eatery')[0];
 
 let data = { email: "", password: "", utype: "diner" };
 

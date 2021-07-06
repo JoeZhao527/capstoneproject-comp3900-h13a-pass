@@ -1,9 +1,14 @@
+
 :root {
+
     --primary-color: rgb(119, 158, 180);
     --btn-color: white;
     --btn-hover-color: lightskyblue;
 }
 
+/* body {
+    font-size: 1;
+} */
 /* nav bar */
 #nav-bar {
     background-color:var(--primary-color);
@@ -198,3 +203,67 @@ input[type="submit"]:hover{
     color: #2691d9;
     cursor: pointer;
 }
+body{
+    margin:0;
+    padding:0;
+}
+
+.box  {
+    border:none;
+    float:none;
+    height:50vh;
+    width: 100%;
+    background-image: url("../images/food_1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* opacity: 0.5; */
+
+}
+#heading{
+    position:absolute;
+    top:25%;
+    transform: translateY(-50%);
+    margin:0;
+    padding:0;
+    text-align: center;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    font-size: xx-large;
+    
+}
+
+#select {
+    position:absolute;
+    top:48%;
+    transform: translateY(-50%);
+    margin:0;
+    padding:0;
+    text-align: center;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    font-size: xx-large;
+}
+
+
+#go-btn {
+    background-color: white;
+    width: 12rem;
+    height: 3rem;
+    border-radius: 2.5rem;
+    border: 2px black solid;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+#go:hover {
+    background-color: var(--btn-hover-color);
+    cursor: pointer;
+}
+
+#select input {
+    width: 100px;
+    height: 25px;
+    margin-right:20px;
+}
+
