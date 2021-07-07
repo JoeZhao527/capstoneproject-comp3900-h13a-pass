@@ -45,15 +45,17 @@ class Diner(db.Model):
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(20))
-    # token
-    # reset_code
+    token = db.Column(db.String(200), unique=True)
+    reset_code = db.Column(db.String(20))
     
-    def __init__(self, first_name, last_name, email, password, phone):
+    def __init__(self, first_name, last_name, email, password, phone, token):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = password
         self.phone = phone
+        self.token = token
+        #self.reset_code = reset_code
 
         
 class Image(db.Model):
@@ -152,4 +154,5 @@ CREATE DOMAIN Discount AS
 """
 
 # clear up and create tables when the app run
+db.drop_all()
 db.create_all()

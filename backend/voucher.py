@@ -65,7 +65,7 @@ def add_voucher(token, eatery_id, date, start, end, discount):
 # function for updating the voucher, date-> weekday, start time, end time, discount etc.
 def update_voucher(token, voucher_id, date, start, end, discount):
     # check if token is valid
-    eatery = Eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
         raise InputError("Invalid token")
     # get the token by the vouchr_id(eatery_id just in case)

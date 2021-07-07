@@ -21,6 +21,11 @@ def create_eatery(first_name, last_name, email, password, phone_number, eatery_n
     add_item(eatery)
     return eatery.id
 
+def create_diner(first_name, last_name, email, password, phone, token):
+    diner = Diner(first_name, last_name, email, password, phone, token)
+    add_item(diner)
+    return diner.id
+
 # insert a Voucher to database
 def create_Voucher(eatery_id, date, start_time, end_time, discount):
     voucher = Voucher(eatery_id, date, start_time, end_time, discount)
@@ -38,10 +43,16 @@ def get_eatery_id(token):
     eatery = Eatery.query.filter_by(token=token).first()
     return eatery.id
 
-# get eatery information by id
+# get eatery information by token for eatery profile
 def get_eatery_by_token(token):
     eatery = Eatery.query.filter_by(token=token).first()
     data = dict((col, getattr(eatery, col)) for col in eatery.__table__.columns.keys())
+    return data
+
+# get diner information by token for diner profile
+def get_diner_by_tokesn(token):
+    diner = Diner.query.filter_by(token=token).first()
+    data = dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys())
     return data
 
 # update user token
