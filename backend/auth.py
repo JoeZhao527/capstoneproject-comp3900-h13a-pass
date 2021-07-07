@@ -303,7 +303,7 @@ def diner_profile_update(token, first_name, last_name, phone):
     if not valid_token(token):
         raise InputError("Invalid token")
     # get eatery by token, update the info
-    diner = diner.query.filter_by(token=token).first()
+    diner = Diner.query.filter_by(token=token).first()
     diner.first_name = first_name
     diner.last_name = last_name
     diner.phone = phone

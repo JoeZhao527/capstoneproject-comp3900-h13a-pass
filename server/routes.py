@@ -71,13 +71,8 @@ def eatery_register_load():
 def eatery_login_info():
     data = json.loads(request.data)
     try:
-<<<<<<< HEAD
         res = eatery_login(data['email'], data['password'])
-        return res['token']
-=======
-        res = auth_login(data['email'], data['password'])
         return json.dumps(res)
->>>>>>> joezhao
     except InputError:
         print(InputError.message)
         return ''
@@ -104,15 +99,6 @@ def reset_pass():
     except InputError:
         return 'reset failed'
 
-<<<<<<< HEAD
-@app.route('/logout', methods=['PUT'])
-def user_logout():
-    data = json.loads(request.data)
-    res = auth_logout(data['token'])
-    return 'true' if res['logout_success'] else ''
-
-=======
->>>>>>> joezhao
 @app.route('/eatery/register', methods=['POST'])
 def eatery_register_check():
     data = json.loads(request.data)
@@ -126,23 +112,8 @@ def eatery_register_check():
         print(InputError.message)
         return ''
 
-<<<<<<< HEAD
-@app.route('/diner/register', methods=['POST'])
-def diner_register_check():
-    data = json.loads(request.data)
-    try:
-        res = diner_register(data['email'], data['password'],
-                            data['fname'], data['lname'],data['phone'])
-        return res['token']
-    except InputError:
-        print(InputError.message)
-        return ''
-
-@app.route('/eatery_private_profile', methods=['GET', 'POST'])
-=======
 ################# EATERY PRIVATE PROFILE ###################
 @app.route('/eatery/profile/private', methods=['GET', 'POST'])
->>>>>>> joezhao
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')
 
