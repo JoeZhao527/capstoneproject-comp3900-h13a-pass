@@ -1,3 +1,4 @@
+
 import string
 import random
 import jwt
@@ -11,8 +12,8 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
-from backend.user_db import Eatery
-from backend.data_access import create_eatery, get_eatery_by_token, update_eatery_token
+from backend.user_db import Eatery, Diner
+from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token
 from backend.errors import InputError
 from server import db
 
@@ -39,6 +40,14 @@ def eatery_email_used(email):
         return True
     return False
 
+# function for checking if the email is used by an diner
+def diner_email_used(email):
+    diner = Diner.query.filter_by(email=email).first()
+    # someone eatery used this email,
+    if diner is not None:
+        return True
+    return False
+
 '''
 # function for adding item in the database
 def add_item(item):
@@ -50,7 +59,14 @@ def create_eatery(first_name, last_name, email, password, phone, eatery_name, ad
     eatery = Eatery(first_name, last_name, email, password, phone, eatery_name, address, menu, description, token)
     add_item(eatery)
     return eatery.id
+
+# function for creating an diner item
+def create_diner(first_name, last_name, email, password, phone, token):
+    diner = Diner(first_name, last_name, email, password, phone, token)
+    add_item(diner)
+    return diner.id
 '''
+
 
 # a function that create a new account for the eatery by given valid email, password, name and phone
 def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, description):
@@ -87,7 +103,7 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     # hash the password for security
     hashed_password = hash_password(password)
     
-    # generate user_id and token, uid = 500000+ num_of_users
+    # generate user_id and token, uid = 500000 + num_of_users
     num_eateries = len(Eatery.query.all())
     userid = 500000 + num_eateries
     token = generate_token(userid)
@@ -96,12 +112,44 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, cuisine, description, token)
     return {'eatery_id': eatery_id, 'token': token}
 
+# a function that create a new account for the diner by given valid email, password, name and phone
 def diner_register(email, password, first_name, last_name, phone):
-    return{1}
+    # check if the email is valid
+    if not re.search(VALID_EMAIL, email):
+        raise InputError("Email invalid")
+    # check if the email addess is being used by another diner
+    if diner_email_used(email):
+        raise InputError("Email being used")
+    # check if the password entered is less than 6 character(or empty)
+    if len(password) < 6:
+        raise InputError("Password invalid")
+    # check if first name or last name is empty
+    if not first_name:
+        raise InputError("First name is empty")
+    if not last_name:
+        raise InputError("Last name is empty")
+    # check if first name or last name is invalid
+    if len(first_name) > 50:
+        raise InputError("First name invalid")
+    if len(last_name) > 50:
+        raise InputError("Last name invalid")
+
+    # hash the password for security
+    hashed_password = hash_password(password)
+    
+    # generate user_id and token, uid = 100000 + num_of_users
+    num_diners = len(Diner.query.all())
+    userid = 100000 + num_diners
+    token = generate_token(userid)
+    
+    # create an eatery and store in the database, return the eatery_id
+    diner_id = create_diner(first_name, last_name, email, hashed_password, phone, token)
+    return {'diner_id': diner_id, 'token': token}
+
 # login function
-# given a registered user's email and password
-# generates a valid token for the user to remain authenticated
-def auth_login(email, passowrd):
+# given a registered eatery's email and password
+# generates a valid token for the eatery to remain authenticated
+def eatery_login(email, passowrd):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
@@ -121,19 +169,54 @@ def auth_login(email, passowrd):
         # update token to database
         update_eatery_token(token, eatery)
         return {'eatery_id': eatery.id, 'token': token}
+
+# login function 
+# given a registered diner's email and password
+# generates a valid token for the diner to remain authenticated
+def diner_login(email, passowrd):
+    # check if the email is valid
+    if not re.search(VALID_EMAIL, email):
+        raise InputError("Email invalid")
+    # check if the email is registered(used)
+    if not diner_email_used(email):
+        raise InputError("Email does not belong to a user")
+
+    # email belong to a diner, get the diner from database
+    diner = Diner.query.filter_by(email=email).first()
+    # check if the input password match the user's password
+    # if not match
+    if diner.password != hash_password(passowrd):
+        raise InputError("Password Incorrect")
+    # if password match, generate new token and set the user's state to login
+    else:
+        token = generate_token(diner.id)
+        # update token to database
+        diner.token = token
+        db.session.commit()
+
+        return {'diner_id': diner.id, 'token': token}
+
 # given an active token, invalidates the token to log the user out
 # if a vaid token is given, and the user is successfully logged out -> true, otherwise -> false
+# assume there won't be a diner has the same token as an eatery
+# otherwise just split this function into two functions
 def auth_logout(token):
     eatery = Eatery.query.filter_by(token=token).first()
-    # if there is a user with the token, token valid
+    diner = Diner.query.filter_by(token=token).first()
+    # if there is a eatery with the token, token valid, invalidate the token
     if eatery is not None:
         # user.if_logged_in = False
         # end the active token of eatery
         eatery.token = None
         db.session.commit()
         return {"logout_success": True}
+    # else if there is a diner with the token, invalidate the token
+    elif diner is not None:
+        # end the active token of diner
+        diner.token = None
+        db.session.commit()
+        return {"logout_success": True}
     return {"logout_success": False}
-
 
 # given an email address of a registered user, send them an email contain a specific reset code
 # user trying to rest the password
@@ -145,7 +228,7 @@ def auth_password_request(email):
     if not eatery_email_used(email):
         raise InputError("Email does not belong to a user")
     else:
-        eatery = Eatery.query.filter_by(email=email)
+        eatery = Eatery.query.filter_by(email=email).first()
         mix = string.ascii_letters + string.digits
         code = ''.join(random.choice(mix) for i in range(20))
         eatery.reset_code = code
@@ -174,7 +257,7 @@ def auth_password_request(email):
 
 def auth_password_reset(reset_code, new_password):
     # find a user with the same reset code
-    eatery = Eatery.query.filter_by(reset_code=reset_code)
+    eatery = Eatery.query.filter_by(reset_code=reset_code).first()
     # if reset code invalid
     if eatery is None:
         raise InputError("Reset_code is invalid")
@@ -185,19 +268,15 @@ def auth_password_reset(reset_code, new_password):
         else:
             # change the password and empty the reset code
             hashed_password = hash_password(new_password)
-            eatery.passowrd = hashed_password
+            eatery.password = hashed_password
             eatery.reset_code = ""
             db.session.commit()
     return {}
-"""
-def get_eatery(token):
-    eatery = get_eatery_by_token(token)
-    # TODO: check if eatery is got by this token, otherwise returns an empty string
-    return eatery
-"""
+    
 # function for checking if the token is valid
 def valid_token(token):
-    eatery = Eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token).first()
+    # diner = Diner.query.filter_by(token=token)
     if eatery is None:
         return False
     return True
@@ -218,22 +297,36 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
     eatery.desciption = description
     db.session.commit()
     return get_eatery_by_token(token)
-"""
-def eatery_profile_setname(token, first_name, last_name):
+
+# function for updating the diner profile (eaterie's info), can seperate the function if necessary
+def diner_profile_update(token, first_name, last_name, phone):
     if not valid_token(token):
         raise InputError("Invalid token")
-def eatery_profile_setmail(token, email):
-    if not valid_token(token):
-        raise InputError("Invalid token")
-def eatery_profile_setphone(token, phone):
-    if not valid_token(token):
-        raise InputError("Invalid token")
-def eatery_profile_seteatery():
-    if not valid_token(token):
-        raise InputError("Invalid token")
-def eatery_profile_update_image()：
-"""
+    # get eatery by token, update the info
+    diner = Diner.query.filter_by(token=token).first()
+    diner.first_name = first_name
+    diner.last_name = last_name
+    diner.phone = phone
+    db.session.commit()
+    return get_diner_by_token(token)
 
 
 if __name__ == "__main__":
     print(generate_token(123))
+    result1 = diner_register("jay123@gmail.com", "123Cjj", "Jay", "Chen", "0470397745")
+    print(result1)
+
+    result2 = diner_register("jay12345@gmail.com", "123Cjj", "Hayden", "Chen", "3000800")
+    print(result2)
+    diners = Diner.query.filter_by(last_name="Chen").all()
+    for diner in diners:
+        print(diner.email)
+
+
+    #print(data)
+    #result2 = diner_login("jay123@gmail.com", "123Cjj")
+    #print(result2)
+
+    #print(eatery.token)
+    #print(eatery.phone)
+    #print(eatery.eatery_name)

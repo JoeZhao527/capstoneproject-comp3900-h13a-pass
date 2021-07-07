@@ -1,6 +1,7 @@
 from flask import Response
+from werkzeug.utils import redirect
 from server import app
-from flask import render_template, request
+from flask import render_template, request, redirect
 from backend.auth import *
 from backend.schedule import *
 from backend.data_access import *
@@ -8,10 +9,22 @@ from backend.voucher import *
 from backend.image import *
 import json
 
+###########################################################
+##                   COMMON ROUTES                       ##
+###########################################################
 @app.route('/')
 def home():
-    return render_template('eatery_home.html')
+    return redirect('/eatery/home', code=302)
 
+@app.route('/logout', methods=['PUT'])
+def eatery_logout():
+    data = json.loads(request.data)
+    res = auth_logout(data['token'])
+    return 'true' if res['logout_success'] else ''
+
+###########################################################
+##                   DINER  ROUTES                       ##
+###########################################################
 @app.route('/diner/home')
 def diner_home_load():
     return render_template('diner_home.html')
@@ -20,25 +33,46 @@ def diner_home_load():
 def diner_register_load():
     return render_template('diner_register.html')
 
+@app.route('/diner/register', methods=['POST'])
+def diner_register_check():
+    data = json.loads(request.data)
+    try:
+        res = eatery_register(data['email'], data['password'],
+                            data['fname'], data['lname'],data['phone'],
+                            data['ename'])
+        return res['token']
+    except InputError:
+        print(InputError.message)
+        return ''
+
 @app.route('/diner/private_profile')
 def diner_private_profile_load():
     return render_template('diner_profile.html')
 
+@app.route('/diner/login', methods=['POST'])
+def diner_login_info():
+    # TODO
+    return ''
+
+###########################################################
+##                   EATERY ROUTES                       ##
+###########################################################
+
+################# EATERY AUTHENTICATION ###################
+@app.route('/eatery/home')
+def eatery_home():
+    return render_template('eatery_home.html')
 
 @app.route('/eatery/register')
 def eatery_register_load():
     return render_template('eatery_register.html')
 
-@app.route('/login', methods=['GET'])
-def login_page():
-    return render_template('login.html')
-
-@app.route('/login', methods=['POST'])
-def login_info():
+@app.route('/eatery/login', methods=['POST'])
+def eatery_login_info():
     data = json.loads(request.data)
     try:
-        res = auth_login(data['email'], data['password'])
-        return res['token']
+        res = eatery_login(data['email'], data['password'])
+        return json.dumps(res)
     except InputError:
         print(InputError.message)
         return ''
@@ -65,12 +99,6 @@ def reset_pass():
     except InputError:
         return 'reset failed'
 
-@app.route('/logout', methods=['PUT'])
-def eatery_logout():
-    data = json.loads(request.data)
-    res = auth_logout(data['token'])
-    return 'true' if res['logout_success'] else ''
-
 @app.route('/eatery/register', methods=['POST'])
 def eatery_register_check():
     data = json.loads(request.data)
@@ -84,30 +112,19 @@ def eatery_register_check():
         print(InputError.message)
         return ''
 
-@app.route('/diner/register', methods=['POST'])
-def diner_register_check():
-    data = json.loads(request.data)
-    try:
-        res = eatery_register(data['email'], data['password'],
-                            data['fname'], data['lname'],data['phone'],
-                            data['ename'])
-        return res['token']
-    except InputError:
-        print(InputError.message)
-        return ''
-
-@app.route('/eatery_private_profile', methods=['GET', 'POST'])
+################# EATERY PRIVATE PROFILE ###################
+@app.route('/eatery/profile/private', methods=['GET', 'POST'])
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')
 
-@app.route('/eatery_private_profile/info', methods=['POST'])
+@app.route('/eatery/profile/private/info', methods=['POST'])
 def eatery_private_profile_info():
     data = json.loads(request.data)
     res = get_eatery_by_token(data['token'])
     # returns json string if res is not empty, otherwise returns an empty string
     return json.dumps(res)
 
-@app.route('/eatery_private_profile/update', methods=['PUT'])
+@app.route('/eatery/profile/private/update', methods=['PUT'])
 def eatery_private_profile_update():
     data = json.loads(request.data)
     try:
@@ -118,7 +135,7 @@ def eatery_private_profile_update():
     except InputError:
         return 'failed'
     
-@app.route('/eatery_private_profile/add_schedule', methods=['POST'])
+@app.route('/eatery/profile/private/add_schedule', methods=['POST'])
 def eatery_add_schedule():
     print(request.data)
     info = json.loads(request.data)
@@ -133,7 +150,7 @@ def eatery_add_schedule():
     except InputError:
         return 'failed'
 
-@app.route('/eatery_private_profile/add_voucher', methods=['POST'])
+@app.route('/eatery/profile/private/add_voucher', methods=['POST'])
 def eatery_add_voucher():
     print(request.data)
     info = json.loads(request.data)
@@ -150,7 +167,7 @@ def eatery_add_voucher():
     except InputError:
         return 'failed'
 
-@app.route('/eatery/profile/update_schedule', methods=['PUT'])
+@app.route('/eatery/profile/private/update_schedule', methods=['PUT'])
 def eatery_update_schedule():
     if request.method == 'PUT':
         try:
@@ -166,7 +183,7 @@ def eatery_update_schedule():
 
     return render_template()
 
-@app.route('/eatery/profile/remove_schedule', methods=['DELETE'])
+@app.route('/eatery/profile/private/remove_schedule', methods=['DELETE'])
 def eatery_delete_schedule():
     print('delete schedule')
     try:
@@ -178,7 +195,7 @@ def eatery_delete_schedule():
         print(InputError.message)
         return 'failed'
 
-@app.route('/eatery/profile/remove_voucher', methods=["DELETE"])
+@app.route('/eatery/profile/private/remove_voucher', methods=["DELETE"])
 def eatery_delete_voucher():
     print('delete voucher')
     try:
@@ -190,14 +207,14 @@ def eatery_delete_voucher():
         print(InputError.message)
         return 'failed'
 
-@app.route('/eatery/profile/get_schedule', methods=['POST'])
+@app.route('/eatery/profile/private/get_schedule', methods=['POST'])
 def eatery_get_schedule():
     data = json.loads(request.data)
     token = data['token']
     res = get_eatery_schedule(token)
     return json.dumps(res)
 
-@app.route('/eatery/profile/get_voucher', methods=['POST'])
+@app.route('/eatery/profile/private/get_voucher', methods=['POST'])
 def eatery_get_voucher():
     data = json.loads(request.data)
     token = data['token']
@@ -205,7 +222,7 @@ def eatery_get_voucher():
     print(res)
     return json.dumps(res)
 
-@app.route('/eatery_private_profile/upload_image', methods=['POST'])
+@app.route('/eatery/profile/private/upload_image', methods=['POST'])
 def eatery_upload_image():
     data = json.loads(request.data)
     try:
@@ -215,14 +232,14 @@ def eatery_upload_image():
     except InputError:
         return 'failed'
 
-@app.route('/eatery_private_profile/get_image', methods=['POST'])
+@app.route('/eatery/profile/private/get_image', methods=['POST'])
 def eatery_get_image():
     data = json.loads(request.data)
     token = data['token']
     res = get_eatery_image(token=token)
     return json.dumps({'data':res})
 
-@app.route('/eatery/profile/delete_image', methods=['DELETE'])
+@app.route('/eatery/profile/private/delete_image', methods=['DELETE'])
 def eatery_delete_image():
     try:
         info = json.loads(request.data)
@@ -231,3 +248,9 @@ def eatery_delete_image():
     except InputError:
         print(InputError.message)
         return 'failed'
+
+################ EATERY PUBLIC PROFILE ##################
+@app.route('/eatery/profile/<int:id>', methods=['GET'])
+def eatery_public_profile(id):
+    print(type(id))
+    return render_template('eatery_public_profile.html')

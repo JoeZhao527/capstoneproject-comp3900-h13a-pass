@@ -14,7 +14,7 @@ import random
 weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 # function for cheking valid eatery
 def valid_eatery(eatery_id, token):
-    eatery = Eatery.query.filter_by(id=eatery_id, token=token)
+    eatery = Eatery.query.filter_by(id=eatery_id, token=token).first()
     # no eatery with given id or given token in the data
     if eatery is None:
         return False
@@ -65,11 +65,11 @@ def add_voucher(token, eatery_id, date, start, end, discount):
 # function for updating the voucher, date-> weekday, start time, end time, discount etc.
 def update_voucher(token, voucher_id, date, start, end, discount):
     # check if token is valid
-    eatery = Eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
         raise InputError("Invalid token")
     # get the token by the vouchr_id(eatery_id just in case)
-    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id)
+    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
 
     voucher.date = date
     voucher.start = start
