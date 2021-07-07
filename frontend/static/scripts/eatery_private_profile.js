@@ -1,8 +1,9 @@
 // path
 const eatery_home = '/'
 
-// token
+// token and id
 let token = sessionStorage.getItem('token');
+let eatery_id = sessionStorage.getItem('id');
 
 /* side bar swicth page logic */
 const side_bar = document.getElementById('side-bar')
@@ -26,28 +27,11 @@ function displayPage(page) {
 
 displayPage(pages[0]);
 
-/* logout */
-const logout_btn = document.getElementById('logout');
+/* logout button, logout logic in logout.js */
+const logout_btn = document.getElementById('logout-btn');
 
-logout_btn.onclick = () => {
-    if (logout()) {
-        sessionStorage.removeItem('token');
-        window.location.href = eatery_home;
-    } else {
-        alert('logout failed');
-    }
-}
+/* go to eatery public page */
 
-/**
- * send logout request to backend
- */
- function logout() {
-    let xhr = new XMLHttpRequest();
-    xhr.open('PUT', '/logout', false);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(`{"token":"${token}"}`);
-    return xhr.response
-}
 
 /* content */
 
@@ -59,7 +43,7 @@ const profile_item = profile_form.getElementsByTagName('input');
 function getEateryData() {
     let _data = {}
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery_private_profile/info', true);
+    xhr.open('POST', '/eatery/profile/private/info', true);
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
             for (const [key, value] of Object.entries(JSON.parse(this.response))) {
@@ -155,7 +139,7 @@ profile_form.onsubmit = (e) => {
 function updateProfile(data) {
     // send data and receive token
     let xhr = new XMLHttpRequest();
-    xhr.open('PUT', '/eatery_private_profile/update', false);
+    xhr.open('PUT', '/eatery/profile/private/update', false);
     xhr.send(JSON.stringify(data))
     return xhr.response;
 }
@@ -216,7 +200,7 @@ schedule_form.onsubmit = (e) => {
 
 function addScheduleREquest(data) {
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery_private_profile/add_schedule', true);
+    xhr.open('POST', '/eatery/profile/private/add_schedule', true);
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (!this.response) {
@@ -242,7 +226,7 @@ function addDeleteScheduleBtn(item, id) {
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
         let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/eatery/profile/remove_schedule', false);
+        xhr.open('DELETE', '/eatery/profile/private/remove_schedule', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({ token: token, id: id }));
         if (!this.response) {
@@ -257,7 +241,7 @@ function addDeleteScheduleBtn(item, id) {
 function loadSchedules() {
     clearSchedules();
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery/profile/get_schedule', true);
+    xhr.open('POST', '/eatery/profile/private/get_schedule', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
@@ -266,7 +250,7 @@ function loadSchedules() {
             }
         }
     }
-    xhr.send(`{ "token":"${token}" }`)
+    xhr.send(JSON.stringify({ token:token }))
     // add data to schedule list
 }
 
@@ -307,7 +291,7 @@ voucher_form.onsubmit = (e) => {
 
 function addVoucherRequest(data) {
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery_private_profile/add_voucher', true);
+    xhr.open('POST', '/eatery/profile/private/add_voucher', true);
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (!this.response) {
@@ -332,7 +316,7 @@ function addDeleteVoucherBtn(item, id) {
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
         let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/eatery/profile/remove_voucher', false);
+        xhr.open('DELETE', '/eatery/profile/private/remove_voucher', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({ token: token, id: id }));
         if (!this.response) {
@@ -371,7 +355,7 @@ function groupVouchers(data) {
 function loadVouchers() {
     clearVouchers();
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery/profile/get_voucher', true);
+    xhr.open('POST', '/eatery/profile/private/get_voucher', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
@@ -389,7 +373,7 @@ function loadVouchers() {
             console.log(voucher_list)
         }
     }
-    xhr.send(`{ "token":"${token}" }`)
+    xhr.send(JSON.stringify({token:token}))
     // add data to schedule list
 }
 
@@ -436,7 +420,7 @@ function handleFiles(e) {
         reader.onloadend = function () {
             let data = { token: token, image: reader.result }
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', '/eatery_private_profile/upload_image', true);
+            xhr.open('POST', '/eatery/profile/private/upload_image', true);
             xhr.setRequestHeader('Content-Type', 'application/json')
             xhr.onreadystatechange = () => {
                 if (this.readyState == 4 && this.status == 200) {
@@ -469,7 +453,7 @@ function isImage(file) {
 function load_image() {
     image_box.innerHTML = ''
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/eatery_private_profile/get_image', true);
+    xhr.open('POST', '/eatery/profile/private/get_image', true);
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -480,7 +464,7 @@ function load_image() {
             }
         }
     }
-    xhr.send(`{"token":"${token}"}`)
+    xhr.send(JSON.stringify({token:token}))
 }
 
 function createImage(src, img_id) {
@@ -502,7 +486,7 @@ function createImage(src, img_id) {
 
 function deleteImage(token, id, div) {
     let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/eatery/profile/delete_image', false);
+        xhr.open('DELETE', '/eatery/profile/private/delete_image', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({ token: token, id: id }));
         if (!this.response) {
@@ -513,3 +497,10 @@ function deleteImage(token, id, div) {
 }
 
 load_image();
+
+/* got to public profile */
+const preview_btn = document.getElementById('preview-btn');
+
+preview_btn.onclick = () => {
+    window.location.href = `/eatery/profile/${eatery_id}`
+}
