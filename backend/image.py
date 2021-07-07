@@ -43,3 +43,7 @@ def delete_image(token, image_id):
     # get the voucher and delete it 
     image = Image.query.filter_by(id=image_id, eatery_id=eatery.id).first()
     delete_item(image)
+
+def get_image_by_id(eatery_id):
+    images = get_image(eatery_id)
+    return images

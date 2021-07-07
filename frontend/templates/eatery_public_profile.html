@@ -2,294 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eatery Details</title>
-    <link rel="stylesheet" href="../static/styles/eatery_public_profile.css">
+    <title>Eatery public</title>
+    <link rel="stylesheet" href="../../static/styles/eatery_public_profile.css">
 </head>
 <body>
-    <!-- 导航 -->
-    <div class = "top">
-        <nav id="nav-bar">
-            <button class="home">Value Eat</button>
-            <input type="text" placeholder = "Find your eatery" id="search">
-            <button class="login nav-btn">Login</button>
-            <button class="sign-up nav-btn">Sign up</button>
-            <button class="profile nav-btn">Profile</button>
-            <button class="logout nav-btn">Logout</button>
-        </nav>
-    </div>
-    
-    <!-- 照片墙 -->
-    <section id="img_wall">
-        <div class="slidershow middle">
-
-            <div class="slides">
-              <input type="radio" name="r" id="r1" checked>
-              <input type="radio" name="r" id="r2">
-              <input type="radio" name="r" id="r3">
-              <input type="radio" name="r" id="r4">
-              <input type="radio" name="r" id="r5">
-              <div class="slide s1">
-                <img src="../static/images/food_1.jpg" alt="">
-              </div>
-              <div class="slide">
-                <img src="../static/images/food_2.jpg" alt="">
-              </div>
-              <div class="slide">
-                <img src="../static/images/food_3.jpg" alt="">
-              </div>
-              <div class="slide">
-                <img src="../static/images/food_4.jpg" alt="">
-              </div>
-              <div class="slide">
-                <img src="../static/images/food_5.jpg" alt="">
-              </div>
+    <nav id="nav-bar">
+        <button id="home-btn">Value Eat</button>
+        <button id="logout-btn">logout</button>
+        <button id="login-btn">login</button>
+        <button id="profile-btn">profile</button>
+        <button id="sign-up-btn">sign-up</button>
+    </nav>
+    <section id="head-container" class="container">
+        <div id="header-section">
+            header
+        </div>
+        <div id="image-section">
+            <div id="image-container"></div>
+            <button id="slide-right" class="arrow arrow--right"></button>
+            <button id="slide-left" class="arrow arrow--left"></button>
+        </div>
+    </section>
+    <section id="main-container" class="container">
+        <div id="main-section">
+            <div id="content-section">
+                content
             </div>
-      
-            <div class="navigation">
-              <label for="r1" class="bar"></label>
-              <label for="r2" class="bar"></label>
-              <label for="r3" class="bar"></label>
-              <label for="r4" class="bar"></label>
-              <label for="r5" class="bar"></label>
+            <div id="comment-section">
+                comment
             </div>
         </div>
-    </section>
-
-    
-    <!-- Eatery details-->
-    <section class = "details">
-        <h1>Anonymous Eatery</h1>
-        <div style = "float:left">Rating: 5.0</div>
-        <div style = "float:left;margin-left: 70px;">Cuisine: Burgers&Chips</div>
-        <div style = "clear:both"> </div>
-    </section>
-    <hr />
-
-    <!-- Description, menu and details-->
-    <section class = "container" id = "desPart"> 
-        <div style = "text-align:center" id="description-switch">
-            <button id="description-btn">Description</button>
-            <button id="menu-btn">Menu</button>
-            <button id="details-btn">Details</button>
-        </div>
-        <div id="description">
-            <p>BB's Beach Break is a casual café with restaurant-quality dining. Located opposite North Steyne Surf Club, BB's sits right in the middle of Manly & Queenscliff. Whether you have just finished your early morning surf or having your evening stroll on the boardwalk this is the place to take your beach break.
-                You can smell the fresh sea air at this dreamy joint – it drifts off the ocean into this Manly restaurant, tantalising you with thoughts of seafood even before you’ve glimpsed the menu.
-                And once you do, you won’t be disappointed. Whether you’re after fish & chips, or the crispy-skinned salmon, or the delectable chilli prawns or the variety tapas selection or the seafood platter, there are always plenty of fruits of the sea on offer to help you make the most of your beachside location.    
-            </p>
-            </div>
-        <div id="menu">
-            <p>
-                menu
-            </p>
-        </div>
-        <div id="eaterydetails">
-            <p>details</p>
+        <div id="book-section">
+            book
         </div>
     </section>
-
-    
-    <section class = "heading">
-        <h1>Book a Voucher</h1>
-    </section>
-    
-    
-    <!--Book a Voucher-->
-    <section class = "container" id = "voucherPart">
-        
-        <div style = "text-align:left" id="time-switch">
-            <button id="Breakfast-btn">Breakfast</button>
-            <button id="Lunch-btn">Lunch</button>
-            <button id="Dinner-btn">Dinner</button>
-        </div>
-        <div id="breakfast">
-            <table border ="1px">
-                <thread>
-                    <tr>
-                        <th>Monday
-                            5/6/21
-                            9am
-                        </th>
-                        <th>
-                            Tuesday
-                            7/6/21
-                            9am
-                        </th>
-                        <th>
-                            Wednesday
-                            8/6/21
-                            9am
-                        </th>
-                        <th>
-                            Thursday
-                            9/6/21
-                            9am
-                        </th>
-                        <th>
-                            Friday
-                            10/6/21
-                            9am
-                        </th>
-                        <th>
-                            Saturday
-                            11/6/21
-                            9am
-                        </th>
-                    </tr>
-                </thread>
-                <tbody>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                </tbody>
-            </table>
-        </div>
-        <div id="lunch">
-            <table border ="1px">
-                <thread>
-                    <tr>
-                        <th>Monday
-                            5/6/21
-                            11am
-                        </th>
-                        <th>
-                            Tuesday
-                            7/6/21
-                            11am
-                        </th>
-                        <th>
-                            Wednesday
-                            8/6/21
-                            11am
-                        </th>
-                        <th>
-                            Thursday
-                            9/6/21
-                            11am
-                        </th>
-                        <th>
-                            Friday
-                            10/6/21
-                            11am
-                        </th>
-                        <th>
-                            Saturday
-                            11/6/21
-                            11am
-                        </th>
-                    </tr>
-                </thread>
-                <tbody>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                </tbody>
-            </table>
-        </div>
-        <div id="dinner">
-            <table border ="1px">
-                <thread>
-                    <tr>
-                        <th>Monday
-                            5/6/21
-                            18pm
-                        </th>
-                        <th>
-                            Tuesday
-                            7/6/21
-                            18pm
-                        </th>
-                        <th>
-                            Wednesday
-                            8/6/21
-                            18pm
-                        </th>
-                        <th>
-                            Thursday
-                            9/6/21
-                            18pm
-                        </th>
-                        <th>
-                            Friday
-                            10/6/21
-                            18pm
-                        </th>
-                        <th>
-                            Saturday
-                            11/6/21
-                            18pm
-                        </th>
-                    </tr>
-                </thread>
-                <tbody>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                    <td onclick="alert('Not done yet')" style="text-align:center;">
-                        book
-                    </td>
-                </tbody>
-            </table>
-        </div>
-        
-    </section>
-
-    
-
-    <!-- comments-->
-
-    <section class = "comment-heading"> 
-        <h1>Comments</h1>
-    </section>
-
-    <section class = "container" id = "comments">
-
-        <input type="text" placeholder = "Add comments" id="commentbar">
-    </section>
-    
-    <script src="../static/scripts/eatery_public_profile.js"></script>
+    <footer>
+        footer
+    </footer>
+    <script src="../../static/scripts/eatery_public_profile.js"></script>
 </body>
 </html>

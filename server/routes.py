@@ -72,6 +72,7 @@ def eatery_login_info():
     data = json.loads(request.data)
     try:
         res = eatery_login(data['email'], data['password'])
+        print(res)
         return json.dumps(res)
     except InputError:
         print(InputError.message)
@@ -254,3 +255,10 @@ def eatery_delete_image():
 def eatery_public_profile(id):
     print(type(id))
     return render_template('eatery_public_profile.html')
+
+@app.route('/eatery/profile/<int:id>/get_image', methods=['GET'])
+def eatery_public_get_image(id):
+    try:
+        return json.dumps({'data':get_image_by_id(id)})
+    except InputError:
+        return ''

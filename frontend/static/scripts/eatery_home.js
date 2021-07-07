@@ -43,8 +43,7 @@ Array.from(profile_btn).forEach(element => {
  */
 function loadPage() {
     let token = window.sessionStorage.getItem('token')
-
-    if (token === null) {
+    if (token === 'undefined' || token === null) {
         displayDefault();
     } else {
         displayUser(token);
