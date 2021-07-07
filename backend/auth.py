@@ -1,3 +1,4 @@
+
 import string
 import random
 import jwt
@@ -274,7 +275,7 @@ def auth_password_reset(reset_code, new_password):
     
 # function for checking if the token is valid
 def valid_token(token):
-    eatery = Eatery.query.filter_by(token=token)
+    eatery = Eatery.query.filter_by(token=token).first()
     # diner = Diner.query.filter_by(token=token)
     if eatery is None:
         return False
@@ -312,3 +313,20 @@ def diner_profile_update(token, first_name, last_name, phone):
 
 if __name__ == "__main__":
     print(generate_token(123))
+    result1 = diner_register("jay123@gmail.com", "123Cjj", "Jay", "Chen", "0470397745")
+    print(result1)
+
+    result2 = diner_register("jay12345@gmail.com", "123Cjj", "Hayden", "Chen", "3000800")
+    print(result2)
+    diners = Diner.query.filter_by(last_name="Chen").all()
+    for diner in diners:
+        print(diner.email)
+
+
+    #print(data)
+    #result2 = diner_login("jay123@gmail.com", "123Cjj")
+    #print(result2)
+
+    #print(eatery.token)
+    #print(eatery.phone)
+    #print(eatery.eatery_name)

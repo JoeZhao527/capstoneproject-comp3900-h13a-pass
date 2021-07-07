@@ -50,7 +50,7 @@ def get_eatery_by_token(token):
     return data
 
 # get diner information by token for diner profile
-def get_diner_by_tokesn(token):
+def get_diner_by_token(token):
     diner = Diner.query.filter_by(token=token).first()
     data = dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys())
     return data
@@ -69,3 +69,11 @@ def store_image(eatery_id, image):
 def get_image(eatery_id):
     images = Image.query.filter_by(eatery_id=eatery_id).all()
     return [dict((col, getattr(img, col)) for col in img.__table__.columns.keys()) for img in images]
+
+# get dictionary by given an eatery item (convert an eatery in database into a dictionary)
+def dictionary_of_eatery(eatery):
+    data = dict((col, getattr(eatery, col)) for col in eatery.__table__.columns.keys())
+    return data
+def dictionary_of_diner(diner):
+    data = dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys())
+    return data
