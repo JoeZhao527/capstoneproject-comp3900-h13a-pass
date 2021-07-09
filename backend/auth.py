@@ -69,7 +69,7 @@ def create_diner(first_name, last_name, email, password, phone, token):
 
 
 # a function that create a new account for the eatery by given valid email, password, name and phone
-def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, description):
+def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
@@ -99,6 +99,10 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
         raise InputError("Eatery menu invalid")
     if len(description) > 50:
         raise InputError("description invalid")
+    if len(city) > 20:
+        raise InputError("Eatery city invalid")
+    if len(suburb) > 20:
+        raise InputError("Eatery suburb invalid")
 
     # hash the password for security
     hashed_password = hash_password(password)
@@ -109,7 +113,7 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
     token = generate_token(userid)
     
     # create an eatery and store in the database, return the eatery_id
-    eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, cuisine, description, token)
+    eatery_id = create_eatery(first_name, last_name, email, hashed_password, phone, eatery_name, address, menu, cuisine, city, suburb, description, token)
     return {'eatery_id': eatery_id, 'token': token}
 
 # a function that create a new account for the diner by given valid email, password, name and phone
@@ -282,7 +286,7 @@ def valid_token(token):
     return True
 
 # function for updating the eatery profile (eaterie's info), can seperate the function if necessary
-def eatery_profile_update(token, first_name, last_name, phone, eatery_name, address, menu, cuisine, description):
+def eatery_profile_update(token, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, subrub, description):
     if not valid_token(token):
         raise InputError("Invalid token")
     # get eatery by token, update the info
@@ -294,6 +298,8 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
     eatery.address = address
     eatery.menu = menu
     eatery.cuisine = cuisine
+    eatery.city = city
+    eatery.suburb = subrub
     eatery.desciption = description
     db.session.commit()
     return get_eatery_by_token(token)

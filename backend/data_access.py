@@ -16,8 +16,8 @@ def delete_item(item):
     db.session.commit()
 
 # insert an eatery to database
-def create_eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, description, token):
-    eatery = Eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, description, token)
+def create_eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, city, suburb, description, token):
+    eatery = Eatery(first_name, last_name, email, password, phone_number, eatery_name, address, menu, cuisine, city, suburb, description, token)
     add_item(eatery)
     return eatery.id
 

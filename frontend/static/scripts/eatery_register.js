@@ -33,8 +33,9 @@ function register() {
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.response) {
-                sessionStorage.setItem('token', this.response['token']);
-                sessionStorage.setItem('id', this.response['eatery_id']);
+                res = JSON.parse(this.response)
+                sessionStorage.setItem('token', res['token']);
+                sessionStorage.setItem('id', res['eatery_id']);
                 sessionStorage.setItem('utype', 'eatery');
                 window.location.href = eatery_home;
             } else {
