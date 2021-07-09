@@ -6,41 +6,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eatery public</title>
     <link rel="stylesheet" href="../../static/styles/eatery_public_profile.css">
+    <link rel="stylesheet" href="../../static/styles/login.css">
 </head>
 <body>
     <nav id="nav-bar">
         <button id="home-btn">Value Eat</button>
-        <button id="logout-btn">logout</button>
-        <button id="login-btn">login</button>
-        <button id="profile-btn">profile</button>
-        <button id="sign-up-btn">sign-up</button>
+        <input type="text" placeholder = "Find your eatery" id="search">
+        <button id="sign-up-btn" class="nav-btn">sign-up</button>
+        <button id="profile-btn" class="nav-btn">profile</button>
+        <button id="login-btn" class="nav-btn">login</button>
+        <button id="logout-btn" class="nav-btn">logout</button>
     </nav>
-    <section id="head-container" class="container">
-        <div id="header-section">
-            header
+    <div id="image-section" class="container">
+        <div id="image-container"></div>
+        <button id="slide-right" class="arrow arrow--right"></button>
+        <button id="slide-left" class="arrow arrow--left"></button>
+    </div>
+    <div class="left-block">
+        <div id="header-section"  class="container">
+            <h1 id="eatery-name"></h1>
         </div>
-        <div id="image-section">
-            <div id="image-container"></div>
-            <button id="slide-right" class="arrow arrow--right"></button>
-            <button id="slide-left" class="arrow arrow--left"></button>
-        </div>
-    </section>
-    <section id="main-container" class="container">
-        <div id="main-section">
+        <div id="main-section"  class="container">
             <div id="content-section">
-                content
+                <h1>Overview</h1>
+                <span id="cuisine"></span> /
+                <button id="description-btn"> Description & Menu</button> /
+                <button id="contact-btn"> Address & Contact</button> /
+                <div id="description" class="content-sub">
+                    <p>The eatery is too lazy, didn't write any description</p>
+                </div>
+                <div id="contact" class="content-sub">
+                    <div>
+                        <h3>City</h3>
+                        <p id="city">city</p>
+                    </div>
+                    <div>
+                        <h3>Suburb</h3>
+                        <p id="suburb">suburb</p>
+                    </div>
+                    <div>
+                        <h3>Address</h3>
+                        <p id="address">address</p>
+                    </div>
+                    <div>
+                        <h3>Phone</h3>
+                        <p id="phone">phone</p>
+                    </div>
+                    <div>
+                        <h3>Email</h3>
+                        <p id="email">email</p>
+                    </div>
+                </div>
+                <div id="menu">
+
+                </div>
             </div>
             <div id="comment-section">
+                <h1>Comment</h1>
                 comment
             </div>
         </div>
-        <div id="book-section">
-            book
+    </div>
+    <div id="book-section" class="container right-block">
+        book
+    </div>
+    <section id="login-page">
+        <div class="center">
+            <h1>Login</h1>
+            <p id="login-msg"></p>
+            <div id="tabs">
+                <button id="diner" class="tab">Diner</button>
+                <button id="eatery" class="tab">Eatery</button>
+            </div>
+            <form id="login-form">
+                <div class="txt_field">
+                    <input type="text" name="email" required>
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" name="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div id="pass">Forgot Password</div>
+                <div class="signup_link">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
         </div>
     </section>
-    <footer>
-        footer
-    </footer>
     <script src="../../static/scripts/eatery_public_profile.js"></script>
+    <script src="../../static/scripts/logout.js"></script>
+    <script src="../../static/scripts/login.js"></script>
 </body>
 </html>

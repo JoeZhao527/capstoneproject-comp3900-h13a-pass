@@ -97,7 +97,7 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
         raise InputError("Eatery address invalid")
     if len(menu) > 50:
         raise InputError("Eatery menu invalid")
-    if len(description) > 50:
+    if len(description) > 1000:
         raise InputError("description invalid")
     if len(city) > 20:
         raise InputError("Eatery city invalid")
@@ -300,7 +300,7 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
     eatery.cuisine = cuisine
     eatery.city = city
     eatery.suburb = subrub
-    eatery.desciption = description
+    eatery.description = description
     db.session.commit()
     return get_eatery_by_token(token)
 

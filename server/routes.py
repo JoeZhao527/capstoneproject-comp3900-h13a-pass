@@ -254,7 +254,6 @@ def eatery_delete_image():
 ################ EATERY PUBLIC PROFILE ##################
 @app.route('/eatery/profile/<int:id>', methods=['GET'])
 def eatery_public_profile(id):
-    print(type(id))
     return render_template('eatery_public_profile.html')
 
 @app.route('/eatery/profile/<int:id>/get_image', methods=['GET'])
@@ -262,4 +261,11 @@ def eatery_public_get_image(id):
     try:
         return json.dumps({'data':get_image_by_id(id)})
     except InputError:
+        return ''
+
+@app.route('/eatery/profile/<int:id>/get_info', methods=['GET'])
+def eatery_public_get_info(id):
+    try:
+        return json.dumps(get_eatery_by_id(id))
+    except:
         return ''
