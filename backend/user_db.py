@@ -1,5 +1,6 @@
 # crutial import for backend to run py itself
 import os, sys
+from re import sub
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
@@ -21,11 +22,13 @@ class Eatery(db.Model):
     address = db.Column(db.String(50), nullable=False)
     menu = db.Column(db.String(50))
     cuisine = db.Column(db.String(50))
+    city = db.Column(db.String(20))
+    suburb = db.Column(db.String(20))
     description = db.Column(db.String(200))
     token = db.Column(db.String(200), unique=True)
     reset_code = db.Column(db.String(20))
 
-    def __init__(self, first_name, last_name, email, password, phone, eatery_name, address, menu, cuisine, description, token):
+    def __init__(self, first_name, last_name, email, password, phone, eatery_name, address, menu, cuisine, city, suburb, description, token):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -35,6 +38,8 @@ class Eatery(db.Model):
         self.address = address
         self.menu = menu
         self.cuisine = cuisine
+        self.city = city
+        self.suburb = suburb
         self.description = description
         self.token = token
 
