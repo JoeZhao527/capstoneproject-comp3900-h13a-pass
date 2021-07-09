@@ -107,8 +107,9 @@ def eatery_register_check():
         res = eatery_register(data['email'], data['password'],
                             data['fname'], data['lname'],data['phone'],
                             data['ename'], data['address'], data['menu'],
-                            data['cuisines'], data['description'])
-        return res['token']
+                            data['cuisines'], data['city'], data['suburb'],
+                            data['description'])
+        return json.dumps(res)
     except InputError:
         print(InputError.message)
         return ''
@@ -130,8 +131,8 @@ def eatery_private_profile_update():
     data = json.loads(request.data)
     try:
         res = eatery_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
-                            data['eatery_name'], data['address'], data['menu'],
-                            data['cuisines'], data['description'])
+                            data['eatery_name'], data['address'], data['menu'], data['cuisines'], 
+                            data['city'], data['suburb'] ,data['description'])
         return ''
     except InputError:
         return 'failed'
