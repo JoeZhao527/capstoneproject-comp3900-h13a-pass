@@ -43,11 +43,15 @@ def get_eatery_id(token):
     eatery = Eatery.query.filter_by(token=token).first()
     return eatery.id
 
+# get eatery information by id, for eatery public profile
+def get_eatery_by_id(id):
+    eatery = Eatery.query.filter_by(id=id).first()
+    return dictionary_of_eatery(eatery)
+
 # get eatery information by token for eatery profile
 def get_eatery_by_token(token):
     eatery = Eatery.query.filter_by(token=token).first()
-    data = dict((col, getattr(eatery, col)) for col in eatery.__table__.columns.keys())
-    return data
+    return dictionary_of_eatery(eatery)
 
 # get diner information by token for diner profile
 def get_diner_by_token(token):
@@ -74,6 +78,7 @@ def get_image(eatery_id):
 def dictionary_of_eatery(eatery):
     data = dict((col, getattr(eatery, col)) for col in eatery.__table__.columns.keys())
     return data
+
 def dictionary_of_diner(diner):
     data = dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys())
     return data

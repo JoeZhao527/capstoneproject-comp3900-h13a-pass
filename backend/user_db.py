@@ -24,7 +24,7 @@ class Eatery(db.Model):
     cuisine = db.Column(db.String(50))
     city = db.Column(db.String(20))
     suburb = db.Column(db.String(20))
-    description = db.Column(db.String(200))
+    description = db.Column(db.String(1000))
     token = db.Column(db.String(200), unique=True)
     reset_code = db.Column(db.String(20))
 
