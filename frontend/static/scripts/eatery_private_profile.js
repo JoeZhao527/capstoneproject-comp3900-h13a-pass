@@ -1,9 +1,18 @@
 // path
-const eatery_home = '/'
+const eatery_home = '/eatery/home'
 
 // token and id
 let token = sessionStorage.getItem('token');
 let eatery_id = sessionStorage.getItem('id');
+
+// check if there's no token
+function loadPage() {
+    if (token === 'undefined' || token === null) {
+        window.location.href = eatery_home;
+    }
+}
+
+loadPage();
 
 /* side bar swicth page logic */
 const side_bar = document.getElementById('side-bar')

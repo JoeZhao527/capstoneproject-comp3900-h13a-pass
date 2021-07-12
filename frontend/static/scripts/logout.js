@@ -5,7 +5,7 @@ _logout.onclick = () => {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('id');
         sessionStorage.removeItem('utype');
-        window.location.href = eatery_home;
+        loadPage();
     } else {
         alert('logout failed');
     }

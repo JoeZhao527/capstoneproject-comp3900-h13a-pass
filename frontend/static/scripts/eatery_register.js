@@ -20,15 +20,7 @@ submit_btn.addEventListener('click', function(e) {
         }
     });
     data['cuisines'] = cuisines.join(',');
-    let token = register();
-    if (token !== '') {
-        sessionStorage.setItem('token', token);
-        console.log('data')
-        window.location.href = eatery_home;
-    } else {
-        alert('sign up failed')
-    }
-    clear();
+    register();
 })
 
 /**
@@ -38,8 +30,21 @@ function register() {
     // send data and receive token
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/eatery/register', false);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.response) {
+                res = JSON.parse(this.response)
+                sessionStorage.setItem('token', res['token']);
+                sessionStorage.setItem('id', res['eatery_id']);
+                sessionStorage.setItem('utype', 'eatery');
+                window.location.href = eatery_home;
+            } else {
+                alert('sign up failed')
+            }
+            clear();
+        }
+    }
     xhr.send(JSON.stringify(data))
-    return xhr.response;
 }
 
 /* clean up cuisines, data and inputs */

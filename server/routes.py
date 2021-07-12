@@ -72,6 +72,7 @@ def eatery_login_info():
     data = json.loads(request.data)
     try:
         res = eatery_login(data['email'], data['password'])
+        print(res)
         return json.dumps(res)
     except InputError:
         print(InputError.message)
@@ -106,8 +107,9 @@ def eatery_register_check():
         res = eatery_register(data['email'], data['password'],
                             data['fname'], data['lname'],data['phone'],
                             data['ename'], data['address'], data['menu'],
-                            data['cuisines'], data['description'])
-        return res['token']
+                            data['cuisines'], data['city'], data['suburb'],
+                            data['description'])
+        return json.dumps(res)
     except InputError:
         print(InputError.message)
         return ''
@@ -129,8 +131,8 @@ def eatery_private_profile_update():
     data = json.loads(request.data)
     try:
         res = eatery_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
-                            data['eatery_name'], data['address'], data['menu'],
-                            data['cuisines'], data['description'])
+                            data['eatery_name'], data['address'], data['menu'], data['cuisines'], 
+                            data['city'], data['suburb'] ,data['description'])
         return ''
     except InputError:
         return 'failed'
@@ -252,5 +254,18 @@ def eatery_delete_image():
 ################ EATERY PUBLIC PROFILE ##################
 @app.route('/eatery/profile/<int:id>', methods=['GET'])
 def eatery_public_profile(id):
-    print(type(id))
     return render_template('eatery_public_profile.html')
+
+@app.route('/eatery/profile/<int:id>/get_image', methods=['GET'])
+def eatery_public_get_image(id):
+    try:
+        return json.dumps({'data':get_image_by_id(id)})
+    except InputError:
+        return ''
+
+@app.route('/eatery/profile/<int:id>/get_info', methods=['GET'])
+def eatery_public_get_info(id):
+    try:
+        return json.dumps(get_eatery_by_id(id))
+    except:
+        return ''
