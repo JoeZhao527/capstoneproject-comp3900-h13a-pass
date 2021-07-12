@@ -3,11 +3,10 @@ const login_sec = document.getElementById('login-page');
 const login_form = document.getElementById('login-form');
 const eatery_btn = document.getElementById('eatery');
 const diner_btn = document.getElementById('diner');
-console.log(login_sec,login_form,eatery_btn,diner_btn)
+
 let data = { email: "", password: "", utype: "eatery" };
 
 login_btn.addEventListener('click', function() {
-    //window.location.href = '/login';
     showLogin();
 })
 
@@ -33,6 +32,12 @@ login_form.onsubmit = (event) => {
     else {
         eatery_login();
     }
+    // clear up login form
+    Array.from(login_form).forEach(e => {
+        if(e.type !== 'button' && e.type !== 'submit' && e.name) {
+            e.value = '';
+        }
+    });
 }
 
 function eatery_login() {
