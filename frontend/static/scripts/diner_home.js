@@ -132,40 +132,75 @@ document.onmousedown = (e) => {
     }
 }
 
+
 login_form.onsubmit = (event) => {
+    event.preventDefault();
     Array.from(login_form).forEach(e => {
         if(e.type !== 'button' && e.type !== 'submit' && e.name) {
             data[e.name] = e.value;
         }
     });
     console.log(data);
-    // if (data['utype'] === 'diner') {alert('diner is not implemented yet')}
-    // else {
-    //     let token = login();
-    //     if (token) {
-    //         window.sessionStorage.setItem('token', token);
-    //     } else {
-    //         alert('login failed');
-    //     }
-    //     loadPage();
-    // }
-    let token = login();
-        if (token) {
-            window.sessionStorage.setItem('token', token);
-        } else {
-            alert('login failed');
-        }
-        loadPage();
-    closeLogin();
+    if (data['utype'] === 'diner') {
+        diner_login();
+    }
+    else {
+        eatery_login();
+    }
 }
 
-function login() {
+
+function eatery_login() {
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'login', false);
+    xhr.open('POST', '/eatery/login', false);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.response) {
+                let res = JSON.parse(this.response);
+                console.log(res);
+                window.sessionStorage.setItem('token', res['token']);
+                window.sessionStorage.setItem('id', res['eatery_id']);
+                window.sessionStorage.setItem('utype', 'eatery');
+                loadPage();
+                closeLogin();
+            } else {
+                document.getElementById('login-msg').innerHTML = 'invalid email or password';
+                login_form.reset();
+                setTimeout(() => {
+                    document.getElementById('login-msg').innerHTML = '';
+                }, 3000);
+            }
+        }
+    }
     xhr.send(JSON.stringify(data));
-    return xhr.response;
 }
+
+function diner_login() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/diner/login', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.response) {
+                let res = JSON.parse(this.response);
+                window.sessionStorage.setItem('token', res['token']);
+                window.sessionStorage.setItem('id', res['diner_id']);
+                window.sessionStorage.setItem('utype', 'diner');
+                loadPage();
+                closeLogin();
+            } else {
+                document.getElementById('login-msg').innerHTML = 'invalid email or password';
+                login_form.reset();
+                setTimeout(() => {
+                    document.getElementById('login-msg').innerHTML = '';
+                }, 3000);
+            }
+        }
+    }
+    xhr.send(JSON.stringify(data));
+}
+
 
 eatery_btn.onclick = () => {
     displayTab('eatery');
@@ -202,3 +237,32 @@ const forgot_pass = document.getElementById('pass');
 forgot_pass.onclick = () => {
     window.location.href = "/reset_pass"
 }
+
+const _logout = document.getElementById('logout-btn');
+_logout.onclick = () => {
+    if (logout()) {
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('id');
+        loadPage();
+    } else {
+        alert('logout failed');
+    }
+}
+
+/**
+ * send logout request to backend
+ */
+ function logout() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/logout', false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(`{"token":"${sessionStorage.getItem('token')}"}`);
+    return xhr.response
+}
+
+function showEatery() {
+    let xhr = new XMLHttpRequest();
+    console.log(data);
+
+}
+showEatery();

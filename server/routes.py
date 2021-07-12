@@ -36,11 +36,11 @@ def diner_register_load():
 @app.route('/diner/register', methods=['POST'])
 def diner_register_check():
     data = json.loads(request.data)
+    print(data)
     try:
-        res = eatery_register(data['email'], data['password'],
-                            data['fname'], data['lname'],data['phone'],
-                            data['ename'])
-        return res['token']
+        res = diner_register(data['email'], data['password'],
+                            data['fname'], data['lname'],data['phone'])
+        return json.dumps(res)
     except InputError:
         print(InputError.message)
         return ''
@@ -51,8 +51,19 @@ def diner_private_profile_load():
 
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
-    # TODO
-    return ''
+    data = json.loads(request.data)
+    print(data)
+    try:
+        res = diner_login(data['email'], data['password'])
+        print(res)
+        return json.dumps(res)
+    except InputError:
+        print(InputError.message)
+        return ''
+@app.route('/diner/home/getEatery',methods=['GET'])
+def diner_getEatery():
+    try:
+        return json.dumps()
 
 ###########################################################
 ##                   EATERY ROUTES                       ##

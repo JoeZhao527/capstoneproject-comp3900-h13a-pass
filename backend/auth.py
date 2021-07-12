@@ -205,19 +205,19 @@ def diner_login(email, passowrd):
 # assume there won't be a diner has the same token as an eatery
 # otherwise just split this function into two functions
 def auth_logout(token):
-    eatery = Eatery.query.filter_by(token=token).first()
-    diner = Diner.query.filter_by(token=token).first()
+    eatery = Eatery.query.filter_by(token=token)
+    diner = Diner.query.filter_by(token=token)
     # if there is a eatery with the token, token valid, invalidate the token
-    if eatery is not None:
+    if eatery:
         # user.if_logged_in = False
         # end the active token of eatery
-        eatery.token = None
+        eatery.first().token = None
         db.session.commit()
         return {"logout_success": True}
     # else if there is a diner with the token, invalidate the token
-    elif diner is not None:
+    elif diner:
         # end the active token of diner
-        diner.token = None
+        diner.first().token = None
         db.session.commit()
         return {"logout_success": True}
     return {"logout_success": False}
