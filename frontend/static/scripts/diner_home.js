@@ -262,7 +262,42 @@ _logout.onclick = () => {
 
 function showEatery() {
     let xhr = new XMLHttpRequest();
-    console.log(data);
+    xhr.open('GET', '/diner/home/getEatery',true);
+    xhr.setRequestHeader('Content-Type', 'application/json')
+
+    console.log(xhr);
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let eatery_list = JSON.parse(this.response)
+            console.log(eatery_list);
+            for (const i = 0; i < eatery_list.length; i++) {
+                const eatery_div = document.createElement('div')
+                eatery_div.className = 'section'
+
+                const img = new Image()
+                // img.src = 
+                img.className = 'img'
+
+                const name = document.createElement('h2')
+                // name.textContent=
+
+                const details = doucment.createElement('p')
+                // details.textContent =
+
+                eatery_div.appendChild(img)
+                eatery_div.appendChild(name)
+                eatery_div.appendChild(details)
+                // eatery_div.appendChild()
+
+                eatery_div.addEventListener('click', function() {
+                    // window.location.href = /eatery/profile/${i+1};
+                })
+            }
+        }
+
+    }
+    xhr.send();
 
 }
 showEatery();
