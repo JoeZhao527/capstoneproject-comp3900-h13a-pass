@@ -282,3 +282,10 @@ def eatery_public_get_info(id):
         return json.dumps(get_eatery_by_id(id))
     except:
         return ''
+
+@app.route('/eatery/profile/<int:id>/get_vouchers', methods=['GET'])
+def eatery_public_get_voucher(id):
+    try:
+        return json.dumps(get_eatery_voucher(id))
+    except:
+        return  ''

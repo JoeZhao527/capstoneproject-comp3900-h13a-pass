@@ -24,8 +24,6 @@ function loadPage() {
     token = sessionStorage.getItem('token');
     user_id = sessionStorage.getItem('id');
     utype = sessionStorage.getItem('utype');
-    console.log(token)
-    console.log(user_btns, default_btns)
     if (token) displayUser();
     else displayDefault();
 }
@@ -115,7 +113,6 @@ function getInformation(eatery_id) {
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.response)
-            console.log(data)
             load_description(data['description'], data['cuisine']);
             load_contact(data);
             load_header(data['eatery_name']);
@@ -132,7 +129,6 @@ function load_description(_description, _cuisine) {
 function load_contact(data) {
     for (const item of contact_item) {
         let p = item.getElementsByTagName('p')[0];
-        console.log(p, p.id)
         p.innerHTML = data[p.id];
     }
 }
@@ -165,3 +161,130 @@ function displayContent(page) {
 }
 
 displayContent(description);
+
+/* voucher booking */
+const book_section = document.getElementById('book-section');
+
+/**
+ * add a date fileter to the booking section
+ */
+function loadVoucherFilter() {
+    var minDay = new Date();
+    var dd = String(minDay.getDate()).padStart(2, '0');
+    var mm = String(minDay.getMonth() + 1).padStart(2, '0');
+    var yyyy = minDay.getFullYear();
+    minDay = yyyy + '-' + mm + '-' + dd;
+    
+    var maxDay = new Date();
+    maxDay.setDate(maxDay.getDate() + 7); 
+    var dd = String(maxDay.getDate()).padStart(2, '0');
+    var mm = String(maxDay.getMonth() + 1).padStart(2, '0');
+    var yyyy = maxDay.getFullYear();
+    maxDay = yyyy + '-' + mm + '-' + dd;
+    
+    book_section.innerHTML = `<h2> Book A Voucher!</h2> select date:
+    <input id="date-filter" type="date" min="${minDay}" max="${maxDay}" value="${minDay}">
+    <div id="voucher-container"><p>No Vouchers Avaliable Today</p></div>`;
+}
+
+// add date filter to booking section when page load
+loadVoucherFilter();
+
+const voucher_container = document.getElementById('voucher-container');
+
+// get date fileter
+const date_filter_input = document.getElementById('date-filter');
+let date_filter = date_filter_input.value;
+
+date_filter_input.onchange = (e) => {
+    date_filter = e.target.value;
+    voucher_container.innerHTML = '<p>No Vouchers Avaliable Today</p>';
+    public_loadVouchers(profile_id);
+}
+
+let voucher_list = []
+
+function addVoucherItem(item) {
+    let data = item['data']
+    let ids = item['id']
+    if (data['date'] == date_filter) {
+        let date = stringifyDate(data['date'], data['weekday']);
+        let period = stringifyTime(data['start_time'], data['end_time']);
+        let discount = stringifyDiscount(data['discount']);
+        let num = stringifyNum(ids.length);
+    
+        // create node
+        /**
+         * Voucher structure:
+            <div class="voucherNode">
+                <div class="discountNode"></div>
+                <div class="voucherTimeNode">
+                    <div class="dateNode"></div>
+                    <div class="timeNode"></div>
+                </div>
+                <div class="bookNode"></div>
+            </div>
+         */
+        let voucherNode = document.createElement('div');
+    
+        let dateNode = document.createElement('div');
+        dateNode.innerHTML = date;
+        let periodNode = document.createElement('div');
+        periodNode.innerHTML = period;
+        let discountNode = document.createElement('div');
+        discountNode.innerHTML = discount;
+        discountNode.className = 'discount';
+        let numNode = document.createElement('p');
+        numNode.innerHTML = num;
+        let bookNode = document.createElement('div');
+        bookNode.innerHTML = "book";
+        bookNode.className = "book";
+    
+        let voucherTimeNode = document.createElement('section');
+        voucherTimeNode.appendChild(dateNode);
+        voucherTimeNode.appendChild(periodNode);
+        voucherTimeNode.appendChild(numNode);
+    
+        voucherNode.appendChild(discountNode);
+        voucherNode.appendChild(voucherTimeNode);
+        voucherNode.appendChild(bookNode);
+
+        voucherNode.onclick = () => {
+            checkUser(utype, ids);
+        }
+
+        voucher_container.appendChild(voucherNode);
+
+        // if a voucher is added, remove the "no voucher" text
+        let no_res = voucher_container.getElementsByTagName('p')[0]
+        voucher_container.removeChild(no_res);
+    }
+}
+
+/**
+ * 
+ * @param date date of the voucher
+ * @param weekday weekday of the voucher
+ * @returns a date + weekday string, e.g. 07-21 Tue
+ */
+function stringifyDate(date, weekday) {
+    return date.split('-')[1] + '-' + date.split('-')[2] + ' ' + weekday;
+}
+
+/**
+ * 
+ * @param {string} start 
+ * @param {string} end 
+ * @returns valid time for voucher, e.g. 16:00 - 20:00
+ */
+function stringifyTime(start, end) {
+    return start + ' ~ ' + end;
+}
+
+function stringifyDiscount(discount) {
+    return `${discount}%\n OFF!`
+}
+
+function stringifyNum(len) {
+    return `Only ${len} Vouchers Left!`;
+}

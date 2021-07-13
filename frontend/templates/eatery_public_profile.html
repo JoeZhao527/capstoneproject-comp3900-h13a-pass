@@ -73,7 +73,8 @@
         </div>
     </div>
     <div id="book-section" class="container right-block">
-        <h2> vouchers booking section</h2>
+        <input type="date" min="2013-06-28" max="2013-07-04">
+        <div id="voucher-container">nothing found</div>
     </div>
     <section id="login-page">
         <div class="center">
@@ -101,8 +102,16 @@
             </form>
         </div>
     </section>
+    <section id="book-failed-page">
+        <div class="center">
+            <h2>Only Diner Can Book Vouchers!</h2>
+            <button> OK </button>
+        </div>
+    </section>
     <script src="../../static/scripts/eatery_public_profile.js"></script>
-    <script src="../../static/scripts/logout.js"></script>
+    <script src="../../static/scripts/load_vouchers.js"></script>
     <script src="../../static/scripts/login.js"></script>
+    <script src="../../static/scripts/logout.js"></script>
+    <script src="../../static/scripts/book_voucher.js"></script>
 </body>
 </html>
