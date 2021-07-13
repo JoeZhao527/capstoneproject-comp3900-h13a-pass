@@ -63,7 +63,9 @@ def diner_login_info():
 @app.route('/diner/home/getEatery',methods=['GET'])
 def diner_getEatery():
     try:
-        return json.dumps(get_num_eatery())
+        data = get_num_eatery()
+        print(data)
+        return json.dumps(data)
     except:
         return ''
 
