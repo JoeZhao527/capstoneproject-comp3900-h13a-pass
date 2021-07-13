@@ -59,14 +59,58 @@ def view_eatery_profile():
 
 # TODO: Sprint2 user story3
 # function for booking a voucher
+# 7. As a diner, I want to be able to book a voucher and see 
+# the time range for the available discount voucher so that I 
+# can plan ahead according to the booked voucher's time.
 def book_voucher(token, diner_id, voucher_id):
-    return
+    # Check if given token is valid
+    if not valid_token(token):
+        raise InputError("Invalid token")
+    # Check if voucher exists
+    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    if voucher is None:
+        raise InputError("Voucher does not exist")
+    # Get schedule information with voucher
+    schedule = Schedule.query.filter_by(eatery_id=voucher.eatery_id, weekday=voucher.weekday, 
+                                        start_time=voucher.start_time, end_time=voucher.end_time).first()
+    # Check if schedule corresponds with this voucher
+    if schedule is None:
+        raise InputError("Schedule does not exist")
+        
+    voucher.diner_id = diner_id
+    voucher.if_booked = true
+    schedule.no_vouchers -= 1
+    return {}
+    
 # function for cancelling a voucher.
 def cancel_voucher(token, diner_id, voucher_id):
-    return
+    # Check if given token is valid
+    if not valid_token(token):
+        raise InputError("Invalid token")
+    # Check if voucher exists
+    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    if voucher is None:
+        raise InputError("Voucher does not exist")
+    # Check if the voucher is booked by this diner
+    if diner_id != voucher.diner_id:
+        raise InputError("Voucher is not booked by this diner")
+    # Get schedule information with voucher
+    schedule = Schedule.query.filter_by(eatery_id=voucher.eatery_id, weekday=voucher.weekday, 
+                                        start_time=voucher.start_time, end_time=voucher.end_time).first()
+    # Check if schedule corresponds with this voucher
+    if schedule is None:
+        raise InputError("Schedule does not exist")
+    
+    voucher.diner_id = None
+    voucher.if_booked = false
+    schedule.no_voucher += 1;
+    return {}
 
 # TODO: Sprint2 user story4
 # function for cheking the booked voucher and show the voucher code to the eatery
 # given diner id, show a list of eateries that this diner has booked or is booking 
 def check_booking(token, diner_id):
-    return # a list of eateries
+    booking_list = []
+    # for voucher in Voucher.query.filter_by(diner_id=diner_id).all():
+    #     booking_list.append(voucher.eatery_id)
+    return { booking_list }# a list of eateries
