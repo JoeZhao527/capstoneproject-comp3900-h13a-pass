@@ -260,9 +260,62 @@ _logout.onclick = () => {
     return xhr.response
 }
 
+// section_style = 'width:80%; height: 200px;background-color:rgb(255, 255, 255);position:relative;left:10%;cursor: pointer;margin-bottom: 10px;'
+// img_style = ''
+
+
 function showEatery() {
     let xhr = new XMLHttpRequest();
-    console.log(data);
+    xhr.open('GET', '/diner/home/getEatery',true);
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    // console.log(xhr);
+    const section_container = document.getElementById('section_container')
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let eatery_list = JSON.parse(this.response)
+            console.log(eatery_list)
+            console.log(eatery_list.length)
+            
+            for (let i = 0; i < eatery_list.length; i++) {
+                eatery_detail = eatery_list[i]
+                let eatery_div = document.createElement('div')
+                eatery_div.className = 'section'
+                // eatery_div.style = section_style
+
+                let img = new Image()
+                img.src = "../static/images/food_4.jpg"
+                img.className = 'img'
+                // img.style=img_style
+
+                // let eatery_div = document.createElement('div')
+
+                let name = document.createElement('h2')
+                console.log(eatery_detail['eatery_name'])
+                name.innerHTML= eatery_detail['eatery_name']
+                // name.style = name_style
+
+                let details = document.createElement('p')
+                details.textContent = eatery_detail['cuisine']
+                // details.style= details_style
+
+                
+                let line = document.createElement('hr')
+                eatery_div.appendChild(img)
+                eatery_div.appendChild(name)
+                eatery_div.appendChild(details)
+                eatery_div.appendChild(line)
+                // eatery_div.appendChild()
+
+                eatery_div.addEventListener('click', function() {
+                    // window.location.href = /eatery/profile/${i+1};
+                })
+
+                section_container.appendChild(eatery_div)
+            }
+        }
+
+    }
+    xhr.send();
 
 }
 showEatery();

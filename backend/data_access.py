@@ -84,5 +84,9 @@ def dictionary_of_diner(diner):
     return data
 
 def get_num_eatery():
-    return  Eatery.query().all()
+    eatery = Eatery.query.filter_by().all()
+    data = []
+    for e in eatery:
+        data.append(dictionary_of_eatery(e))
+    return data
     
