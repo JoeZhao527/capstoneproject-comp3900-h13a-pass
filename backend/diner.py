@@ -78,9 +78,7 @@ def search_by_filter(token, date, time, location, cuisine):
 
 # function for finding discount voucher based on given keyword
 # key word use for matching the eatery_name
-def search_by_key(token, keyword):
-    if not valid_token(token):
-        raise InputError("Invalid token")
+def search_by_key(keyword):
     result = Eatery.query.all()
     eateries = []
     
