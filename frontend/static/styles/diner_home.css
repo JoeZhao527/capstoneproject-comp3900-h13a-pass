@@ -80,10 +80,12 @@
 
 /* login section */
 #login-page {
+    z-index:9999;
     display: none;
 }
 
 .center {
+    z-index:9999;
     position: absolute;
     top: 50%;
     left: 50%;

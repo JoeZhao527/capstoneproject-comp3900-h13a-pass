@@ -13,7 +13,7 @@
         <button class="sign-up nav-btn">Sign up</button>
         <button class="login nav-btn">Login</button>
         <button class="profile nav-btn">Profile</button>
-        <button class="logout nav-btn">Logout</button>
+        <button id = "logout-btn" class="logout nav-btn">Logout</button>
     </nav>
 
     <section id="login-page">
@@ -65,6 +65,10 @@
         </div>
     </div> 
 
+    <div id="section_container">
+
+    </div>
+    
     <div class = "section">
         <div class="img">
             <img src="../static/images/food_1.jpg" alt="">
@@ -92,14 +96,14 @@
         </div>
     </div>
     <hr>
-
+    
     <div class = "section">
         <div class="img">
-            <img src="../static/images/food_1.jpg" alt="">
+            <img src="../static/images/food_2.jpg" alt="">
             <!-- <h2 id="name" >BB's Beach Break</h2> -->
           </div>
         <div class="details">
-            <h2 id="name">BB's Beach Break</h2>
+            <h2 id="name">Peanut Butter Jelly</h2>
             <p display: inline-block;>suburb</p>
             <p display: inline-block;>cuisine</p>
             <form id="score_form">
@@ -122,6 +126,33 @@
     <hr>
 
 
+    <div class = "section">
+        <div class="img">
+            <img src="../static/images/food_3.jpg" alt="">
+            <!-- <h2 id="name" >BB's Beach Break</h2> -->
+          </div>
+        <div class="details">
+            <h2 id="name">Peanut Butter Jelly Lane Cove</h2>
+            <p display: inline-block;>suburb</p>
+            <p display: inline-block;>cuisine</p>
+            <form id="score_form">
+                <div class="star_evaluate">
+                    <input type="radio" id="scoreId_1" class="score score_1" name="score" value="1"/>
+                    <label for="scoreId_1" class="star star_1"></label>
+                    <input type="radio" id="scoreId_2" class="score score_2" name="score" value="2"/>
+                    <label for="scoreId_2" class="star star_2"></label>
+                    <input type="radio" id="scoreId_3" class="score score_3" name="score" value="3"/>
+                    <label for="scoreId_3" class="star star_3"></label>
+                    <input type="radio" id="scoreId_4" class="score score_4" name="score" value="4"/>
+                    <label for="scoreId_4" class="star star_4"></label>
+                    <input type="radio" id="scoreId_5" class="score score_5" name="score" value="5"/>
+                    <label for="scoreId_5" class="star star_5"></label>
+                </div>
+            </form>
+            <p>reviews</p>
+        </div>
+    </div>
+    <hr>
 
     
 <body>
@@ -129,5 +160,7 @@
 
 
     <script src="../static/scripts/diner_home.js"></script>
+    <!-- <script src="../static/scripts/logout.js"></script> -->
+    <!-- <script src="../static/scripts/login.js"></script> -->
 </body>
 </html>

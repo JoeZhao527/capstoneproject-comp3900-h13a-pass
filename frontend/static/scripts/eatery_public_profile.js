@@ -13,7 +13,7 @@ const eatery_private = '/eatery/profile/private';
 const home_btn = document.getElementById('home-btn');
 const login_btn = document.getElementById('login-btn');
 const logout_btn = document.getElementById('logout-btn');
-const sign_up_btn = document.getElementById('sign-up-btn')
+const sign_up_btn = document.getElementById('sign-up-btn');
 const profile_btn = document.getElementById('profile-btn');
 
 const user_btns = [logout_btn, profile_btn];
