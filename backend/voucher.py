@@ -92,7 +92,10 @@ def delete_voucher(token, voucher_id):
 
 # get all eatery's vouchers by eatery's token
 def get_eatery_voucher(token):
-    eatery = Eatery.query.filter_by(token=token).first()
+    if type(token) == str:
+        eatery = Eatery.query.filter_by(token=token).first()
+    else:
+        eatery = Eatery.query.filter_by(id=token).first()
     # check if eatery exist
     if eatery is None:
         raise InputError("Invalid token")
@@ -101,7 +104,7 @@ def get_eatery_voucher(token):
 
     # get all the schedeule query
     # store the schedules into list
-    for voucher in Voucher.query.filter_by(eatery_id=eatery.id).all():
+    for voucher in Voucher.query.filter_by(eatery_id=eatery.id, if_booked=False).all():
         item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
         # convert the start and end time to string
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
