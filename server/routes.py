@@ -64,7 +64,7 @@ def diner_login_info():
 def diner_getEatery():
     try:
         data = get_num_eatery()
-        print(data)
+        # print(data)
         return json.dumps(data)
     except:
         return ''
