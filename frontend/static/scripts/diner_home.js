@@ -287,7 +287,7 @@ function showEatery() {
                 img.className = 'img'
                 // img.style=img_style
 
-                let eatery_div = document.createElement('div')
+                // let eatery_div = document.createElement('div')
 
                 let name = document.createElement('h2')
                 console.log(eatery_detail['eatery_name'])
