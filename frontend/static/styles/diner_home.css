@@ -282,7 +282,7 @@ body{
 
 .section .img {
     display: inline-block;
-    width: 200px;
+    /* width: 200px; */
 }
 .section img{
     width: 150px;
@@ -295,6 +295,8 @@ body{
     display:inline-block;
     /* position: absolute; */
     width: 500px;
+    vertical-align:top;
+    margin-left: 20px;
 }
 
 hr {
