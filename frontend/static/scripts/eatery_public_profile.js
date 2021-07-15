@@ -232,7 +232,7 @@ function addVoucherItem(item) {
         let periodNode = document.createElement('div');
         periodNode.innerHTML = period;
         let discountNode = document.createElement('div');
-        discountNode.innerHTML = discount;
+        discountNode.innerHTML = discount; // discount "10% OFF"
         discountNode.className = 'discount';
         let numNode = document.createElement('p');
         numNode.innerHTML = num;
