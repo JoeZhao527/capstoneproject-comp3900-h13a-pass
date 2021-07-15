@@ -13,9 +13,9 @@ body {
 /* nav bar */
 #nav-bar {
     background-color:var(--primary-color);
-    padding: 25px;
     margin: -10px;
     box-shadow: 0 0 15px 0 black;
+    padding: 15px 0 15px 0;
 }
 
 #nav-bar button:hover{
@@ -31,27 +31,9 @@ body {
     color: black;
     background-color: var(--primary-color);
     width: 6rem;
-    height: 2.5rem;
-    margin-right: 3rem;
-    margin-top: -0.5rem;
+    height: 3rem;
+    margin-right: 4rem;
     float: right;
-}
-
-.sign-up, .profile {
-    font-weight: 600;
-    color: black;
-    background-color: white;
-    border: 1px black solid;
-    transition: 0.2s;
-}
-
-.sign-up:hover, .profile:hover {
-    background-color: var(--btn-hover-color);
-}
-
-#search {
-    width: 32rem;
-    height: 1.6rem;
 }
 
 .home {
@@ -61,9 +43,8 @@ body {
     font-size: 20px;
     font-style: italic;
     background-color: var(--primary-color);
-    width: 8rem;
-    height: 2rem;
-    margin-right: 4rem;
+    width: 16rem;
+    height: 3rem;
     float: left;
 }
 
@@ -74,6 +55,7 @@ body {
 
 /* container */
 .container {
+    margin-top: 1rem;
     display: flex;
 }
 
