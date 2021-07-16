@@ -141,7 +141,7 @@ def cancel_voucher(token, diner_id, voucher_id):
     db.session.commit()
     return {}
 
-# Shows a list of eateries of this diners current or past bookings
+# show a list of eateries of this diners current or past bookings
 def check_booking(token, diner_id):
     # List of bookings that diner has booked
     booking_list = []

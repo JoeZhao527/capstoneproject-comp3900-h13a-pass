@@ -73,7 +73,7 @@ def diner_login_info():
 @app.route('/diner/home/getEatery',methods=['GET'])
 def diner_getEatery():
     try:
-        data = get_num_eatery()
+        data = get_all_eatery()
         # print(data)
         return json.dumps(data)
     except:
@@ -268,7 +268,7 @@ def eatery_get_schedule():
 def eatery_get_voucher():
     data = json.loads(request.data)
     token = data['token']
-    res = get_eatery_voucher(token)
+    res = get_unbooked_voucher(token)
     print(res)
     return json.dumps(res)
 
@@ -321,7 +321,7 @@ def eatery_public_get_info(id):
 @app.route('/eatery/profile/<int:id>/get_vouchers', methods=['GET'])
 def eatery_public_get_voucher(id):
     try:
-        res = json.dumps(get_eatery_voucher(id))
+        res = json.dumps(get_unbooked_voucher(id))
         return res
     except:
         return  ''
