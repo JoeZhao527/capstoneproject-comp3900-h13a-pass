@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
 from backend.user_db import Eatery, Diner, Voucher
-from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token
+from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token, dictionary_of_eatery
 from backend.errors import InputError
 from server import db
 # for testing
@@ -339,10 +339,12 @@ if __name__ == "__main__":
     #checks = db.session.query(Eatery, Voucher).filter(Voucher.eatery_id == Eatery.id).filter(Voucher.id == 1).all()
     # checks = db.session.query(Eatery).join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
     #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
-    checks = Diner.query.all()
-    print(checks)
-    for Eatery in checks:
-        print(Eatery)
+    diners = Diner.query.all()
+    print(diners)
+    result = [dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys()) for diner in diners]
+    print(result)
+    result2 = [dictionary_of_eatery(eat) for eat in diners]
+    print(result2)
     #print(data)
     #result2 = diner_login("jay123@gmail.com", "123Cjj")
     #print(result2)

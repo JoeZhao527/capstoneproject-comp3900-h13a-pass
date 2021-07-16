@@ -90,7 +90,7 @@ def delete_voucher(token, voucher_id):
     voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
     delete_item(voucher)
 
-# get all eatery's vouchers by eatery's token
+# get all eatery's unbooked vouchers by eatery's token
 def get_eatery_voucher(token):
     if type(token) == str:
         eatery = Eatery.query.filter_by(token=token).first()
@@ -102,15 +102,15 @@ def get_eatery_voucher(token):
 
     voucher_list = []
 
-    # get all the schedeule query
-    # store the schedules into list
+    # get all the voucher query
+    # store the unbooked vouchers into list
     for voucher in Voucher.query.filter_by(eatery_id=eatery.id, if_booked=False).all():
         item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
         # convert the start and end time to string
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
         item['date'] = convert_date_to_string(item['date'])
         voucher_list.append(item)
-    return { "vouchers": voucher_list }
+    return {"vouchers": voucher_list}
 
 def convert_string_to_date(s):
     if isinstance(s, str):

@@ -70,10 +70,10 @@ def search_by_filter(token, date, time, location, cuisine):
     
     # conver the eateries object in the result to dictionary of eatery.
     # return a list of eateries
-    eateries = []
-    for eat in result:
-        eateries.append(dictionary_of_eatery(eat))
-    return eateries
+    # eateries = []
+    # for eat in result:
+    #    eateries.append(dictionary_of_eatery(eat))
+    return [dictionary_of_eatery(eat) for eat in result]
 
 
 # function for finding discount voucher based on given keyword
@@ -96,6 +96,7 @@ def search_by_key(token, keyword):
 # maybe can make it more specific later
 def view_eatery_list():
     result = Eatery.query.all()
+    # return [dictionary_of_eatery(eat) for eat in result]
     eateries = []
     for eat in result:
         eateries.append(dictionary_of_eatery(eat))
@@ -115,6 +116,6 @@ def cancel_voucher(token, diner_id, voucher_id):
 
 # TODO: Sprint2 user story4
 # function for cheking the booked voucher and show the voucher code to the eatery
-# given diner id, show a list of eateries that this diner has booked or is booking 
+# given diner id, show a list of eateries voucher that this diner has booked or is booking 
 def check_booking(token, diner_id):
     return # a list of
