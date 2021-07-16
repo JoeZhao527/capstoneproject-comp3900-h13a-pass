@@ -61,6 +61,7 @@ def diner_private_profile_load():
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
     data = json.loads(request.data)
+    print("here")
     print(data)
     try:
         res = diner_login(data['email'], data['password'])
