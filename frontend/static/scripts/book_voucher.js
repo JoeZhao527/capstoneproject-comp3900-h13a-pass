@@ -26,6 +26,23 @@ function checkUser(utype, ids) {
     } else if (utype == 'eatery') {
         book_failed_page.style.visibility = 'visible'
     } else {
-        alert(`vouchers with id ${ids} are avaliable`);
+        bookVoucher(ids[0])
     }
+}
+
+function bookVoucher(voucher_id) {
+    console.log(voucher_id)
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', `/eatery/profile/${profile_id}/book_voucher`, true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log('here')
+            if (!this.response) {
+                public_loadVouchers(profile_id);
+            } else {
+                alert('book_failed')
+            }
+        }
+    }
+    xhr.send(JSON.stringify({ token:token, id:user_id, voucher_id:voucher_id }))
 }

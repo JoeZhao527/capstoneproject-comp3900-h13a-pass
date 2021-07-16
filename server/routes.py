@@ -300,3 +300,13 @@ def eatery_public_get_voucher(id):
         return json.dumps(get_eatery_voucher(id))
     except:
         return  ''
+
+@app.route('/eatery/profile/<int:id>/book_voucher', methods=['POST'])
+def diner_book_voucher(id):
+    data = json.loads(request.data)
+    print(data)
+    try:
+        book_voucher(data['token'], data['id'], data['voucher_id'])
+        return ''
+    except:
+        return 'failed'

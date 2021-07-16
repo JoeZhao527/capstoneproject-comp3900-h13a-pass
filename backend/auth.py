@@ -210,14 +210,14 @@ def auth_logout(token):
     eatery = Eatery.query.filter_by(token=token)
     diner = Diner.query.filter_by(token=token)
     # if there is a eatery with the token, token valid, invalidate the token
-    if eatery:
+    if eatery.first():
         # user.if_logged_in = False
         # end the active token of eatery
         eatery.first().token = None
         db.session.commit()
         return {"logout_success": True}
     # else if there is a diner with the token, invalidate the token
-    elif diner:
+    else:
         # end the active token of diner
         diner.first().token = None
         db.session.commit()

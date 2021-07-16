@@ -213,7 +213,6 @@ let date_filter = date_filter_input.value;
 
 date_filter_input.onchange = (e) => {
     date_filter = e.target.value;
-    voucher_container.innerHTML = '<p>No Vouchers Avaliable Today</p>';
     public_loadVouchers(profile_id);
 }
 
