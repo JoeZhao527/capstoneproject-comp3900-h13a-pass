@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eatery Home</title>
     <link rel="stylesheet" href="../static/styles/eatery_home.css">
+    <link rel="stylesheet" href="../static/styles/search_bar.css">
 </head>
 <body>
     <nav id="nav-bar">
         <button class="home">Value Eat</button>
-        <input type="text" placeholder = "Find your eatery" id="search">
+        <div id="search-bar">
+            <input type="text" placeholder = "Find your eatery" id="search" required>
+            <span></span>
+            <div id="search-res"></div>
+        </div>
         <button class="sign-up nav-btn">Sign up</button>
         <button class="login nav-btn">Login</button>
         <button class="profile nav-btn">Profile</button>
@@ -73,5 +78,6 @@
     </section>
     <script src="../static/scripts/eatery_home.js"></script>
     <script src="../static/scripts/logout.js"></script>
+    <script src="../static/scripts/search_bar.js"></script>
 </body>
 </html>

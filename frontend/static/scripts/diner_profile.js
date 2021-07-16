@@ -59,7 +59,7 @@ const profile_item = profile_form.getElementsByTagName('input');
 function getDinerData() {
     let _data = {}
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/diner_private_profile/info', true);
+    xhr.open('POST', '/diner/profile/private/info', true);
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
             for (const [key, value] of Object.entries(JSON.parse(this.response))) {
@@ -71,6 +71,7 @@ function getDinerData() {
     }
     xhr.send(`{"token":"${token}"}`);
 }
+getDinerData();
 
 // load diner data to profile
 function loadDinerData(data) {
@@ -181,7 +182,6 @@ function addDeletePreviousBtn(item, id) {
 }
 
 function loadPrevious() {
-    console.log('here')
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/diner/profile/get_previous', true);
     xhr.setRequestHeader('Content-Type', 'application/json');

@@ -7,11 +7,17 @@
     <title>Eatery public</title>
     <link rel="stylesheet" href="../../static/styles/eatery_public_profile.css">
     <link rel="stylesheet" href="../../static/styles/login.css">
+    <link rel="stylesheet" href="../../static/styles/search_bar.css">
+    <link rel="stylesheet" type="text/css" href="../../static/styles/google_map.css" />
 </head>
 <body>
     <nav id="nav-bar">
-        <button id="home-btn">Value Eat</button>
-        <input type="text" placeholder = "Find your eatery" id="search">
+        <button id="home-btn" class="home">Value Eat</button>
+        <div id="search-bar">
+            <input type="text" placeholder = "Find your eatery" id="search" required>
+            <span></span>
+            <div id="search-res"></div>
+        </div>
         <button id="sign-up-btn" class="nav-btn">sign-up</button>
         <button id="profile-btn" class="nav-btn">profile</button>
         <button id="login-btn" class="nav-btn">login</button>
@@ -37,21 +43,22 @@
                 <h1>Overview</h1>
                 <button id="description-btn"> Description & Menu</button> /
                 <button id="contact-btn"> Address & Contact</button> /
+                <button id="map-btn"> View On Map</button>
                 <div id="description" class="content-sub">
                     <p>The eatery is too lazy, didn't write any description</p>
                 </div>
                 <div id="contact" class="content-sub">
                     <div>
                         <h3>City</h3>
-                        <p id="city">city</p>
+                        <p id="city"></p>
                     </div>
                     <div>
                         <h3>Suburb</h3>
-                        <p id="suburb">suburb</p>
+                        <p id="suburb"></p>
                     </div>
                     <div>
                         <h3>Address</h3>
-                        <p id="address">address</p>
+                        <p id="address"></p>
                     </div>
                     <div>
                         <h3>Phone</h3>
@@ -62,8 +69,8 @@
                         <p id="email">email</p>
                     </div>
                 </div>
-                <div id="menu">
-
+                <div id="google-map" class="content-sub">
+                    <div id="map"></div>
                 </div>
             </div>
             <div id="comment-section">
@@ -108,10 +115,16 @@
             <button> OK </button>
         </div>
     </section>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPquSqRek6F778Hr2PARZvopNtCRx2kyE&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+    <script src="../../static/scripts/google_map.js"></script>
     <script src="../../static/scripts/eatery_public_profile.js"></script>
     <script src="../../static/scripts/load_vouchers.js"></script>
     <script src="../../static/scripts/login.js"></script>
     <script src="../../static/scripts/logout.js"></script>
     <script src="../../static/scripts/book_voucher.js"></script>
+    <script src="../../static/scripts/search_bar.js"></script>
 </body>
 </html>

@@ -7,6 +7,8 @@ from backend.schedule import *
 from backend.data_access import *
 from backend.voucher import *
 from backend.image import *
+from backend.diner import *
+
 import json
 
 ###########################################################
@@ -21,6 +23,13 @@ def eatery_logout():
     data = json.loads(request.data)
     res = auth_logout(data['token'])
     return 'true' if res['logout_success'] else ''
+
+@app.route('/search', methods=['POST'])
+def search_eatery_by_key():
+    keyword = json.loads(request.data)['keyword']
+    res = search_by_key(keyword)
+    print(res)
+    return json.dumps({'data':res})
 
 ###########################################################
 ##                   DINER  ROUTES                       ##
@@ -52,6 +61,7 @@ def diner_private_profile_load():
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
     data = json.loads(request.data)
+    print("here")
     print(data)
     try:
         res = diner_login(data['email'], data['password'])
@@ -68,6 +78,29 @@ def diner_getEatery():
         return json.dumps(data)
     except:
         return ''
+
+@app.route('/diner/profile/private', methods=['GET', 'POST'])
+def diner_private_profile():
+    return render_template('diner_private_profile.html')
+
+@app.route('/diner/profile/private/info', methods=['POST'])
+def diner_private_profile_info():
+    print("1")
+    data = json.loads(request.data)
+    res = get_diner_by_token(data['token'])
+    # returns json string if res is not empty, otherwise returns an empty string
+    return json.dumps(res)
+
+@app.route('/diner/profile/private/update', methods=['PUT'])
+def diner_private_profile_update():
+    data = json.loads(request.data)
+    try:
+        res = diner_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
+                            data['diner_name'], data['address'], data['menu'], data['cuisines'], 
+                            data['city'], data['suburb'] ,data['description'])
+        return ''
+    except InputError:
+        return 'failed'
 
 ###########################################################
 ##                   EATERY ROUTES                       ##
@@ -130,7 +163,7 @@ def eatery_register_check():
         return ''
 
 ################# EATERY PRIVATE PROFILE ###################
-@app.route('/eatery/profile/private', methods=['GET', 'POST'])
+@app.route('/eatery/profile/private', methods=['GET'])
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')
 

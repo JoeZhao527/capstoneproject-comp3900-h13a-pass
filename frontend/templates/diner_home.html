@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link rel="stylesheet" href="../static/styles/diner_home.css">
+    <link rel="stylesheet" href="../../static/styles/search_bar.css">
 </head>
     <nav id="nav-bar">
         <button class="home">Value Eat</button>
-        <input type="text" placeholder = "Find your eatery" id="search">
+        <div id="search-bar">
+            <input type="text" placeholder = "Find your eatery" id="search" required>
+            <span></span>
+            <div id="search-res"></div>
+        </div>
         <button class="eatery nav-btn">For Eatery</button>
         <button class="sign-up nav-btn">Sign up</button>
         <button class="login nav-btn">Login</button>
@@ -76,8 +81,8 @@
           </div>
         <div class="details">
             <h2 id="name">BB's Beach Break</h2>
-            <p display: inline-block;>suburb</p>
-            <p display: inline-block;>cuisine</p>
+            <p>suburb</p>
+            <p>cuisine</p>
             <form id="score_form">
                 <div class="star_evaluate">
                     <input type="radio" id="scoreId_1" class="score score_1" name="score" value="1"/>
@@ -160,6 +165,7 @@
 
 
     <script src="../static/scripts/diner_home.js"></script>
+    <script src="../../static/scripts/search_bar.js"></script>
     <!-- <script src="../static/scripts/logout.js"></script> -->
     <!-- <script src="../static/scripts/login.js"></script> -->
 </body>

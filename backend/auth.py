@@ -1,4 +1,3 @@
-
 import string
 import random
 import jwt
@@ -12,10 +11,13 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
-from backend.user_db import Eatery, Diner
+from backend.user_db import Eatery, Diner, Voucher
 from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token
 from backend.errors import InputError
 from server import db
+# for testing
+from backend.voucher import create_voucher
+from datetime import date, datetime, time
 
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
@@ -296,10 +298,10 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
     eatery.phone = phone
     eatery.eatery_name = eatery_name
     eatery.address = address
-    eatery.menu = menu
-    eatery.cuisine = cuisine
     eatery.city = city
     eatery.suburb = subrub
+    eatery.menu = menu
+    eatery.cuisine = cuisine
     eatery.description = description
     db.session.commit()
     return get_eatery_by_token(token)
@@ -318,17 +320,29 @@ def diner_profile_update(token, first_name, last_name, phone):
 
 
 if __name__ == "__main__":
-    print(generate_token(123))
+    # make an eatery and add voucher
+    r4 = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
+    print(r4)
+    
+    new_voucher = create_voucher(r4["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123")
+    print(str(new_voucher.id) + "!!!!!!" + str(new_voucher.discount) + str(new_voucher.start_time))
+    
     result1 = diner_register("jay123@gmail.com", "123Cjj", "Jay", "Chen", "0470397745")
     print(result1)
 
     result2 = diner_register("jay12345@gmail.com", "123Cjj", "Hayden", "Chen", "3000800")
     print(result2)
-    diners = Diner.query.filter_by(last_name="Chen").all()
-    for diner in diners:
-        print(diner.email)
+    #diners = Diner.query.filter_by(last_name="Chen").all()
+    #for diner in diners:
+    #    print(diner.email)
 
-
+    #checks = db.session.query(Eatery, Voucher).filter(Voucher.eatery_id == Eatery.id).filter(Voucher.id == 1).all()
+    # checks = db.session.query(Eatery).join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
+    #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
+    checks = Diner.query.all()
+    print(checks)
+    for Eatery in checks:
+        print(Eatery)
     #print(data)
     #result2 = diner_login("jay123@gmail.com", "123Cjj")
     #print(result2)
