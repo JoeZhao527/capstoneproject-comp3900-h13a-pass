@@ -89,14 +89,15 @@ def update_voucher(token, voucher_id, date, start, end, discount):
     db.session.commit()
 
 # function for deleting the voucher
-def delete_voucher(token, voucher_id):
+def delete_all_vouchers(token, group_id):
     # check if token is valid
     eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
         raise InputError("Invalid token")
     # get the voucher and delete it 
-    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
-    delete_item(voucher)
+    vouchers = Voucher.query.filter_by(group_id=group_id, eatery_id=eatery.id).all()
+    for voucher in vouchers:
+        delete_item(voucher)
 
 # function for deleting the voucher by group_id
 def delete_voucher_by_group(token, group_id):
@@ -136,8 +137,25 @@ def get_unbooked_voucher(token):
         raise InputError("Invalid token")
 
     voucher_list = []
-
-    # to get all the vouchers that are not booked nor expired
+    '''
+    each voucher in voucher list have the following structure:
+        {
+            amount: 3       - this is for frontend showing voucher purpose, not in database
+            code: "qaCam8etuN0pyxb8ZzUe"
+            date: "2021-07-17"
+            diner_id: null
+            discount: 10
+            eatery_id: 1
+            end_time: "23:49"
+            group_id: 1000
+            id: 1
+            if_booked: false
+            if_used: false
+            start_time: "21:49"
+            weekday: "Saturday"
+        }
+    '''
+    # get all the voucher query
     # store the unbooked vouchers into list
     # for the voucher has not booked
     for voucher in Voucher.query.filter_by(eatery_id=eatery.id, if_booked=False).all():
@@ -224,8 +242,6 @@ def get_booked_diner_voucher(token):
             item['date'] = convert_date_to_string(item['date'])
             voucher_list.append(item)
     return {"vouchers": voucher_list}
-
-
 
 # string type: "2014-06-08"     
 def convert_string_to_date(s):

@@ -245,13 +245,13 @@ def eatery_delete_schedule():
         print(InputError.message)
         return 'failed'
 
-@app.route('/eatery/profile/private/remove_voucher', methods=["DELETE"])
+@app.route('/eatery/profile/private/delete_all_vouchers', methods=["DELETE"])
 def eatery_delete_voucher():
     print('delete voucher')
     try:
         info = json.loads(request.data)
-        for id in info['id']:
-            delete_voucher(token=info['token'], voucher_id=id)
+        print(info)
+        delete_all_vouchers(token=info['token'], group_id=info['id'])
         return ''
     except InputError:
         print(InputError.message)
@@ -321,6 +321,16 @@ def eatery_public_get_info(id):
 @app.route('/eatery/profile/<int:id>/get_vouchers', methods=['GET'])
 def eatery_public_get_voucher(id):
     try:
-        return json.dumps(get_eatery_voucher(id))
+        res = json.dumps(get_eatery_voucher(id))
+        return res
     except:
         return  ''
+
+@app.route('/eatery/profile/<int:id>/book_voucher', methods=['POST'])
+def diner_book_voucher(id):
+    data = json.loads(request.data)
+    try:
+        book_voucher(data['token'], data['id'], data['group_id'])
+        return ''
+    except:
+        return 'failed'

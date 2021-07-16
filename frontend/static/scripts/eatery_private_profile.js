@@ -156,10 +156,17 @@ function updateProfile(data) {
 }
 
 /* add item */
+/**
+ * 
+ * @param {*} data data of schedule/voucher Item, include time, weekday, discount etc.
+ * @param {*} id group_id for voucher, schedule_id for schedule
+ * @param {*} addDelete add deletebutton function. the id will be used to delete schedule/vouchers
+ * @returns returns a voucehr/schedule item that can be append to voucher/schedule table
+ */
 function createItem(data, id, addDelete) {
     let item = document.createElement('tr');
     for (const [key, value] of Object.entries(data)) {
-        const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code']
+        const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code', 'group_id', 'amount']
         if (!hidden_attr.includes(key)) {
             let td = document.createElement('td');
             td.appendChild(document.createTextNode(value));
@@ -167,9 +174,10 @@ function createItem(data, id, addDelete) {
         }
     }
     // only voucher has date, use this to check the type of node
+    let num_voucher = data['amount']
     if ('date' in data) {
         let td = document.createElement('td');
-        td.appendChild(document.createTextNode(id.length));
+        td.appendChild(document.createTextNode(num_voucher));
         item.appendChild(td);
     }
     addDelete(item, id);
@@ -229,7 +237,7 @@ function addScheduleREquest(data) {
 }
 
 function addScheduleItem(data, id) {
-    schedules.appendChild(createItem(data,[id],addDeleteScheduleBtn));
+    schedules.appendChild(createItem(data,id,addDeleteScheduleBtn));
 }
 
 function addDeleteScheduleBtn(item, id) {
@@ -318,16 +326,25 @@ function addVoucherRequest(data) {
     xhr.send(JSON.stringify(data));
 }
 
+/**
+ * this will be called by private_loadVouchers in load_vouchers.js
+ * @param data voucher's data, include date, start/end time, discount and amount
+ * @param id voucher's group_id, which can be used to add/delete voucher
+ */
 function addVoucherItem(data, id) {
+    // creatItem create a voucher
     vouchers.appendChild(createItem(data, id, addDeleteVoucherBtn));
 }
 
+/**
+ * add a delete button to a voucher item, which will delete all vouchers by its group_id
+ */
 function addDeleteVoucherBtn(item, id) {
     let btn = document.createElement('button');
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
         let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/eatery/profile/private/remove_voucher', false);
+        xhr.open('DELETE', '/eatery/profile/private/delete_all_vouchers', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({ token: token, id: id }));
         if (!this.response) {
