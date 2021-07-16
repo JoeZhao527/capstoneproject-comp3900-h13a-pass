@@ -323,7 +323,7 @@ if __name__ == "__main__":
     # make an eatery and add voucher
     r4 = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
     print(r4)
-    
+    # eatery_register("jianjunjchen@gmail", )
     new_voucher = create_voucher(r4["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123")
     print(str(new_voucher.id) + "!!!!!!" + str(new_voucher.discount) + str(new_voucher.start_time))
     
@@ -345,6 +345,9 @@ if __name__ == "__main__":
     print(result)
     result2 = [dictionary_of_eatery(eat) for eat in diners]
     print(result2)
+
+    diners_id = db.session.query(Diner.id).first()
+    print(diners_id[0])
     #print(data)
     #result2 = diner_login("jay123@gmail.com", "123Cjj")
     #print(result2)

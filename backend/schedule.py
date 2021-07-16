@@ -25,7 +25,7 @@ def delete_item(item):
 
 
 def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
-    start, end = convert_time(start), convert_time(end)
+    start, end = convert_string_to_time(start), convert_string_to_time(end)
     # check if token is valid
     eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
@@ -72,7 +72,7 @@ while True:
 
 # function for updating the schedule
 def update_schedule(token, schedule_id, no_vouchers, weekday, start, end, discount):
-    start, end = convert_time(start), convert_time(end)
+    start, end = convert_string_to_time(start), convert_string_to_time(end)
     # check if token is valid
     eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
@@ -132,7 +132,7 @@ def get_eatery_schedule(token):
         schedule_list.append(item)
     return { "schedules": schedule_list }
 
-def convert_time(s):
+def convert_string_to_time(s):
     h, m = s.split(':')[0], s.split(':')[1]
     return time(int(h), int(m))
 
@@ -140,5 +140,5 @@ def convert_time_to_string(t):
     return str(t)[:-3]
     
 if __name__ == "__main__":
-    print(convert_time('00:00'))
+    print(convert_string_to_time('00:00'))
     

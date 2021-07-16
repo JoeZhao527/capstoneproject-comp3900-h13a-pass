@@ -19,9 +19,7 @@ def valid_token(token):
 # function for finding (eateries) with discounts based on specified time range, location, or cuisine.
 # maybe need postcode for eatery
 # location = suburb(postcode)
-def search_by_filter(token, date, time, location, cuisine):
-    if not valid_token(token):
-        raise InputError("Invalid token")
+def search_by_filter(date, time, location, cuisine):
     # search by date
     if date and not time and not location and not cuisine:
         # return a list of eatery objects pass the filter
@@ -104,18 +102,35 @@ def view_eatery_list():
 def view_eatery_profile():
     return
 
-# function for booking a voucher
+# function for cheking diner has not book the same voucher
+# check if the voucher has the same group id with the diner's booked voucher 
+def diner_booked_vouchcer(diner_id, voucher_id):
+    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    # get the voucher's group memebers and check if diner has booked any one of them
+    groupID = voucher.group_id
+    # use the group ID to check if booked or not
+    booked = Voucher.query.filter_by(group_id = groupID, diner_id = diner_id).first()
+    if booked:
+        return True
+    return False
+
+
+# function for diner to book a voucher
 def book_voucher(token, diner_id, voucher_id):
     # Check if given token of diner is valid
     if not valid_token(token):
         raise InputError("Invalid token")
     # Check if voucher exists
-    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    voucher = Voucher.query.filter_by(id=voucher_id, if_booked=False).first()
     if voucher is None:
-        raise InputError("Voucher does not exist")
-
+        raise InputError("Invalid voucher ID")
+    # check if diner has booked the same group voucher already
+    if diner_booked_vouchcer(diner_id, voucher_id):
+        raise InputError("Diner has booked already!")
+    # update the diner_id and if_booked in the voucher
     voucher.diner_id = diner_id
     voucher.if_booked = True
+    db.session.commit()
     return {}
     
 # function for cancelling a voucher.

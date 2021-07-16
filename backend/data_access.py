@@ -27,10 +27,11 @@ def create_diner(first_name, last_name, email, password, phone, token):
     return diner.id
 
 # insert a Voucher to database
-def create_Voucher(eatery_id, date, start_time, end_time, discount):
-    voucher = Voucher(eatery_id, date, start_time, end_time, discount)
-    add_item(voucher)
-    return voucher.id
+# useless function, the right one is in the voucher.py
+#def create_Voucher(eatery_id, date, start_time, end_time, discount):
+#    voucher = Voucher(eatery_id, date, start_time, end_time, discount)
+#    add_item(voucher)
+#    return voucher.id
 
 # insert a schedule to database
 def create_schedule(eatery_id, no_vouchers, weekday, start, end, discount):
