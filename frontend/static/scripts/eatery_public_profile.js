@@ -157,6 +157,7 @@ function load_header(_eatery_name) {
     eatery_name.innerHTML = _eatery_name;
 }
 
+let addr = {}
 // load the whole information section on loading the page
 getInformation(profile_id);
 
@@ -243,10 +244,9 @@ let voucher_list = []
  * in date_filter, display all the vouchers can be booked at that date
  * 
  */
-function addVoucherItem(item) {
-    let data = item['data']
-    let group_id = item['group_id']
-    let amount = item['data']['amount']
+function addVoucherItem(data) {
+    let group_id = data['group_id']
+    let amount = data['amount']
     // date_filter contains the date to display voucher, 
     if (data['date'] == date_filter) {
         let date = stringifyDate(data['date'], data['weekday']);

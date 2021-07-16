@@ -40,8 +40,10 @@ function private_loadVouchers() {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            
             for (const data of JSON.parse(this.response)['vouchers']) {
-                addVoucherItem(data['data'], data['group_id'])
+                console.log(data)
+                addVoucherItem(data, data['group_id'])
             }
         }
     }

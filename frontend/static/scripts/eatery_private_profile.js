@@ -344,7 +344,7 @@ function addDeleteVoucherBtn(item, id) {
     btn.innerHTML = 'Delete';
     btn.onclick = () => {
         let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/eatery/profile/private/remove_voucher', false);
+        xhr.open('DELETE', '/eatery/profile/private/delete_all_vouchers', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({ token: token, id: id }));
         if (!this.response) {

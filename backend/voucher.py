@@ -89,14 +89,15 @@ def update_voucher(token, voucher_id, date, start, end, discount):
     db.session.commit()
 
 # function for deleting the voucher
-def delete_voucher(token, voucher_id):
+def delete_all_vouchers(token, group_id):
     # check if token is valid
     eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
         raise InputError("Invalid token")
     # get the voucher and delete it 
-    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
-    delete_item(voucher)
+    vouchers = Voucher.query.filter_by(group_id=group_id, eatery_id=eatery.id).all()
+    for voucher in vouchers:
+        delete_item(voucher)
 
 # function for deleting the voucher by group_id
 def delete_voucher_by_group(token, group_id):
@@ -120,16 +121,49 @@ def get_eatery_voucher(token):
         raise InputError("Invalid token")
 
     voucher_list = []
-
+    '''
+    each voucher in voucher list have the following structure:
+        {
+            amount: 3       - this is for frontend showing voucher purpose, not in database
+            code: "qaCam8etuN0pyxb8ZzUe"
+            date: "2021-07-17"
+            diner_id: null
+            discount: 10
+            eatery_id: 1
+            end_time: "23:49"
+            group_id: 1000
+            id: 1
+            if_booked: false
+            if_used: false
+            start_time: "21:49"
+            weekday: "Saturday"
+        }
+    '''
     # get all the voucher query
     # store the unbooked vouchers into list
     for voucher in Voucher.query.filter_by(eatery_id=eatery.id, if_booked=False).all():
         item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
         # convert the start and end time to string
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+        # convert date to string
         item['date'] = convert_date_to_string(item['date'])
-        voucher_list.append(item)
+
+        # amount of this types of voucher
+        item['amount'] = 1
+        # appned voucher to voucher list
+        voucher_append(voucher_list, item)
+        
     return {"vouchers": voucher_list}
+
+# append 'voucher' to 'voucher_list'
+def voucher_append(voucher_list, voucher):
+    for item in voucher_list:
+        # if a voucher in the list has same group id, add amount of that voucher by 1
+        if item['group_id'] == voucher['group_id']:
+            item['amount'] += 1
+            return
+    # otherwise append this voucher to the list by itself, with amount 1
+    voucher_list.append(voucher)
 
 # string type: "2014-06-08"     
 def convert_string_to_date(s):

@@ -102,16 +102,11 @@ def view_eatery_list():
 def view_eatery_profile():
     return
 
-<<<<<<< HEAD
-# function for booking a voucher
-def book_voucher(token, diner_id, voucher_id):
-    print(token, diner_id, voucher_id)
-=======
 
 # function for diner to book a voucher by given group id
 def book_voucher(token, diner_id, group_id):
->>>>>>> 654b43bf96314796568f36379a76243a542e7c7c
     # Check if given token of diner is valid
+    print('here')
     if not valid_token(token):
         raise InputError("Invalid token")
     # Check if voucher(group id) exists
