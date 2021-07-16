@@ -69,6 +69,14 @@ while True:
     schedule.run_pending(add_voucher_by_schedule())
     time.sleep(1)
 """
+# function for checking if the voucher is up to date by the schedule
+def add_voucher_by_schedule():
+    return
+
+
+
+
+
 
 # function for updating the schedule
 def update_schedule(token, schedule_id, no_vouchers, weekday, start, end, discount):
