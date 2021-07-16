@@ -7,6 +7,8 @@ from backend.schedule import *
 from backend.data_access import *
 from backend.voucher import *
 from backend.image import *
+from backend.diner import *
+
 import json
 
 ###########################################################
@@ -21,6 +23,13 @@ def eatery_logout():
     data = json.loads(request.data)
     res = auth_logout(data['token'])
     return 'true' if res['logout_success'] else ''
+
+@app.route('/search', methods=['POST'])
+def search_eatery_by_key():
+    keyword = json.loads(request.data)['keyword']
+    res = search_by_key(keyword)
+    print(res)
+    return json.dumps({'data':res})
 
 ###########################################################
 ##                   DINER  ROUTES                       ##
@@ -153,7 +162,7 @@ def eatery_register_check():
         return ''
 
 ################# EATERY PRIVATE PROFILE ###################
-@app.route('/eatery/profile/private', methods=['GET', 'POST'])
+@app.route('/eatery/profile/private', methods=['GET'])
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')
 

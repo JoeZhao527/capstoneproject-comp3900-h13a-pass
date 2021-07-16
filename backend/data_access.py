@@ -78,10 +78,13 @@ def get_image(eatery_id):
 def dictionary_of_eatery(eatery):
     data = dict((col, getattr(eatery, col)) for col in eatery.__table__.columns.keys())
     return data
-
+# get disctionary by given an diner item
 def dictionary_of_diner(diner):
     data = dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys())
     return data
+# get dictionary of a voucher by given a voucher item
+def dictionay_of_voucher(voucher):
+    data = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
 
 def get_num_eatery():
     eatery = Eatery.query.filter_by().all()

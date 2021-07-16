@@ -20,10 +20,10 @@ class Eatery(db.Model):
     phone = db.Column(db.String(20))
     eatery_name = db.Column(db.String(50), nullable=False)
     address = db.Column(db.String(50), nullable=False)
-    menu = db.Column(db.String(50))
-    cuisine = db.Column(db.String(50))
     city = db.Column(db.String(20))
     suburb = db.Column(db.String(20))
+    menu = db.Column(db.String(50))
+    cuisine = db.Column(db.String(50))
     description = db.Column(db.String(1000))
     token = db.Column(db.String(200), unique=True)
     reset_code = db.Column(db.String(20))
@@ -159,4 +159,5 @@ CREATE DOMAIN Discount AS
 """
 
 # clear up and create tables when the app run
+#db.drop_all() # use for backend testing
 db.create_all()
