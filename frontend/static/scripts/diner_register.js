@@ -3,6 +3,7 @@ const diner_home = '/diner/home';
 
 const submit_btn = document.getElementById('submit');
 const form = document.forms["sign-up-form"].getElementsByTagName("input");
+
 const backhome = document.getElementById('back-home')
 let data = {}
 
@@ -32,7 +33,7 @@ submit_btn.addEventListener('click', function(e) {
 function register() {
     // send data and receive token
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', '/dinner/register', false);
+    xhr.open('POST', '/diner/register', false);
     xhr.send(JSON.stringify(data))
     return xhr.response;
 }

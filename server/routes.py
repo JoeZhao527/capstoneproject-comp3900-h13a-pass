@@ -7,6 +7,8 @@ from backend.schedule import *
 from backend.data_access import *
 from backend.voucher import *
 from backend.image import *
+from backend.diner import *
+
 import json
 
 ###########################################################
@@ -22,6 +24,13 @@ def eatery_logout():
     res = auth_logout(data['token'])
     return 'true' if res['logout_success'] else ''
 
+@app.route('/search', methods=['POST'])
+def search_eatery_by_key():
+    keyword = json.loads(request.data)['keyword']
+    res = search_by_key(keyword)
+    print(res)
+    return json.dumps({'data':res})
+
 ###########################################################
 ##                   DINER  ROUTES                       ##
 ###########################################################
@@ -36,11 +45,11 @@ def diner_register_load():
 @app.route('/diner/register', methods=['POST'])
 def diner_register_check():
     data = json.loads(request.data)
+    print(data)
     try:
-        res = eatery_register(data['email'], data['password'],
-                            data['fname'], data['lname'],data['phone'],
-                            data['ename'])
-        return res['token']
+        res = diner_register(data['email'], data['password'],
+                            data['fname'], data['lname'],data['phone'])
+        return json.dumps(res)
     except InputError:
         print(InputError.message)
         return ''
@@ -51,8 +60,23 @@ def diner_private_profile_load():
 
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
-    # TODO
-    return ''
+    data = json.loads(request.data)
+    print(data)
+    try:
+        res = diner_login(data['email'], data['password'])
+        print(res)
+        return json.dumps(res)
+    except InputError:
+        print(InputError.message)
+        return ''
+@app.route('/diner/home/getEatery',methods=['GET'])
+def diner_getEatery():
+    try:
+        data = get_num_eatery()
+        # print(data)
+        return json.dumps(data)
+    except:
+        return ''
 
 ###########################################################
 ##                   EATERY ROUTES                       ##
@@ -115,7 +139,7 @@ def eatery_register_check():
         return ''
 
 ################# EATERY PRIVATE PROFILE ###################
-@app.route('/eatery/profile/private', methods=['GET', 'POST'])
+@app.route('/eatery/profile/private', methods=['GET'])
 def eatery_private_profile():
     return render_template('eatery_private_profile.html')
 
