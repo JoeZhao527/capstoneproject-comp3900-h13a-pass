@@ -61,6 +61,7 @@ def diner_private_profile_load():
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
     data = json.loads(request.data)
+    print("here")
     print(data)
     try:
         res = diner_login(data['email'], data['password'])
@@ -77,6 +78,29 @@ def diner_getEatery():
         return json.dumps(data)
     except:
         return ''
+
+@app.route('/diner/profile/private', methods=['GET', 'POST'])
+def diner_private_profile():
+    return render_template('diner_private_profile.html')
+
+@app.route('/diner/profile/private/info', methods=['POST'])
+def diner_private_profile_info():
+    print("1")
+    data = json.loads(request.data)
+    res = get_diner_by_token(data['token'])
+    # returns json string if res is not empty, otherwise returns an empty string
+    return json.dumps(res)
+
+@app.route('/diner/profile/private/update', methods=['PUT'])
+def diner_private_profile_update():
+    data = json.loads(request.data)
+    try:
+        res = diner_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
+                            data['diner_name'], data['address'], data['menu'], data['cuisines'], 
+                            data['city'], data['suburb'] ,data['description'])
+        return ''
+    except InputError:
+        return 'failed'
 
 ###########################################################
 ##                   EATERY ROUTES                       ##
@@ -300,3 +324,13 @@ def eatery_public_get_voucher(id):
         return json.dumps(get_eatery_voucher(id))
     except:
         return  ''
+
+@app.route('/eatery/profile/<int:id>/book_voucher', methods=['POST'])
+def diner_book_voucher(id):
+    data = json.loads(request.data)
+    print(data)
+    try:
+        book_voucher(data['token'], data['id'], data['voucher_id'])
+        return ''
+    except:
+        return 'failed'

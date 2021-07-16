@@ -105,6 +105,7 @@ def view_eatery_profile():
 
 # function for booking a voucher
 def book_voucher(token, diner_id, voucher_id):
+    print(token, diner_id, voucher_id)
     # Check if given token of diner is valid
     if not valid_token(token):
         raise InputError("Invalid token")
@@ -115,6 +116,7 @@ def book_voucher(token, diner_id, voucher_id):
 
     voucher.diner_id = diner_id
     voucher.if_booked = True
+    db.session.commit()
     return {}
     
 # function for cancelling a voucher.

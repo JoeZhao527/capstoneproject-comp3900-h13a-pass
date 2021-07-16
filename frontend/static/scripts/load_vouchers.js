@@ -50,6 +50,7 @@ function clearVouchers() {
 }
 
 function public_loadVouchers(id) {
+    voucher_container.innerHTML = '<p>No Vouchers Avaliable Today</p>';
     console.log(id);
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `/eatery/profile/${id}/get_vouchers`, true);
@@ -66,6 +67,7 @@ function public_loadVouchers(id) {
             for (const item of voucher_list) {
                 addVoucherItem(item);
             }
+            console.log(voucher_list)
         }
     }
     xhr.send()

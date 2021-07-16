@@ -19,6 +19,7 @@ function getAddress(addr) {
 function initMap() {
 
 }
+
 // Initialize and add the map
 function myinitMap(lat, lng, address) {
     // The location of Uluru
