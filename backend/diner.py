@@ -103,16 +103,51 @@ def view_eatery_list():
 def view_eatery_profile():
     return
 
-# TODO: Sprint2 user story3
 # function for booking a voucher
 def book_voucher(token, diner_id, voucher_id):
-    return
+    # Check if given token of diner is valid
+    if not valid_token(token):
+        raise InputError("Invalid token")
+    # Check if voucher exists
+    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    if voucher is None:
+        raise InputError("Voucher does not exist")
+
+    voucher.diner_id = diner_id
+    voucher.if_booked = true
+    return {}
+    
 # function for cancelling a voucher.
 def cancel_voucher(token, diner_id, voucher_id):
-    return
+    # Check if given token is valid
+    if not valid_token(token):
+        raise InputError("Invalid token")
+    # Check if voucher exists
+    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    if voucher is None:
+        raise InputError("Voucher does not exist")
+    # Check if the voucher is booked by this diner
+    if diner_id != voucher.diner_id:
+        raise InputError("Voucher is not booked by this diner")
 
-# TODO: Sprint2 user story4
-# function for cheking the booked voucher and show the voucher code to the eatery
-# given diner id, show a list of eateries that this diner has booked or is booking 
+    voucher.diner_id = None
+    voucher.if_booked = false
+    return {}
+
+# Shows a list of eateries of this diners current or past bookings
 def check_booking(token, diner_id):
-    return # a list of
+    # List of bookings that diner has booked
+    booking_list = []
+    # for each voucher that matches this diners id, i.e. vouchers that this diner has booked
+    # Create a dictionary object for each voucher and append to the list
+    for voucher, eatery_name in db.session.query(Voucher, Eatery.eatery_name).join(Eatery, Voucher.eatery_id==Eatery.id).filter(Voucher.diner_id==diner_id).all():
+        item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
+        item["eatery_name"] = eatery_name
+        # convert the start and end time to string
+        item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+        booking_list.append(item)
+        
+    return { booking_list }
+
+def convert_time_to_string(t):
+    return str(t)[:-3]
