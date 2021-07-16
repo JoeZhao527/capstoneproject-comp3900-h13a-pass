@@ -114,7 +114,7 @@ def book_voucher(token, diner_id, voucher_id):
         raise InputError("Voucher does not exist")
 
     voucher.diner_id = diner_id
-    voucher.if_booked = true
+    voucher.if_booked = True
     return {}
     
 # function for cancelling a voucher.
@@ -131,7 +131,7 @@ def cancel_voucher(token, diner_id, voucher_id):
         raise InputError("Voucher is not booked by this diner")
 
     voucher.diner_id = None
-    voucher.if_booked = false
+    voucher.if_booked = False
     return {}
 
 # Shows a list of eateries of this diners current or past bookings
