@@ -20,13 +20,13 @@ document.onmousedown = (e) => {
     }
 }
 
-function checkUser(utype, ids) {
+function checkUser(utype, group_id) {
     if (typeof utype == 'undefined' || utype == null) {
         showLogin();
     } else if (utype == 'eatery') {
         book_failed_page.style.visibility = 'visible'
     } else {
-        bookVoucher(ids[0])
+        bookVoucher(group_id)
     }
 }
 
@@ -39,10 +39,11 @@ function bookVoucher(voucher_id) {
             console.log('here')
             if (!this.response) {
                 public_loadVouchers(profile_id);
+                alert('book_success')
             } else {
                 alert('book_failed')
             }
         }
     }
-    xhr.send(JSON.stringify({ token:token, id:user_id, voucher_id:voucher_id }))
+    xhr.send(JSON.stringify({ token:token, id:user_id, group_id:voucher_id }))
 }

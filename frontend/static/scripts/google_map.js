@@ -1,3 +1,7 @@
+/**
+ * this file is for load map in eatery public page
+ */
+
 function getAddress(addr) {
     let city = addr['city']
     let suburb = addr['suburb']
@@ -15,10 +19,8 @@ function getAddress(addr) {
     xhr.send()
 }
 
-// will be called by google map by default
-function initMap() {
-
-}
+// will be called by google map by default, it's here to prevent error in console
+function initMap() {}
 
 // Initialize and add the map
 function myinitMap(lat, lng, address) {
