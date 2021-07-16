@@ -277,7 +277,7 @@ function showEatery() {
             console.log(eatery_list.length)
             
             for (let i = 0; i < eatery_list.length; i++) {
-                eatery_detail = eatery_list[i]
+                let eatery_detail = eatery_list[i]
                 let eatery_div = document.createElement('div')
                 eatery_div.className = 'section'
                 // eatery_div.style = section_style
@@ -285,24 +285,30 @@ function showEatery() {
                 let img = new Image()
                 img.src = "../static/images/food_4.jpg"
                 img.className = 'img'
+                img.value = 'img'
                 // img.style=img_style
 
-                // let eatery_div = document.createElement('div')
+                let detail = document.createElement('div')
+                detail.className='details'
 
                 let name = document.createElement('h2')
                 console.log(eatery_detail['eatery_name'])
                 name.innerHTML= eatery_detail['eatery_name']
                 // name.style = name_style
 
-                let details = document.createElement('p')
-                details.textContent = eatery_detail['cuisine']
-                // details.style= details_style
+                let description = document.createElement('p')
+                description.textContent = "cuisine: "+eatery_detail['cuisine']
+                // description.style= details_style
 
+                let review = document.createElement('p')
+                review.textContent = "review: "
                 
                 let line = document.createElement('hr')
                 eatery_div.appendChild(img)
-                eatery_div.appendChild(name)
-                eatery_div.appendChild(details)
+                detail.appendChild(name)
+                detail.appendChild(description)
+                detail.appendChild(review)
+                eatery_div.appendChild(detail)
                 eatery_div.appendChild(line)
                 // eatery_div.appendChild()
 
