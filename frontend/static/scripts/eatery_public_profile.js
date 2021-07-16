@@ -102,6 +102,8 @@ getImages(profile_id);
 const cuisines = document.getElementById('cuisine');
 const description = document.getElementById('description'); // description page
 const contact = document.getElementById('contact');         // contact page
+const google_map = document.getElementById('google-map')    // google map page
+
 const contact_item = contact.getElementsByTagName('div')
 const eatery_name = document.getElementById('eatery-name');
 
@@ -116,6 +118,7 @@ function getInformation(eatery_id) {
             load_description(data['description'], data['cuisine']);
             load_contact(data);
             load_header(data['eatery_name']);
+            getAddress(addr)
         }
     }
     xhr.send();
@@ -126,9 +129,12 @@ function load_description(_description, _cuisine) {
     description.innerHTML = _description;
 }
 
+
+
 function load_contact(data) {
     for (const item of contact_item) {
         let p = item.getElementsByTagName('p')[0];
+        addr[p.id] = data[p.id];
         p.innerHTML = data[p.id];
     }
 }
@@ -137,20 +143,29 @@ function load_header(_eatery_name) {
     eatery_name.innerHTML = _eatery_name;
 }
 
+// will be used in map
+let addr = {}
+
 getInformation(profile_id);
+
 
 /* switching between description and contact */
 // description button and contact button
 const description_btn = document.getElementById('description-btn');
 const contact_btn = document.getElementById('contact-btn');
-const content_pages = [description, contact];
+const map_btn = document.getElementById('map-btn');
 
+const content_pages = [description, contact, google_map];
 description_btn.onclick = () => {
     displayContent(description);
 }
 
 contact_btn.onclick = () => {
     displayContent(contact);
+}
+
+map_btn.onclick = () => {
+    displayContent(google_map);
 }
 
 function displayContent(page) {
@@ -232,7 +247,7 @@ function addVoucherItem(item) {
         let periodNode = document.createElement('div');
         periodNode.innerHTML = period;
         let discountNode = document.createElement('div');
-        discountNode.innerHTML = discount;
+        discountNode.innerHTML = discount; // discount "10% OFF"
         discountNode.className = 'discount';
         let numNode = document.createElement('p');
         numNode.innerHTML = num;

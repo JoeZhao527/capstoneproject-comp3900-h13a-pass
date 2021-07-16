@@ -16,7 +16,7 @@ from backend.data_access import create_eatery, create_diner, get_eatery_by_token
 from backend.errors import InputError
 from server import db
 # for testing
-from voucher import create_voucher
+from backend.voucher import create_voucher
 from datetime import date, datetime, time
 
 
