@@ -136,7 +136,6 @@ def cancel_voucher(token, diner_id, voucher_id):
 
 # Shows a list of eateries of this diners current or past bookings
 def check_booking(token, diner_id):
-<<<<<<< HEAD
     # List of bookings that diner has booked
     booking_list = []
     # for each voucher that matches this diners id, i.e. vouchers that this diner has booked
@@ -152,6 +151,3 @@ def check_booking(token, diner_id):
 
 def convert_time_to_string(t):
     return str(t)[:-3]
-=======
-    return # a list of
->>>>>>> main
