@@ -57,29 +57,18 @@ def view_eatery_list():
 def view_eatery_profile():
     return
 
-# TODO: Sprint2 user story3
 # function for booking a voucher
-# 7. As a diner, I want to be able to book a voucher and see 
-# the time range for the available discount voucher so that I 
-# can plan ahead according to the booked voucher's time.
 def book_voucher(token, diner_id, voucher_id):
-    # Check if given token is valid
+    # Check if given token of diner is valid
     if not valid_token(token):
         raise InputError("Invalid token")
     # Check if voucher exists
     voucher = Voucher.query.filter_by(id=voucher_id).first()
     if voucher is None:
         raise InputError("Voucher does not exist")
-    # Get schedule information with voucher
-    schedule = Schedule.query.filter_by(eatery_id=voucher.eatery_id, weekday=voucher.weekday, 
-                                        start_time=voucher.start_time, end_time=voucher.end_time).first()
-    # Check if schedule corresponds with this voucher
-    if schedule is None:
-        raise InputError("Schedule does not exist")
-        
+
     voucher.diner_id = diner_id
     voucher.if_booked = true
-    schedule.no_vouchers -= 1
     return {}
     
 # function for cancelling a voucher.
@@ -94,23 +83,25 @@ def cancel_voucher(token, diner_id, voucher_id):
     # Check if the voucher is booked by this diner
     if diner_id != voucher.diner_id:
         raise InputError("Voucher is not booked by this diner")
-    # Get schedule information with voucher
-    schedule = Schedule.query.filter_by(eatery_id=voucher.eatery_id, weekday=voucher.weekday, 
-                                        start_time=voucher.start_time, end_time=voucher.end_time).first()
-    # Check if schedule corresponds with this voucher
-    if schedule is None:
-        raise InputError("Schedule does not exist")
-    
+
     voucher.diner_id = None
     voucher.if_booked = false
-    schedule.no_voucher += 1;
     return {}
 
-# TODO: Sprint2 user story4
-# function for cheking the booked voucher and show the voucher code to the eatery
-# given diner id, show a list of eateries that this diner has booked or is booking 
+# Shows a list of eateries of this diners current or past bookings
 def check_booking(token, diner_id):
+    # List of bookings that diner has booked
     booking_list = []
-    # for voucher in Voucher.query.filter_by(diner_id=diner_id).all():
-    #     booking_list.append(voucher.eatery_id)
-    return { booking_list }# a list of eateries
+    # for each voucher that matches this diners id, i.e. vouchers that this diner has booked
+    # Create a dictionary object for each voucher and append to the list
+    for voucher, eatery_name in db.session.query(Voucher, Eatery.eatery_name).join(Eatery, Voucher.eatery_id==Eatery.id).filter(Voucher.diner_id==diner_id).all():
+        item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
+        item["eatery_name"] = eatery_name
+        # convert the start and end time to string
+        item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+        booking_list.append(item)
+        
+    return { booking_list }
+
+def convert_time_to_string(t):
+    return str(t)[:-3]
