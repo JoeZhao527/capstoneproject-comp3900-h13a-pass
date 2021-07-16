@@ -19,9 +19,7 @@ def valid_token(token):
 # function for finding (eateries) with discounts based on specified time range, location, or cuisine.
 # maybe need postcode for eatery
 # location = suburb(postcode)
-def search_by_filter(token, date, time, location, cuisine):
-    if not valid_token(token):
-        raise InputError("Invalid token")
+def search_by_filter(date, time, location, cuisine):
     # search by date
     if date and not time and not location and not cuisine:
         # return a list of eatery objects pass the filter
@@ -70,10 +68,10 @@ def search_by_filter(token, date, time, location, cuisine):
     
     # conver the eateries object in the result to dictionary of eatery.
     # return a list of eateries
-    eateries = []
-    for eat in result:
-        eateries.append(dictionary_of_eatery(eat))
-    return eateries
+    # eateries = []
+    # for eat in result:
+    #    eateries.append(dictionary_of_eatery(eat))
+    return [dictionary_of_eatery(eat) for eat in result]
 
 
 # function for finding discount voucher based on given keyword
@@ -94,6 +92,7 @@ def search_by_key(keyword):
 # maybe can make it more specific later
 def view_eatery_list():
     result = Eatery.query.all()
+    # return [dictionary_of_eatery(eat) for eat in result]
     eateries = []
     for eat in result:
         eateries.append(dictionary_of_eatery(eat))
@@ -103,23 +102,33 @@ def view_eatery_list():
 def view_eatery_profile():
     return
 
+<<<<<<< HEAD
 # function for booking a voucher
 def book_voucher(token, diner_id, voucher_id):
     print(token, diner_id, voucher_id)
+=======
+
+# function for diner to book a voucher by given group id
+def book_voucher(token, diner_id, group_id):
+>>>>>>> 654b43bf96314796568f36379a76243a542e7c7c
     # Check if given token of diner is valid
     if not valid_token(token):
         raise InputError("Invalid token")
-    # Check if voucher exists
-    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    # Check if voucher(group id) exists
+    voucher = Voucher.query.filter_by(group_id=group_id, if_booked=False).first()
     if voucher is None:
-        raise InputError("Voucher does not exist")
-
+        raise InputError("Invalid voucher ID")
+    # check if diner has booked the same group voucher already
+    booked_same_voucher = Voucher.query.filter_by(group_id=group_id, diner_id=diner_id, if_booked=True).first()
+    if booked_same_voucher:
+        raise InputError("Diner has booked this voucher already!")
+    # update the diner_id and if_booked in the voucher
     voucher.diner_id = diner_id
     voucher.if_booked = True
     db.session.commit()
     return {}
     
-# function for cancelling a voucher.
+# function for cancelling a voucher by given a voucher id.
 def cancel_voucher(token, diner_id, voucher_id):
     # Check if given token is valid
     if not valid_token(token):
@@ -129,11 +138,12 @@ def cancel_voucher(token, diner_id, voucher_id):
     if voucher is None:
         raise InputError("Voucher does not exist")
     # Check if the voucher is booked by this diner
-    if diner_id != voucher.diner_id:
+    if voucher.diner_id != diner_id:
         raise InputError("Voucher is not booked by this diner")
-
+    # update the info in this voucher
     voucher.diner_id = None
     voucher.if_booked = False
+    db.session.commit()
     return {}
 
 # Shows a list of eateries of this diners current or past bookings
@@ -149,7 +159,7 @@ def check_booking(token, diner_id):
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
         booking_list.append(item)
         
-    return { booking_list }
+    return {booking_list}
 
 def convert_time_to_string(t):
     return str(t)[:-3]
