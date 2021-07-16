@@ -102,38 +102,27 @@ def view_eatery_list():
 def view_eatery_profile():
     return
 
-# function for cheking diner has not book the same voucher
-# check if the voucher has the same group id with the diner's booked voucher 
-def diner_booked_vouchcer(diner_id, voucher_id):
-    voucher = Voucher.query.filter_by(id=voucher_id).first()
-    # get the voucher's group memebers and check if diner has booked any one of them
-    groupID = voucher.group_id
-    # use the group ID to check if booked or not
-    booked = Voucher.query.filter_by(group_id = groupID, diner_id = diner_id).first()
-    if booked:
-        return True
-    return False
 
-
-# function for diner to book a voucher
-def book_voucher(token, diner_id, voucher_id):
+# function for diner to book a voucher by given group id
+def book_voucher(token, diner_id, group_id):
     # Check if given token of diner is valid
     if not valid_token(token):
         raise InputError("Invalid token")
-    # Check if voucher exists
-    voucher = Voucher.query.filter_by(id=voucher_id, if_booked=False).first()
+    # Check if voucher(group id) exists
+    voucher = Voucher.query.filter_by(group_id=group_id, if_booked=False).first()
     if voucher is None:
         raise InputError("Invalid voucher ID")
     # check if diner has booked the same group voucher already
-    if diner_booked_vouchcer(diner_id, voucher_id):
-        raise InputError("Diner has booked already!")
+    booked_same_voucher = Voucher.query.filter_by(group_id=group_id, diner_id=diner_id, if_booked=True).first()
+    if booked_same_voucher:
+        raise InputError("Diner has booked this voucher already!")
     # update the diner_id and if_booked in the voucher
     voucher.diner_id = diner_id
     voucher.if_booked = True
     db.session.commit()
     return {}
     
-# function for cancelling a voucher.
+# function for cancelling a voucher by given a voucher id.
 def cancel_voucher(token, diner_id, voucher_id):
     # Check if given token is valid
     if not valid_token(token):
@@ -143,11 +132,12 @@ def cancel_voucher(token, diner_id, voucher_id):
     if voucher is None:
         raise InputError("Voucher does not exist")
     # Check if the voucher is booked by this diner
-    if diner_id != voucher.diner_id:
+    if voucher.diner_id != diner_id:
         raise InputError("Voucher is not booked by this diner")
-
+    # update the info in this voucher
     voucher.diner_id = None
     voucher.if_booked = False
+    db.session.commit()
     return {}
 
 # Shows a list of eateries of this diners current or past bookings
@@ -163,7 +153,7 @@ def check_booking(token, diner_id):
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
         booking_list.append(item)
         
-    return { booking_list }
+    return {booking_list}
 
 def convert_time_to_string(t):
     return str(t)[:-3]
