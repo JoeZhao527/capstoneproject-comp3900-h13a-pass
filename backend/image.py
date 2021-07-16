@@ -40,7 +40,7 @@ def delete_image(token, image_id):
     eatery = Eatery.query.filter_by(token=token).first()
     if eatery is None:
         raise InputError("Invalid token")
-    # get the voucher and delete it 
+    # get the image and delete it 
     image = Image.query.filter_by(id=image_id, eatery_id=eatery.id).first()
     delete_item(image)
 

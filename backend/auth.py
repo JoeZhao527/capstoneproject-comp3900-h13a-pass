@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
 from backend.user_db import Eatery, Diner, Voucher
-from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token
+from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token, dictionary_of_eatery
 from backend.errors import InputError
 from server import db
 # for testing
@@ -323,7 +323,7 @@ if __name__ == "__main__":
     # make an eatery and add voucher
     r4 = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
     print(r4)
-    
+    # eatery_register("jianjunjchen@gmail", )
     new_voucher = create_voucher(r4["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123")
     print(str(new_voucher.id) + "!!!!!!" + str(new_voucher.discount) + str(new_voucher.start_time))
     
@@ -339,10 +339,15 @@ if __name__ == "__main__":
     #checks = db.session.query(Eatery, Voucher).filter(Voucher.eatery_id == Eatery.id).filter(Voucher.id == 1).all()
     # checks = db.session.query(Eatery).join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
     #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
-    checks = Diner.query.all()
-    print(checks)
-    for Eatery in checks:
-        print(Eatery)
+    diners = Diner.query.all()
+    print(diners)
+    result = [dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys()) for diner in diners]
+    print(result)
+    result2 = [dictionary_of_eatery(eat) for eat in diners]
+    print(result2)
+
+    diners_id = db.session.query(Diner.id).first()
+    print(diners_id[0])
     #print(data)
     #result2 = diner_login("jay123@gmail.com", "123Cjj")
     #print(result2)
