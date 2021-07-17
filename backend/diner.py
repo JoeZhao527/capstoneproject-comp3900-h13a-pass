@@ -147,14 +147,29 @@ def check_booking(token, diner_id):
     booking_list = []
     # for each voucher that matches this diners id, i.e. vouchers that this diner has booked
     # Create a dictionary object for each voucher and append to the list
-    for voucher, eatery_name in db.session.query(Voucher, Eatery.eatery_name).join(Eatery, Voucher.eatery_id==Eatery.id).filter(Voucher.diner_id==diner_id).all():
+    for voucher, eatery in db.session.query(Voucher, Eatery).join(Eatery, Voucher.eatery_id==Eatery.id).filter(Voucher.diner_id==diner_id).all():
         item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
-        item["eatery_name"] = eatery_name
+        item["eatery_name"] = eatery.eatery_name
+        item["eatery_phone"] = eatery.phone
+        item["address"] = eatery.address + " " + eatery.suburb + " " + eatery.city
+        item["cuisine"] = eatery.cuisine
+        item["description"] = eatery.description
+        item["menu"] = eatery.menu
         # convert the start and end time to string
+        # convert the date to string
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+        item['date'] = convert_date_to_string(item['date'])
         booking_list.append(item)
         
     return {booking_list}
 
+# if time is not a string, conver it to a string
+# if time is a string, return t
 def convert_time_to_string(t):
-    return str(t)[:-3]
+    return str(t)[:-3] if not isinstance(t, str) else t
+
+# if date is not a string, conver it to a string
+# if date is a string, return date
+def convert_date_to_string(d):
+    return str(d) if not isinstance(d, str) else d
+
