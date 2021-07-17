@@ -3,10 +3,10 @@ import os, sys
 from re import sub
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
+from server import db
 
 # datetime for voucher time range
 import datetime
-from server import db
 
 # clean up cache
 db.metadata.clear()
@@ -161,5 +161,5 @@ CREATE DOMAIN Discount AS
 """
 
 # clear up and create tables when the app run
-#db.drop_all() # use for backend testing
+db.drop_all() # use for backend testing
 db.create_all()
