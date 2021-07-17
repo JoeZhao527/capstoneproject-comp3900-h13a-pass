@@ -1,3 +1,7 @@
+#reservation-container > h1 {
+    font-size: x-large;
+}
+
 #select-row {
     margin: 1rem 0;
 }
@@ -12,12 +16,14 @@
 }
 
 #sort {
-    margin: 0 8rem 0 3rem;
+    margin: 0 1rem 0 3rem;
 }
+
 
 #select-row > div > input, 
 #select-row > div > select {
-    height: 3rem;
+    height: 2.5rem;
+    font-size: medium;
     border-radius: 10px;
     border: none;
     background-color: rgb(231, 229, 229);
@@ -27,6 +33,40 @@
     width: 18rem;
 }
 
+#sort-order-input {
+    display: none;
+}
+
+#sort-order-input + label:hover {
+    cursor: pointer;
+    background-color: rgb(201, 201, 201);
+    border-radius: 5px;
+}
+
+#sort-order-input + label{
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0 0 0 0px;
+    margin-right: 3rem !important;
+    background-image: url('../images/order.png');
+    background-size: 80%;
+    background-position: checkcode-center;
+    background-repeat: no-repeat;
+    display:inline-block;
+}
+
+#sort-order-input:checked + label {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-right: 3rem !important;
+    padding: 0 0 0 0px;
+    background-image: url('../images/order-rev.png');
+    background-size: 80%;
+    background-position: checkcode-center;
+    background-repeat: no-repeat;
+    display:inline-block;
+}
+
 #select-row > div > select {
     width: 8rem;
 }
@@ -34,25 +74,138 @@
     margin-right: 1rem;
 }
 
-#reservation-table {
+/* reservation table */
+table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-#reservation-table td, #reservation-table th {
+table td, table th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-#reservation-table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(even){background-color: #f2f2f2;}
 
-#reservation-table tr:hover {background-color: #ddd;}
+table tr:hover {background-color: #ddd;}
 
-#reservation-table th {
+table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     color: black;
 }
 
+table .reservation-btn {
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+table .complete-btn{background-image: url("/static/images/complete.png");background-size: 100%;}
+table .complete-btn:hover{background-color: rgb(0, 201, 0);}
+
+table .expire-btn{background-image: url("/static/images/delete.png");background-size: 80%;}
+table .expire-btn:hover {background-color: red;}
+
+table .view-feedback-btn{background-image: url("/static/images/view-comment.png");background-size: 100%;}
+table .view-feedback-btn:hover {background-color: yellow;}
+
+/* complete booking subpage */
+#checkcode-page {
+    display: none;
+}
+
+.checkcode-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding-bottom: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 15px 15px 15px 15px rgba(0,0,0,0.05);
+}
+.checkcode-center h1{
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid silver;
+}
+
+.checkcode-center p {
+    padding-left: 3rem;
+    color: red;
+}
+
+.checkcode-center form{
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+#checkcode-form .txt_field{
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+}
+
+#checkcode-form > .txt_field input{
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+#checkcode-form > .txt_field label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+#checkcode-form > .txt_field span::before{
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #2691d9;
+    transition: .5s;
+}
+#checkcode-form > .txt_field input:focus ~ label,
+#checkcode-form > .txt_field input:valid ~ label{
+    top: -5px;
+    color: #2691d9;
+}
+#checkcode-form > .txt_field input:focus ~ span::before,
+#checkcode-form > .txt_field input:valid ~ span::before{
+    width: 100%;
+}
+
+#checkcode-form > input[type="submit"]{
+    width: 100%;
+    height: 50px;
+    border: 1px solid;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+#checkcode-form > input[type="submit"]:hover{
+    border-color: #2691d9;
+    transition: .5s;
+}

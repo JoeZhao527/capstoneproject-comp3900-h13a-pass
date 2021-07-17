@@ -270,7 +270,7 @@ function addScheduleItem(data, id) {
 
 function addDeleteScheduleBtn(item, id) {
     let btn = document.createElement('button');
-    btn.innerHTML = 'Delete';
+    btn.className = 'delete'
     btn.onclick = () => {
         let xhr = new XMLHttpRequest();
         xhr.open('DELETE', '/eatery/profile/private/remove_schedule', false);
@@ -302,7 +302,7 @@ function loadSchedules() {
 }
 
 function clearSchedules() {
-    schedules.innerHTML = '<tr class="th"><th>weekday</th><th>start</th><th>end</th><th>discount</th><th>amount</th><th></th></tr>'
+    schedules.innerHTML = '<tr class="th"><th>weekday</th><th>start</th><th>end</th><th>discount</th><th>amount</th><th>Actions</th></tr>'
 }
 
 loadSchedules();
@@ -369,8 +369,7 @@ function addVoucherItem(data, id) {
  */
 function addDeleteVoucherBtn(item, id) {
     let delete_all = document.createElement('button');
-    delete_all.innerHTML = 'delete all';
-    delete_all.className = 'btn';
+    delete_all.className = 'delete';
     delete_all.onclick = () => {
         let xhr = new XMLHttpRequest();
         xhr.open('DELETE', '/eatery/profile/private/delete_all_vouchers', false);
@@ -399,7 +398,10 @@ document.onmousedown = (e) => {
             (!add_schedule_btn.contains(e.target))) {
             add_schedule_page.style.display = 'none';
         }
-    }   
+    } else if ((!checkcode_page.contains(e.target)) && 
+        checkcode_page.style.display === 'inline') {
+        checkcode_page.style.display = 'none';
+    }
 }
 
 // get the current active page

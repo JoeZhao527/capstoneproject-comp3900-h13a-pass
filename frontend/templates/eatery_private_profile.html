@@ -98,7 +98,7 @@
                         <th>end</th>
                         <th>discount</th>
                         <th>amount</th>
-                        <th></th>
+                        <th>Action</th>
                     </tr>
                 </table>
                 <button id="add-schedule-btn">add schedule</button>
@@ -113,6 +113,7 @@
                         <th>end</th>
                         <th>discount</th>
                         <th>amount</th>
+                        <th>Actions</th>
                     </tr>
                 </table>
                 <button id="add-voucher-btn">add voucher</button>
@@ -186,22 +187,26 @@
                         <div id="search" class="left">
                             <input type="text" placeholder=" Search by diner name">
                         </div>
+                        <div id='sort-order' class="right">
+                            <input id="sort-order-input" type="checkbox">
+                            <label for="sort-order-input"></label>
+                        </div>
                         <div id="sort" class="right">
                             <label>sort by: </label>
                             <select id="sort-select">
-                                <option value="by date">by date</option>
+                                <option value="by time">by time</option>
                                 <option value="by discount">by discount</option>
                             </select>
                         </div>
                         <div id="filter" class="right">
                             <label>filter by: </label>
                             <select id="filter-select">
+                                <option value="all">all</option>
                                 <option value="completed">completed</option>
                                 <option value="incomplete">incomplete</option>
-                                <option value="rated">rated</option>
+                                <option value="expired">expired</option>
                             </select>
                         </div>
-                        
                     </div>
                     <div id="reservation-content">
                         <table id="reservation-table">
@@ -212,10 +217,25 @@
                                 <th>Status</th>
                                 <th>Discount</th>
                                 <th>Contact</th>
+                                <th>Action</th>
                             </tr>
                         </table>
                     </div>
                 </section>
+            </div>
+        </section>
+        <section id="checkcode-page">
+            <div class="checkcode-center">
+                <h1>check code</h1>
+                <p id="checkcode-msg"></p>
+                <form id="checkcode-form">
+                    <div class="txt_field">
+                        <input id="checkcode" type="text" name="checkcode" required>
+                        <span></span>
+                        <label>Booking code</label>
+                    </div>
+                    <input type="submit" value="complete booking">
+                </form>
             </div>
         </section>
     </main>

@@ -269,8 +269,45 @@ def eatery_get_voucher():
     data = json.loads(request.data)
     token = data['token']
     res = get_unbooked_voucher(token)
-    print(res)
     return json.dumps(res)
+
+@app.route('/eatery/profile/private/get_reservation/<filter>', methods=['POST'])
+def eatery_get_all_reservation(filter):
+    data = json.loads(request.data)
+    print(data)
+    token = data['token']
+    sort_method = data['sort_method']
+    sort_reverse = data['sort_reverse']
+    try:
+        # get result voucher list by filter type
+        if filter == 'all':
+            res = get_all_diner_voucher(token)
+        elif filter == 'expired':
+            res = get_booked_expired_voucher(token)
+        elif filter == 'incomplete':
+            res = get_booked_diner_voucher(token)
+        elif filter == 'completed':
+            res = get_booked_used_voucher(token)
+
+        # sort result voucher list by sort method
+        if sort_method == 'by time':
+            res['vouchers'] = sorted(res['vouchers'], key=lambda k: (k['date'], k['start_time']), reverse=sort_reverse)
+        elif sort_method == 'by discount':
+            res['vouchers'] = sorted(res['vouchers'], key=lambda k: (k['discount']), reverse=sort_reverse)
+        return json.dumps(res)
+    except InputError:
+        return ''
+
+@app.route('/eatery/profile/private/complete_booking', methods=['POST'])
+def eatery_complete_booking():
+    data = json.loads(request.data)
+    token = data['token']
+    voucher_id = data['voucher_id']
+    try:
+        complete_booking(token, voucher_id)
+        return ''
+    except InputError:
+        return 'failed'
 
 @app.route('/eatery/profile/private/upload_image', methods=['POST'])
 def eatery_upload_image():
