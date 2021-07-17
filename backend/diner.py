@@ -106,7 +106,6 @@ def view_eatery_profile():
 # function for diner to book a voucher by given group id
 def book_voucher(token, diner_id, group_id):
     # Check if given token of diner is valid
-    print('here')
     if not valid_token(token):
         raise InputError("Invalid token")
     # Check if voucher(group id) exists
