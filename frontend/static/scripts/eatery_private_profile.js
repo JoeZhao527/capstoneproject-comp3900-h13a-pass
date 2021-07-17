@@ -24,6 +24,13 @@ const pages = document.getElementsByClassName('page');
 for (let i = 0; i < switchs.length; i++) {
     switchs[i].onclick = () => {
         displayPage(pages[i]);
+        for (let j = 0; j < switchs.length; j++) {
+            if (i === j) {
+                switchs[j].style.boxShadow = '10px 10px 10px 10px rgba(0,0,0,0.05)'
+            } else {
+                switchs[j].style.boxShadow = 'none'
+            }
+        }
     }
 }
 
@@ -36,7 +43,8 @@ function displayPage(page) {
     }
 }
 
-displayPage(pages[0]);
+displayPage(pages[3]);
+switchs[3].style.boxShadow = '10px 10px 10px 10px rgba(0,0,0,0.05)';
 
 /* logout button, logout logic in logout.js */
 const logout_btn = document.getElementById('logout-btn');
@@ -163,7 +171,7 @@ function updateProfile(data) {
  * @param {*} addDelete add deletebutton function. the id will be used to delete schedule/vouchers
  * @returns returns a voucehr/schedule item that can be append to voucher/schedule table
  */
-function createItem(data, id, addDelete) {
+function createItem(data, id, addDeleteAll) {
     let item = document.createElement('tr');
     for (const [key, value] of Object.entries(data)) {
         const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code', 'group_id', 'amount']
@@ -180,7 +188,27 @@ function createItem(data, id, addDelete) {
         td.appendChild(document.createTextNode(num_voucher));
         item.appendChild(td);
     }
-    addDelete(item, id);
+
+    addDeleteAll(item, id);
+    return item;
+}
+
+function createVoucherItem(data, id) {
+    let item = document.createElement('tr');
+    for (const [key, value] of Object.entries(data)) {
+        const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code', 'group_id', 'amount']
+        if (!hidden_attr.includes(key)) {
+            let td = document.createElement('td');
+            td.appendChild(document.createTextNode(value));
+            item.appendChild(td);
+        }
+    }
+
+    let td = document.createElement('td');
+    td.appendChild(document.createTextNode(data['amount']));
+    item.appendChild(td);
+
+    addDeleteVoucherBtn(item, id);
     return item;
 }
 
@@ -333,16 +361,17 @@ function addVoucherRequest(data) {
  */
 function addVoucherItem(data, id) {
     // creatItem create a voucher
-    vouchers.appendChild(createItem(data, id, addDeleteVoucherBtn));
+    vouchers.appendChild(createVoucherItem(data, id));
 }
 
 /**
  * add a delete button to a voucher item, which will delete all vouchers by its group_id
  */
 function addDeleteVoucherBtn(item, id) {
-    let btn = document.createElement('button');
-    btn.innerHTML = 'Delete';
-    btn.onclick = () => {
+    let delete_all = document.createElement('button');
+    delete_all.innerHTML = 'delete all';
+    delete_all.className = 'btn';
+    delete_all.onclick = () => {
         let xhr = new XMLHttpRequest();
         xhr.open('DELETE', '/eatery/profile/private/delete_all_vouchers', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -353,7 +382,7 @@ function addDeleteVoucherBtn(item, id) {
             alert('delete failed');
         }
     }
-    item.appendChild(btn);
+    item.appendChild(delete_all);
 }
 
 // close subpage

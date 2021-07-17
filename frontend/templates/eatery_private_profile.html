@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../../static/styles/eatery_private_profile.css">
+    <link rel="stylesheet" href="../../static/styles/reservation.css">
 </head>
 <body>
     <nav id="nav-bar">
@@ -20,7 +21,7 @@
             <div id="to-reserve"><img src="../../static/images/reservation_icon.png"> Reservation</div>
         </section>
         <section class="container">
-            <div id="profile" class="page">
+            <div id="profile" class="page subpage">
                 <div id="profile-section">
                     <h1>Profile</h1>
                     <form id="profile-form">
@@ -88,7 +89,7 @@
                     <div id="image-container"></div>
                 </div>
             </div>
-            <div id="view-schedule" class="page">
+            <div id="view-schedule" class="page subpage">
                 <h1>Schedules</h1>
                 <table id="schedules">
                     <tr class="th">
@@ -102,7 +103,7 @@
                 </table>
                 <button id="add-schedule-btn">add schedule</button>
             </div>
-            <div id="view-voucher" class="page">
+            <div id="view-voucher" class="page subpage">
                 <h1>Vouchers</h1>
                 <table id="vouchers">
                     <tr>
@@ -178,25 +179,49 @@
                     <input type="submit" id="submit-schedule" name="submit" class="submit" value="add">
                 </form>
             </div>
-            <div id="view-reservation" class="page">
-                <h1>Reservations</h1>
-                <table id="reservations">
-                    <tr>
-                        <th>date</th>
-                        <th>weekday</th>
-                        <th>start</th>
-                        <th>end</th>
-                        <th>discount</th>
-                        <th>diner name</th>
-                        <th>diner phone</th>
-                        <th>diner email</th>
-                    </tr>
-                </table>
+            <div id="view-reservation" class="page subpage">
+                <section id="reservation-container">
+                    <h1>Reservation</h1>
+                    <div id="select-row">
+                        <div id="search" class="left">
+                            <input type="text" placeholder=" Search by diner name">
+                        </div>
+                        <div id="sort" class="right">
+                            <label>sort by: </label>
+                            <select id="sort-select">
+                                <option value="by date">by date</option>
+                                <option value="by discount">by discount</option>
+                            </select>
+                        </div>
+                        <div id="filter" class="right">
+                            <label>filter by: </label>
+                            <select id="filter-select">
+                                <option value="completed">completed</option>
+                                <option value="incomplete">incomplete</option>
+                                <option value="rated">rated</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div id="reservation-content">
+                        <table id="reservation-table">
+                            <tr>
+                                <th>Date</th>
+                                <th>Weekday</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Discount</th>
+                                <th>Contact</th>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
             </div>
         </section>
     </main>
     <script src="../../static/scripts/eatery_private_profile.js"></script>
     <script src="../../static/scripts/load_vouchers.js"></script>
     <script src="../../static/scripts/logout.js"></script>
+    <script src="../../static/scripts/reservation.js"></script>
 </body>
 </html>

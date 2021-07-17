@@ -1,0 +1,58 @@
+#select-row {
+    margin: 1rem 0;
+}
+
+#select-row > div{
+    display: inline-block;
+}
+
+#select-row > .right{
+    position: relative;
+    float: right;
+}
+
+#sort {
+    margin: 0 8rem 0 3rem;
+}
+
+#select-row > div > input, 
+#select-row > div > select {
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(231, 229, 229);
+}
+
+#select-row > div > input {
+    width: 18rem;
+}
+
+#select-row > div > select {
+    width: 8rem;
+}
+#select-row > div > label {
+    margin-right: 1rem;
+}
+
+#reservation-table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#reservation-table td, #reservation-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#reservation-table tr:nth-child(even){background-color: #f2f2f2;}
+
+#reservation-table tr:hover {background-color: #ddd;}
+
+#reservation-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: black;
+}
+

@@ -43,14 +43,16 @@ main {
 
 .side-bar div {
     display: inline-block;
-    height: 3rem;
-    width: 17rem;
+    height: 2.5rem;
+    width: 15rem;
     font-size: 18px;
     font-weight: bold;
     color: black;
     padding: 1rem 0 1rem 2rem;
     vertical-align: center;
     margin-bottom: 1rem;
+    margin-left: 1rem;
+    border-radius: 2rem;
 }
 
 .side-bar > div > img {
@@ -61,7 +63,7 @@ main {
 
 .side-bar > div:hover {
     cursor: pointer;
-    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05) !important;
 }
 
 /* pages */
@@ -75,10 +77,10 @@ main {
 }
 
 /* profile */
-.page {
+.subpage {
     padding-left: 20px;
 }
-.page > div{
+.subpage > div{
     display: inline-block;
     vertical-align:top;
 }
@@ -296,37 +298,38 @@ tr:hover {
     box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.05);
 }
 
-.page table:first-child {
+.subpage table:first-child {
     box-shadow: none;
 }
 
-.page table {
+.subpage table {
     font-size: 18px;
 }
 
-.page table tr th{
+.subpage table tr th{
     padding: 30px 80px 30px 0;
 }
 
-.page table tr {
+.subpage table tr {
     border-bottom: 2px solid;
 }
 
-.page table button {
+.subpage table button{
     font-size: 18px;
     height: 100%;
     width: 100%;
     color: gray;
+    background-color: white;
     border: none;
 }
 
-.page table button:hover {
+.subpage table button:hover{
     background-color: red;
     color: white;
     cursor: pointer;
 }
 
-.page > button {
+.subpage > button {
     margin-top: 5rem;
     width: 10rem;
     height: 50px;

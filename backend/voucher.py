@@ -165,8 +165,21 @@ def get_unbooked_voucher(token):
             # convert the start and end time to string
             item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
             item['date'] = convert_date_to_string(item['date'])
-            voucher_list.append(item)
+            # amount is necessary for frontend to show amount of each type of vouchers
+            item['amount'] = 1
+            voucher_append(voucher_list, item)
+            # voucher_list.append(item)
     return {"vouchers": voucher_list}
+
+# group the vouchers with the same group id
+def voucher_append(voucher_list, voucher):
+    for item in voucher_list:
+        # if the vouchers have same group_id, group them
+        if item['group_id'] == voucher['group_id']:
+            item['amount'] += 1
+            return
+    # otherwise append it by itself with amount 1
+    voucher_list.append(voucher)
 
 # get all eatery's unbooked and expired vouchers by eatery's token
 # not booked and not expired
