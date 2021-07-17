@@ -110,7 +110,7 @@ function updateProfile(data) {
     let xhr = new XMLHttpRequest();
     xhr.open('PUT', '/diner_private_profile/update', false);
     xhr.send(JSON.stringify(data))
-    console.log('here');
+    console.log(xhr.response)
     return xhr.response;
 }
 

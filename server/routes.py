@@ -91,13 +91,11 @@ def diner_private_profile_info():
     # returns json string if res is not empty, otherwise returns an empty string
     return json.dumps(res)
 
-@app.route('/diner/profile/private/update', methods=['PUT'])
+@app.route('/diner_private_profile/update', methods=['PUT'])
 def diner_private_profile_update():
     data = json.loads(request.data)
     try:
-        res = diner_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
-                            data['diner_name'], data['address'], data['menu'], data['cuisines'], 
-                            data['city'], data['suburb'] ,data['description'])
+        res = diner_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'])
         return ''
     except InputError:
         return 'failed'

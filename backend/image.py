@@ -7,13 +7,13 @@ from backend.user_db import Eatery, Image
 from backend.data_access import get_eatery_id, store_image, get_image, delete_item
 from backend.errors import InputError
 from server import db
-from backend.auth import valid_token
+from backend.auth import *
 
 import base64
 
 def upload_image(token, img):
     # check if token is valid
-    if not valid_token(token):
+    if not eatery_valid_token(token):
         raise InputError("invalid token")
     
     # check if the image is actually uploaded
@@ -28,7 +28,7 @@ def upload_image(token, img):
 
 def get_eatery_image(token):
     # check if token is valid
-    if not valid_token(token):
+    if not eatery_valid_token(token):
         raise InputError("invalid token")
     
     eatery_id = get_eatery_id(token)
