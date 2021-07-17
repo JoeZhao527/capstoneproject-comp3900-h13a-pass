@@ -345,6 +345,7 @@ def load_data():
             suburb = eatery["suburb"]
             description = eatery["description"]
             eatery_id = eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
+            
             # for each eatery, load related images
             #for image in eatery["images"]:
                # store_image(eatery_id, image)

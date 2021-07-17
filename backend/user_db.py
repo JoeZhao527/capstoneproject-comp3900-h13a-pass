@@ -7,7 +7,6 @@ from server import db
 
 # datetime for voucher time range
 import datetime
-
 # clean up cache
 db.metadata.clear()
 
@@ -161,5 +160,5 @@ CREATE DOMAIN Discount AS
 """
 
 # clear up and create tables when the app run
-db.drop_all() # use for backend testing
+#db.drop_all() # use for backend testing
 db.create_all()
