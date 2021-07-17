@@ -86,7 +86,7 @@ def dictionary_of_diner(diner):
 # get dictionary of a voucher by given a voucher item
 def dictionay_of_voucher(voucher):
     data = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
-
+    return data
 # get a list of all eateries
 def get_all_eatery():
     eatery = Eatery.query.all()
