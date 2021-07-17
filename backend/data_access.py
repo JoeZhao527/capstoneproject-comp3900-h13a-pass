@@ -27,10 +27,11 @@ def create_diner(first_name, last_name, email, password, phone, token):
     return diner.id
 
 # insert a Voucher to database
-def create_Voucher(eatery_id, date, start_time, end_time, discount):
-    voucher = Voucher(eatery_id, date, start_time, end_time, discount)
-    add_item(voucher)
-    return voucher.id
+# useless function, the right one is in the voucher.py
+#def create_Voucher(eatery_id, date, start_time, end_time, discount):
+#    voucher = Voucher(eatery_id, date, start_time, end_time, discount)
+#    add_item(voucher)
+#    return voucher.id
 
 # insert a schedule to database
 def create_schedule(eatery_id, no_vouchers, weekday, start, end, discount):
@@ -85,9 +86,10 @@ def dictionary_of_diner(diner):
 # get dictionary of a voucher by given a voucher item
 def dictionay_of_voucher(voucher):
     data = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
-
-def get_num_eatery():
-    eatery = Eatery.query.filter_by().all()
+    return data
+# get a list of all eateries
+def get_all_eatery():
+    eatery = Eatery.query.all()
     data = []
     for e in eatery:
         data.append(dictionary_of_eatery(e))

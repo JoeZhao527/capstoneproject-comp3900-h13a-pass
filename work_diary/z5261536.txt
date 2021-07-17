@@ -1,6 +1,30 @@
-Week1
+Week1 (5.31-6.6)
 Group formed. We decided our group name as PASS and choose to do the project Value Eats. I created the Jira account and wrote the user stories with the other group members. I also discueesd with the team that which software tools(language) we would use for the backend and frontend for the project. (backend:python, fontend: html/css/js)
 User stories connextra format: As a [who] I want to [what] so that [why].
 
-Week2
-We discussed the User stories together, add epics to each story. We also allocated the project work to each members.
+Week2 (6.7 - 6.13)
+I discussed the User stories with my group members together, allocated the proposal work for our project to each member. 
+Joe & Edward -> frontend UI design, Nicholas and I -> backend interface design, Karen -> database design 
+I also started adding details and sub stories for each user story on Jira, and enrolled in our group project repository on github.
+
+Week3 (6.13 - 6.20)
+I updated and added more user stories. Together with Joe, I updated and completed the ER digram, UML diagram for our backend structure and database. I also completed backend interface design for our backend functions with Nicholas.
+Helped doing part of the frontend UI design and wrote part of the porject proposal such as sprint timeline.
+
+Week4 (6.20 - 6.27)
+I updated the backend interface design and started completing the user stories for our first sprint. The user stories in sprint 1 mainly focus on Eatery. I focued on the eatery related functionality such as eatery registration, login, logout, password reset, add voucher etc.
+I also updated and compeleted the sqlalchamey database for storing all the info for our users, vouchers, schedule, reviews etc.
+
+Week5 (6.26 - 7.3)
+Updated the eatery related functions and database.
+I joined and presented our progressive Demos A with Joe and Nicholas on Thursday, mainly talked about our backend functions and database.
+
+Week6 (7.4 - 7.11) Flex week
+Started working on sprint2, mainly focused on diner related functions such as diner login, logout, registration etc.
+Fixed some issues from sprint 1.
+Had a meeting talked about the restrospective, summary and review for our performance in sprint1. 
+
+Week7 (7.12 - 7.18)
+I discuessd more about the Retrospective A with my group members. Provided and updated some ideas of what went well so far, as well as what didn't go so well and things to try to improve the team's work process for the next sprint. 
+Completed the functions for Diner such as search eateries by filter and keyword. Helped updating and fixing fucntions such as book voucher and cancel voucher with Nicholas.
+....

@@ -3,11 +3,10 @@ import os, sys
 from re import sub
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
+from server import db
 
 # datetime for voucher time range
 import datetime
-from server import db
-
 # clean up cache
 db.metadata.clear()
 
@@ -82,16 +81,18 @@ class Voucher(db.Model):
     end_time = db.Column(db.Time, nullable=False)
     discount = db.Column(db.Float, nullable=False)
     if_used = db.Column(db.Boolean)
-    if_booked = db.Column(db.Boolean)     # add 
+    if_booked = db.Column(db.Boolean)  # add 
     code = db.Column(db.String(20))    # verify code to check if the user has booked the voucher and not used
-    
-    def __init__(self, eatery_id, date, start_time, end_time, discount, code):
+    group_id = db.Column(db.Integer, nullable=False)   # group id for group the same vouchers 
+
+    def __init__(self, eatery_id, date, start_time, end_time, discount, code, group_id):
         self.eatery_id = eatery_id
         self.date = date
         self.start_time = start_time
         self.end_time = end_time
         self.discount = discount
         self.code = code
+        self.group_id = group_id
         # self.diner_id = None
         # self.if_used = False
         # self.if_booked = False
