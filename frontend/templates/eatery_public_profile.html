@@ -2,26 +2,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eatery Details</title>
-<<<<<<< HEAD
-    <link rel="stylesheet" href="../static/styles/eatery_public_profile.css">
-=======
-    <link rel="stylesheet" href="../styles/eatery_public_profile.css">
->>>>>>> 1c73eab163064efe8d9bd6db724987d832e56dcc
+    <title>Eatery public</title>
+    <link rel="stylesheet" href="../../static/styles/eatery_public_profile.css">
+    <link rel="stylesheet" href="../../static/styles/login.css">
+    <link rel="stylesheet" href="../../static/styles/search_bar.css">
+    <link rel="stylesheet" type="text/css" href="../../static/styles/google_map.css" />
 </head>
 <body>
     <nav id="nav-bar">
-        <button class="home">Value Eat</button>
-        <input type="text" id="search">
-        <button class="login nav-btn">Login</button>
-        <button class="sign-up nav-btn">Sign up</button>
-        <button class="profile nav-btn">Profile</button>
-        <button class="logout nav-btn">Logout</button>
+        <button id="home-btn" class="home">Value Eat</button>
+        <div id="search-bar">
+            <input type="text" placeholder = "Find your eatery" id="search" required>
+            <span></span>
+            <div id="search-res"></div>
+        </div>
+        <button id="sign-up-btn" class="nav-btn">sign-up</button>
+        <button id="profile-btn" class="nav-btn">profile</button>
+        <button id="login-btn" class="nav-btn">login</button>
+        <button id="logout-btn" class="nav-btn">logout</button>
     </nav>
-<<<<<<< HEAD
-    
-=======
->>>>>>> 1c73eab163064efe8d9bd6db724987d832e56dcc
+    <div id="image-section" class="container">
+        <div id="image-container"></div>
+        <button id="slide-right" class="arrow arrow--right"></button>
+        <button id="slide-left" class="arrow arrow--left"></button>
+    </div>
+    <div class="left-block">
+        <div id="header-section"  class="container">
+            <h1 id="eatery-name"></h1>
+            <div>
+                cuisines: <span id="cuisine"></span>
+            </div>
+            <div>
+                rating: <div class="Stars" style="--rating: 3.3;"></div><span> 3.3</span>
+            </div>
+        </div>
+        <div id="main-section"  class="container">
+            <div id="content-section">
+                <h1>Overview</h1>
+                <button id="description-btn"> Description & Menu</button> /
+                <button id="contact-btn"> Address & Contact</button> /
+                <button id="map-btn"> View On Map</button>
+                <div id="description" class="content-sub">
+                    <p>The eatery is too lazy, didn't write any description</p>
+                </div>
+                <div id="contact" class="content-sub">
+                    <div>
+                        <h3>City</h3>
+                        <p id="city"></p>
+                    </div>
+                    <div>
+                        <h3>Suburb</h3>
+                        <p id="suburb"></p>
+                    </div>
+                    <div>
+                        <h3>Address</h3>
+                        <p id="address"></p>
+                    </div>
+                    <div>
+                        <h3>Phone</h3>
+                        <p id="phone">phone</p>
+                    </div>
+                    <div>
+                        <h3>Email</h3>
+                        <p id="email">email</p>
+                    </div>
+                </div>
+                <div id="google-map" class="content-sub">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div id="comment-section">
+                <h1>Comment</h1>
+                comment
+            </div>
+        </div>
+    </div>
+    <div id="book-section" class="container right-block">
+        <input type="date" min="2013-06-28" max="2013-07-04">
+        <div id="voucher-container">nothing found</div>
+    </div>
+    <section id="login-page">
+        <div class="center">
+            <h1>Login</h1>
+            <p id="login-msg"></p>
+            <div id="tabs">
+                <button id="diner" class="tab">Diner</button>
+                <button id="eatery" class="tab">Eatery</button>
+            </div>
+            <form id="login-form">
+                <div class="txt_field">
+                    <input type="text" name="email" required>
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" name="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div id="pass">Forgot Password</div>
+                <div class="signup_link">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+        </div>
+    </section>
+    <section id="book-failed-page">
+        <div class="center">
+            <h2>Only Diner Can Book Vouchers!</h2>
+            <button> OK </button>
+        </div>
+    </section>
+    <script src="../../static/scripts/google_map.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPquSqRek6F778Hr2PARZvopNtCRx2kyE&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+    <script src="../../static/scripts/eatery_public_profile.js"></script>
+    <script src="../../static/scripts/load_vouchers.js"></script>
+    <script src="../../static/scripts/login.js"></script>
+    <script src="../../static/scripts/logout.js"></script>
+    <script src="../../static/scripts/book_voucher.js"></script>
+    <script src="../../static/scripts/search_bar.js"></script>
 </body>
 </html>

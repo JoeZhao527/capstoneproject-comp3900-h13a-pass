@@ -1,0 +1,398 @@
+
+:root {
+
+    --primary-color: rgb(119, 158, 180);
+    --btn-color: white;
+    --btn-hover-color: lightskyblue;
+}
+
+/* body {
+    font-size: 1;
+} */
+/* nav bar */
+/* nav bar */
+#nav-bar {
+    background-color:var(--primary-color);
+    margin: -10px;
+    box-shadow: 0 0 15px 0 black;
+    padding: 15px 0 15px 0;
+}
+
+#nav-bar button:hover{
+    cursor: pointer;
+    color: black;
+    transition: 0.2s;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.nav-btn {
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: black;
+    background-color: var(--primary-color);
+    width: 6rem;
+    height: 3rem;
+    margin-right: 4rem;
+    float: right;
+}
+
+.home {
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: 20px;
+    font-style: italic;
+    background-color: var(--primary-color);
+    width: 16rem;
+    height: 3rem;
+    float: left;
+}
+
+.home:hover {
+    background-color: white;
+    transition: 0.4s;
+}
+
+/* container */
+.container {
+    display: flex;
+}
+
+
+
+/* login section */
+#login-page {
+    z-index:9999;
+    display: none;
+}
+
+.center {
+    z-index:9999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 15px 15px 15px 15px rgba(0,0,0,0.05);
+}
+.center h1{
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 1px solid silver;
+}
+.center form{
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+form .txt_field{
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 30px 0;
+}
+
+.txt_field input{
+    width: 100%;
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+.txt_field label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    transition: .5s;
+}
+.txt_field span::before{
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #2691d9;
+    transition: .5s;
+}
+.txt_field input:focus ~ label,
+.txt_field input:valid ~ label{
+    top: -5px;
+    color: #2691d9;
+}
+.txt_field input:focus ~ span::before,
+.txt_field input:valid ~ span::before{
+    width: 100%;
+}
+#pass{
+    margin: -5px 0 20px 5px;
+    color: #a6a6a6;
+    cursor: pointer;
+}
+#pass:hover{
+    text-decoration: underline;
+}
+input[type="submit"]{
+    width: 100%;
+    height: 50px;
+    border: 1px solid;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+input[type="submit"]:hover{
+    border-color: #2691d9;
+    transition: .5s;
+}
+.signup_link{
+    margin: 30px 0;
+    text-align: center;
+    font-size: 16px;
+    color: #666666;
+}
+.signup_link a{
+    color: #2691d9;
+    text-decoration: none;
+}
+
+.signup_link a:hover{
+    text-decoration: underline;
+}
+
+
+#tabs {
+    margin-left: 35px;
+}
+
+#tabs button {
+    width: 155px;
+    height: 30px;
+    margin-right: 10px;
+    background-color: white;
+    border: none;
+    border-bottom: #2691d9 3px solid;
+}
+
+#tabs button:hover {
+    color: #2691d9;
+    cursor: pointer;
+}
+body{
+    margin:0;
+    padding:0;
+}
+
+.box  {
+    border:none;
+    float:none;
+    height:50vh;
+    width: 100%;
+    background-image: url("../images/food_1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* opacity: 0.5; */
+
+}
+#heading{
+    position:absolute;
+    top:15rem;
+    transform: translateY(-50%);
+    margin:0;
+    padding:0;
+    text-align: center;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    font-size: xx-large;
+    
+}
+
+#select {
+    position:absolute;
+    top:48%;
+    transform: translateY(-50%);
+    margin:0;
+    padding:0;
+    text-align: center;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    font-size: xx-large;
+}
+
+
+#go-btn {
+    background-color: white;
+    width: 12rem;
+    height: 3rem;
+    border-radius: 2.5rem;
+    border: 2px black solid;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+#go:hover {
+    background-color: var(--btn-hover-color);
+    cursor: pointer;
+}
+
+#select input {
+    width: 100px;
+    height: 25px;
+    margin-right:20px;
+}
+
+.section{
+    width:80%;
+    height: 200px;
+    background-color:rgb(255, 255, 255);
+    position:relative;
+    left:10%;
+    cursor: pointer;
+    margin-bottom: 10px;
+    
+}
+
+.section .img {
+    display: inline-block;
+    /* width: 200px; */
+}
+.section img{
+    width: 150px;
+    height:auto;
+    padding-top: 22px;
+    padding-left: 22px;
+}
+
+.details {
+    display:inline-block;
+    /* position: absolute; */
+    width: 500px;
+    vertical-align:top;
+    margin-left: 20px;
+}
+
+hr {
+    color: #a6a6a6;
+    width:100%
+}
+
+
+/*去掉标签默认样式*/
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+input {
+    margin: 0;
+}
+
+/*初始化样式*/
+.star_evaluate {
+    position: relative;
+    width: 100px;
+    height: 20px;
+    background: url("../images/star_d.png") repeat-x;
+    background-size: 20px 20px;
+    overflow: hidden;
+}
+
+.star,.score{
+    display: block;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+}
+.star{
+    z-index: 2;
+}
+.score{
+    opacity: 0;
+}
+
+.star_1, .score_1 {
+    left: 0;
+}
+
+.star_2, .score_2 {
+    left: 20px;
+}
+
+.star_3, .score_3 {
+    left: 40px;
+}
+
+.star_4, .score_4 {
+    left: 60px;
+}
+
+.star_5, .score_5 {
+    left: 80px;
+}
+
+/*鼠标悬浮*/
+.star:hover {
+    cursor: pointer;
+    background: url("../images/star.png") repeat-x;
+    background-size: 20px 20px;
+    left: 0;
+    z-index: 1;
+}
+
+.star_1:hover {
+    width: 20px;
+}
+
+.star_2:hover {
+    width: 40px;
+}
+
+.star_3:hover {
+    width: 60px;
+}
+
+.star_4:hover {
+    width: 80px;
+}
+
+.star_5:hover {
+    width: 100px;
+}
+
+/*选中之后*/
+.score:checked + .star {
+    background: url("") repeat-x;
+    background-size: 20px 20px;
+    left: 0;
+}
+
+.score_1:checked + .star_1 {
+    width: 20px;
+}
+
+.score_2:checked + .star_2 {
+    width: 40px;
+}
+
+.score_3:checked + .star_3 {
+    width: 60px;
+}
+
+.score_4:checked + .star_4 {
+    width: 80px;
+}
+
+.score_5:checked + .star_5 {
+    width: 100px;
+}

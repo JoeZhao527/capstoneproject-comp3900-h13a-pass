@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diner Profile</title>
+    <link rel="stylesheet" href="../static/styles/diner_profile.css">
+</head>
+
+<body>
+    <nav id="nav-bar">
+        <button id="logout">logout</button>
+    </nav>
+    <main>
+        <section id="side-bar" class="side-bar">
+            <div id="to-profile"><img src="../static/images/profile_icon.png"> Profile</div>
+            <div id="to-active"><img src="../static/images/voucher_icon.png"> Active Voucher</div>
+            <div id="to-previous"><img src="../static/images/voucher_icon.png"> Previous Voucher</div>
+        </section>
+        <section class="container">
+            <div id="profile" class="page">
+                <div id="profile-section">
+                    <form id="profile-form">
+                        <div class="txt_field left">
+                            <label for="first_name">first name:</label>
+                            <input type="text" name="first_name" id="first_name" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field right">
+                            <label for="last_name">last name:</label>
+                            <input type="text" name="last_name" id="last_name" required>
+                            <span></span>
+                        </div>
+                        <div class="txt_field left">
+                            <label for="phone">phone:</label>
+                            <input type="text" name="phone" id="phone" required>
+                            <span></span>
+                        </div>
+                        
+                        
+                        
+                        <input type="submit" id="submit" value="Update Profile">
+                    </form>
+                </div>
+                
+                
+            </div>
+            <div id="view-active" class="page">
+                <h1>Active Vouchers</h1>
+                <table id="schedules">
+                    <tr class="th">
+                        <th>Eatery</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Discount</th>
+                        <th>Code</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="view-previous" class="page">
+                <h1>Previous Vouchers</h1>
+                <table id="vouchers">
+                    <tr>
+                        <th>Eatery</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Discount</th>
+                        <th>Code</th>
+                    </tr>
+                </table>
+            </div>
+            
+            
+        </section>
+    </main>
+    
+
+
+
+
+    <script src="../static/scripts/diner_profile.js"></script>
+</body>
+</html>

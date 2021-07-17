@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="../static/styles/diner_home.css">
+    <link rel="stylesheet" href="../../static/styles/search_bar.css">
+</head>
+    <nav id="nav-bar">
+        <button class="home">Value Eat</button>
+        <div id="search-bar">
+            <input type="text" placeholder = "Find your eatery" id="search" required>
+            <span></span>
+            <div id="search-res"></div>
+        </div>
+        <button class="eatery nav-btn">For Eatery</button>
+        <button class="sign-up nav-btn">Sign up</button>
+        <button class="login nav-btn">Login</button>
+        <button class="profile nav-btn">Profile</button>
+        <button id = "logout-btn" class="logout nav-btn">Logout</button>
+    </nav>
+
+    <section id="login-page">
+        <div class="center">
+            <h1>Login</h1>
+            <div id="tabs">
+                <button id="diner" class="tab">Diner</button>
+                <button id="eatery" class="tab">Eatery</button>
+            </div>
+            <form id="login-form">
+                <div class="txt_field">
+                    <input type="text" name="email" required>
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" name="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div id="pass">Forgot Password</div>
+                <input type="submit" value="Login">
+                <div class="signup_link">
+                    Not a member? <a href="#">Signup</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <div class = 'box'>
+        <div id="heading">
+            <h1 class="h1">Promote Your Eatery</h1>
+            <h1 class="h2">From Today!</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas incidunt.</p>
+        </div>
+        <div id="select">
+            <div>
+                <label>Date: </label>
+                <input type="date" id="date" name="date" required>
+            
+                <label>Time: </label>
+                <input type="time" id="voucher-start" name="start" min="00:00" max="23:59" required>
+            
+                <label>Numer of People: </label>
+                <input type="number" id="voucher-discount" min="0" max="100" required>
+            
+                <button id="go-btn">Let's go</button>
+            </div>
+        </div>
+    </div> 
+
+    <div id="section_container">
+
+    </div>
+    
+    <div class = "section">
+        <div class="img">
+            <img src="../static/images/food_1.jpg" alt="">
+            <!-- <h2 id="name" >BB's Beach Break</h2> -->
+          </div>
+        <div class="details">
+            <h2 id="name">BB's Beach Break</h2>
+            <p>suburb</p>
+            <p>cuisine</p>
+            <form id="score_form">
+                <div class="star_evaluate">
+                    <input type="radio" id="scoreId_1" class="score score_1" name="score" value="1"/>
+                    <label for="scoreId_1" class="star star_1"></label>
+                    <input type="radio" id="scoreId_2" class="score score_2" name="score" value="2"/>
+                    <label for="scoreId_2" class="star star_2"></label>
+                    <input type="radio" id="scoreId_3" class="score score_3" name="score" value="3"/>
+                    <label for="scoreId_3" class="star star_3"></label>
+                    <input type="radio" id="scoreId_4" class="score score_4" name="score" value="4"/>
+                    <label for="scoreId_4" class="star star_4"></label>
+                    <input type="radio" id="scoreId_5" class="score score_5" name="score" value="5"/>
+                    <label for="scoreId_5" class="star star_5"></label>
+                </div>
+            </form>
+            <p>reviews</p>
+        </div>
+    </div>
+    <hr>
+    
+    <div class = "section">
+        <div class="img">
+            <img src="../static/images/food_2.jpg" alt="">
+            <!-- <h2 id="name" >BB's Beach Break</h2> -->
+          </div>
+        <div class="details">
+            <h2 id="name">Peanut Butter Jelly</h2>
+            <p display: inline-block;>suburb</p>
+            <p display: inline-block;>cuisine</p>
+            <form id="score_form">
+                <div class="star_evaluate">
+                    <input type="radio" id="scoreId_1" class="score score_1" name="score" value="1"/>
+                    <label for="scoreId_1" class="star star_1"></label>
+                    <input type="radio" id="scoreId_2" class="score score_2" name="score" value="2"/>
+                    <label for="scoreId_2" class="star star_2"></label>
+                    <input type="radio" id="scoreId_3" class="score score_3" name="score" value="3"/>
+                    <label for="scoreId_3" class="star star_3"></label>
+                    <input type="radio" id="scoreId_4" class="score score_4" name="score" value="4"/>
+                    <label for="scoreId_4" class="star star_4"></label>
+                    <input type="radio" id="scoreId_5" class="score score_5" name="score" value="5"/>
+                    <label for="scoreId_5" class="star star_5"></label>
+                </div>
+            </form>
+            <p>reviews</p>
+        </div>
+    </div>
+    <hr>
+
+
+    <div class = "section">
+        <div class="img">
+            <img src="../static/images/food_3.jpg" alt="">
+            <!-- <h2 id="name" >BB's Beach Break</h2> -->
+          </div>
+        <div class="details">
+            <h2 id="name">Peanut Butter Jelly Lane Cove</h2>
+            <p display: inline-block;>suburb</p>
+            <p display: inline-block;>cuisine</p>
+            <form id="score_form">
+                <div class="star_evaluate">
+                    <input type="radio" id="scoreId_1" class="score score_1" name="score" value="1"/>
+                    <label for="scoreId_1" class="star star_1"></label>
+                    <input type="radio" id="scoreId_2" class="score score_2" name="score" value="2"/>
+                    <label for="scoreId_2" class="star star_2"></label>
+                    <input type="radio" id="scoreId_3" class="score score_3" name="score" value="3"/>
+                    <label for="scoreId_3" class="star star_3"></label>
+                    <input type="radio" id="scoreId_4" class="score score_4" name="score" value="4"/>
+                    <label for="scoreId_4" class="star star_4"></label>
+                    <input type="radio" id="scoreId_5" class="score score_5" name="score" value="5"/>
+                    <label for="scoreId_5" class="star star_5"></label>
+                </div>
+            </form>
+            <p>reviews</p>
+        </div>
+    </div>
+    <hr>
+
+    
+<body>
+
+
+
+    <script src="../static/scripts/diner_home.js"></script>
+    <script src="../../static/scripts/search_bar.js"></script>
+    <!-- <script src="../static/scripts/logout.js"></script> -->
+    <!-- <script src="../static/scripts/login.js"></script> -->
+</body>
+</html>
