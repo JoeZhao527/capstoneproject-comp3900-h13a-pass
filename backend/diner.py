@@ -23,55 +23,115 @@ def search_by_filter(date, time, location, cuisine):
     # search by date
     if date and not time and not location and not cuisine:
         # return a list of eatery objects pass the filter
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date).all()
     # search by time
     elif not date and time and not location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
     # search by location
     elif not date and not time and location and not cuisine:
-        result = Eatery.query.filter_by(suburb=location).all()
+        # a list to store eatery object that fit the location
+        eateries = Eatery.query.all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # search by cuisine
     elif not date and not time and not location and cuisine:
         result = Eatery.query.filter_by(cuisine=cuisine).all()
     # date and time
     elif date and time and not location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time).all()
     # date and location
     elif date and not time and location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Eatery.suburb == location).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # date and cuisine
     elif date and not time and not location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Eatery.cuisine == cuisine).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Eatery.cuisine == cuisine).all()
     # time and location
     elif not date and time and location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # time and cuisine
     elif not date and time and not location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
     # location and cuisine
     elif not date and not time and location and cuisine:
-        result = Eatery.query.filter_by(suburb=location, cuisine=cuisine).all()
+        eateries = Eatery.query.filter_by(cuisine=cuisine).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # date, time and location
     elif date and time and location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # date, time and cuisine
     elif date and time and not location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
     # time, location and cuisine
     elif not date and time and location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location, Eatery.cuisine == cuisine).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
+    # date, time, location and cuisine
     elif date and time and location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location, Eatery.cuisine == cuisine).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
+    
     # if no date, time, location and cuisine speicify, return defalt -> a list of all the eateries
     else:
         result = Eatery.query.all()
     
     # conver the eateries object in the result to dictionary of eatery.
-    # return a list of eateries
-    # eateries = []
-    # for eat in result:
-    #    eateries.append(dictionary_of_eatery(eat))
-    return [dictionary_of_eatery(eat) for eat in result]
+    # add the first image of the eatery into the dictionary
+    # return a list of eateries with one image
+    eatery_with_image = []
+    for eat in result:
+        eatery_item = dictionary_of_eatery(eat)
+        # get the first image of the eatery
+        first_image = Image.query.filter_by(eatery_id=eat.id).first().image
+        eatery_item["eatery_image"] = first_image
+        # add the eatery with image dictionary into the list
+        eatery_with_image.append(eatery_item)
+
+    return eatery_with_image
+    #return [dictionary_of_eatery(eat) for eat in result]
 
 
 # function for finding discount voucher based on given keyword

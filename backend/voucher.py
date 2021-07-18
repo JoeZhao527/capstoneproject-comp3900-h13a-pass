@@ -223,7 +223,7 @@ def get_booked_diner_voucher(token):
     voucher_list = []
 
     # to get all the vouchers that are booked, not used and not expired
-    voucher_diner_list = db.session.query(Voucher, Diner).filter(Voucher.diner_id==Diner.id).filter_by(eatery_id=eatery.id, if_booked=True, if_used=False).all()
+    voucher_diner_list = db.session.query(Voucher, Diner).join(Diner, Voucher.diner_id==Diner.id).filter(Voucher.eatery_id==eatery.id, Voucher.if_booked==True, Voucher.if_used==False).all()
     for voucher, diner in voucher_diner_list:
         # and the voucher has expired        
         if not voucher_has_expired(voucher):
@@ -253,7 +253,7 @@ def get_booked_expired_voucher(token):
     voucher_list = []
 
     # to get all the vouchers that are booked, not used but expired
-    voucher_diner_list = db.session.query(Voucher, Diner).filter(Voucher.diner_id==Diner.id).filter_by(eatery_id=eatery.id, if_booked=True).all()
+    voucher_diner_list = db.session.query(Voucher, Diner).join(Diner, Voucher.diner_id==Diner.id).filter(Voucher.eatery_id==eatery.id, Voucher.if_booked==True).all()
     for voucher, diner in voucher_diner_list:
         # and the voucher has expired   
         if voucher_has_expired(voucher):
@@ -281,7 +281,7 @@ def get_booked_used_voucher(token):
     voucher_list = []
 
     # to get all the vouchers that are booked and used
-    voucher_diner_list = db.session.query(Voucher, Diner).filter(Voucher.diner_id==Diner.id).filter_by(eatery_id=eatery.id, if_booked=True, if_used=True).all()
+    voucher_diner_list = db.session.query(Voucher, Diner).join(Diner, Voucher.diner_id==Diner.id).filter(Voucher.eatery_id==eatery.id, Voucher.if_booked==True, Voucher.if_used==True).all()
     for voucher, diner in voucher_diner_list:
         item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
         # convert the start and end time to string
@@ -306,7 +306,7 @@ def get_all_diner_voucher(token):
     voucher_list = []
 
     # to get all the vouchers that are booked, not used and not expired
-    voucher_diner_list = db.session.query(Voucher, Diner).filter(Voucher.diner_id==Diner.id).filter_by(eatery_id=eatery.id, if_booked=True).all()
+    voucher_diner_list = db.session.query(Voucher, Diner).join(Diner, Voucher.diner_id==Diner.id).filter(Voucher.eatery_id==eatery.id, Voucher.if_booked==True).all()
     for voucher, diner in voucher_diner_list:
         item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
         # convert the start and end time to string
@@ -323,6 +323,7 @@ def get_all_diner_voucher(token):
     return {"vouchers": voucher_list}
 
 # use eatery token and voucher_id to complete a reservation
+# when diner show the 
 def complete_booking(token, voucher_id):
     eatery = Eatery.query.filter_by(token=token).first()
     # check if eatery exist
@@ -338,6 +339,7 @@ def complete_booking(token, voucher_id):
     voucher.if_used = True
     db.session.commit()
     return
+
 # string type: "2014-06-08"     
 def convert_string_to_date(s):
     if isinstance(s, str):
