@@ -12,12 +12,19 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
 from backend.user_db import Eatery, Diner, Voucher
-from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token, dictionary_of_eatery
+from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token, dictionary_of_eatery, store_image
 from backend.errors import InputError
 from server import db
+# for loading data
+import json
+
 # for testing
 from backend.voucher import create_voucher
 from datetime import date, datetime, time
+
+# for the eatery register and create voucher (load data from json file into the database)
+#from backend.voucher import create_voucher
+#from backend.data_access import store_image
 
 
 VALID_EMAIL = r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
@@ -319,6 +326,55 @@ def diner_profile_update(token, first_name, last_name, phone):
     return get_diner_by_token(token)
 
 
+# take all the information of eateries and voucher in eatery_data.json into the valueEats.db
+def load_data():
+    with open('../data/eatery_data.json') as data_file:
+        data = json.load(data_file)
+        # load eateries from the data file into the database
+        for eatery in data["eateries"]:
+            email = eatery["email"]
+            password = eatery["password"]
+            first_name = eatery["first_name"]
+            last_name = eatery["last_name"]
+            phone = eatery["phone"]
+            eatery_name = eatery["eatery_name"]
+            address = eatery["address"]
+            menu = eatery["menu"]
+            cuisine = eatery["cuisine"]
+            city = eatery["city"]
+            suburb = eatery["suburb"]
+            description = eatery["description"]
+            eatery_id = eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
+            
+            # for each eatery, load related images
+            #for image in eatery["images"]:
+               # store_image(eatery_id, image)
+
+        # load vouchers from the data file into the database
+        #for voucher in data["vouchers"]:
+        #    xxx
+
+# for testing
+if __name__ == "__main__":
+    load_data()
+    Eateries = Eatery.query.all()
+    result = [dictionary_of_eatery(eat) for eat in Eateries]
+    print(result)
+
+    # make an eatery and add voucher
+    result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
+    # eatery_register("jianjunjchen@gmail", )
+    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123", 10086)
+
+    #checks = db.session.query(Eatery, Voucher).filter(Voucher.eatery_id == Eatery.id).all()
+    #checks = db.session.query(Eatery, Voucher).join(Voucher, Eatery.id == Voucher.eatery_id).filter_by(code="abcsefnm123")
+    #
+    #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
+    checks = Eatery.query.filter_by(first_name = "JJI").first().email
+    print(checks)
+    
+
+"""
 if __name__ == "__main__":
     # make an eatery and add voucher
     r4 = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
@@ -341,7 +397,7 @@ if __name__ == "__main__":
     #
     #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
     print(checks)
-    """
+
     diners = Diner.query.all()
     print(diners)
     result = [dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys()) for diner in diners]
@@ -352,11 +408,4 @@ if __name__ == "__main__":
     diners_id = db.session.query(Diner.id).first()
     print(diners_id[0])
     
-    """
-    #print(data)
-    #result2 = diner_login("jay123@gmail.com", "123Cjj")
-    #print(result2)
-
-    #print(eatery.token)
-    #print(eatery.phone)
-    #print(eatery.eatery_name)
+"""

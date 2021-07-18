@@ -52,7 +52,7 @@ function private_loadVouchers() {
 }
 
 function clearVouchers() {
-    vouchers.innerHTML = '<tr><th>date</th><th>weekday</th><th>start</th><th>end</th><th>discount</th><th>amount</th></tr>'
+    vouchers.innerHTML = '<tr><th>date</th><th>weekday</th><th>start</th><th>end</th><th>discount</th><th>amount</th><th>Actions</th></tr>'
 }
 
 /**

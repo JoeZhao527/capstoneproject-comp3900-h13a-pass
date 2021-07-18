@@ -3,11 +3,10 @@ import os, sys
 from re import sub
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
+from server import db
 
 # datetime for voucher time range
 import datetime
-from server import db
-
 # clean up cache
 db.metadata.clear()
 
@@ -133,25 +132,6 @@ class Review(db.Model):
         self.rating = rating
 
 """
-class Booking(db.Model):
-    id = db.Column(db.Integer, primary_key=True) 
-    diner_id = db.Column(db.Integer, db.ForeignKey('diner.id'))
-    eatery_id = db.Column(db.Integer, db.ForeignKey('eatery.id'))
-    if_used = db.Column(db.Boolean)
-    
-    def __init__(self, diner_id, eatery_id, if_used):
-       self.diner_id = diner_id
-       self.eatery_if = eatery_id
-       self.if_used = if_used
-
-class Offer(db.Model):
-     id = db.Column(db.Integer, primary_key=True)
-     schedule_id = db.Column(db.Integer, db.ForeignKey('schedule.id'))
-     voucher_id = db.Column(db.Integer, db.ForeignKey('voucher.id'))
-     
-     def __init__(self, schedule_id, voucher_id):
-       self.schedule_id = schedule_id
-       self.voucher_id = voucher_id
 CREATE DOMAIN Weekdays AS 
    CHECK (VALUE IN ('Mon','Tues','Wed','Thurs','Fri', 'Sat', 'Sun'));
 CREATE DOMAIN Ratings AS 

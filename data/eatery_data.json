@@ -1,45 +1,54 @@
-[
-    {  
-        "email": "johnsmith@gmail.com",
-        "password": "123",
-        "first_name" : "John",
-        "last_name": "Smith",
-        "phone": "+61491570156",
-        "eatery_name": "Sweet Escape",
-        "address": "280 George St",
-        "menu" : "",
-        "cuisine" : ["Cafe", "Casual"],
-        "city": "Sydney",
-        "suburb": "Sydney",
-        "description": "Sweet Escape is Sydney's most loved home base for espresso and discussions. We offer a delicious variety of coffee from Sweet Escape made by our professionally trained baristas, from your classic coffee to our house specialty. You can complete your coffee with oen of our sweet treats made by our very own baker."
-    },
-    {  
-        "email": "janedoe@gmail.com",
-        "password": "abc",
-        "first_name" : "Jane",
-        "last_name": "Doe",
-        "phone": "+61414361904",
-        "eatery_name": "Yummy Pizza",
-        "address": "95 A Ridge St",
-        "menu" : "",
-        "cuisine" : ["Fast Food", "Casual"],
-        "city": "Sydney",
-        "suburb": "North Sydney",
-        "description": "At Yummy Pizza , we are not simply baking  pizza but involved in other fast food like sandwiches , burgers and cookies. We make individuals happy and satisfy their hunger. Yummy Pizza was based on the conviction that pizza night ought to be exceptional, and we convey that conviction into all that we do."
-    },
-    {  
-        "email": "joe.bloggs@gmail.com",
-        "password": "000",
-        "first_name" : "Joe",
-        "last_name": "Bloggs",
-        "phone": "(02)99221238",
-        "eatery_name": "El Pirata Porch",
-        "address": "278 Sussex St",
-        "menu" : "",
-        "cuisine" : ["Fine Dining"],
-        "city": "Sydney",
-        "suburb": "Sydney",
-        "description": "We welcome you to sit back, unwind and appreciate the lovely sights of the city while our best gourmet expert sets you up a scrumptious dinner utilizing the best and freshest ingredients. The adaptable menu flaunts some imaginative food, for example, salt and pepper squid on a delicate, Thai-roused plate of mixed greens; harissa angle soup (with the harissa glue served in a little glass); lemon simmered chicken on dark pepper gnocchi; and a most heavenly cinnamon. The eatery utilizes neighborhood create for fish and venison dishes flourish."
-    }
+{
+    "eateries": [
+        {  
+            "email": "johnsmith@gmail.com",
+            "password": "1234567",
+            "first_name" : "John",
+            "last_name": "Smith",
+            "phone": "+61491570156",
+            "eatery_name": "Sweet Escape",
+            "address": "280 George St",
+            "menu" : "",
+            "cuisine" : "Cafe",
+            "city": "Sydney",
+            "suburb": "Sydney",
+            "description": "Sweet Escape is Sydney's most loved home base for espresso and discussions. We offer a delicious variety of coffee from Sweet Escape made by our professionally trained baristas, from your classic coffee to our house specialty. You can complete your coffee with oen of our sweet treats made by our very own baker.",
+            "images": [] 
+        },
+        {  
+            "email": "janedoe@gmail.com",
+            "password": "abc12334",
+            "first_name" : "Jane",
+            "last_name": "Doe",
+            "phone": "+61414361904",
+            "eatery_name": "Yummy Pizza",
+            "address": "95 A Ridge St",
+            "menu" : "",
+            "cuisine" : "Fast Food",
+            "city": "Sydney",
+            "suburb": "North Sydney",
+            "description": "At Yummy Pizza , we are not simply baking  pizza but involved in other fast food like sandwiches , burgers and cookies. We make individuals happy and satisfy their hunger. Yummy Pizza was based on the conviction that pizza night ought to be exceptional, and we convey that conviction into all that we do.",
+            "images": []
+        },
+        {  
+            "email": "joe.bloggs@gmail.com",
+            "password": "00078910DC",
+            "first_name" : "Joe",
+            "last_name": "Bloggs",
+            "phone": "(02)99221238",
+            "eatery_name": "El Pirata Porch",
+            "address": "278 Sussex St",
+            "menu" : "",
+            "cuisine" : "Fine Dining",
+            "city": "Sydney",
+            "suburb": "Sydney",
+            "description": "We welcome you to sit back, unwind and appreciate the lovely sights of the city while our best gourmet expert sets you up a scrumptious dinner utilizing the best and freshest ingredients. The adaptable menu flaunts some imaginative food, for example, salt and pepper squid on a delicate, Thai-roused plate of mixed greens; harissa angle soup (with the harissa glue served in a little glass); lemon simmered chicken on dark pepper gnocchi; and a most heavenly cinnamon. The eatery utilizes neighborhood create for fish and venison dishes flourish.",
+            "images": []
+        }
+    ],
 
-]
+    "vouchers": [
+        {}
+    ]
+
+}
