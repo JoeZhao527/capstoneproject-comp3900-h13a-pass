@@ -100,6 +100,17 @@ def diner_private_profile_update():
     except InputError:
         return 'failed'
 
+@app.route('/diner/profile/get_active',methods = ['POST'])
+def diner_profile_active():
+    data = json.loads(request.data)
+    # res = 
+    
+
+@app.route('/diner/profile/get_previous',methods = ['POST'])
+def diner_profile_previous():
+    data = json.loads(request.data)
+    res = get_diner_by_token(data['token'])
+
 ###########################################################
 ##                   EATERY ROUTES                       ##
 ###########################################################

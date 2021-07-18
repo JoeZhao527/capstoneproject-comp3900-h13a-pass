@@ -84,6 +84,13 @@ main {
     margin: 14px;
     border-radius: 2.5rem;
 }
+#profile-section {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size :28px
+}
 
 #profile  div:hover {
     box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
@@ -92,15 +99,18 @@ main {
 #profile-form label {
     display: inline-block;
     font-weight: bolder;
-    font-size: 18px;
-    width: 120px;
+    /* font-size: 18px; */
+    width: 220px;
     height: 30px;
+    border-radius: 5px;
 }
 
 #profile-form input {
     display: inline-block;
     width: 300px;
     height: 30px;
+    font-size: 28px;
+    border-radius: 5px;
 }
 
 #profile-form label, #profile-form input {

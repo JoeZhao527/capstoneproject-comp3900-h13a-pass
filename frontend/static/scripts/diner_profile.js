@@ -120,26 +120,26 @@ function mapWeekday(n) {
 }
 
 
-function addDeleteActiveBtn(item, id) {
-    let btn = document.createElement('button');
-    btn.innerHTML = 'Delete';
-    btn.onclick = () => {
-        let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/diner/profile/remove_active', false);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({ token: token, id: id }));
-        if (!this.response) {
-            active.removeChild(item);
-        } else {
-            alert('delete failed');
-        }
-    }
-    item.appendChild(btn);
-}
+// function addDeleteActiveBtn(item, id) {
+//     let btn = document.createElement('button');
+//     btn.innerHTML = 'Delete';
+//     btn.onclick = () => {
+//         let xhr = new XMLHttpRequest();
+//         xhr.open('DELETE', '/diner/profile/remove_active', false);
+//         xhr.setRequestHeader('Content-Type', 'application/json');
+//         xhr.send(JSON.stringify({ token: token, id: id }));
+//         if (!this.response) {
+//             active.removeChild(item);
+//         } else {
+//             alert('delete failed');
+//         }
+//     }
+//     item.appendChild(btn);
+// }
 
-function addActiveItem(data, id) {
-    schedules.appendChild(createItem(data,id,addDeleteActiveBtn));
-}
+// function addActiveItem(data, id) {
+//     schedules.appendChild(createItem(data,id,addDeleteActiveBtn));
+// }
 
 function loadActive() {
     let xhr = new XMLHttpRequest();
@@ -205,3 +205,5 @@ function getCurrPage() {
         if (p.style.display === 'block') {return p.id;}
     }
 }
+
+
