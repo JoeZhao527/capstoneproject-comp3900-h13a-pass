@@ -36,7 +36,7 @@ def search_eatery_by_key():
 ###########################################################
 @app.route('/diner/home')
 def diner_home_load():
-    return render_template('diner_home.html')
+    return render_template('home.html')
 
 @app.route('/diner/register')
 def diner_register_load():

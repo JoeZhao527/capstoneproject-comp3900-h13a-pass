@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Value Eat</title>
+    <link rel="stylesheet" href="../../static/styles/home.css">
+    <link rel="stylesheet" href="../../static/styles/login.css">
+    <link rel="stylesheet" href="../../static/styles/search_bar.css">
+</head>
+<body>
+    <nav id="nav-bar">
+        <button class="home">Value Eat</button>
+        <div id="search-bar">
+            <input type="text" placeholder = "Find your eatery" id="search" required>
+            <span></span>
+            <div id="search-res"></div>
+        </div>
+        <button id="for-eatery-btn" class="eatery nav-btn">For Eatery</button>
+        <button id="sign-up-btn" class="sign-up nav-btn">Sign up</button>
+        <button id="login-btn" class="login nav-btn">Login</button>
+        <button id="profile-btn" class="profile nav-btn">Profile</button>
+        <button id="logout-btn" class="logout nav-btn">Logout</button>
+    </nav>
+
+    <section id="intro">
+        <h1>Welcome to Value Eat</h1>
+    </section>
+    <section id="filter">
+        <div id="date" class="filter-input">
+            <div>
+                <img id="date-icon" class="child" src="../static/images/date.png">
+                <span id="date-input" class="child" title="All dates">All dates</span>
+            </div>
+            <ul id="date-list"></ul>
+        </div>
+        <div id="time" class="filter-input">
+            <div>
+                <img id="time-icon" class="child" src="../static/images/time.png">
+                <span id="time-input" class="child" title="All time">All time</span>
+            </div>
+            <ul id="time-list"></ul>
+        </div>
+        <div id="city" class="filter-input">
+            <div>
+                <img id="city-icon" class="child" src="../static/images/city.png">
+                <span id="city-input" class="child">city</span>
+            </div>
+            <ul id="city-list">
+                <li>Fast food</li>
+                <li>Fine dinning</li>
+                <li>Asian</li>
+                <li>Australian</li>
+            </ul>
+        </div>
+        <div id="suburb" class="filter-input">
+            <div>
+                <img id="suburb-icon" class="child" src="../static/images/suburb.png">
+                <span id="suburb-input" class="child">suburb</span>
+            </div>
+            <ul id="suburb-list">
+                <li>Fast food</li>
+                <li>Fine dinning</li>
+                <li>Asian</li>
+                <li>Australian</li>
+            </ul>
+        </div>
+        <div id="cuisine" class="filter-input">
+            <div>
+                <img id="cuisine-icon" class="child" src="../static/images/cuisine.png">
+                <span id="cusine-input" class="child">cuisine</span>
+            </div>
+            <ul id="cuisine-list">
+                <li>Fast food</li>
+                <li>Fine dinning</li>
+                <li>Asian</li>
+                <li>Australian</li>
+            </ul>
+        </div>
+        <div id="filter-search">
+            <div id="filter-submit">
+                <img id="filter-icon" class="child" src="../static/images/lets-go.png">
+                <span class="child">Let's go</span>
+            </div>
+        </div>
+    </section>
+    <section id="login-page">
+        <div class="center">
+            <h1>Login</h1>
+            <p id="login-msg"></p>
+            <div id="tabs">
+                <button id="diner" class="tab">Diner</button>
+                <button id="eatery" class="tab">Eatery</button>
+            </div>
+            <form id="login-form">
+                <div class="txt_field">
+                    <input type="text" name="email" required>
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" name="password" required>
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <div id="pass">Forgot Password</div>
+                <input type="submit" value="Login">
+                <div class="signup_link">
+                    Not a member? <a href="#">Signup</a>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script src="../static/scripts/home.js"></script>
+    <script src="../static/scripts/login.js"></script>
+    <script src="../static/scripts/logout.js"></script>
+    <script src="../static/scripts/search_bar.js"></script>
+</body>
+</html>

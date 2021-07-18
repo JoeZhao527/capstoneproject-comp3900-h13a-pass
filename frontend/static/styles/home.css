@@ -1,0 +1,118 @@
+:root {
+
+    --primary-color: rgb(119, 158, 180);
+    --btn-color: white;
+    --btn-hover-color: lightskyblue;
+    --dropdown-color: rgb(248, 246, 246);
+}
+
+/* body {
+    font-size: 1;
+} */
+/* nav bar */
+/* nav bar */
+#nav-bar {
+    background-color:var(--primary-color);
+    margin: -10px;
+    box-shadow: 0 0 15px 0 black;
+    padding: 15px 0 15px 0;
+}
+
+#nav-bar button:hover{
+    cursor: pointer;
+    color: black;
+    transition: 0.2s;
+    box-shadow: 1px 1px 1px 1px black;
+}
+.nav-btn {
+    border: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: black;
+    background-color: var(--primary-color);
+    width: 6rem;
+    height: 3rem;
+    margin-right: 4rem;
+    float: right;
+}
+
+.home {
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: 20px;
+    font-style: italic;
+    background-color: var(--primary-color);
+    width: 16rem;
+    height: 3rem;
+    float: left;
+}
+
+.home:hover {
+    background-color: white;
+    transition: 0.4s;
+}
+
+/* filter */
+#filter > div { /* cuisine */
+    width: 14rem;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#filter > div > div {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    text-align: center;
+    position: relative;
+    height: 5rem;
+    width: 100%;
+    box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.05);
+}
+
+#filter > div > div:hover {cursor: pointer;}
+#filter-submit:hover {background-color: rgb(255, 223, 80);}
+#filter > div > div > .child {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+#filter > div > div > img {
+    left: 1rem;
+    width: 40px;
+}
+
+#filter > div > div > span {
+    left: 5rem;
+}
+
+#filter ul {
+    position: absolute;
+    display: none;
+    padding: 0;
+    list-style-type: none;
+    list-style: none;
+    height: 9rem;
+    width: 14rem;
+    overflow: scroll;
+    background-color: var(--dropdown-color);
+    box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.05);
+}
+
+#filter li {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    padding: 10px;
+}
+
+#filter li:hover {
+    background-color: gray;
+    cursor: pointer;
+}
+
+#date-icon, #time-icon, #filter-icon {
+    width: 30px !important;
+}
