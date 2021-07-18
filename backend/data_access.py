@@ -110,9 +110,11 @@ def suburb_with_city():
         city = eatery.city
         suburb = eatery.suburb
         # if this city already exist in the dictionary
-        # just add the suburb into the suburb list of this city
+        # just add the suburb into the suburb list of this city if the suburb is new
         if city in locations.keys():
-            locations[city].append(suburb)
+            # if the suburb not exist in the list, add it
+            if suburb not in locations[city]:
+                locations[city].append(suburb)
         # if this city is not in the dictionary
         # create a empty suburb list for this city, then add the first suburb into the list
         else:
