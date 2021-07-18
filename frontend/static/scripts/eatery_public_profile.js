@@ -107,7 +107,11 @@ const google_map = document.getElementById('google-map')    // google map page
 const contact_item = contact.getElementsByTagName('div')
 const eatery_name = document.getElementById('eatery-name');
 
-// get eatery information by id
+/**
+ * @param {*} eatery_id 
+ * get eatery information from backend by its id,
+ * then load the data to web page
+ */
 function getInformation(eatery_id) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `/eatery/profile/${eatery_id}/get_info`, true);
@@ -115,23 +119,32 @@ function getInformation(eatery_id) {
     xhr.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.response)
+            // load description section
             load_description(data['description'], data['cuisine']);
+            // load contact section
             load_contact(data);
+            // load header
             load_header(data['eatery_name']);
+            /**
+             * getAddress is a function is 'google_map.js', which is used to get latitude and longitude by an address,
+             * and load the google map
+             */
             getAddress(addr)
         }
     }
     xhr.send();
 }
 
+// load description and cuisine to web page
 function load_description(_description, _cuisine) {
     cuisines.innerHTML = _cuisine;
     description.innerHTML = _description;
 }
 
-
-
+// load contact item to web page
 function load_contact(data) {
+    // contact_item is a list of attribute name:
+    // ['address', 'phone', 'email', 'city', 'suburb']
     for (const item of contact_item) {
         let p = item.getElementsByTagName('p')[0];
         addr[p.id] = data[p.id];
@@ -139,13 +152,13 @@ function load_contact(data) {
     }
 }
 
+// load header, with eatery's name
 function load_header(_eatery_name) {
     eatery_name.innerHTML = _eatery_name;
 }
 
-// will be used in map
 let addr = {}
-
+// load the whole information section on loading the page
 getInformation(profile_id);
 
 
@@ -184,12 +197,14 @@ const book_section = document.getElementById('book-section');
  * add a date fileter to the booking section
  */
 function loadVoucherFilter() {
+    // get the minimum date for the filter, which is today
     var minDay = new Date();
     var dd = String(minDay.getDate()).padStart(2, '0');
     var mm = String(minDay.getMonth() + 1).padStart(2, '0');
     var yyyy = minDay.getFullYear();
     minDay = yyyy + '-' + mm + '-' + dd;
     
+    // get the maximum date for the filter, which is 7 days later
     var maxDay = new Date();
     maxDay.setDate(maxDay.getDate() + 7); 
     var dd = String(maxDay.getDate()).padStart(2, '0');
@@ -197,6 +212,7 @@ function loadVoucherFilter() {
     var yyyy = maxDay.getFullYear();
     maxDay = yyyy + '-' + mm + '-' + dd;
     
+    // set the voucher filter and header for the voucher booking section
     book_section.innerHTML = `<h2> Book A Voucher!</h2> select date:
     <input id="date-filter" type="date" min="${minDay}" max="${maxDay}" value="${minDay}">
     <div id="voucher-container"><p>No Vouchers Avaliable Today</p></div>`;
@@ -213,20 +229,30 @@ let date_filter = date_filter_input.value;
 
 date_filter_input.onchange = (e) => {
     date_filter = e.target.value;
-    voucher_container.innerHTML = '<p>No Vouchers Avaliable Today</p>';
     public_loadVouchers(profile_id);
 }
 
 let voucher_list = []
 
-function addVoucherItem(item) {
-    let data = item['data']
-    let ids = item['id']
+/**
+ * 
+ * @param {object} item contains:
+ *      1. 'data': voucher's date, start time, end time, discount, and number of vouchers etc.
+ *      2. 'group_id': voucher's group id. group id can be used to book/cancel voucher by diner,
+ *          or delete/add voucher by eatery
+ * addVoucherItem will be called by 'public_loadVouchers' in load_vouchers.js, it uses the date
+ * in date_filter, display all the vouchers can be booked at that date
+ * 
+ */
+function addVoucherItem(data) {
+    let group_id = data['group_id']
+    let amount = data['amount']
+    // date_filter contains the date to display voucher, 
     if (data['date'] == date_filter) {
         let date = stringifyDate(data['date'], data['weekday']);
         let period = stringifyTime(data['start_time'], data['end_time']);
         let discount = stringifyDiscount(data['discount']);
-        let num = stringifyNum(ids.length);
+        let num = stringifyNum(amount);
     
         // create node
         /**
@@ -236,26 +262,28 @@ function addVoucherItem(item) {
                 <div class="voucherTimeNode">
                     <div class="dateNode"></div>
                     <div class="timeNode"></div>
+                    <div class="numNode"></div>
                 </div>
                 <div class="bookNode"></div>
             </div>
+         * this will be a voucher node, append to the voucher container
          */
-        let voucherNode = document.createElement('div');
+        let voucherNode = document.createElement('div');    // the voucher information container
     
-        let dateNode = document.createElement('div');
+        let dateNode = document.createElement('div');       // voucher's date div
         dateNode.innerHTML = date;
-        let periodNode = document.createElement('div');
+        let periodNode = document.createElement('div');     // voucher's start time, end time div
         periodNode.innerHTML = period;
-        let discountNode = document.createElement('div');
-        discountNode.innerHTML = discount; // discount "10% OFF"
+        let discountNode = document.createElement('div');   // voucher's discount div
+        discountNode.innerHTML = discount;
         discountNode.className = 'discount';
-        let numNode = document.createElement('p');
+        let numNode = document.createElement('p');          // voucher's number left div
         numNode.innerHTML = num;
-        let bookNode = document.createElement('div');
+        let bookNode = document.createElement('div');       // book voucher button div
         bookNode.innerHTML = "book";
         bookNode.className = "book";
     
-        let voucherTimeNode = document.createElement('section');
+        let voucherTimeNode = document.createElement('section'); // div contains voucher date and time
         voucherTimeNode.appendChild(dateNode);
         voucherTimeNode.appendChild(periodNode);
         voucherTimeNode.appendChild(numNode);
@@ -265,11 +293,17 @@ function addVoucherItem(item) {
         voucherNode.appendChild(bookNode);
 
         voucherNode.onclick = () => {
-            checkUser(utype, ids);
+            /**
+             * function from book_voucher.js
+             * @param utype: user type, "diner" or "eatery"
+             * @param group_id: voucher's group id, can be used by diner to book voucher
+             */
+            checkUser(utype, group_id);
         }
 
         voucher_container.appendChild(voucherNode);
-
+        
+        // voucher section will have a no-voucher today onload
         // if a voucher is added, remove the "no voucher" text
         let no_res = voucher_container.getElementsByTagName('p')[0]
         voucher_container.removeChild(no_res);
@@ -288,8 +322,8 @@ function stringifyDate(date, weekday) {
 
 /**
  * 
- * @param {string} start 
- * @param {string} end 
+ * @param {string} start start time of voucher
+ * @param {string} end  end time of voucher
  * @returns valid time for voucher, e.g. 16:00 - 20:00
  */
 function stringifyTime(start, end) {

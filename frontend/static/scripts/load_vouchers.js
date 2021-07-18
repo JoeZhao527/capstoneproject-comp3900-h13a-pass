@@ -1,3 +1,14 @@
+/**
+ * This file will be used in eatery public profile and eatery private profile to get 
+ * eatery's vouchers, and load in apprioriate format to each file
+ * 
+ * Notice that the addVoucherItem() in eatery_public and eatery private is different,
+ * since the required voucher format in these 2 pages are differet. For more details
+ * about how vouchers get loaded to the page, see addVoucherItem in eatery_public_profile.js
+ * and eatery_private_profile.js
+ */
+
+/* functionailty of grouping vouchers are moved to backend
 function groupVouchers(data) {
     // incoming data is ungrouped with an item in voucher list
     let grouped = false;
@@ -21,7 +32,7 @@ function groupVouchers(data) {
     }
     return grouped;
 }
-
+*/
 function private_loadVouchers() {
     clearVouchers();
     let xhr = new XMLHttpRequest();
@@ -29,15 +40,10 @@ function private_loadVouchers() {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
-            voucher_list = []
+            
             for (const data of JSON.parse(this.response)['vouchers']) {
-                if (!groupVouchers(data)) {
-                    // if voucher cannot be grouped with an exist one, add it to the list
-                    voucher_list.push({ data: data, id: [data['id']] });
-                }
-            }
-            for (const item of voucher_list) {
-                addVoucherItem(item['data'], item['id'])
+                console.log(data)
+                addVoucherItem(data, data['group_id'])
             }
         }
     }
@@ -49,22 +55,21 @@ function clearVouchers() {
     vouchers.innerHTML = '<tr><th>date</th><th>weekday</th><th>start</th><th>end</th><th>discount</th><th>amount</th></tr>'
 }
 
+/**
+ * @param {integer} id eatery's id
+ * load vouchers of the eatery to /eatery/profile/${id}
+ */
 function public_loadVouchers(id) {
+    voucher_container.innerHTML = '<p>No Vouchers Avaliable Today</p>';
     console.log(id);
     let xhr = new XMLHttpRequest();
     xhr.open('GET', `/eatery/profile/${id}/get_vouchers`, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            voucher_list = []
             for (const data of JSON.parse(this.response)['vouchers']) {
-                if (!groupVouchers(data)) {
-                    // if voucher cannot be grouped with an exist one, add it to the list
-                    voucher_list.push({ data: data, id: [data['id']] });
-                }
-            }
-            for (const item of voucher_list) {
-                addVoucherItem(item);
+                // for each voucher, add it to the eatery public page
+                addVoucherItem(data);
             }
         }
     }
