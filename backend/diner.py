@@ -7,6 +7,7 @@ from backend.user_db import Eatery, Diner, Voucher
 from backend.data_access import dictionary_of_eatery
 from backend.errors import InputError
 from server import db
+from datetime import date, datetime, time
 
 # function for checking if the diner's token is valid
 def valid_token(token):
@@ -23,55 +24,115 @@ def search_by_filter(date, time, location, cuisine):
     # search by date
     if date and not time and not location and not cuisine:
         # return a list of eatery objects pass the filter
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date).all()
     # search by time
     elif not date and time and not location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
     # search by location
     elif not date and not time and location and not cuisine:
-        result = Eatery.query.filter_by(suburb=location).all()
+        # a list to store eatery object that fit the location
+        eateries = Eatery.query.all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # search by cuisine
     elif not date and not time and not location and cuisine:
         result = Eatery.query.filter_by(cuisine=cuisine).all()
     # date and time
     elif date and time and not location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time).all()
     # date and location
     elif date and not time and location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Eatery.suburb == location).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # date and cuisine
     elif date and not time and not location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Eatery.cuisine == cuisine).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Eatery.cuisine == cuisine).all()
     # time and location
     elif not date and time and location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # time and cuisine
     elif not date and time and not location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
     # location and cuisine
     elif not date and not time and location and cuisine:
-        result = Eatery.query.filter_by(suburb=location, cuisine=cuisine).all()
+        eateries = Eatery.query.filter_by(cuisine=cuisine).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # date, time and location
     elif date and time and location and not cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
     # date, time and cuisine
     elif date and time and not location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
     # time, location and cuisine
     elif not date and time and location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location, Eatery.cuisine == cuisine).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
+    # date, time, location and cuisine
     elif date and time and location and cuisine:
-        result = Eatery.query.join(Voucher).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.suburb == location, Eatery.cuisine == cuisine).all()
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date, Voucher.start_time <= time, Voucher.end_time >= time, Eatery.cuisine == cuisine).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            eat_location = eatery.city + "," + eatery.suburb
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            if location in eat_location:
+                result.append(eatery)
+    
     # if no date, time, location and cuisine speicify, return defalt -> a list of all the eateries
     else:
         result = Eatery.query.all()
     
     # conver the eateries object in the result to dictionary of eatery.
-    # return a list of eateries
-    # eateries = []
-    # for eat in result:
-    #    eateries.append(dictionary_of_eatery(eat))
-    return [dictionary_of_eatery(eat) for eat in result]
+    # add the first image of the eatery into the dictionary
+    # return a list of eateries with one image
+    eatery_with_image = []
+    for eat in result:
+        eatery_item = dictionary_of_eatery(eat)
+        # get the first image of the eatery
+        first_image = Image.query.filter_by(eatery_id=eat.id).first().image
+        eatery_item["eatery_image"] = first_image
+        # add the eatery with image dictionary into the list
+        eatery_with_image.append(eatery_item)
+
+    return eatery_with_image
+    #return [dictionary_of_eatery(eat) for eat in result]
 
 
 # function for finding discount voucher based on given keyword
@@ -161,6 +222,99 @@ def check_booking(token, diner_id):
         booking_list.append(item)
         
     return {booking_list}
+
+
+# function for checking if a voucher has expired or not
+# by given a voucher item, check if this voucher has expired
+def voucher_has_expired(voucher):
+    # to check if the voucher is after or equal to today's date
+    if voucher.date < date.today():
+        return True
+    # now the date is good, check the end time
+    else:
+        # the voucher today is expired
+        if voucher.date == date.today() and voucher.end_time <= datetime.now().time():
+            return True
+        # the voucher has not expired yet
+        else: 
+            return False
+
+# get diner's booked vouchers by diner's token
+# 1. booked, not used and not expired (available)
+def get_booked_voucher(token):
+    diner = Diner.query.filter_by(token=token).first()
+    # check if diner exist
+    if diner is None:
+        raise InputError("Invalid token")
+
+    voucher_list = []
+
+    # to get all the vouchers that are booked, not used and not expired by this diner
+    vouchers = Voucher.query.filter_by(diner_id=diner.id, if_booked=True, if_used=False).all()
+    for voucher in vouchers:
+        # and the voucher has not expired        
+        if not voucher_has_expired(voucher):
+            item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
+            # convert the start and end time to string
+            item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+            item['date'] = convert_date_to_string(item['date'])
+
+            # the voucher must not be expired in this list
+            # this is a temporary solution, propery way should be having a expired attribute in voucher
+            item['expired'] = False
+            voucher_list.append(item)
+    return {"vouchers": voucher_list}
+
+
+# get diner's booked and used vouchers by diner's token
+# 2. booked and used (not available)
+def get_used_voucher(token):
+    diner = Diner.query.filter_by(token=token).first()
+    # check if diner exist
+    if diner is None:
+        raise InputError("Invalid token")
+
+    voucher_list = []
+
+    # to get all the vouchers that are booked and used(whatever expired or not)by this diner
+    vouchers = Voucher.query.filter_by(diner_id=diner.id, if_booked=True, if_used=True).all()
+    for voucher in vouchers:
+        item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
+        # convert the start and end time to string
+        item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+        item['date'] = convert_date_to_string(item['date'])
+
+        voucher_list.append(item)
+    
+    return {"vouchers": voucher_list}
+
+# get diner's booked, not used but expired vouchers by diner's token
+# 3. booked, not used and expired (not available)
+def get_booked_expired_voucher(token):
+    diner = Diner.query.filter_by(token=token).first()
+    # check if diner exist
+    if diner is None:
+        raise InputError("Invalid token")
+
+    voucher_list = []
+
+    # to get all the vouchers that are booked, not used by this diner
+    vouchers = Voucher.query.filter_by(diner_id=diner.id, if_booked=True, if_used=False).all()
+    for voucher in vouchers:
+        # and the voucher has expired        
+        if voucher_has_expired(voucher):
+            item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
+            # convert the start and end time to string
+            item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
+            item['date'] = convert_date_to_string(item['date'])
+
+            # the voucher must not be expired in this list
+            # this is a temporary solution, propery way should be having a expired attribute in voucher
+            item['expired'] = True
+            voucher_list.append(item)
+    return {"vouchers": voucher_list}
+
+
 
 # if time is not a string, conver it to a string
 # if time is a string, return t

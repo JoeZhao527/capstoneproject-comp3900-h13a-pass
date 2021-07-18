@@ -94,4 +94,43 @@ def get_all_eatery():
     for e in eatery:
         data.append(dictionary_of_eatery(e))
     return data
-    
+
+# function for generating a dictionary of city with it suburbs
+"""
+locations = {
+    "Sydney" : ["Randwick", "Zetland"],
+    "Melboune": [],
+    "Brisbane": ["Bulwer"]
+}
+"""
+def suburb_with_city():
+    locations = {}
+    eateries = Eatery.query.all()
+    for eatery in eateries:
+        city = eatery.city
+        suburb = eatery.suburb
+        # if this city already exist in the dictionary
+        # just add the suburb into the suburb list of this city if the suburb is new
+        if city in locations.keys():
+            # if the suburb not exist in the list, add it
+            if suburb not in locations[city]:
+                locations[city].append(suburb)
+        # if this city is not in the dictionary
+        # create a empty suburb list for this city, then add the first suburb into the list
+        else:
+            locations[city] = []
+            locations[city].append(suburb)
+
+# function for generating a list of cuisine of eatery
+# return a list of cuisine from all the eateries
+# ["chinese", "Japanese", "Korean", "Hotpot"] 
+def cuisine_of_eateries():
+    cuisines = []
+    eateries = Eatery.query.all()
+    for eatery in eateries:
+        cuisine = eatery.cuisine
+        # if this cuisine type not exist in the list
+        if cuisine not in cuisines:
+            cuisines.append(cuisine)
+    return cuisines
+

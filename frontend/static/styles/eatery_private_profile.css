@@ -43,14 +43,16 @@ main {
 
 .side-bar div {
     display: inline-block;
-    height: 3rem;
-    width: 17rem;
+    height: 2.5rem;
+    width: 13rem;
     font-size: 18px;
     font-weight: bold;
     color: black;
     padding: 1rem 0 1rem 2rem;
     vertical-align: center;
     margin-bottom: 1rem;
+    margin-left: 1rem;
+    border-radius: 2rem;
 }
 
 .side-bar > div > img {
@@ -61,7 +63,7 @@ main {
 
 .side-bar > div:hover {
     cursor: pointer;
-    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05) !important;
 }
 
 /* pages */
@@ -75,10 +77,10 @@ main {
 }
 
 /* profile */
-.page {
+.subpage {
     padding-left: 20px;
 }
-.page > div{
+.subpage > div{
     display: inline-block;
     vertical-align:top;
 }
@@ -284,49 +286,47 @@ main {
 }
 
 table {
+    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-}
-
-tr { 
-    border: solid;
-    border-width: 0.5px 0;
-}
-
-tr:hover {
-    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.05);
-}
-
-.page table:first-child {
-    box-shadow: none;
-}
-
-.page table {
-    font-size: 18px;
-}
-
-.page table tr th{
-    padding: 30px 80px 30px 0;
-}
-
-.page table tr {
-    border-bottom: 2px solid;
-}
-
-.page table button {
-    font-size: 18px;
-    height: 100%;
     width: 100%;
-    color: gray;
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    color: black;
+}
+
+
+table .delete{
+    background-image: url("/static/images/delete.png");
+    background-size: 80%;;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 5px;
     border: none;
 }
 
-.page table button:hover {
+table .delete:hover{
     background-color: red;
     color: white;
     cursor: pointer;
 }
 
-.page > button {
+.subpage > button {
     margin-top: 5rem;
     width: 10rem;
     height: 50px;
