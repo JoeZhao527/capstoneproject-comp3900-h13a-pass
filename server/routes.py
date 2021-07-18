@@ -16,7 +16,7 @@ import json
 ###########################################################
 @app.route('/')
 def home():
-    return redirect('/eatery/home', code=302)
+    return redirect('/diner/home', code=302)
 
 @app.route('/logout', methods=['PUT'])
 def eatery_logout():

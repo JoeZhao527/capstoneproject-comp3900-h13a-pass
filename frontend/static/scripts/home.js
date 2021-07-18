@@ -298,6 +298,10 @@ let input_list = document.getElementById('filter').getElementsByTagName('span');
 const eatery_section = document.getElementById('eateries');
 
 submit_filter.onclick = () => {
+    getFilterAndLoad();
+}
+
+function getFilterAndLoad() {
     let filter_data = {}
     for (const i of input_list) {
         if (i.id == '') break;
@@ -445,3 +449,5 @@ function loadEateries(eateries) {
     */
 
 }
+
+getFilterAndLoad();
