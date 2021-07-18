@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../static/styles/home.css">
     <link rel="stylesheet" href="../../static/styles/login.css">
     <link rel="stylesheet" href="../../static/styles/search_bar.css">
+    <link rel="stylesheet" href="../../static/styles/stars.css">
 </head>
 <body>
     <nav id="nav-bar">
@@ -26,19 +27,20 @@
 
     <section id="intro">
         <h1>Welcome to Value Eat</h1>
+        <h2>Get Vouchers For Your Favourite Eatery</h2>
     </section>
     <section id="filter">
         <div id="date" class="filter-input">
             <div>
                 <img id="date-icon" class="child" src="../static/images/date.png">
-                <span id="date-input" class="child" title="All dates">All dates</span>
+                <span id="date-input" class="child" title="">All dates</span>
             </div>
             <ul id="date-list"></ul>
         </div>
         <div id="time" class="filter-input">
             <div>
                 <img id="time-icon" class="child" src="../static/images/time.png">
-                <span id="time-input" class="child" title="All time">All time</span>
+                <span id="time-input" class="child" title="">All time</span>
             </div>
             <ul id="time-list"></ul>
         </div>
@@ -47,29 +49,19 @@
                 <img id="city-icon" class="child" src="../static/images/city.png">
                 <span id="city-input" class="child">city</span>
             </div>
-            <ul id="city-list">
-                <li>Fast food</li>
-                <li>Fine dinning</li>
-                <li>Asian</li>
-                <li>Australian</li>
-            </ul>
+            <ul id="city-list"></ul>
         </div>
         <div id="suburb" class="filter-input">
             <div>
                 <img id="suburb-icon" class="child" src="../static/images/suburb.png">
-                <span id="suburb-input" class="child">suburb</span>
+                <span id="suburb-input" class="child" title="">All suburbs</span>
             </div>
-            <ul id="suburb-list">
-                <li>Fast food</li>
-                <li>Fine dinning</li>
-                <li>Asian</li>
-                <li>Australian</li>
-            </ul>
+            <ul id="suburb-list"></ul>
         </div>
         <div id="cuisine" class="filter-input">
             <div>
                 <img id="cuisine-icon" class="child" src="../static/images/cuisine.png">
-                <span id="cusine-input" class="child">cuisine</span>
+                <span id="cuisine-input" class="child" title="">All cuisines</span>
             </div>
             <ul id="cuisine-list">
                 <li>Fast food</li>
@@ -85,6 +77,9 @@
             </div>
         </div>
     </section>
+
+    <section id="eateries"></section>
+    
     <section id="login-page">
         <div class="center">
             <h1>Login</h1>

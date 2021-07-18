@@ -79,7 +79,10 @@ const date_ul = document.getElementById('date-list');
 const time_ul = document.getElementById('time-list');
 const city_ul = document.getElementById('city-list');
 const suburb_ul = document.getElementById('suburb-list');
+const cuisine_ul = document.getElementById('cuisine-list');
 
+let locationList = {}
+let cuisineList = []
 
 function loadDateList() {
     let date_list = generateDateList();
@@ -91,7 +94,7 @@ function loadDateList() {
     li.onclick = () => {
         let date_input = document.getElementById('date-input');
         date_input.innerHTML = 'All dates'
-        date_input.title = 'All dates'
+        date_input.title = ""
     }
     date_ul.appendChild(li)
 
@@ -103,7 +106,6 @@ function loadDateList() {
             let date_input = document.getElementById('date-input');
             date_input.innerHTML = date['display']
             date_input.title = date['date']
-            console.log(date_input)
         }
         date_ul.appendChild(li)
     }
@@ -117,9 +119,9 @@ function loadTimeList() {
     let li = document.createElement('li');
     li.innerHTML = 'All time'
     li.onclick = () => {
-        let date_input = document.getElementById('time-input');
-        date_input.innerHTML = 'All time'
-        date_input.title = 'All time'
+        let time_input = document.getElementById('time-input');
+        time_input.innerHTML = 'All time'
+        time_input.title = ""
     }
     time_ul.appendChild(li)
 
@@ -131,12 +133,85 @@ function loadTimeList() {
             let time_input = document.getElementById('time-input');
             time_input.innerHTML = t;
             time_input.title = t;
-            console.log(time_input)
         }
         time_ul.appendChild(li)
     }
 }
 
+function loadCityList() {
+    let cityList = generateCityList();
+    city_ul.innerHTML = ''
+
+    for (const c of cityList) {
+        let li = document.createElement('li');
+        li.innerHTML = c;
+        li.onclick = () => {
+            let city_input = document.getElementById('city-input');
+            city_input.innerHTML = c;
+            city_input.title = c;
+            loadSuburbList(c);
+        }
+        city_ul.appendChild(li)
+    }
+
+    // load default value for city
+    let city_input = document.getElementById('city-input');
+    let city = city_ul.firstChild.innerHTML;
+    city_input.innerHTML = city;
+    city_input.title = city;
+    loadSuburbList(city);
+}
+
+function loadSuburbList(city) {
+    let suburbList = locationList[city];
+    suburb_ul.innerHTML = ''
+
+    let li = document.createElement('li');
+    li.innerHTML = 'All suburb'
+    li.onclick = () => {
+        let suburb_input = document.getElementById('suburb-input');
+        suburb_input.innerHTML = 'All suburb'
+        suburb_input.title = ""
+    }
+    suburb_ul.appendChild(li)
+
+    // 24 hours 00/30 minutes selection
+    for (const s of suburbList) {
+        let li = document.createElement('li');
+        li.innerHTML = s;
+        li.onclick = () => {
+            let suburb_input = document.getElementById('suburb-input');
+            suburb_input.innerHTML = s;
+            suburb_input.title = s;
+        }
+        suburb_ul.appendChild(li)
+    }
+}
+
+function loadCuisineList() {
+    cuisine_ul.innerHTML = ''
+
+    let li = document.createElement('li');
+    li.innerHTML = 'All cuisines'
+    li.onclick = () => {
+        let input = document.getElementById('cuisine-input');
+        input.innerHTML = 'All cuisines'
+        input.title = ""
+    }
+    cuisine_ul.appendChild(li)
+
+    // 24 hours 00/30 minutes selection
+    for (const item of cuisineList) {
+        let li = document.createElement('li');
+        li.innerHTML = item;
+        li.onclick = () => {
+            let input = document.getElementById('cuisine-input');
+            input.innerHTML = item;
+            input.title = item;
+        }
+        cuisine_ul.appendChild(li)
+    }
+}
 // generate next 7 days 
 function generateDateList() {
     let date_list = []
@@ -147,7 +222,7 @@ function generateDateList() {
         let mm = String(today.getMonth() + 1).padStart(2, '0');  // Month
         let day = weekdayMap(today.getDay()); // weekday
         let yyyy = today.getFullYear()
-        let item = { date:`${dd}/${mm}/${yyyy}`, display:`${day}  ${dd}th ${monthMap(mm)}`}
+        let item = { date:`${yyyy}-${mm}-${dd}`, display:`${day}  ${dd}th ${monthMap(mm)}`}
         date_list.push(item);
 
         today.setDate(today.getDate() + 1);
@@ -178,9 +253,195 @@ function generateTimeList() {
     return timeList;
 }
 
+// get city dictionary, stores it in locationList
 function generateCityList() {
-    
+    let cityList = []
+    for (var city in locationList) {
+        cityList.push(city);
+    }
+    return cityList;
+}
+
+// get location list from server
+function getLocationList() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/diner/home/get_location', false);
+    xhr.send()
+    res = JSON.parse(xhr.response)
+    locationList = res;
+    return res
+}
+
+// get cuisine list from server
+function getCuisineList() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', '/diner/home/get_cuisine', false);
+    xhr.send()
+    res = JSON.parse(xhr.response)['cuisine']
+    cuisineList = res;
+    return res;
 }
 
 loadDateList();
 loadTimeList();
+
+getLocationList(); // get location from server
+generateCityList();
+loadCityList();
+
+getCuisineList(); // get cuisines from server
+loadCuisineList();
+
+/* submit filter and apply search */
+const submit_filter = document.getElementById('filter-submit');
+let input_list = document.getElementById('filter').getElementsByTagName('span');
+const eatery_section = document.getElementById('eateries');
+
+submit_filter.onclick = () => {
+    let filter_data = {}
+    for (const i of input_list) {
+        if (i.id == '') break;
+        let k = i.id.split('-')[0]
+        filter_data[k] = i.title;
+    }
+
+    // create filter data location attr
+    filter_data['location'] = filter_data['city']+','+filter_data['suburb'];
+    
+    searchEateryByFilter(filter_data);
+}
+
+function searchEateryByFilter(filter_data) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/diner/get_eatery', true);
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.response) {
+                let res = JSON.parse(this.response)['eateries']
+                loadEateries(res)
+            } else {
+                alert('filter search failed')
+            }
+        }
+    }
+    xhr.send(JSON.stringify(filter_data))
+}
+
+/**
+ * Load the eateries into the main page
+ * @param {Array} eateries a list of eateries, with eatery name, location, images etc.
+ */
+function loadEateries(eateries) {
+    eatery_section.innerHTML = ''
+    let default_img_src = '../static/images/food_1.jpg';
+
+    for (let idx = 0; idx < eateries.length; idx++) {
+        // address image icon 
+        let addr_img = new Image();
+        addr_img.src = '../static/images/city.png';
+        addr_img.className = 'icon child';
+
+        // cuisine image icon
+        let cuisine_img = new Image();
+        cuisine_img.src = '../static/images/cuisine.png';
+        cuisine_img.className = 'icon child';
+
+        let eatery = eateries[idx];
+        let img_src = eatery['eatery_image']
+        let name = eatery['eatery_name']
+        let addr = eatery['city'] + ', ' + eatery['suburb']
+        let cuisine = eatery['cuisine']
+        let eatery_path = `/eatery/profile/${eatery['id']}`;
+        let container = document.createElement('div');
+        let sub_container = document.createElement('div');
+        let img_div = document.createElement('div');
+        let name_div = document.createElement('div');
+        let h1 = document.createElement('h1');
+
+        // make eatery name element
+        h1.innerHTML = name;
+        name_div.appendChild(h1);
+
+        let content_divs = []
+        for (let i = 0; i < 3; i++) {
+            let div = document.createElement('div');
+            div.className = 'content';
+            content_divs.push(div)
+        }
+
+        let eatery_img = new Image();
+        if (img_src !== '') eatery_img.src = img_src;
+        else eatery_img.src = default_img_src;
+        img_div.appendChild(eatery_img);
+
+        // address span
+        let addr_span = document.createElement('span');
+        addr_span.className = 'child'
+        addr_span.innerHTML = addr;
+
+        // make address line
+        content_divs[0].appendChild(addr_img);
+        content_divs[0].appendChild(addr_span);
+
+
+        // cuisine span
+        let cuisine_span = document.createElement('span');
+        cuisine_span.className = 'child';
+        cuisine_span.innerHTML = cuisine;
+
+        content_divs[1].appendChild(cuisine_img);
+        content_divs[1].appendChild(cuisine_span);
+
+
+        // rating span, currently static
+        let star_div = document.createElement('div')
+        star_div.className = 'Stars'
+        star_div.style = '--rating: 4.3';
+        star_div.innerHTML = ' 4.3 ';
+
+        content_divs[2].appendChild(star_div);
+
+        // append name, address, cusine and stars to sub_container
+        sub_container.appendChild(name_div);
+        for (const d of content_divs) {
+            console.log(typeof d)
+            sub_container.appendChild(d);
+        }
+
+        container.appendChild(img_div);
+        container.appendChild(sub_container);
+
+        container.onclick = () => {
+            window.location.href = eatery_path;
+        }
+
+        console.log(container)
+
+        eatery_section.appendChild(container);
+    }
+    /*
+    <div>
+        <div>
+            <img src="../static/images/food_1.jpg" alt="">
+        </div>
+        <div>
+            <div>
+                <h1>eatery name</h1>
+            </div>
+            <div class="content">
+                <img class="icon child" src="../static/images/city.png" alt="">
+                <span class="child">Sydney, Kensington</span>
+            </div>
+            <div class="content">
+                <img class="icon child" src="../static/images/cuisine.png" alt="">
+                <span class="child">cuisine</span>
+            </div>
+            <div class="content">
+                <div class="Stars" style="--rating: 3.3;"> 3.3 </div>
+            </div>
+        </div>
+    </div>
+    */
+
+}

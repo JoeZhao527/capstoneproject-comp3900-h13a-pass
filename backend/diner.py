@@ -3,7 +3,7 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
-from backend.user_db import Eatery, Diner, Voucher
+from backend.user_db import Eatery, Diner, Voucher, Image
 from backend.data_access import dictionary_of_eatery
 from backend.errors import InputError
 from server import db
@@ -125,8 +125,8 @@ def search_by_filter(date, time, location, cuisine):
     for eat in result:
         eatery_item = dictionary_of_eatery(eat)
         # get the first image of the eatery
-        first_image = Image.query.filter_by(eatery_id=eat.id).first().image
-        eatery_item["eatery_image"] = first_image
+        first_image = Image.query.filter_by(eatery_id=eat.id).first()
+        eatery_item["eatery_image"] = first_image.image if first_image else ''
         # add the eatery with image dictionary into the list
         eatery_with_image.append(eatery_item)
 

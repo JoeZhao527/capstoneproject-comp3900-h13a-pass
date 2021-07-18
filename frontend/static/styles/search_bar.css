@@ -1,6 +1,7 @@
 #search-bar{
     position: relative;
-    width: 48rem;
+    width: 40rem;
+    margin-right: 4rem;
     display: inline-block;
 }
 
@@ -16,7 +17,7 @@
 }
 
 #search-bar input:focus {
-    background-color: white;
+    background-color: rgba(252, 252, 252, 0.5);
     transition: .5s;
 }
 
@@ -27,13 +28,13 @@
     left: 0;
     width: 0%;
     height: 2px;
-    background: #2691d9;
+    background: #000000;
     transition: .5s;
 }
 #search-bar input:focus ~ label,
 #search-bar input:valid ~ label{
     top: -5px;
-    color: #2691d9;
+    color: #000000;
 }
 #search-bar input:focus ~ span::before,
 #search-bar input:valid ~ span::before{
@@ -53,7 +54,7 @@
     color: black;
     padding: 12px 16px;
     text-decoration: none;
-    width: 46.5rem;
+    width: 38.5rem;
     display: block;
 }
 
