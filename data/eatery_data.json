@@ -13,7 +13,21 @@
             "city": "Sydney",
             "suburb": "Sydney",
             "description": "Sweet Escape is Sydney's most loved home base for espresso and discussions. We offer a delicious variety of coffee from Sweet Escape made by our professionally trained baristas, from your classic coffee to our house specialty. You can complete your coffee with oen of our sweet treats made by our very own baker.",
-            "images": [] 
+            "images": [],
+            "vouchers": [
+                {
+                    "date": "2021-07-30",
+                    "start_time": "12:00",
+                    "end_time": "15:00",
+                    "discount": 0.8
+                }, 
+                {
+                    "date": "2021-08-02",
+                    "start_time": "12:00",
+                    "end_time": "15:00",
+                    "discount": 0.5   
+                }
+            ]  
         },
         {  
             "email": "janedoe@gmail.com",
@@ -28,7 +42,8 @@
             "city": "Sydney",
             "suburb": "Fairfield East",
             "description": "At Yummy Pizza , we are not simply baking  pizza but involved in other fast food like sandwiches, burgers and cookies. We make individuals happy and satisfy their hunger. Yummy Pizza was based on the conviction that pizza night ought to be exceptional, and we convey that conviction into all that we do.",
-            "images": []
+            "images": [],
+            "vouchers": []
         },
         {  
             "email": "joe.bloggs@gmail.com",
@@ -43,7 +58,8 @@
             "city": "Sydney",
             "suburb": "Sydney",
             "description": "We welcome you to sit back, unwind and appreciate the lovely sights of the city while our best gourmet expert sets you up a scrumptious dinner utilizing the best and freshest ingredients. The adaptable menu flaunts some imaginative food, for example, salt and pepper squid on a delicate, Thai-roused plate of mixed greens; harissa angle soup (with the harissa glue served in a little glass); lemon simmered chicken on dark pepper gnocchi; and a most heavenly cinnamon. The eatery utilizes neighborhood create for fish and venison dishes flourish.",
-            "images": []
+            "images": [],
+            "vouchers": []
         },
         {  
             "email": "shirley.jones@gmail.com",
@@ -58,7 +74,8 @@
             "city": "Sydney",
             "suburb": "North Sydney",
             "description": "Head to this laid-back North Sydney restaurant for beef tongue tacos, chicken smothered in a heady mole sauce, and a monster crab tostada. North Sydney's only Michelin-starred Mexican restaurant is an especially cool choice for lunch during the week or drinks after work.",
-            "images": []
+            "images": [],
+            "vouchers": []
         },
         {  
             "email": "helen.wall@gmail.com",
@@ -73,7 +90,8 @@
             "city": "Sydney",
             "suburb": "The Entrance",
             "description": "Over the last five years, Outback Steakhouse has turned into the quintessential American restaurant that chef Andrew Carmellini and partners Josh Pickard and Luke Ostrom sought to evoke when it first opened. It’s a great choice when you’re craving a steak, a burger, or oysters, and the menu always includes plentiful seafood options as well as pastas. Outback Steakhouse is now an indelible part of the Sydney landscape.",      
-            "images": []
+            "images": [],
+            "vouchers": []
         },
         {  
             "email": "kevin.lee@gmail.com",
@@ -88,7 +106,8 @@
             "city": "East Sydney",
             "suburb": "Sydney",
             "description": "The tables at this Hardie Street favorite are outfitted with grills for cooking short ribs, brisket, beef tongue, rib eye, and pork jowl. The banchan plates are uniformly good, and Deuki Hong’s menu also includes winning dishes like stir-fried squid noodles, kimchi stew, and seafood pancakes.",
-            "images": []
+            "images": [],
+            "vouchers": []
         },
         {  
             "email": "kelly.finney@gmail.com",
@@ -103,7 +122,8 @@
             "city": "Sydney",
             "suburb": "Mona Vale",
             "description": "Mama's Kitchen is one of Sydney's finest, offering an exceptional dining experience, unmistakably Australian style. Our menu offers a range of dishes from a variety of cultures, such as escargot, pasta and beef carpaccio. Additionally, we offer an extensive wine list, to help with your food and wine pairing.",
-            "images": []
+            "images": [],
+            "vouchers": []
         },
         {  
             "email": "rose.william@gmail.com",
@@ -118,8 +138,10 @@
             "city": "Sydney",
             "suburb": "Blacktown",
             "description": "Experience an authentic Italian experience with traditional cuisine and exquisite wines at Taste of Rome. Our executive chef Laurent Cambon has been working here since 1994. Laurent infuses his Michelin-star experience into the original menu, having completed stints at Parisian restaurants L’Arpege and Au Trou Gascon. ",
-            "images": []
-        },{  
+            "images": [],
+            "vouchers": []
+        },
+        {  
             "email": "david.johnson@gmail.com",
             "password": "00078910DC",
             "first_name" : "David",
@@ -132,8 +154,10 @@
             "city": "Sydney",
             "suburb": "Baulkham Hills",
             "description": "David Johnson’s two-year-old ramen shop serves one of the best tonkotsu broths around. Beyond ramen, Neo Ramen also offers some high minded plates, like foie gras-stuffed chicken wings, as well as dry-aged Japanese Wagyu beef specials.",
-            "images": []
-        },{  
+            "images": [],
+            "vouchers": []
+        },
+        {  
             "email": "gary.walsh@gmail.com",
             "password": "00078910DC",
             "first_name" : "Gary",
@@ -146,17 +170,8 @@
             "city": "Sydney",
             "suburb": "Rozelle",
             "description": "The Beanery uses crisp drain and a similar Mocha Italia beans to make a range of cofees including Caffè latte, Cappuccino, White and Black Americano, Hot Chocolate and Mocha. The coffee we cook is the coffee we like to drink, and we trust you like it as well.",
-            "images": []
-        }
-    ],
-
-    "vouchers": [
-        {
-            "date": "17-07-2021",
-            "start": "17:30" ,
-            "end": "21:00",
-            "discount": 30
+            "images": [],
+            "vouchers": []
         }
     ]
-
 }
