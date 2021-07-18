@@ -225,7 +225,7 @@ def get_booked_diner_voucher(token):
     # to get all the vouchers that are booked, not used and not expired
     voucher_diner_list = db.session.query(Voucher, Diner).join(Diner, Voucher.diner_id==Diner.id).filter(Voucher.eatery_id==eatery.id, Voucher.if_booked==True, Voucher.if_used==False).all()
     for voucher, diner in voucher_diner_list:
-        # and the voucher has expired        
+        # and the voucher has not expired        
         if not voucher_has_expired(voucher):
             item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
             # convert the start and end time to string
