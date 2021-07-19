@@ -103,13 +103,27 @@ def diner_private_profile_update():
 @app.route('/diner/profile/get_active',methods = ['POST'])
 def diner_profile_active():
     data = json.loads(request.data)
-    # res = 
+    res = get_booked_voucher(data['token'])
+    print(res)
+    return res
     
 
 @app.route('/diner/profile/get_previous',methods = ['POST'])
 def diner_profile_previous():
     data = json.loads(request.data)
-    res = get_diner_by_token(data['token'])
+    res = get_used_voucher(data['token'])
+    return res
+
+@app.route('//diner/profile/private/delete_voucher', methods=["DELETE"])
+def diner_profile_deleate_voucher():
+    try:
+        info = json.loads(request.data)
+        # delete_all_vouchers(token=info['token'], group_id=info['id'])
+        return ''
+    except InputError:
+        print(InputError.message)
+        return 'failed'
+
 
 ###########################################################
 ##                   EATERY ROUTES                       ##

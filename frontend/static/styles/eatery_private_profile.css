@@ -310,7 +310,7 @@ table th {
 
 table .delete{
     background-image: url("/static/images/delete.png");
-    background-size: 80%;;
+    background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
     width: 30px;

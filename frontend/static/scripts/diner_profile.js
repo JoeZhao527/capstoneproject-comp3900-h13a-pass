@@ -145,50 +145,98 @@ function loadActive() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/diner/profile/get_active', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    const thv = document.getElementById('vouchers')
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
-            for (const data of JSON.parse(this.response)['active']) {
-                addActiveItem(data, data['id']);
+            
+            // for (const data of JSON.parse(this.response)['active']) {
+            //     addActiveItem(data, data['id']);
+            // }
+            let vlist = JSON.parse(this.response)['vouchers']
+            console.log(vlist)
+            for(let i = 0; i < vlist.length; i++) {
+                let voucher = vlist[i]
+                console.log(voucher)
+                console.log(voucher['date'])
+                let activepart = document.createElement('tr')
+
+                let eaterynode = document.createElement('th')
+                let datenode = document.createElement('th')
+                let timenode = document.createElement('th')
+                let discountnode = document.createElement('th')
+                let codenode = document.createElement('th')
+
+                eaterynode.innerHTML = voucher['']
+                datenode.innerHTML = voucher['date']
+                timenode.innerHTML = voucher['start_time']+" - "+voucher['end_time']
+                discountnode.innerHTML = voucher['discount']
+                codenode.innerHTML = voucher['code']
+
+                activepart.appendChild(eaterynode)
+                activepart.appendChild(datenode)
+                activepart.appendChild(timenode)
+                activepart.appendChild(discountnode)
+                activepart.appendChild(codenode)
+                addDeleteActiveVoucherBtn(activepart, token, voucher['code']);
+                thv.appendChild(activepart)    
             }
         }
     }
-    xhr.send(`{ "token":"${token}" }`)
+    xhr.send(`{"token":"${token}"}`);
     // add data to schedule list
 }
-
 loadActive();
 
-
-
-function addPreviousItem(data, id) {
-    Previouss.appendChild(createItem(data, id, addDeletePreviousBtn));
-}
-
-function addDeletePreviousBtn(item, id) {
-    let btn = document.createElement('button');
-    btn.innerHTML = 'Delete';
-    btn.onclick = () => {
+function addDeleteActiveVoucherBtn(item, id, code) {
+    let deletebtn = document.createElement('button');
+    deletebtn.className = 'delete';
+    deletebtn.onclick = () => {
         let xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/diner/profile/remove_previous', false);
+        xhr.open('DELETE', '/diner/profile/private/delete_voucher', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({ token: token, id: id }));
+        xhr.send(JSON.stringify({ token: token, id: id, code: code }));
         if (!this.response) {
-            Previouss.removeChild(item);
+            vouchers.removeChild(item);
         } else {
             alert('delete failed');
         }
     }
-    item.appendChild(btn);
+    item.appendChild(deletebtn);
 }
 
 function loadPrevious() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/diner/profile/get_previous', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
+    const thp = document.getElementById('previous')
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
-            for (const data of JSON.parse(this.response)['Previouss']) {
-                addPreviousItem(data, data['id']);
+            let vlist = JSON.parse(this.response)['vouchers']
+            console.log(vlist)
+            for(let i = 0; i < vlist.length; i++) {
+                let voucher = vlist[i]
+                console.log(voucher)
+                console.log(voucher['date'])
+                let activepart = document.createElement('tr')
+
+                let eaterynode = document.createElement('th')
+                let datenode = document.createElement('th')
+                let timenode = document.createElement('th')
+                let discountnode = document.createElement('th')
+                let codenode = document.createElement('th')
+
+                eaterynode.innerHTML = voucher['']
+                datenode.innerHTML = voucher['date']
+                timenode.innerHTML = voucher['start_time']+" - "+voucher['end_time']
+                discountnode.innerHTML = voucher['discount']
+                codenode.innerHTML = voucher['code']
+
+                activepart.appendChild(eaterynode)
+                activepart.appendChild(datenode)
+                activepart.appendChild(timenode)
+                activepart.appendChild(discountnode)
+                activepart.appendChild(codenode)
+                thp.appendChild(activepart)
             }
         }
     }
@@ -198,6 +246,27 @@ function loadPrevious() {
 loadPrevious();
 
 
+
+// function addPreviousItem(data, id) {
+//     Previouss.appendChild(createItem(data, id, addDeletePreviousBtn));
+// }
+
+// function addDeletePreviousBtn(item, id) {
+//     let btn = document.createElement('button');
+//     btn.innerHTML = 'Delete';
+//     btn.onclick = () => {
+//         let xhr = new XMLHttpRequest();
+//         xhr.open('DELETE', '/diner/profile/remove_previous', false);
+//         xhr.setRequestHeader('Content-Type', 'application/json');
+//         xhr.send(JSON.stringify({ token: token, id: id }));
+//         if (!this.response) {
+//             Previouss.removeChild(item);
+//         } else {
+//             alert('delete failed');
+//         }
+//     }
+//     item.appendChild(btn);
+// }
 
 // get the current active page
 function getCurrPage() {
