@@ -103,11 +103,11 @@ displayTab('eatery');
 
 function displayTab(user) {
     if (user === 'diner') {
-        diner_btn.style.setProperty('border-bottom', '#2691d9 3px solid');
+        diner_btn.style.setProperty('border-bottom', '#f7ca36 2px solid');
         eatery_btn.style.setProperty('border-bottom', 'none');
         data['utype'] = 'diner'
     } else {
-        eatery_btn.style.setProperty('border-bottom', '#2691d9 3px solid');
+        eatery_btn.style.setProperty('border-bottom', '#f7ca36 2px solid');
         diner_btn.style.setProperty('border-bottom', 'none');
         data['utype'] = 'eatery'
     }

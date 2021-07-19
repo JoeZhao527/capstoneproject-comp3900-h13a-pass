@@ -12,14 +12,14 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
 from backend.user_db import Eatery, Diner, Voucher
-from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token, dictionary_of_eatery, store_image
+from backend.data_access import create_eatery, create_diner, get_eatery_by_token, get_diner_by_token, update_eatery_token, dictionary_of_eatery, store_image, dictionary_of_voucher
 from backend.errors import InputError
 from server import db
 # for loading data
 import json
 
 # for testing
-from backend.voucher import create_voucher
+from backend.voucher import create_voucher, add_voucher
 from datetime import date, datetime, time
 
 # for the eatery register and create voucher (load data from json file into the database)
@@ -355,34 +355,63 @@ def load_data():
             city = eatery["city"]
             suburb = eatery["suburb"]
             description = eatery["description"]
-            eatery_id = eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
+            result = eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
+            
             
             # for each eatery, load related images
             #for image in eatery["images"]:
                # store_image(eatery_id, image)
 
-        # load vouchers from the data file into the database
-        #for voucher in data["vouchers"]:
-        #    xxx
+            # load vouchers from the data file into the database
+            # get the id and token of this eatery first
+            eatery_id = result["eatery_id"]
+            token = result["token"]
+            
+            # a list of voucher dictionary info
+            for voucher in eatery["vouchers"]:
+                date = convert_string_to_date(voucher["date"])
+                start = convert_string_to_time(voucher["start_time"])
+                end = convert_string_to_time(voucher["end_time"])
+                discount = voucher["discount"]
+                add_voucher(token, eatery_id, date, start, end, discount)
+
+
+# string type: "2014-06-08"     
+def convert_string_to_date(s):
+    if isinstance(s, str):
+        y, m, d = s.split('-')[0], s.split('-')[1], s.split('-')[2]
+        return date(int(y), int(m), int(d))
+    return s
+
+# string time type: "21:15"
+def convert_string_to_time(s):
+    if isinstance(s, str):
+        h, m = s.split(':')[0], s.split(':')[1]
+        return time(int(h), int(m))
+    return s
 
 # for testing
 if __name__ == "__main__":
     load_data()
     Eateries = Eatery.query.all()
-    result = [dictionary_of_eatery(eat) for eat in Eateries]
-    print(result)
+    result1 = [dictionary_of_eatery(eat) for eat in Eateries]
+    print(result1)
+
+    Vouchers = Voucher.query.all()
+    result2 = [dictionary_of_voucher(vouch) for vouch in Vouchers]
+    print(result2)
 
     # make an eatery and add voucher
-    result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
+    #result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
     # eatery_register("jianjunjchen@gmail", )
-    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123", 10086)
+    #new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123", 10086)
 
     #checks = db.session.query(Eatery, Voucher).filter(Voucher.eatery_id == Eatery.id).all()
     #checks = db.session.query(Eatery, Voucher).join(Voucher, Eatery.id == Voucher.eatery_id).filter_by(code="abcsefnm123")
     #
     #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
-    checks = Eatery.query.filter_by(first_name = "JJI").first().email
-    print(checks)
+    #checks = Eatery.query.filter_by(first_name = "JJI").first().email
+    #print(checks)
     
 
 """

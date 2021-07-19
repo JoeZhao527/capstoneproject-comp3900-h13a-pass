@@ -1,0 +1,48 @@
+:root {
+    --hover-color: #f7ca36;
+}
+/* nav bar */
+#nav-bar {
+    padding: 15px 0 15px 0;
+    position: absolute;
+    width: 95%;
+}
+
+.nav-btn:hover{
+    cursor: pointer;
+    color: var(--hover-color);
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+}
+.nav-btn {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: white;
+    width: 7%;
+    height: 3rem;
+    margin-left: 2%;
+    float: right;
+}
+
+.home {
+    border: none;
+    font-family: fantasy;
+    font-weight: bolder;
+    font-size: 30px;
+    font-style: italic;
+    background-color: transparent;
+    outline: none;
+    width: 12%;
+    padding-top: 10px;
+    margin: 0 1rem;
+    height: 3rem;
+    color: white;
+    float: left;
+}
+
+.home:hover {
+    color: var(--hover-color);
+    cursor: pointer;
+}

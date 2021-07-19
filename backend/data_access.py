@@ -84,7 +84,7 @@ def dictionary_of_diner(diner):
     data = dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys())
     return data
 # get dictionary of a voucher by given a voucher item
-def dictionay_of_voucher(voucher):
+def dictionary_of_voucher(voucher):
     data = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
     return data
 # get a list of all eateries
@@ -120,17 +120,20 @@ def suburb_with_city():
         else:
             locations[city] = []
             locations[city].append(suburb)
+    return locations
 
 # function for generating a list of cuisine of eatery
 # return a list of cuisine from all the eateries
 # ["chinese", "Japanese", "Korean", "Hotpot"] 
 def cuisine_of_eateries():
-    cuisines = []
+    cuisine_list = []
     eateries = Eatery.query.all()
     for eatery in eateries:
-        cuisine = eatery.cuisine
-        # if this cuisine type not exist in the list
-        if cuisine not in cuisines:
-            cuisines.append(cuisine)
-    return cuisines
+        # each cuisine is a cuisine list separated by ','
+        cuisines = eatery.cuisine.split(',')
+        for cuisine in cuisines:
+            # if this cuisine type not exist in the list
+            if cuisine not in cuisine_list:
+                cuisine_list.append(cuisine)
+    return {'cuisine':cuisine_list}
 

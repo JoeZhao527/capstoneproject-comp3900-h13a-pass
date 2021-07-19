@@ -16,7 +16,7 @@ import json
 ###########################################################
 @app.route('/')
 def home():
-    return redirect('/eatery/home', code=302)
+    return redirect('/diner/home', code=302)
 
 @app.route('/logout', methods=['PUT'])
 def eatery_logout():
@@ -36,7 +36,7 @@ def search_eatery_by_key():
 ###########################################################
 @app.route('/diner/home')
 def diner_home_load():
-    return render_template('diner_home.html')
+    return render_template('home.html')
 
 @app.route('/diner/register')
 def diner_register_load():
@@ -70,6 +70,28 @@ def diner_login_info():
     except InputError:
         print(InputError.message)
         return ''
+
+@app.route('/diner/home/get_location', methods=['GET'])
+def get_location_list():
+    return json.dumps(suburb_with_city())
+
+@app.route('/diner/home/get_cuisine', methods=['GET'])
+def get_cuisine_list():
+    return json.dumps(cuisine_of_eateries())
+
+@app.route('/diner/get_eatery', methods=['POST'])
+def get_eatery_list():
+    data = json.loads(request.data)
+    _date = data['date']
+    _time = data['time']
+    location = data['location']
+    cuisine = data['cuisine']
+    try:
+        res = search_by_filter(_date, _time, location, cuisine)
+        return json.dumps({'eateries':res})
+    except InputError:
+        return ''
+
 @app.route('/diner/home/getEatery',methods=['GET'])
 def diner_getEatery():
     try:

@@ -1,0 +1,180 @@
+:root {
+
+    --primary-color: rgb(119, 158, 180);
+    --btn-color: white;
+    --btn-hover-color: lightskyblue;
+    --dropdown-color: rgb(248, 246, 246);
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* intro */
+#intro {
+    background-image: url("../images/main1.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position-y: center;
+    margin: -3rem -1rem;
+    height: 40rem;
+    box-shadow: inset 10rem 10rem 10rem 10rem rgba(0,0,0,0.5);
+}
+
+#intro h1 {
+    text-align: center;
+    color: rgb(185, 185, 185);
+    line-height: 25rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 56px;
+}
+#intro h2 {
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgb(255, 255, 255);
+    margin-top: -10rem;
+    font-size: 60px;
+}
+
+/* filter */
+#filter {
+    position: sticky;
+    top: 0;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    background-color: white;
+    margin-top: -3rem;
+    z-index: 1;
+}
+
+.center {
+    z-index: 2 !important;
+}
+
+#filter > div { /* cuisine */
+    flex: 1;
+    vertical-align: top;
+}
+
+#filter > div > div {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    text-align: center;
+    position: relative;
+    height: 5rem;
+    width: 100%;
+    box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.05);
+}
+
+#filter > div > div:hover {cursor: pointer;}
+#filter-submit {background-color: rgb(255, 223, 0);}
+#filter-submit:hover {background-color: rgb(255, 223, 150);}
+#filter > div > div > .child {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+#filter > div > div > img {
+    left: 1rem;
+    width: 40px;
+}
+
+#filter > div > div > span {
+    left: 4rem;
+}
+
+#filter ul {
+    position: absolute;
+    display: none;
+    padding: 0;
+    list-style-type: none;
+    list-style: none;
+    height: 9rem;
+    width: 16.5%;
+    overflow: scroll;
+    background-color: var(--dropdown-color);
+    box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.05);
+}
+
+#filter li {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    padding: 10px;
+}
+
+#filter li:hover {
+    background-color: gray;
+    cursor: pointer;
+}
+
+#date-icon, #time-icon, #filter-icon {
+    width: 30px !important;
+}
+
+/* eateries */
+#eateries {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#eateries > div:hover {
+    cursor: pointer;
+    border: 3px solid black;
+}
+
+#eateries > div {
+    padding: 5px;
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
+    width: 46%;
+    margin: 10px 0 10px 30px;
+    height: 280px;
+    display: flex;
+}
+
+#eateries > div > div {
+    margin-right: 20px;
+}
+
+#eateries h1 {
+    font-size: 28px;
+}
+
+#eateries > div > div > img{
+    width: 280px;
+    height: 280px;
+    background-size: 100%;
+    background-position: center;
+}
+
+.icon {
+    width: 30px;
+}
+
+.content > .child {
+    position: relative;
+    margin: 0;
+    bottom: 60%;
+    transform: translate(0, 40%);
+}
+
+.content {
+    margin: 0 0 20px 0;
+}
+
+.content > span {
+    left: 1rem;
+}
+
+.content > div {
+    display: inline-block;
+}
+
+.Stars {
+    margin-top: 2rem;
+}
