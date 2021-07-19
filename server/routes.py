@@ -140,7 +140,8 @@ def diner_profile_previous():
 def diner_profile_deleate_voucher():
     try:
         info = json.loads(request.data)
-        # delete_all_vouchers(token=info['token'], group_id=info['id'])
+        cancel_voucher(token=info['token'], voucher_id=info['id'])
+        print("delete success")
         return ''
     except InputError:
         print(InputError.message)

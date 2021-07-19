@@ -166,7 +166,7 @@ function loadActive() {
                 let discountnode = document.createElement('th')
                 let codenode = document.createElement('th')
 
-                eaterynode.innerHTML = voucher['']
+                eaterynode.innerHTML = voucher['eatery_name']
                 datenode.innerHTML = voucher['date']
                 timenode.innerHTML = voucher['start_time']+" - "+voucher['end_time']
                 discountnode.innerHTML = voucher['discount']
@@ -177,7 +177,7 @@ function loadActive() {
                 activepart.appendChild(timenode)
                 activepart.appendChild(discountnode)
                 activepart.appendChild(codenode)
-                addDeleteActiveVoucherBtn(activepart, token, voucher['code']);
+                addDeleteActiveVoucherBtn(activepart, token, voucher['id']);
                 thv.appendChild(activepart)    
             }
         }
@@ -187,14 +187,14 @@ function loadActive() {
 }
 loadActive();
 
-function addDeleteActiveVoucherBtn(item, id, code) {
+function addDeleteActiveVoucherBtn(item,token, id) {
     let deletebtn = document.createElement('button');
     deletebtn.className = 'delete';
     deletebtn.onclick = () => {
         let xhr = new XMLHttpRequest();
         xhr.open('DELETE', '/diner/profile/private/delete_voucher', false);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({ token: token, id: id, code: code }));
+        xhr.send(JSON.stringify({ token: token, id: id }));
         if (!this.response) {
             vouchers.removeChild(item);
         } else {
@@ -225,7 +225,7 @@ function loadPrevious() {
                 let discountnode = document.createElement('th')
                 let codenode = document.createElement('th')
 
-                eaterynode.innerHTML = voucher['']
+                eaterynode.innerHTML = voucher['eatery_name']
                 datenode.innerHTML = voucher['date']
                 timenode.innerHTML = voucher['start_time']+" - "+voucher['end_time']
                 discountnode.innerHTML = voucher['discount']
