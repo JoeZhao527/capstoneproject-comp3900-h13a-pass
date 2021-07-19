@@ -211,16 +211,17 @@ def book_voucher(token, diner_id, group_id):
     return {}
     
 # function for cancelling a voucher by given a voucher id.
-def cancel_voucher(token, diner_id, voucher_id):
+def cancel_voucher(token, voucher_id):
+    diner = Diner.query.filter_by(token=token).first()
     # Check if given token is valid
-    if not valid_token(token):
+    if diner is None:
         raise InputError("Invalid token")
-    # Check if voucher exists
-    voucher = Voucher.query.filter_by(id=voucher_id).first()
+    # Check if voucher exists, booked and not used
+    voucher = Voucher.query.filter_by(id=voucher_id, if_booked=True, if_used=False).first()
     if voucher is None:
         raise InputError("Voucher does not exist")
     # Check if the voucher is booked by this diner
-    if voucher.diner_id != diner_id:
+    if voucher.diner_id != diner.id:
         raise InputError("Voucher is not booked by this diner")
     # update the info in this voucher
     voucher.diner_id = None
@@ -277,14 +278,18 @@ def get_booked_voucher(token):
     voucher_list = []
 
     # to get all the vouchers that are booked, not used and not expired by this diner
-    vouchers = Voucher.query.filter_by(diner_id=diner.id, if_booked=True, if_used=False).all()
-    for voucher in vouchers:
+    # with the related eatery
+    voucher_eatery_list = db.session.query(Voucher, Eatery).join(Eatery, Voucher.eatery_id==Eatery.id).filter(Voucher.diner_id==diner.id, Voucher.if_booked==True, Voucher.if_used==False).all()
+    for voucher, eatery in voucher_eatery_list:
         # and the voucher has not expired        
         if not voucher_has_expired(voucher):
             item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
             # convert the start and end time to string
             item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
             item['date'] = convert_date_to_string(item['date'])
+            # also add the information of related eatery
+            item["eatery_name"] = eatery.eatery_name
+            item["eatery_phone"] = eatery.phone
 
             # the voucher must not be expired in this list
             # this is a temporary solution, propery way should be having a expired attribute in voucher
@@ -304,13 +309,15 @@ def get_used_voucher(token):
     voucher_list = []
 
     # to get all the vouchers that are booked and used(whatever expired or not)by this diner
-    vouchers = Voucher.query.filter_by(diner_id=diner.id, if_booked=True, if_used=True).all()
-    for voucher in vouchers:
+    voucher_eatery_list = db.session.query(Voucher, Eatery).join(Eatery, Voucher.eatery_id==Eatery.id).filter(Voucher.diner_id==diner.id, Voucher.if_booked==True, Voucher.if_used==True).all()
+    for voucher, eatery in voucher_eatery_list:
         item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
         # convert the start and end time to string
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
         item['date'] = convert_date_to_string(item['date'])
-
+        # also add the information of related eatery
+        item["eatery_name"] = eatery.eatery_name
+        item["eatery_phone"] = eatery.phone
         voucher_list.append(item)
     
     return {"vouchers": voucher_list}
@@ -326,14 +333,17 @@ def get_booked_expired_voucher(token):
     voucher_list = []
 
     # to get all the vouchers that are booked, not used by this diner
-    vouchers = Voucher.query.filter_by(diner_id=diner.id, if_booked=True, if_used=False).all()
-    for voucher in vouchers:
+    voucher_eatery_list = db.session.query(Voucher, Eatery).join(Eatery, Voucher.eatery_id==Eatery.id).filter(Voucher.diner_id==diner.id, Voucher.if_booked==True, Voucher.if_used==False).all()
+    for voucher, eatery in voucher_eatery_list:
         # and the voucher has expired        
         if voucher_has_expired(voucher):
             item = dict((col, getattr(voucher, col)) for col in voucher.__table__.columns.keys())
             # convert the start and end time to string
             item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
             item['date'] = convert_date_to_string(item['date'])
+            # also add the information of related eatery
+            item["eatery_name"] = eatery.eatery_name
+            item["eatery_phone"] = eatery.phone
 
             # the voucher must not be expired in this list
             # this is a temporary solution, propery way should be having a expired attribute in voucher
