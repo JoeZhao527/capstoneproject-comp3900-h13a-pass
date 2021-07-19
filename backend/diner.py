@@ -351,6 +351,20 @@ def get_booked_expired_voucher(token):
             voucher_list.append(item)
     return {"vouchers": voucher_list}
 
+def check_voucher_code(token, diner_id, group_id, voucher_code):
+    # Check if given token of diner is valid
+    if not valid_token(token):
+        raise InputError("Invalid token")
+
+    voucher = Voucher.query.filter_by(group_id=group_id, if_booked=True, diner_id=diner_id).first()
+    if voucher is None:
+        raise InputError("Invalid voucher ID")
+
+    success = False
+    if voucher_code == voucher.code:
+        success = True
+
+    return {"success": success}
 
 
 # if time is not a string, conver it to a string
