@@ -8,7 +8,22 @@
             "phone": "+61491570156",
             "eatery_name": "Sweet Escape",
             "address": "280 George St",
-            "menu" : "",
+            "menu" : [
+                "Flat White",
+                "Cappuccino",
+                "Latte",
+                "Long Black",
+                "Chai Latte",
+                "Short Macchiato", 
+                "Long Macchiato",
+                "Mocha",
+                "Espresso",
+                "Affogato",
+                "Banana Bread",
+                "Chocolate Chip Cookies",
+                "Cinnamon Roll",
+                "Chocolate Mousse"         
+           ],
             "cuisine" : "Cafe",
             "city": "Sydney",
             "suburb": "Sydney",
@@ -17,16 +32,35 @@
             "vouchers": [
                 {
                     "date": "2021-07-30",
-                    "start_time": "12:00",
-                    "end_time": "15:00",
-                    "discount": 0.8
+                    "start_time": "7:00",
+                    "end_time": "11:00",
+                    "discount": 0.3
                 }, 
                 {
-                    "date": "2021-08-02",
-                    "start_time": "12:00",
-                    "end_time": "15:00",
+                    "date": "2021-07-27",
+                    "start_time": "15:00",
+                    "end_time": "17:00",
                     "discount": 0.5   
+                },
+                {
+                    "date": "2021-07-25",
+                    "start_time": "12:00",
+                    "end_time": "14:00",
+                    "discount": 0.25
+                },
+                {
+                    "date": "2021-07-24",
+                    "start_time": "17:30",
+                    "end_time": "21:00",
+                    "discount": 0.25
+                },
+                {
+                    "date": "2021-07-29",
+                    "start_time": "11:30",
+                    "end_time": "14:30",
+                    "discount": 0.25
                 }
+
             ]  
         },
         {  
@@ -37,13 +71,50 @@
             "phone": "+61414361904",
             "eatery_name": "Yummy Pizza",
             "address": "129 A Campbell St",
-            "menu" : "",
+            "menu" : [
+                "Cheese Pizza",
+                "Veggie Pizza",
+                "Pepperoni Pizza",
+                "Hawaiian Pizza",
+                "Veggie Burger",
+                "Double Beef Burger",
+                "Original Burger",
+                "Grilled Chicken Sandwich",
+                "Fish Fillet Sandwich",
+                "Chocolate Chip Cookies",
+                "Almond Cookies"           
+           ],
             "cuisine" : "Fast Food",
             "city": "Sydney",
             "suburb": "Fairfield East",
-            "description": "At Yummy Pizza , we are not simply baking  pizza but involved in other fast food like sandwiches, burgers and cookies. We make individuals happy and satisfy their hunger. Yummy Pizza was based on the conviction that pizza night ought to be exceptional, and we convey that conviction into all that we do.",
+            "description": "At Yummy Pizza, we are not simply baking pizza but involved in other fast food like sandwiches, burgers and cookies. We make individuals happy and satisfy their hunger. Yummy Pizza was based on the conviction that pizza night ought to be exceptional, and we convey that conviction into all that we do.",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-29",
+                    "start_time": "18:00",
+                    "end_time": "20:00",
+                    "discount": 0.15
+                }, 
+                {
+                    "date": "2021-07-30",
+                    "start_time": "17:00",
+                    "end_time": "22:00",
+                    "discount": 0.1
+                }, 
+                {
+                    "date": "2021-07-31",
+                    "start_time": "17:00",
+                    "end_time": "22:00",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-08-01",
+                    "start_time": "17:00",
+                    "end_time": "22:00",
+                    "discount": 0.1
+                }
+            ]
         },
         {  
             "email": "joe.bloggs@gmail.com",
@@ -53,13 +124,45 @@
             "phone": "(02)99221238",
             "eatery_name": "El Pirata Porch",
             "address": "278 Sussex St",
-            "menu" : "",
+            "menu" : [
+                "Quail egg and ricotta ravioli",
+                "Smoked trout and beetroot salad",
+                "Grilled lobster with mustard and burnt butter",
+                "Stuffed Mediterranean beef",
+                "Veal cutlets with pancetta and Fontina"
+            ],
             "cuisine" : "Fine Dining",
             "city": "Sydney",
             "suburb": "Sydney",
             "description": "We welcome you to sit back, unwind and appreciate the lovely sights of the city while our best gourmet expert sets you up a scrumptious dinner utilizing the best and freshest ingredients. The adaptable menu flaunts some imaginative food, for example, salt and pepper squid on a delicate, Thai-roused plate of mixed greens; harissa angle soup (with the harissa glue served in a little glass); lemon simmered chicken on dark pepper gnocchi; and a most heavenly cinnamon. The eatery utilizes neighborhood create for fish and venison dishes flourish.",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "18:00",
+                    "end_time": "21:00",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "18:00",
+                    "end_time": "21:00",
+                    "discount": 0.10
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "18:00",
+                    "end_time": "21:00",
+                    "discount": 0.10
+                },
+                {
+                    "date": "2021-07-31",
+                    "start_time": "18:00",
+                    "end_time": "21:00",
+                    "discount": 0.05
+                }
+
+            ]
         },
         {  
             "email": "shirley.jones@gmail.com",
@@ -69,13 +172,51 @@
             "phone": "+61431223005",
             "eatery_name": "Casa Enrique",
             "address": "179 Walker St",
-            "menu" : "",
+            "menu" : [
+                "Taco rice with grilled chicken and green chilli salsa",
+                "Slow-cooked chicken with brown rice and avocado",
+                "Spicy chicken empanadas",
+                "Broccoli, lemon and cottage cheese quesadillas",
+                "Chilli con carne with spiced guacamole"    
+            ],
             "cuisine" : "Mexican",
             "city": "Sydney",
             "suburb": "North Sydney",
             "description": "Head to this laid-back North Sydney restaurant for beef tongue tacos, chicken smothered in a heady mole sauce, and a monster crab tostada. North Sydney's only Michelin-starred Mexican restaurant is an especially cool choice for lunch during the week or drinks after work.",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "11:00",
+                    "end_time": "14:00",
+                    "discount": 0.2
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "7:00",
+                    "end_time": "11:00",
+                    "discount": 0.25
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "11:00",
+                    "end_time": "14:00",
+                    "discount": 0.2
+                },
+                {
+                    "date": "2021-07-31",
+                    "start_time": "21:00",
+                    "end_time": "23:00",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-08-01",
+                    "start_time": "18:00",
+                    "end_time": "22:00",
+                    "discount": 0.15
+                }
+
+            ]
         },
         {  
             "email": "helen.wall@gmail.com",
@@ -85,13 +226,64 @@
             "phone": "(02)92615741",
             "eatery_name": "Outback Steakhouse",
             "address": "18 Dening St",
-            "menu" : "",
+            "menu" : [
+                "Classic Cheeseburger",
+                "Ribeye Steak",
+                "New York Strip Steak",
+                "T-Bone Steak",
+                "Sirloin Steak",
+                "Onion Rings",
+                "Chicken Wings"
+            ],
             "cuisine" : "American",
             "city": "Sydney",
             "suburb": "The Entrance",
             "description": "Over the last five years, Outback Steakhouse has turned into the quintessential American restaurant that chef Andrew Carmellini and partners Josh Pickard and Luke Ostrom sought to evoke when it first opened. It’s a great choice when you’re craving a steak, a burger, or oysters, and the menu always includes plentiful seafood options as well as pastas. Outback Steakhouse is now an indelible part of the Sydney landscape.",      
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-30",
+                    "start_time": "17:00",
+                    "end_time": "20:00",
+                    "discount": 0.5
+                }, 
+                {
+                    "date": "2021-07-26",
+                    "start_time": "11:30",
+                    "end_time": "14:30",
+                    "discount": 0.5   
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "11:30",
+                    "end_time": "14:30",
+                    "discount": 0.5   
+                },
+                {
+                    "date": "2021-07-25",
+                    "start_time": "12:00",
+                    "end_time": "14:00",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-24",
+                    "start_time": "17:30",
+                    "end_time": "21:00",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-29",
+                    "start_time": "17:30",
+                    "end_time": "20:30",
+                    "discount": 0.2
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "11:30",
+                    "end_time": "14:30",
+                    "discount": 0.5   
+                }
+            ]
         },
         {  
             "email": "kevin.lee@gmail.com",
@@ -101,13 +293,50 @@
             "phone": "0412622298",
             "eatery_name": "Whispering Bamboo",
             "address": "14 Hardie St",
-            "menu" : "",
+            "menu" : [
+                "Fried Baozi",
+                "Peking Duck",
+                "Friend Rice",
+                "Mapo Tofu",
+                "Wonton Soup"
+            ],
             "cuisine" : "Asian",
             "city": "East Sydney",
             "suburb": "Sydney",
             "description": "The tables at this Hardie Street favorite are outfitted with grills for cooking short ribs, brisket, beef tongue, rib eye, and pork jowl. The banchan plates are uniformly good, and Deuki Hong’s menu also includes winning dishes like stir-fried squid noodles, kimchi stew, and seafood pancakes.",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "11:30",
+                    "end_time": "15:30",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "11:30",
+                    "end_time": "15:30",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "11:30",
+                    "end_time": "15:30",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-29",
+                    "start_time": "11:30",
+                    "end_time": "15:30",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-30",
+                    "start_time": "11:30",
+                    "end_time": "15:30",
+                    "discount": 0.15
+                }
+            ]
         },
         {  
             "email": "kelly.finney@gmail.com",
@@ -117,13 +346,31 @@
             "phone": "(02)99993840",
             "eatery_name": "Mama's Kitchen",
             "address": "13 Whipbird Cct",
-            "menu" : "",
+            "menu" : [
+                "Wood grilled king salmon",
+                "Chicken brodo with mushroom and mascarpone tortellini",
+                "Wine-braised veal shoulder with Gorgonzola polenta",
+                "Braised duck and chestnut kofta with king brown mushrooms"
+            ],
             "cuisine" : "Fine Dining",
             "city": "Sydney",
             "suburb": "Mona Vale",
             "description": "Mama's Kitchen is one of Sydney's finest, offering an exceptional dining experience, unmistakably Australian style. Our menu offers a range of dishes from a variety of cultures, such as escargot, pasta and beef carpaccio. Additionally, we offer an extensive wine list, to help with your food and wine pairing.",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-29",
+                    "start_time": "18:00",
+                    "end_time": "21:00",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-30",
+                    "start_time": "18:00",
+                    "end_time": "21:00",
+                    "discount": 0.1
+                }
+            ]
         },
         {  
             "email": "rose.william@gmail.com",
@@ -133,13 +380,27 @@
             "phone": "(02)96223176",
             "eatery_name": "Taste of Rome",
             "address": "46 Joseph St",
-            "menu" : "",
+            "menu" : [
+                "Caprese Salad with Pesto Sauce",
+                "Bruschetta",
+                "Pasta Carbonara",
+                "Mushroom Risotto",
+                "Homemade Lasagna"
+            ],
+
             "cuisine" : "Italian",
             "city": "Sydney",
             "suburb": "Blacktown",
             "description": "Experience an authentic Italian experience with traditional cuisine and exquisite wines at Taste of Rome. Our executive chef Laurent Cambon has been working here since 1994. Laurent infuses his Michelin-star experience into the original menu, having completed stints at Parisian restaurants L’Arpege and Au Trou Gascon. ",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-30",
+                    "start_time": "18:00",
+                    "end_time": "21:00",
+                    "discount": 0.2
+                }
+            ]
         },
         {  
             "email": "david.johnson@gmail.com",
@@ -149,13 +410,50 @@
             "phone": "0431014986",
             "eatery_name": "Neo Ramen",
             "address": "3 Rockley Ave",
-            "menu" : "",
+            "menu" : [
+                "Tokyo Ramen",
+                "Karaage Ramen",
+                "Hokkaido Ramen",
+                "Tonkotsu Ramen"
+            ],
             "cuisine" : "Asian",
             "city": "Sydney",
             "suburb": "Baulkham Hills",
             "description": "David Johnson’s two-year-old ramen shop serves one of the best tonkotsu broths around. Beyond ramen, Neo Ramen also offers some high minded plates, like foie gras-stuffed chicken wings, as well as dry-aged Japanese Wagyu beef specials.",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "11:30",
+                    "end_time": "14:30",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "11:30",
+                    "end_time": "14:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "11:30",
+                    "end_time": "14:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-30",
+                    "start_time": "15:00",
+                    "end_time": "17:00",
+                    "discount": 0.3
+                },
+                {
+                    "date": "2021-07-31",
+                    "start_time": "15:00",
+                    "end_time": "17:00",
+                    "discount": 0.3
+                }
+
+            ]
         },
         {  
             "email": "gary.walsh@gmail.com",
@@ -165,13 +463,51 @@
             "phone": "(02)95554523",
             "eatery_name": "The Beanery",
             "address": "33 Lilyfield Rd",
-            "menu" : "",
+            "menu" : [
+                "Caffè latte",
+                "Cappuccino", 
+                "White Americano",
+                "Black Americano",
+                "Hot Chocolate", 
+                "Mocha"
+            ],
             "cuisine" : "Cafe",
             "city": "Sydney",
             "suburb": "Rozelle",
             "description": "The Beanery uses crisp drain and a similar Mocha Italia beans to make a range of cofees including Caffè latte, Cappuccino, White and Black Americano, Hot Chocolate and Mocha. The coffee we cook is the coffee we like to drink, and we trust you like it as well.",
             "images": [],
-            "vouchers": []
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "6:00",
+                    "end_time": "10:00",
+                    "discount": 0.05
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "6:00",
+                    "end_time": "10:00",
+                    "discount": 0.05
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "6:00",
+                    "end_time": "10:00",
+                    "discount": 0.05
+                },
+                {
+                    "date": "2021-07-30",
+                    "start_time": "6:00",
+                    "end_time": "10:00",
+                    "discount": 0.05
+                },
+                {
+                    "date": "2021-07-31",
+                    "start_time": "6:00",
+                    "end_time": "10:00",
+                    "discount": 0.05
+                }
+            ]
         }
     ]
 }
