@@ -1,3 +1,7 @@
+:root {
+    --primary-color: #f7ca36;
+}
+
 /* login section */
 #login-page {
     display: none;
@@ -60,13 +64,13 @@ form .txt_field{
     left: 0;
     width: 0%;
     height: 2px;
-    background: #2691d9;
+    background: var(--primary-color);
     transition: .5s;
 }
 .txt_field input:focus ~ label,
 .txt_field input:valid ~ label{
     top: -5px;
-    color: #2691d9;
+    color: var(--primary-color);
 }
 .txt_field input:focus ~ span::before,
 .txt_field input:valid ~ span::before{
@@ -84,17 +88,16 @@ input[type="submit"]{
     width: 100%;
     height: 50px;
     border: 1px solid;
-    background: #2691d9;
+    background: var(--primary-color);
     border-radius: 25px;
     font-size: 18px;
-    color: #e9f4fb;
+    color: #444444;
     font-weight: 700;
     cursor: pointer;
     outline: none;
 }
 input[type="submit"]:hover{
-    border-color: #2691d9;
-    transition: .5s;
+    border-color: var(--primary-color);
 }
 .signup_link{
     margin: 30px 0;
@@ -103,7 +106,7 @@ input[type="submit"]:hover{
     color: #666666;
 }
 .signup_link a{
-    color: #2691d9;
+    color: var(--primary-color);
     text-decoration: none;
 }
 .signup_link a:hover{
@@ -120,10 +123,10 @@ input[type="submit"]:hover{
     margin-right: 10px;
     background-color: white;
     border: none;
-    border-bottom: #2691d9 3px solid;
+    border-bottom: var(--primary-color) 3px solid;
 }
 
 #tabs button:hover {
-    color: #2691d9;
+    color: var(--primary-color);
     cursor: pointer;
 }

@@ -6,49 +6,6 @@
     --dropdown-color: rgb(248, 246, 246);
 }
 
-/* nav bar */
-#nav-bar {
-    padding: 15px 0 15px 0;
-    position: absolute;
-}
-
-#nav-bar button:hover{
-    cursor: pointer;
-    color: black;
-    transition: 0.2s;
-    box-shadow: 1px 1px 1px 1px black;
-}
-.nav-btn {
-    border: none;
-    background-color: transparent;
-    outline: none;
-    font-weight: 600;
-    font-size: 16px;
-    color: black;
-    width: 6rem;
-    height: 3rem;
-    margin-left: 4rem;
-    float: right;
-}
-
-.home {
-    border: none;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bolder;
-    font-size: 20px;
-    font-style: italic;
-    background-color: transparent;
-    outline: none;
-    width: 12rem;
-    margin: 0 1rem;
-    height: 3rem;
-    float: left;
-}
-
-.home:hover {
-    transition: 0.4s;
-}
-
 body {
     overflow-x: hidden;
 }
@@ -88,7 +45,13 @@ body {
     display: flex;
     background-color: white;
     margin-top: -3rem;
+    z-index: 1;
 }
+
+.center {
+    z-index: 2 !important;
+}
+
 #filter > div { /* cuisine */
     flex: 1;
     vertical-align: top;
@@ -105,7 +68,8 @@ body {
 }
 
 #filter > div > div:hover {cursor: pointer;}
-#filter-submit:hover {background-color: rgb(255, 223, 80);}
+#filter-submit {background-color: rgb(255, 223, 0);}
+#filter-submit:hover {background-color: rgb(255, 223, 150);}
 #filter > div > div > .child {
     position: absolute;
     margin: 0;
