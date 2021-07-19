@@ -8,22 +8,7 @@
             "phone": "+61491570156",
             "eatery_name": "Sweet Escape",
             "address": "280 George St",
-            "menu" : [
-                "Flat White",
-                "Cappuccino",
-                "Latte",
-                "Long Black",
-                "Chai Latte",
-                "Short Macchiato", 
-                "Long Macchiato",
-                "Mocha",
-                "Espresso",
-                "Affogato",
-                "Banana Bread",
-                "Chocolate Chip Cookies",
-                "Cinnamon Roll",
-                "Chocolate Mousse"         
-           ],
+            "menu" : "",
             "cuisine" : "Cafe",
             "city": "Sydney",
             "suburb": "Sydney",
@@ -71,19 +56,7 @@
             "phone": "+61414361904",
             "eatery_name": "Yummy Pizza",
             "address": "129 A Campbell St",
-            "menu" : [
-                "Cheese Pizza",
-                "Veggie Pizza",
-                "Pepperoni Pizza",
-                "Hawaiian Pizza",
-                "Veggie Burger",
-                "Double Beef Burger",
-                "Original Burger",
-                "Grilled Chicken Sandwich",
-                "Fish Fillet Sandwich",
-                "Chocolate Chip Cookies",
-                "Almond Cookies"           
-           ],
+            "menu" : "",
             "cuisine" : "Fast Food",
             "city": "Sydney",
             "suburb": "Fairfield East",
@@ -124,13 +97,7 @@
             "phone": "(02)99221238",
             "eatery_name": "El Pirata Porch",
             "address": "278 Sussex St",
-            "menu" : [
-                "Quail egg and ricotta ravioli",
-                "Smoked trout and beetroot salad",
-                "Grilled lobster with mustard and burnt butter",
-                "Stuffed Mediterranean beef",
-                "Veal cutlets with pancetta and Fontina"
-            ],
+            "menu" : "",
             "cuisine" : "Fine Dining",
             "city": "Sydney",
             "suburb": "Sydney",
@@ -172,13 +139,7 @@
             "phone": "+61431223005",
             "eatery_name": "Casa Enrique",
             "address": "179 Walker St",
-            "menu" : [
-                "Taco rice with grilled chicken and green chilli salsa",
-                "Slow-cooked chicken with brown rice and avocado",
-                "Spicy chicken empanadas",
-                "Broccoli, lemon and cottage cheese quesadillas",
-                "Chilli con carne with spiced guacamole"    
-            ],
+            "menu" : "",
             "cuisine" : "Mexican",
             "city": "Sydney",
             "suburb": "North Sydney",
@@ -226,15 +187,7 @@
             "phone": "(02)92615741",
             "eatery_name": "Outback Steakhouse",
             "address": "18 Dening St",
-            "menu" : [
-                "Classic Cheeseburger",
-                "Ribeye Steak",
-                "New York Strip Steak",
-                "T-Bone Steak",
-                "Sirloin Steak",
-                "Onion Rings",
-                "Chicken Wings"
-            ],
+            "menu" : "",
             "cuisine" : "American",
             "city": "Sydney",
             "suburb": "The Entrance",
@@ -293,13 +246,7 @@
             "phone": "0412622298",
             "eatery_name": "Whispering Bamboo",
             "address": "14 Hardie St",
-            "menu" : [
-                "Fried Baozi",
-                "Peking Duck",
-                "Friend Rice",
-                "Mapo Tofu",
-                "Wonton Soup"
-            ],
+            "menu" : "",
             "cuisine" : "Asian",
             "city": "East Sydney",
             "suburb": "Sydney",
@@ -346,12 +293,7 @@
             "phone": "(02)99993840",
             "eatery_name": "Mama's Kitchen",
             "address": "13 Whipbird Cct",
-            "menu" : [
-                "Wood grilled king salmon",
-                "Chicken brodo with mushroom and mascarpone tortellini",
-                "Wine-braised veal shoulder with Gorgonzola polenta",
-                "Braised duck and chestnut kofta with king brown mushrooms"
-            ],
+            "menu" : "",
             "cuisine" : "Fine Dining",
             "city": "Sydney",
             "suburb": "Mona Vale",
@@ -380,14 +322,7 @@
             "phone": "(02)96223176",
             "eatery_name": "Taste of Rome",
             "address": "46 Joseph St",
-            "menu" : [
-                "Caprese Salad with Pesto Sauce",
-                "Bruschetta",
-                "Pasta Carbonara",
-                "Mushroom Risotto",
-                "Homemade Lasagna"
-            ],
-
+            "menu" : "",
             "cuisine" : "Italian",
             "city": "Sydney",
             "suburb": "Blacktown",
@@ -410,12 +345,7 @@
             "phone": "0431014986",
             "eatery_name": "Neo Ramen",
             "address": "3 Rockley Ave",
-            "menu" : [
-                "Tokyo Ramen",
-                "Karaage Ramen",
-                "Hokkaido Ramen",
-                "Tonkotsu Ramen"
-            ],
+            "menu" : "",
             "cuisine" : "Asian",
             "city": "Sydney",
             "suburb": "Baulkham Hills",
@@ -463,14 +393,7 @@
             "phone": "(02)95554523",
             "eatery_name": "The Beanery",
             "address": "33 Lilyfield Rd",
-            "menu" : [
-                "Caffè latte",
-                "Cappuccino", 
-                "White Americano",
-                "Black Americano",
-                "Hot Chocolate", 
-                "Mocha"
-            ],
+            "menu" : "",
             "cuisine" : "Cafe",
             "city": "Sydney",
             "suburb": "Rozelle",
@@ -507,6 +430,48 @@
                     "end_time": "10:00",
                     "discount": 0.05
                 }
+            ]
+        },
+        {
+            "email": "ted.nugent@gmail.com",
+            "password": "00078910DC",
+            "first_name" : "Ted",
+            "last_name": "Nugent",
+            "phone": "(03)90410882",
+            "eatery_name": "Feastival",
+            "address": "90 Parkes Road",
+            "menu" : "",
+            "cuisine" : "Buffet",
+            "city": "Melbourne",
+            "suburb": "Melbourne",
+            "description": "Experience a world of flavours at Feastival, the award-winning restaurant in Melbourne, conveniently located at the heart of the food hub in Melbourne. We serve a variety of cuisines, all home-cooked from our award-winning chefs.",
+            "images": [],
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "12:00",
+                    "end_time": "2:00",
+                    "discount": 0.05
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "12:00",
+                    "end_time": "2:00",
+                    "discount": 0.05
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "12:00",
+                    "end_time": "2:00",
+                    "discount": 0.05
+                },
+                {
+                    "date": "2021-07-29",
+                    "start_time": "12:00",
+                    "end_time": "2:00",
+                    "discount": 0.05
+                }
+                
             ]
         }
     ]
