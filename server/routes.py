@@ -113,16 +113,40 @@ def diner_private_profile_info():
     # returns json string if res is not empty, otherwise returns an empty string
     return json.dumps(res)
 
-@app.route('/diner/profile/private/update', methods=['PUT'])
+@app.route('/diner_private_profile/update', methods=['PUT'])
 def diner_private_profile_update():
     data = json.loads(request.data)
     try:
-        res = diner_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
-                            data['diner_name'], data['address'], data['menu'], data['cuisines'], 
-                            data['city'], data['suburb'] ,data['description'])
+        res = diner_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'])
         return ''
     except InputError:
         return 'failed'
+
+@app.route('/diner/profile/get_active',methods = ['POST'])
+def diner_profile_active():
+    data = json.loads(request.data)
+    res = get_booked_voucher(data['token'])
+    print(res)
+    return res
+    
+
+@app.route('/diner/profile/get_previous',methods = ['POST'])
+def diner_profile_previous():
+    data = json.loads(request.data)
+    res = get_used_voucher(data['token'])
+    return res
+
+@app.route('//diner/profile/private/delete_voucher', methods=["DELETE"])
+def diner_profile_deleate_voucher():
+    try:
+        info = json.loads(request.data)
+        cancel_voucher(token=info['token'], voucher_id=info['id'])
+        print("delete success")
+        return ''
+    except InputError:
+        print(InputError.message)
+        return 'failed'
+
 
 ###########################################################
 ##                   EATERY ROUTES                       ##

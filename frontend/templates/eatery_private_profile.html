@@ -25,55 +25,59 @@
                 <div id="profile-section">
                     <h1>Profile</h1>
                     <form id="profile-form">
-                        <div class="txt_field left">
-                            <label for="first_name">first name:</label>
-                            <input type="text" name="first_name" id="first_name" required>
-                            <span></span>
+                        <div>
+                            <div class="txt_field left">
+                                <label for="first_name">first name:</label>
+                                <input type="text" name="first_name" id="first_name" required>
+                                <span></span>
+                            </div>
+                            <div class="txt_field right">
+                                <label for="last_name">last name:</label>
+                                <input type="text" name="last_name" id="last_name" required>
+                                <span></span>
+                            </div>
+                            <div class="txt_field left">
+                                <label for="phone">phone:</label>
+                                <input type="text" name="phone" id="phone" required>
+                                <span></span>
+                            </div>
+                            <div class="txt_field right">
+                                <label for="eatery_name">eatery name:</label>
+                                <input type="text" name="eatery_name" id="eatery_name" required>
+                                <span></span>
+                            </div>
+                            <h4>cuisine types</h4>
+                            <div class="btn_field whole">
+                                <span id="cuisines"></span>
+                            </div>
+                            <div class="txt_field left">
+                                <label for="cuisine">enter cuisine:</label>
+                                <input type="text" id="cuisine">
+                                <span></span>
+                                <button id="add-cuisine">+</button>
+                            </div>
                         </div>
-                        <div class="txt_field right">
-                            <label for="last_name">last name:</label>
-                            <input type="text" name="last_name" id="last_name" required>
-                            <span></span>
-                        </div>
-                        <div class="txt_field left">
-                            <label for="phone">phone:</label>
-                            <input type="text" name="phone" id="phone" required>
-                            <span></span>
-                        </div>
-                        <div class="txt_field right">
-                            <label for="eatery_name">eatery name:</label>
-                            <input type="text" name="eatery_name" id="eatery_name" required>
-                            <span></span>
-                        </div>
-                        <h4>cuisine types</h4>
-                        <div class="btn_field whole">
-                            <span id="cuisines"></span>
-                        </div>
-                        <div class="txt_field left">
-                            <label for="cuisine">enter cuisine:</label>
-                            <input type="text" id="cuisine">
-                            <span></span>
-                            <button id="add-cuisine">+</button>
-                        </div>
-                        <div class="txt_field right">
-                            <label for="city">city:</label>
-                            <input type="text" name="city" id="city" required>
-                            <span></span>
-                        </div>
-                        <div class="txt_field right">
-                            <label for="suburb">suburb:</label>
-                            <input type="text" name="suburb" id="suburb" required>
-                            <span></span>
-                        </div>
-                        <div class="txt_field whole">
-                            <label for="address">address:</label>
-                            <input type="text" name="address" id="address" required>
-                            <span></span>
-                        </div>
-                        <div class="txt_field whole">
-                            <label for="description">description:</label>
-                            <input type="text" name="description" id="description">
-                            <span></span>
+                        <div>
+                            <div class="txt_field right">
+                                <label for="city">city:</label>
+                                <input type="text" name="city" id="city" required>
+                                <span></span>
+                            </div>
+                            <div class="txt_field right">
+                                <label for="suburb">suburb:</label>
+                                <input type="text" name="suburb" id="suburb" required>
+                                <span></span>
+                            </div>
+                            <div class="txt_field whole">
+                                <label for="address">address:</label>
+                                <input type="text" name="address" id="address" required>
+                                <span></span>
+                            </div>
+                            <div class="txt_field whole">
+                                <label for="description">description:</label>
+                                <input type="text" name="description" id="description">
+                                <span></span>
+                            </div>
                         </div>
                         
                         <input type="submit" id="submit" value="Update Profile">
@@ -239,6 +243,7 @@
             </div>
         </section>
     </main>
+    
     <script src="../../static/scripts/eatery_private_profile.js"></script>
     <script src="../../static/scripts/load_vouchers.js"></script>
     <script src="../../static/scripts/logout.js"></script>
