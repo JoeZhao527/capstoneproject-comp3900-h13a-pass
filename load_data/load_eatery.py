@@ -17,7 +17,7 @@ def load_eatery(n):
     des = Description()
 
     # add n eatery to database
-    for i in range(n):
+    for i in range(1, n):
         fname, lname = name.get_name()
         email = str(i).zfill(8) + '@gmail.com'
         password = hash_password('12345678')

@@ -21,7 +21,7 @@ def clear_db():
     db.create_all()
 
 def load_all():
-    load_eatery(100)
-    load_diner(100)
-    load_voucher(100)
+    load_eatery(10)
+    load_diner(10)
+    load_voucher(10,10)
     pass

@@ -11,7 +11,7 @@ import random
 
 def load_diner(n):
     name = Name()
-    for i in range(n):
+    for i in range(1, n):
         fname, lname = name.get_name()
         email = str(i).zfill(8) + '@qq.com'
         password = hash_password('12345678')

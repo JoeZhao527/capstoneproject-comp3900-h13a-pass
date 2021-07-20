@@ -14,7 +14,8 @@ import json
 ###########################################################
 ##                     LOAD  DATA                        ##
 ###########################################################
-clear_db()
+# uncomment these 2 lines to see the load data effect
+#clear_db()
 #load_all()
 
 ###########################################################
@@ -60,10 +61,6 @@ def diner_register_check():
         print(InputError.message)
         return ''
 
-@app.route('/diner/private_profile')
-def diner_private_profile_load():
-    return render_template('diner_profile.html')
-
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
     data = json.loads(request.data)
@@ -107,9 +104,9 @@ def diner_getEatery():
     except:
         return ''
 
-@app.route('/diner/profile/private', methods=['GET', 'POST'])
+@app.route('/diner/profile/private', methods=['GET'])
 def diner_private_profile():
-    return render_template('diner_private_profile.html')
+    return render_template('diner_profile.html')
 
 @app.route('/diner/profile/private/info', methods=['POST'])
 def diner_private_profile_info():
@@ -335,6 +332,7 @@ def eatery_get_all_reservation(filter):
         if filter == 'all':
             res = get_all_diner_voucher(token)
         elif filter == 'expired':
+            print('here')
             res = get_booked_expired_voucher(token)
         elif filter == 'incomplete':
             res = get_booked_diner_voucher(token)
@@ -421,5 +419,5 @@ def diner_book_voucher(id):
     try:
         book_voucher(data['token'], data['id'], data['group_id'])
         return ''
-    except:
+    except InputError:
         return 'failed'

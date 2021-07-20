@@ -1,6 +1,7 @@
 // paths
 const diner_register = '/diner/register';
-const diner_private_profile = '/diner/private_profile';
+const diner_private_profile = '/diner/profile/private';
+const eatery_private_profile = '/eatery/profile/private';
 const diner_home = '/diner/home';
 const eatery_home = '/eatery/home';
 
@@ -43,7 +44,10 @@ for_eatery_btn.onclick = () => { window.location.href = eatery_home }
 
 sign_up_btn.onclick = () => { window.location.href = diner_register }
 
-profile_btn.onclick = () => { window.location.href = diner_private_profile }
+profile_btn.onclick = () => { 
+    if (utype === 'diner') window.location.href = diner_private_profile;
+    else window.location.href = eatery_private_profile;
+}
 
 // filter logic
 const filter_inputs = document.getElementsByClassName('filter-input')
@@ -462,5 +466,5 @@ getFilterAndLoad();
 //   });
 
 
-document.getElementById("footer").innerHTML='<object type="text/html" data="footer.html" ></object>';
+//document.getElementById("footer").innerHTML='<object type="text/html" data="footer.html" ></object>';
     

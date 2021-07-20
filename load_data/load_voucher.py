@@ -11,14 +11,14 @@ from backend.voucher import convert_string_to_time, weekdays
 import random
 
 # load vouchers for m eateries, n diners
-def load_voucher(m):
+def load_voucher(m, n):
     # for each eatery
-    for eid in range(1,m):
+    gid = 1000
+    for eid in range(0,m):
         # 3 days in future, 4 days in past
         dl = Date().get_dates(3,4)
         v_data = []
         # for each date in the random date list
-        gid = 1000
         for d in dl:
             # generate a random time period list
             tl = Time().get_times()
@@ -31,14 +31,30 @@ def load_voucher(m):
                 v_data.append(d + t + (discount, code, gid))
                 gid += 1
         for data in v_data:
+            # voucher number of the vouchers with same group id
             num = random.randint(2,8)
+            diner_list = random.sample(range(1,n), num//2)
             for _ in range(num):
                 # data[1]: date, data[1]: weekday, data[2]: start_time, data[3]:end_time, data[4]:discount
                 # data[5]: code, data[6]: gid
                 voucher = Voucher(eid, data[0],data[2], data[3], data[4], data[5], data[6])
                 voucher.weekday = weekdays[data[1]]
-                voucher.if_used = False
-                voucher.if_booked = False
+
+                if diner_list:
+                    diner = diner_list.pop()
+                else:
+                    diner = None
+                
+                if diner:
+                    voucher.diner_id = diner
+                    voucher.if_used = False
+                    voucher.if_booked = True
+                else:
+                    voucher.diner_id = None
+                    voucher.if_used = False
+                    voucher.if_booked = False
+
+                
                 db.session.add(voucher)
                 db.session.commit()
     pass
