@@ -395,11 +395,24 @@ if __name__ == "__main__":
     load_data()
     Eateries = Eatery.query.all()
     result1 = [dictionary_of_eatery(eat) for eat in Eateries]
-    print(result1)
+    #print(result1)
+
 
     Vouchers = Voucher.query.all()
     result2 = [dictionary_of_voucher(vouch) for vouch in Vouchers]
-    print(result2)
+    #print(result2)
+
+    sort_voucher = Voucher.query.order_by(Voucher.discount.desc())
+    result3 = [dictionary_of_voucher(vouch) for vouch in sort_voucher]
+    print(result3)
+
+    print("!!!!!!!!!!!!!!!!")
+
+    sort_dict = sorted(result2, key=lambda voucher: voucher["discount"], reverse=True)
+    print(sort_dict)
+
+
+    print(result3 == sort_dict)
 
     # make an eatery and add voucher
     #result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")

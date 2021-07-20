@@ -422,11 +422,14 @@ def delete_review(token, review_id):
     
 # function for diner to get and read 
 # reviews with the toatl number and average rating of an eatery from the other diners
+# it works for both eatery and diner
 def read_reviews(eatery_id):
     reviews = db.session.query(Review, Diner).join(Diner, Review.diner_id==Diner.id).filter(Review.eatery_id==eatery_id).all()
     #num_of_review = 0
     #sum_of_rating = 0
-    
+    if reviews is None:
+        return {"reviews": "There is no review yet"}
+
     review_with_diner_list = []
     for review, diner in reviews:
         item = dict((col, getattr(review, col)) for col in review.__table__.columns.keys())
@@ -503,7 +506,53 @@ def get_recommendations(token):
 
     return recomm_eateries
 
-# function for sorting the review by their rating
-# top down or down top
-def sort_reviews():
-    return
+# function for sorting the review by the rating, positive or negative.
+# top down or down top, negative or positive
+def sort_reviews(sort_by, eatery_id):
+    # if the user want to see top down review(positive first)
+    if sort_by == "positive_first":
+        reviews = db.session.query(Review, Diner).join(Diner, Review.diner_id==Diner.id).filter(Review.eatery_id==eatery_id).order_by(Review.rating).all()
+    else:
+        reviews = db.session.query(Review, Diner).join(Diner, Review.diner_id==Diner.id).filter(Review.eatery_id==eatery_id).order_by(Review.rating.desc()).all()
+    if reviews is None:
+        return {"reviews": "There is no review yet"}
+
+    review_with_diner_list = []
+    for review, diner in reviews:
+        item = dict((col, getattr(review, col)) for col in review.__table__.columns.keys())
+        item["diner_id"] = diner.id
+        item["diner_name"] = diner.first_name + " " + diner.last_name
+        
+        #num_of_review += 1
+        #sum_of_rating += review.rating
+        review_with_diner_list.append(item)
+    
+    #avg_rating = round(sum_of_rating/num_of_review, 1)
+    num_of_review, avg_rating = avg_review(eatery_id)
+    return {"reviews": review_with_diner_list, "review_number": num_of_review, "avg_rating": avg_rating}
+
+# function for sorting the eatery by their avg_rating
+# User can choose positive first(highest rate) or negative first()
+# eatery_list is a list of dictionary of eatery
+"""
+[{
+    "id": xxx,
+    "first_name": xxx,
+    ...
+    "eatert_name": xxx,
+    "address": xxx,
+    "image": xxx,
+    "sum_of_review": xxx,
+    "avg_rating": xxx
+}, {}]
+"""
+def sort_eateries(sort_by, eatery_list):
+    # if user didn't select sort_by, do nothing
+    if sort_by is None:
+        return eatery_list
+    elif sort_by == "positive_first":
+        sorted_eatery = sorted(eatery_list, key=lambda eatery: eatery["avg_rating"])
+        return sorted_eatery
+    else:  # sort_by == "negative_first":
+        sorted_eatery = sorted(eatery_list, key=lambda eatery: eatery["avg_rating"], reverse=True)
+        return sorted_eatery
