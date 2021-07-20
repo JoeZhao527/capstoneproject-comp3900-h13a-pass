@@ -43,8 +43,8 @@ function displayPage(page) {
     }
 }
 
-displayPage(pages[3]);
-switchs[3].style.boxShadow = '10px 10px 10px 10px rgba(0,0,0,0.05)';
+displayPage(pages[0]);
+switchs[0].style.boxShadow = '10px 10px 10px 10px rgba(0,0,0,0.05)';
 
 /* logout button, logout logic in logout.js */
 const logout_btn = document.getElementById('logout-btn');

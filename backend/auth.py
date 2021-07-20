@@ -287,16 +287,23 @@ def auth_password_reset(reset_code, new_password):
     return {}
     
 # function for checking if the token is valid
-def valid_token(token):
+def eatery_valid_token(token):
+    
     eatery = Eatery.query.filter_by(token=token).first()
     # diner = Diner.query.filter_by(token=token)
     if eatery is None:
         return False
     return True
 
+def diner_valid_token(token):
+    diner = Diner.query.filter_by(token=token).first()
+    if diner is None:
+        return False
+    return True
+
 # function for updating the eatery profile (eaterie's info), can seperate the function if necessary
 def eatery_profile_update(token, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, subrub, description):
-    if not valid_token(token):
+    if not eatery_valid_token(token):
         raise InputError("Invalid token")
     # get eatery by token, update the info
     eatery = Eatery.query.filter_by(token=token).first()
@@ -315,14 +322,18 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
 
 # function for updating the diner profile (eaterie's info), can seperate the function if necessary
 def diner_profile_update(token, first_name, last_name, phone):
-    if not valid_token(token):
+    print('2')
+    print(token)
+    if not diner_valid_token(token):
         raise InputError("Invalid token")
     # get eatery by token, update the info
     diner = Diner.query.filter_by(token=token).first()
+    print("11111")
     diner.first_name = first_name
     diner.last_name = last_name
     diner.phone = phone
     db.session.commit()
+    print("1")
     return get_diner_by_token(token)
 
 
@@ -384,11 +395,24 @@ if __name__ == "__main__":
     load_data()
     Eateries = Eatery.query.all()
     result1 = [dictionary_of_eatery(eat) for eat in Eateries]
-    print(result1)
+    #print(result1)
+
 
     Vouchers = Voucher.query.all()
     result2 = [dictionary_of_voucher(vouch) for vouch in Vouchers]
-    print(result2)
+    #print(result2)
+
+    sort_voucher = Voucher.query.order_by(Voucher.discount.desc())
+    result3 = [dictionary_of_voucher(vouch) for vouch in sort_voucher]
+    print(result3)
+
+    print("!!!!!!!!!!!!!!!!")
+
+    sort_dict = sorted(result2, key=lambda voucher: voucher["discount"], reverse=True)
+    print(sort_dict)
+
+
+    print(result3 == sort_dict)
 
     # make an eatery and add voucher
     #result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Responsive Footer Section | CodingNepal</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <style>
+      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+/* *{
+  margin: 0;
+  padding: 0;
+  color: #d9d9d9;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+} */
+
+.fa-youtube:before {
+    content: "\f167";
+    color: aliceblue;
+}
+.fa-instagram:before {
+    content: "\f16d";
+    color: aliceblue;
+    
+}
+.fa-facebook-f:before {
+    content: "\f39e";
+    color: aliceblue;
+}
+
+.fa-twitter:before {
+    content: "\f099";
+    color: aliceblue;
+}
+.content1{
+  position: relative;
+  margin: 130px auto;
+  text-align: center;
+  padding: 0 20px;
+}
+.content1 .c1text{
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #202020;
+}
+.content1 .p{
+  font-size: 2.1875rem;
+  font-weight: 600;
+  color: #202020;
+}
+.footer{
+    color: #d9d9d9;
+}
+footer{
+color: #d9d9d9;
+  position: flex;
+  bottom: 0px;
+  width: 100%;
+  background: #424242;
+  margin: 0;
+  padding: 0;
+  
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.main-content11{
+  display: flex;
+}
+.main-content11 .bbox{
+  flex-basis: 50%;
+  padding: 10px 20px;
+}
+.bbox h2{
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.bbox .content33{
+  margin: 20px 0 0 0;
+  position: relative;
+}
+.bbox .content33:before{
+  position: absolute;
+  content: '';
+  top: -10px;
+  height: 2px;
+  width: 100%;
+  background: #1a1a1a;
+}
+.bbox .content33:after{
+  position: absolute;
+  content: '';
+  height: 2px;
+  width: 15%;
+  background: #f12020;
+  top: -10px;
+}
+.social{
+    color: #d9d9d9;
+}
+.left .content33 p{
+  text-align: justify;
+}
+.left .content33 .social{
+  margin: 20px 0 0 0;
+}
+.left .content33 .social a{
+  padding: 0 2px;
+}
+.left .content33 .social a span{
+  height: 40px;
+  width: 40px;
+  background: #1a1a1a;
+  line-height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+.left .content33 .social a span:hover{
+  background: #f12020;
+}
+.center21 .content33 .fas{
+  font-size: 1.4375rem;
+  background: #1a1a1a;
+  height: 45px;
+  width: 45px;
+  line-height: 45px;
+  text-align: center;
+  border-radius: 50%;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.center21 .content33 .fas:hover{
+  background: #f12020;
+}
+.center21 .content33 .c1text{
+  font-size: 1.0625rem;
+  font-weight: 500;
+  padding-left: 10px;
+}
+.center21 .content33 .phone{
+  margin: 15px 0;
+}
+.right form .c1text{
+  font-size: 1.0625rem;
+  margin-bottom: 2px;
+  color: #eae8e8;
+}
+.right form .msg{
+  margin-top: 10px;
+}
+.right form input, .right form textarea{
+  width: 100%;
+  font-size: 1.0625rem;
+  background: #151515;
+  padding-left: 10px;
+  border: 1px solid #222222;
+}
+.right form input:focus,
+.right form textarea:focus{
+  outline-color: #3498db;
+}
+.right form input{
+  height: 35px;
+}
+.right form .btn33{
+  margin-top: 10px;
+}
+.right form .btn33 button{
+  height: 40px;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: #f12020;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: .3s;
+}
+.right form .btn33 button:hover{
+  background: #000;
+}
+.bottom center{
+  padding: 5px;
+  font-size: 0.9375rem;
+  background: #151515;
+}
+.bottom center span{
+  color: #656565;
+}
+.bottom center a{
+  color: #f12020;
+  text-decoration: none;
+}
+.bottom center a:hover{
+  text-decoration: underline;
+}
+@media screen and (max-width: 900px) {
+  footer{
+    position: relative;
+    bottom: 0px;
+  }
+  .main-content11{
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  .main-content11 .bbox{
+    margin: 5px 0;
+  }
+}
+  </style>
+  <body>
+    
+    <footer>
+      <div class="main-content11">
+        <div class="left bbox">
+          <h2>About us</h2>
+          <div class="content33">
+            <p>Value Eats, you can make online reservations, read restaurant reviews from diners, and get different vouchers</p>
+            <div class="social">
+              <a href="https://facebook.com"><span class="fab fa-facebook-f"></span></a>
+              <a href="#"><span class="fab fa-twitter"></span></a>
+              <a href="https://instagram.com"><span class="fab fa-instagram"></span></a>
+              <a href="https://youtube.com"><span class="fab fa-youtube"></span></a>
+            </div>
+          </div>
+        </div>
+        <div class="center21 bbox">
+          <h2>Address</h2>
+          <div class="content33">
+            <div class="place">
+              <span class="fas fa-map-marker-alt"></span>
+              <span class="c1text">UNSW, Sydney</span>
+            </div>
+            <div class="phone">
+              <span class="fas fa-phone-alt"></span>
+              <span class="c1text">1234567890</span>
+            </div>
+            <div class="email">
+              <span class="fas fa-envelope"></span>
+              <span class="c1text">z5223873@unsw.edu.au</span>
+            </div>
+          </div>
+        </div>
+        <div class="right bbox">
+          <h2>Contact us</h2>
+          <div class="content33">
+            <form action="#">
+              <div class="email">
+                <div class="c1text">Email *</div>
+                <input type="email" required>
+              </div>
+              <div class="msg">
+                <div class="text">Message *</div>
+                <textarea rows="2" cols="25" required></textarea>
+              </div>
+              <div class="btn33">
+                <button type="submit">Send</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+      </div>
+    </footer>
+  </body>
+</html>
