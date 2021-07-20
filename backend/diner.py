@@ -424,8 +424,8 @@ def delete_review(token, review_id):
 # reviews with the toatl number and average rating of an eatery from the other diners
 def read_reviews(eatery_id):
     reviews = db.session.query(Review, Diner).join(Diner, Review.diner_id==Diner.id).filter(Review.eatery_id==eatery_id).all()
-    num_of_review = 0
-    sum_of_rating = 0
+    #num_of_review = 0
+    #sum_of_rating = 0
     
     review_with_diner_list = []
     for review, diner in reviews:
@@ -433,12 +433,12 @@ def read_reviews(eatery_id):
         item["diner_id"] = diner.id
         item["diner_name"] = diner.first_name + " " + diner.last_name
         
-        num_of_review += 1
-        sum_of_rating += review.rating
+        #num_of_review += 1
+        #sum_of_rating += review.rating
         review_with_diner_list.append(item)
     
-    avg_rating = round(sum_of_rating/num_of_review, 1)
-    
+    #avg_rating = round(sum_of_rating/num_of_review, 1)
+    num_of_review, avg_rating = avg_review(eatery_id)
     return {"reviews": review_with_diner_list, "review_number": num_of_review, "avg_rating": avg_rating}
 
 
