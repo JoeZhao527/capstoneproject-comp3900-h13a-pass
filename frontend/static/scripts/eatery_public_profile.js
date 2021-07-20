@@ -213,7 +213,8 @@ function loadVoucherFilter() {
     maxDay = yyyy + '-' + mm + '-' + dd;
     
     // set the voucher filter and header for the voucher booking section
-    book_section.innerHTML = `<h2> Book A Voucher!</h2> select date:
+    book_section.innerHTML = `<h2> Book A Voucher!</h2> 
+    <label>select date:</lable>
     <input id="date-filter" type="date" min="${minDay}" max="${maxDay}" value="${minDay}">
     <div id="voucher-container"><p>No Vouchers Avaliable Today</p></div>`;
 }
@@ -273,7 +274,7 @@ function addVoucherItem(data) {
         let dateNode = document.createElement('div');       // voucher's date div
         dateNode.innerHTML = date;
         let periodNode = document.createElement('div');     // voucher's start time, end time div
-        periodNode.innerHTML = period;
+        periodNode.innerHTML = date + '  ' + period;
         let discountNode = document.createElement('div');   // voucher's discount div
         discountNode.innerHTML = discount;
         discountNode.className = 'discount';
@@ -284,7 +285,6 @@ function addVoucherItem(data) {
         bookNode.className = "book";
     
         let voucherTimeNode = document.createElement('section'); // div contains voucher date and time
-        voucherTimeNode.appendChild(dateNode);
         voucherTimeNode.appendChild(periodNode);
         voucherTimeNode.appendChild(numNode);
     

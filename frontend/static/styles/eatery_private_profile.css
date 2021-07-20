@@ -37,7 +37,7 @@ main {
 
 /* side bar */
 .side-bar {
-    width: 20%;
+    width: 20rem;
     margin-top: 20px;
 }
 
@@ -86,14 +86,20 @@ main {
 }
 
 #profile > div {
-    width: 40%;
+    width: 58rem;
     padding: 30px;
     margin: 14px;
     border-radius: 2.5rem;
+    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
 }
 
-#profile > div:hover {
-    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
+#profile-form > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#profile-form > div:first-child {
+    margin-right: 3rem;
 }
 
 #profile-form label {
@@ -139,7 +145,6 @@ main {
 #cuisines {
     display: inline-block;
     width: 437.33px;
-    height: 6rem;
 }
 
 #cuisines > button {
@@ -184,9 +189,6 @@ main {
 }
 
 #image-container > div > img:hover{
-    width: 190px;
-    height: 190px;
-    transition: 0.4s;
     cursor: pointer;
 }
 
