@@ -119,6 +119,7 @@ body {
 #eateries {
     display: flex;
     flex-wrap: wrap;
+    
 }
 
 #eateries > div:hover {

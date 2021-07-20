@@ -451,3 +451,16 @@ function loadEateries(eateries) {
 }
 
 getFilterAndLoad();
+
+
+// fetch("../../templates/footer.html")
+//   .then(response => {
+//     return response.text()
+//   })
+//   .then(data => {
+//     document.querySelector("footer").innerHTML = data;
+//   });
+
+
+document.getElementById("footer").innerHTML='<object type="text/html" data="footer.html" ></object>';
+    

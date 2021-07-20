@@ -295,6 +295,7 @@ def get_booked_voucher(token):
             # this is a temporary solution, propery way should be having a expired attribute in voucher
             item['expired'] = False
             voucher_list.append(item)
+    # return {"vouchers": voucher_list}
     return {"vouchers": voucher_list}
 
 

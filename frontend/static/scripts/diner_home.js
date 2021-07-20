@@ -263,6 +263,25 @@ _logout.onclick = () => {
 // section_style = 'width:80%; height: 200px;background-color:rgb(255, 255, 255);position:relative;left:10%;cursor: pointer;margin-bottom: 10px;'
 // img_style = ''
 
+function getImages(eatery_id) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', `/eatery/profile/${eatery_id}/get_image`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let image_list = JSON.parse(this.response)['data']
+            if (image_list.length!=0) {
+                for(const item of image_list) {
+                    let img = new Image();
+                    return img.src
+                }
+            }
+            
+        }
+    }
+    xhr.send()
+}
+
 
 function showEatery() {
     let xhr = new XMLHttpRequest();

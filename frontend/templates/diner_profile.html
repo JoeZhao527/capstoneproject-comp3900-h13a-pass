@@ -47,20 +47,28 @@
             </div>
             <div id="view-active" class="page">
                 <h1>Active Vouchers</h1>
-                <table id="schedules">
-                    <tr class="th">
+                <table id="vouchers">
+                    <tr class="thv" id='thv'>
                         <th>Eatery</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Discount</th>
                         <th>Code</th>
+                        <th>Action</th>
                     </tr>
+                    <!-- <tr class="th">
+                        <th>test</th>
+                        <th>2021-07-20</th>
+                        <th>test</th>
+                        <th>test</th>
+                        <th>test</th>
+                    </tr> -->
                 </table>
             </div>
             <div id="view-previous" class="page">
                 <h1>Previous Vouchers</h1>
-                <table id="vouchers">
-                    <tr>
+                <table id="previous">
+                    <tr class = "thp" id = "thp">
                         <th>Eatery</th>
                         <th>Date</th>
                         <th>Time</th>
@@ -72,6 +80,7 @@
             
             
         </section>
+        {% include "footer.html" %}
     </main>
     
 
