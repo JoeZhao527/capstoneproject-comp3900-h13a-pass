@@ -166,7 +166,7 @@ def search_by_filter(date, time, location, cuisine):
             sum_of_rating += review.rating
 
         eatery_item["num_of_review"] = num_of_review
-        eatery_item["avg_rating"] = round(sum_of_rating/num_of_review, 1)
+        eatery_item["avg_rating"] = round(sum_of_rating/num_of_review, 1) if num_of_review != 0 else 0
 
         # add the eatery with image dictionary into the list
         eatery_image_review.append(eatery_item)
