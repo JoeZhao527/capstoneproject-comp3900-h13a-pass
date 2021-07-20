@@ -3,8 +3,8 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import server
 
-from backend.user_db import Eatery, Diner, Voucher, Image
-from backend.data_access import dictionary_of_eatery
+from backend.user_db import Eatery, Diner, Voucher, Image, Review
+from backend.data_access import dictionary_of_eatery, create_review, remove_review
 from backend.errors import InputError
 from server import db
 from datetime import date, datetime, time
@@ -149,16 +149,29 @@ def search_by_filter(date, time, location, cuisine):
     # conver the eateries object in the result to dictionary of eatery.
     # add the first image of the eatery into the dictionary
     # return a list of eateries with one image
-    eatery_with_image = []
+    eatery_image_review = []
     for eat in result:
         eatery_item = dictionary_of_eatery(eat)
         # get the first image of the eatery
         first_image = Image.query.filter_by(eatery_id=eat.id).first()
         eatery_item["eatery_image"] = first_image.image if first_image else ''
-        # add the eatery with image dictionary into the list
-        eatery_with_image.append(eatery_item)
 
-    return eatery_with_image
+        # get the sum of review and avg ratings of the eatery
+        num_of_review = 0
+        sum_of_rating = 0
+        # get a list of reviews from this eatery
+        reviews = Review.query.filter_by(eatery_id=eat.id).all()
+        for review in reviews:
+            num_of_review += 1
+            sum_of_rating += review.rating
+
+        eatery_item["num_of_review"] = num_of_review
+        eatery_item["avg_rating"] = round(sum_of_rating/num_of_review, 1)
+
+        # add the eatery with image dictionary into the list
+        eatery_image_review.append(eatery_item)
+
+    return eatery_image_review
     #return [dictionary_of_eatery(eat) for eat in result]
 
 
@@ -351,8 +364,6 @@ def get_booked_expired_voucher(token):
             voucher_list.append(item)
     return {"vouchers": voucher_list}
 
-
-
 # if time is not a string, conver it to a string
 # if time is a string, return t
 def convert_time_to_string(t):
@@ -363,3 +374,83 @@ def convert_time_to_string(t):
 def convert_date_to_string(d):
     return str(d) if not isinstance(d, str) else d
 
+
+# function for diner to add reviews and rating for a specific eatery
+# by given eatery_id, need comment and rating
+def add_review(token, eatery_id, comment, rating):
+    diner = Diner.query.filter_by(token=token).first()
+    # check if diner exist
+    if diner is None:
+        raise InputError("Invalid token")
+    # check if rating is null
+    if rating is None:
+        raise InputError("Rating cannot be empty")
+    # add the review of diner into the database
+    review_id = create_review(diner.id, eatery_id, comment, rating)
+    return {'diner_id': diner.id, 'review_id': review_id}
+
+# function for diner to edit review and rating of an eatery
+def edit_review(token, review_id, rating, comment):
+    diner = Diner.query.filter_by(token=token).first()
+    # check if diner exist
+    if diner is None:
+        raise InputError("Invalid token")
+    
+    review = Review.query.filter_by(id=review_id).first()
+    # check if review exist
+    if review is None:
+        raise InputError("Review not exist")
+    
+    # check if rating is null
+    if rating is None:
+        raise InputError("Rating cannot be empty")
+
+    review.rating = rating
+    review.comment = comment
+    db.session.commit()
+
+    return {'diner_id': diner.id}
+
+# function for diner to delete a review for an eatery.
+def delete_review(token, review_id):
+    diner = Diner.query.filter_by(token=token).first()
+    # check if diner exist
+    if diner is None:
+        raise InputError("Invalid token")
+    
+    review = Review.query.filter_by(id=review_id).first()
+    # check if review exist
+    if review is None:
+        raise InputError("Review not exist")
+    # else, remove this review item from database
+    remove_review(review)
+
+    
+# function for diner to get and read 
+# reviews with the toatl number and average rating of an eatery from the other diners
+def read_reviews(eatery_id):
+    reviews = db.session.query(Review, Diner).join(Diner, Review.diner_id==Diner.id).filter(Review.eatery_id==eatery_id).all()
+    num_of_review = 0
+    sum_of_rating = 0
+    
+    review_with_diner_list = []
+    for review, diner in reviews:
+        item = dict((col, getattr(review, col)) for col in review.__table__.columns.keys())
+        item["diner_id"] = diner.id
+        item["diner_name"] = diner.first_name + " " + diner.last_name
+        
+        num_of_review += 1
+        sum_of_rating += review.rating
+        review_with_diner_list.append(item)
+    
+    avg_rating = round(sum_of_rating/num_of_review, 1)
+    
+    return {"reviews": review_with_diner_list, "review_number": num_of_review, "avg_rating": avg_rating}
+# function for getting recommendations
+def get_recommendations():
+    return
+
+# function for sorting the review by their rating
+# top down or down top
+def sort_reviews():
+    return
