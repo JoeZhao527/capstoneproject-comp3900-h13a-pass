@@ -241,6 +241,7 @@ def get_booked_diner_voucher(token):
             voucher_list.append(item)
     return {"vouchers": voucher_list}
 
+
 # get all eatery's booked, not used but expired vouchers by eatery's token
 # 4. booked, not used but expired
 # also include the info of diner
