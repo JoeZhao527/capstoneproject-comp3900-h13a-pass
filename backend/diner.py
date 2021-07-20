@@ -156,17 +156,10 @@ def search_by_filter(date, time, location, cuisine):
         first_image = Image.query.filter_by(eatery_id=eat.id).first()
         eatery_item["eatery_image"] = first_image.image if first_image else ''
 
-        # get the sum of review and avg ratings of the eatery
-        num_of_review = 0
-        sum_of_rating = 0
-        # get a list of reviews from this eatery
-        reviews = Review.query.filter_by(eatery_id=eat.id).all()
-        for review in reviews:
-            num_of_review += 1
-            sum_of_rating += review.rating
+        num_of_review, avg_rating = avg_review(eat.id)
 
         eatery_item["num_of_review"] = num_of_review
-        eatery_item["avg_rating"] = round(sum_of_rating/num_of_review, 1)
+        eatery_item["avg_rating"] = avg_rating
 
         # add the eatery with image dictionary into the list
         eatery_image_review.append(eatery_item)
@@ -447,9 +440,68 @@ def read_reviews(eatery_id):
     avg_rating = round(sum_of_rating/num_of_review, 1)
     
     return {"reviews": review_with_diner_list, "review_number": num_of_review, "avg_rating": avg_rating}
-# function for getting recommendations
-def get_recommendations():
-    return
+
+
+
+# check if an eatery has already been booked by a diner before
+def previously_booked(eatery_id, diner_id):
+    booked_voucher = Voucher.query.filter_by(eatery_id=eatery_id, diner_id=diner_id, if_booked=True)
+    if book_voucher:
+        return True
+    return False
+
+# get the avg rating by given an eatery_id
+def avg_review(eatery_id):
+    # get the sum of review and avg ratings of the eatery
+    num_of_review = 0
+    sum_of_rating = 0
+    # get a list of reviews from this eatery
+    reviews = Review.query.filter_by(eatery_id=eatery_id).all()
+    for review in reviews:
+        num_of_review += 1
+        sum_of_rating += review.rating
+    # if no review, then avg rating = 0, else, avg rating is normal
+    if num_of_review > 0:
+        avg_rating = round(sum_of_rating/num_of_review, 1)
+    else:
+        avg_rating = 0
+    return num_of_review, avg_rating
+
+# function for getting recommendations based on diner's preferences
+# for an eatery to see all eateries that I have not rpeviously had a booking
+# I may be interested in -> high avg rating
+# from preiviously booked voucher to see diner's preferenece
+# given diner's token
+def get_recommendations(token):
+    diner = Diner.query.filter_by(token=token).first()
+    # check if diner exist
+    if diner is None:
+        raise InputError("Invalid token")
+    # eatery that has not been previously booked by the diner,
+    # and may with a avg rating > 3
+    eateries = Eatery.query.all()
+    recomm_eateries = []
+    diner_id = diner.id
+    # get all eateries from database
+    for eatery in eateries:
+        # if a eatery has already previously booked by the diner, skip
+        # at the same time, the eatery has high avg rating
+        if not previously_booked(eatery.id, diner_id): # and avg_rating(eatery.id) > 3
+            # get all the info of eatery
+            eatery_item = dictionary_of_eatery(eatery)
+            # get the first image of the eatery
+            first_image = Image.query.filter_by(eatery_id=eatery.id).first()
+            eatery_item["eatery_image"] = first_image.image if first_image else ''
+
+            num_of_review, avg_rating = avg_rating(eatery.id)
+
+            eatery_item["num_of_review"] = num_of_review
+            eatery_item["avg_rating"] = avg_rating
+
+            # add the eatery with image dictionary into the list
+            recomm_eateries.append(eatery_item)
+
+    return recomm_eateries
 
 # function for sorting the review by their rating
 # top down or down top
