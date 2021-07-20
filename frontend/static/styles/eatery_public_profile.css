@@ -200,6 +200,14 @@
     margin-top: 2rem;
 }
 
+#voucher-container > p {
+    text-align: center;
+    margin: 120px 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: x-large;
+    font-style: italic;
+} 
+
 #voucher-container > div{
     display: flex;
     margin: 10px;
