@@ -3,7 +3,7 @@ let token = sessionStorage.getItem('token');
 let user_id = sessionStorage.getItem('id');
 let utype = sessionStorage.getItem('utype');
 let profile_id = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-
+console.log(user_id)
 /* path */
 const eatery_home = '/eatery/home';
 const diner_home = '/diner/home';
@@ -42,7 +42,7 @@ loadPage();
 
 /* nav bar jump logic */
 profile_btn.onclick = () => {
-    if (utype === 'diner') window.location.href = '/diner/profile';
+    if (utype === 'diner') window.location.href = '/diner/profile/private';
     else window.location.href = '/eatery/profile/private';
 }
 
@@ -213,7 +213,8 @@ function loadVoucherFilter() {
     maxDay = yyyy + '-' + mm + '-' + dd;
     
     // set the voucher filter and header for the voucher booking section
-    book_section.innerHTML = `<h2> Book A Voucher!</h2> select date:
+    book_section.innerHTML = `<h2> Book A Voucher!</h2> 
+    <label>select date:</lable>
     <input id="date-filter" type="date" min="${minDay}" max="${maxDay}" value="${minDay}">
     <div id="voucher-container"><p>No Vouchers Avaliable Today</p></div>`;
 }
@@ -273,18 +274,17 @@ function addVoucherItem(data) {
         let dateNode = document.createElement('div');       // voucher's date div
         dateNode.innerHTML = date;
         let periodNode = document.createElement('div');     // voucher's start time, end time div
-        periodNode.innerHTML = period;
+        periodNode.innerHTML = date + '  ' + period;
         let discountNode = document.createElement('div');   // voucher's discount div
         discountNode.innerHTML = discount;
         discountNode.className = 'discount';
-        let numNode = document.createElement('p');          // voucher's number left div
+        let numNode = document.createElement('h3');          // voucher's number left div
         numNode.innerHTML = num;
         let bookNode = document.createElement('div');       // book voucher button div
         bookNode.innerHTML = "book";
         bookNode.className = "book";
     
         let voucherTimeNode = document.createElement('section'); // div contains voucher date and time
-        voucherTimeNode.appendChild(dateNode);
         voucherTimeNode.appendChild(periodNode);
         voucherTimeNode.appendChild(numNode);
     
@@ -306,7 +306,7 @@ function addVoucherItem(data) {
         // voucher section will have a no-voucher today onload
         // if a voucher is added, remove the "no voucher" text
         let no_res = voucher_container.getElementsByTagName('p')[0]
-        voucher_container.removeChild(no_res);
+        if (typeof no_res !== 'undefined') voucher_container.removeChild(no_res);
     }
 }
 

@@ -39,6 +39,15 @@ def create_schedule(eatery_id, no_vouchers, weekday, start, end, discount):
     add_item(schedule)
     return schedule.id
 
+# insert a review to database
+def create_review(diner_id, eatery_id, comment, rating):
+    review = Review(diner_id, eatery_id, comment, rating)
+    add_item(review)
+    return review.id
+# remove a review from database
+def remove_review(review):
+    delete_item(review)
+
 # get eatery id by token
 def get_eatery_id(token):
     eatery = Eatery.query.filter_by(token=token).first()

@@ -1,6 +1,7 @@
 // paths
 const eatery_register = '/eatery/register';
 const eatery_private_profile = '/eatery/profile/private';
+const diner_private_profile = '/diner/profile/private';
 const diner_home = '/diner/home';
 const eatery_home = '/eatery/home';
 
@@ -12,6 +13,7 @@ const logout_btn = document.querySelector(".logout");
 const profile_btn = document.getElementsByClassName("profile");
 
 let token = sessionStorage.getItem('token');
+let utype = sessionStorage.getItem('utype');
 
 /* add listeners to buttons */
 Array.from(sign_up_btn).forEach(element => {
@@ -26,7 +28,8 @@ home_btn.addEventListener('click', function() {
 
 Array.from(profile_btn).forEach(element => {
     element.addEventListener('click', function() {
-       window.location.href = eatery_private_profile;
+        if (utype === 'diner') window.location.href = diner_private_profile;
+        else window.location.href = eatery_private_profile;
     });        
 });
 
