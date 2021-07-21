@@ -303,5 +303,25 @@ main {
 }
 /* comment section */
 #comment-section {
+    margin-top: 5rem;
     margin-left: 30px;
+}
+
+#review-filter-container > label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#review-filter-container > select {
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    width: 10rem;
+    height: 2rem;
+    background-color: rgb(199, 199, 199);
+    margin-left: 1rem;
+}
+
+#review-filter-container {
+    margin-bottom: 60px;
 }

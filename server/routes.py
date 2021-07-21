@@ -16,7 +16,7 @@ import json
 ###########################################################
 # uncomment these 2 lines to see the load data effect
 clear_db()
-#load_all()
+load_all()
 
 ###########################################################
 ##                   COMMON ROUTES                       ##
@@ -342,7 +342,6 @@ def eatery_get_all_reservation(filter):
         if filter == 'all':
             res = get_all_diner_voucher(token)
         elif filter == 'expired':
-            print('here')
             res = get_booked_expired_voucher(token)
         elif filter == 'incomplete':
             res = get_booked_diner_voucher(token)
@@ -431,11 +430,17 @@ def diner_book_voucher(id):
     except InputError:
         return 'failed'
 
-@app.route('/eatery/profile/<int:id>/get_reviews', methods=['GET'])
+@app.route('/eatery/profile/<int:id>/get_reviews', methods=['POST'])
 def eatery_public_get_reviews(id):
+    sort_order = json.loads(request.data)['sort']
+    print((sort_order))
     try:
-        data = read_reviews(id)
-        print(data)
-        return json.dumps(data)
+        res = read_reviews(id)
+        # sort order '1' for postive first, '0' for negative first
+        if sort_order == '1':
+            res['reviews'] = sorted(res['reviews'], key=lambda k: (k['rating']), reverse=True)
+        else:
+            res['reviews'] = sorted(res['reviews'], key=lambda k: (k['rating']), reverse=False)
+        return json.dumps(res)
     except:
         return ''

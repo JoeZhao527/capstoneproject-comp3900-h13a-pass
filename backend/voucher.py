@@ -112,6 +112,9 @@ def delete_voucher_by_group(token, group_id):
 # function for checking if a voucher has expired or not
 # by given a voucher item, check if this voucher has expired
 def voucher_has_expired(voucher):
+    # if voucher is used, then it is not expired
+    if voucher.if_used:
+        return False
     # to check if the voucher is after or equal to today's date
     if voucher.date < date.today():
         return True

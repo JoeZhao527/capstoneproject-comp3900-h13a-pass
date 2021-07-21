@@ -372,6 +372,8 @@ function loadEateries(eateries) {
         let addr = eatery['city'] + ', ' + eatery['suburb']
         let cuisine = eatery['cuisine']
         let eatery_path = `/eatery/profile/${eatery['id']}`;
+        let num_review = eatery['num_of_review'];
+        let avg_rating = eatery['avg_rating'];
         let container = document.createElement('div');
         let sub_container = document.createElement('div');
         let img_div = document.createElement('div');
@@ -416,8 +418,8 @@ function loadEateries(eateries) {
         // rating span, currently static
         let star_div = document.createElement('div')
         star_div.className = 'Stars'
-        star_div.style = '--rating: 4.3';
-        star_div.innerHTML = ' 4.3 ';
+        star_div.style = `--rating: ${avg_rating}`;
+        star_div.innerHTML = `${num_review} reviews`;
 
         content_divs[2].appendChild(star_div);
 

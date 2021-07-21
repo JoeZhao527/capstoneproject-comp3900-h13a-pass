@@ -340,11 +340,18 @@ function stringifyNum(len) {
 
 /* get comments for this eatery */
 const comment_container = document.getElementById('comment-container')
+const review_filter = document.getElementById('review-filter')
+
+review_filter.onchange = () => {
+    getReviews()
+}
 
 // get reviews, avg rating and number of reviews from backend
 function getReviews() {
+    let sort_order = review_filter.value
+    console.log(sort_order)
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', `/eatery/profile/${profile_id}/get_reviews`, true);
+    xhr.open('POST', `/eatery/profile/${profile_id}/get_reviews`, true);
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             if (this.response) {
@@ -358,7 +365,7 @@ function getReviews() {
             }
         }
     }
-    xhr.send()
+    xhr.send(JSON.stringify({ sort:sort_order }))
 }
 
 const stars = document.getElementsByClassName('Stars')[0];
