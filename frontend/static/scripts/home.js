@@ -146,6 +146,16 @@ function loadCityList() {
     let cityList = generateCityList();
     city_ul.innerHTML = ''
 
+    let li = document.createElement('li');
+    li.innerHTML = 'All cities'
+    li.onclick = () => {
+        let city_input = document.getElementById('city-input');
+        city_input.innerHTML = 'All cities'
+        city_input.title = ""
+    }
+
+    city_ul.appendChild(li)
+
     for (const c of cityList) {
         let li = document.createElement('li');
         li.innerHTML = c;
@@ -159,17 +169,12 @@ function loadCityList() {
     }
 
     // load default value for city
-    let city_input = document.getElementById('city-input');
-    let city = city_ul.firstChild.innerHTML;
-    city_input.innerHTML = city;
-    city_input.title = city;
     loadSuburbList(city);
 }
 
 function loadSuburbList(city) {
-    let suburbList = locationList[city];
     suburb_ul.innerHTML = ''
-
+    
     let li = document.createElement('li');
     li.innerHTML = 'All suburb'
     li.onclick = () => {
@@ -178,17 +183,18 @@ function loadSuburbList(city) {
         suburb_input.title = ""
     }
     suburb_ul.appendChild(li)
-
-    // 24 hours 00/30 minutes selection
-    for (const s of suburbList) {
-        let li = document.createElement('li');
-        li.innerHTML = s;
-        li.onclick = () => {
-            let suburb_input = document.getElementById('suburb-input');
-            suburb_input.innerHTML = s;
-            suburb_input.title = s;
+    if (city in locationList) {
+        let suburbList = locationList[city];
+        for (const s of suburbList) {
+            let li = document.createElement('li');
+            li.innerHTML = s;
+            li.onclick = () => {
+                let suburb_input = document.getElementById('suburb-input');
+                suburb_input.innerHTML = s;
+                suburb_input.title = s;
+            }
+            suburb_ul.appendChild(li)
         }
-        suburb_ul.appendChild(li)
     }
 }
 
@@ -314,7 +320,12 @@ function getFilterAndLoad() {
     }
 
     // create filter data location attr
-    filter_data['location'] = filter_data['city']+','+filter_data['suburb'];
+
+    if (filter_data['city'] == "" && filter_data['suburb'] == "") {
+        filter_data['location'] = ""
+    } else {
+        filter_data['location'] = filter_data['city']+','+filter_data['suburb'];
+    }
     
     searchEateryByFilter(filter_data);
 }
