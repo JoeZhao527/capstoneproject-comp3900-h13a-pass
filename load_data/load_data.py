@@ -11,6 +11,7 @@ import random
 from load_data.load_eatery import load_eatery
 from load_data.load_diner import load_diner
 from load_data.load_voucher import load_voucher
+from load_data.load_images import load_image
 # description words list
 
 # cuisine list
@@ -24,4 +25,5 @@ def load_all():
     load_eatery(10)
     load_diner(10)
     load_voucher(10,10)
+    load_image(10)
     pass

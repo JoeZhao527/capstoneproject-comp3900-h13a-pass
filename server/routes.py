@@ -364,7 +364,6 @@ def eatery_upload_image():
     data = json.loads(request.data)
     try:
         image_id = upload_image(token=data['token'], img=data['image'])
-        print(image_id)
         return ''
     except InputError:
         return 'failed'

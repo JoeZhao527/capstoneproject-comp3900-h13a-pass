@@ -59,9 +59,6 @@ def load_voucher(m, n):
                 db.session.commit()
     pass
 
-def load_for_one_eatery(eid):
-    pass
-
 class Date:
     def __init__(self) -> None:
         self.today = date.today()
