@@ -115,6 +115,20 @@ def search_by_filter(date, time, location, cuisine):
             # cuisine = "Chinese",  eatery.cuisine = "Chinese, Hotpot"
             if cuisine in eatery.cuisine:
                 result.append(eatery)
+    # date, location and cuisine
+    elif date and not time and location and cuisine:
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            # eat_cuisine would be "Chinese, Hotpot"
+            eat_location = eatery.city + "," + eatery.suburb
+            eat_cuisine = eatery.cuisine
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            # cuisine could be "Chinese", "Hotpot", "Chinese, hotpot"
+            if location in eat_location and cuisine in eat_cuisine:
+                result.append(eatery)
+    
     # time, location and cuisine
     elif not date and time and location and cuisine:
         eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
