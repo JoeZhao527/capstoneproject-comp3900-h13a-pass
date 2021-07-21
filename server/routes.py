@@ -15,7 +15,7 @@ import json
 ##                     LOAD  DATA                        ##
 ###########################################################
 # uncomment these 2 lines to see the load data effect
-#clear_db()
+clear_db()
 #load_all()
 
 ###########################################################
@@ -129,15 +129,15 @@ def diner_private_profile_update():
 def diner_profile_active():
     data = json.loads(request.data)
     res = get_booked_voucher(data['token'])
-    print(res)
-    return res
+    #print(res)
+    return json.dumps(res)
     
 
 @app.route('/diner/profile/get_previous',methods = ['POST'])
 def diner_profile_previous():
     data = json.loads(request.data)
     res = get_used_voucher(data['token'])
-    return res
+    return json.dumps(res)
 
 @app.route('//diner/profile/private/delete_voucher', methods=["DELETE"])
 def diner_profile_deleate_voucher():

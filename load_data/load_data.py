@@ -22,7 +22,7 @@ def clear_db():
     db.create_all()
 
 def load_all():
-    load_eatery(10)
+    load_eatery(100)
     load_diner(10)
     load_voucher(10,10)
     load_image(10)
