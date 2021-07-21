@@ -450,28 +450,216 @@
                 {
                     "date": "2021-07-26",
                     "start_time": "12:00",
-                    "end_time": "2:00",
+                    "end_time": "14:00",
                     "discount": 0.05
                 },
                 {
                     "date": "2021-07-27",
                     "start_time": "12:00",
-                    "end_time": "2:00",
+                    "end_time": "14:00",
                     "discount": 0.05
                 },
                 {
                     "date": "2021-07-28",
                     "start_time": "12:00",
-                    "end_time": "2:00",
+                    "end_time": "14:00",
                     "discount": 0.05
                 },
                 {
                     "date": "2021-07-29",
                     "start_time": "12:00",
-                    "end_time": "2:00",
+                    "end_time": "14:00",
                     "discount": 0.05
                 }
                 
+            ]
+        },
+        {
+            "email": "matthew.miller@gmail.com",
+            "password": "00078910DC",
+            "first_name" : "Matthew",
+            "last_name": "Miller",
+            "phone": "(03)93294120",
+            "eatery_name": "Vegedelight",
+            "address": "28 Erskine St",
+            "menu" : "",
+            "cuisine" : "Vegan",
+            "city": "Melbourne",
+            "suburb": "North Melbourne",
+            "description": "Experience eclectic vegan and vegetarian Indian dishes at Vegedelight, plus a variety of fusion pizzas, in a homey dining room.",
+            "images": [],
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "12:00",
+                    "end_time": "2:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "12:00",
+                    "end_time": "2:00",
+                    "discount": 0.1
+                }
+            ]
+        },
+        {
+            "email": "bob.santiago@gmail.com",
+            "password": "00078910DC",
+            "first_name" : "Bob",
+            "last_name": "Santiago",
+            "phone": "(03) 9078 5323",
+            "eatery_name": "Indian Accent",
+            "address": "15 Presgrave Pl",
+            "menu" : "",
+            "cuisine" : "Fusion",
+            "city": "Melbourne",
+            "suburb": "Melbourne",
+            "description": "Indian Accent is perhaps the best iteration yet of the rise of Indian cuisine to fine dining, at least within the vernacular of the Western kitchen. Of course, Indian cuisine has a long and hallowed history—especially the cuisine of Lucknow—but rarely has this been yoked to Western techniques with the precision and imaginative horsepower of chef Manish Mehrotra, whose New Delhi version of the restaurant, opened in 2009, has long been one of that city's best restaurants.",
+            "images": [],
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "12:00",
+                    "end_time": "14:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "12:00",
+                    "end_time": "14:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-30",
+                    "start_time": "20:00",
+                    "end_time": "23:00",
+                    "discount": 0.2
+                },
+                {
+                    "date": "2021-07-31",
+                    "start_time": "20:00",
+                    "end_time": "23:00",
+                    "discount": 0.2
+                }
+
+
+            ]
+        },
+        {
+            "email": "andrew.lee@gmail.com",
+            "password": "00078910DC",
+            "first_name" : "Andrew",
+            "last_name": "Lee",
+            "phone": "(03)96464104",
+            "eatery_name": "K-Food",
+            "address": "360 Little Bourke St",
+            "menu" : "",
+            "cuisine" : "Korean",
+            "city": "Melbourne",
+            "suburb": "North Melbourne",
+            "description": "K-Food is more than just KBBQ. We want you to experience everything the Korean cuisine has to offer, be it Korea's most famous dish Kimchi, to other staples in our culture.",
+            "images": [],
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "17:30",
+                    "end_time": "21:30",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "17:30",
+                    "end_time": "21:30",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "17:30",
+                    "end_time": "21:30",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-29",
+                    "start_time": "17:30",
+                    "end_time": "21:30",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-30",
+                    "start_time": "17:30",
+                    "end_time": "21:30",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-07-31",
+                    "start_time": "11:00",
+                    "end_time": "14:30",
+                    "discount": 0.1
+                },
+                {
+                    "date": "2021-08-01",
+                    "start_time": "11:00",
+                    "end_time": "14:30",
+                    "discount": 0.1
+                }
+
+
+            ]
+        },
+        {
+            "email": "adele.dupont@gmail.com",
+            "password": "00078910DC",
+            "first_name" : "Adele",
+            "last_name": "Dupont",
+            "phone": " (03)93294120",
+            "eatery_name": "Au Revoir French Bistro",
+            "address": "61 The Crescent",
+            "menu" : "",
+            "cuisine" : "French",
+            "city": "Melbourne",
+            "suburb": "Port Melbourne",
+            "description": "Au Revoir French Bistro is located in the heart of Port Melbourne. From crepes to steak frites, escargot and coq au vin, our French-inspired chefs have brought us the best of what the country has to offer",
+            "images": [],
+            "vouchers": [
+                {
+                    "date": "2021-07-26",
+                    "start_time": "17:00",
+                    "end_time": "21:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-27",
+                    "start_time": "17:00",
+                    "end_time": "21:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-28",
+                    "start_time": "17:00",
+                    "end_time": "21:00",
+                    "discount": 0.2
+                },
+                {
+                    "date": "2021-07-29",
+                    "start_time": "17:00",
+                    "end_time": "21:00",
+                    "discount": 0.2
+                },
+                {
+                    "date": "2021-07-30",
+                    "start_time": "17:00",
+                    "end_time": "21:00",
+                    "discount": 0.15
+                },
+                {
+                    "date": "2021-07-31",
+                    "start_time": "11:00",
+                    "end_time": "15:00",
+                    "discount": 0.15
+                }
+
+
             ]
         }
     ]
