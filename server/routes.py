@@ -150,6 +150,16 @@ def diner_profile_deleate_voucher():
         print(InputError.message)
         return 'failed'
 
+@app.route('/diner/profile/add_review', methods=['POST'])
+def diner_add_comment():
+    data = json.loads(request.data)
+    token, eatery_id, comment, rating = data['token'], data['eatery_id'], data['comment'], data['rating']
+    try:
+        add_review(token, eatery_id, comment, rating)
+        return ''
+    except:
+        return 'failed'
+
 
 ###########################################################
 ##                   EATERY ROUTES                       ##
@@ -420,3 +430,12 @@ def diner_book_voucher(id):
         return ''
     except InputError:
         return 'failed'
+
+@app.route('/eatery/profile/<int:id>/get_reviews', methods=['GET'])
+def eatery_public_get_reviews(id):
+    try:
+        data = read_reviews(id)
+        print(data)
+        return json.dumps(data)
+    except:
+        return ''

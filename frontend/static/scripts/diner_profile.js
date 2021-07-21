@@ -4,6 +4,7 @@ const diner_home = '/diner/home';
 
 // token
 let token = sessionStorage.getItem('token');
+let id = sessionStorage.getItem('id');
 
 /* side bar swicth page logic */
 const side_bar = document.getElementById('side-bar')
@@ -160,11 +161,11 @@ function loadActive() {
                 console.log(voucher['date'])
                 let activepart = document.createElement('tr')
 
-                let eaterynode = document.createElement('th')
-                let datenode = document.createElement('th')
-                let timenode = document.createElement('th')
-                let discountnode = document.createElement('th')
-                let codenode = document.createElement('th')
+                let eaterynode = document.createElement('td')
+                let datenode = document.createElement('td')
+                let timenode = document.createElement('td')
+                let discountnode = document.createElement('td')
+                let codenode = document.createElement('td')
 
                 eaterynode.innerHTML = voucher['eatery_name']
                 datenode.innerHTML = voucher['date']
@@ -219,11 +220,11 @@ function loadPrevious() {
                 console.log(voucher['date'])
                 let activepart = document.createElement('tr')
 
-                let eaterynode = document.createElement('th')
-                let datenode = document.createElement('th')
-                let timenode = document.createElement('th')
-                let discountnode = document.createElement('th')
-                let codenode = document.createElement('th')
+                let eaterynode = document.createElement('td')
+                let datenode = document.createElement('td')
+                let timenode = document.createElement('td')
+                let discountnode = document.createElement('td')
+                let codenode = document.createElement('td')
 
                 eaterynode.innerHTML = voucher['eatery_name']
                 datenode.innerHTML = voucher['date']
@@ -236,6 +237,8 @@ function loadPrevious() {
                 activepart.appendChild(timenode)
                 activepart.appendChild(discountnode)
                 activepart.appendChild(codenode)
+                addReviewBtn(activepart, voucher['eatery_id']);
+
                 thp.appendChild(activepart)
             }
         }
@@ -243,6 +246,85 @@ function loadPrevious() {
     xhr.send(`{ "token":"${token}" }`)
 }
 
+function addReviewBtn(activepart, eatery_id) {
+    let btn = document.createElement('button');
+    btn.className = 'review'
+    btn.onclick = () => {
+        showReviewPage(eatery_id)
+    }
+
+    activepart.appendChild(btn)
+}
+
+const add_review_btns = document.getElementsByClassName('review');
+const review_page = document.getElementById('add-comment-page');
+const submit_review = document.getElementById('submit-review');
+const comment_input = document.getElementById('comment');
+const rating_set = document.getElementById('rating').getElementsByTagName('input');
+
+function showReviewPage(eid) {
+    review_page.style.display = 'inline';
+    eatery_id = eid;
+}
+
+let rating = null;
+let comment = null;
+let eatery_id = null;
+
+for (const i of rating_set) {
+    i.onclick = () => {
+        rating = i.value;
+    }
+}
+
+// when submit button is clicked, get review and comment, submit it
+submit_review.onclick = () => {
+    comment = comment_input.value
+    let msg = document.getElementById('review-msg');
+    if (rating == null) {
+        msg.innerHTML = 'please select a rating';
+        setTimeout(() => {msg.innerHTML = ''}, 2000);
+    } else if (comment == null || comment.length == 0) {
+        msg.innerHTML = 'please enter a comment';
+        setTimeout(() => {msg.innerHTML = ''}, 2000);
+    } else {
+        submitReview();
+    }
+}
+
+function closeReviewPage() {
+    rating = null;
+    comment = null;
+    eatery_id = null;
+    for (const i of rating_set) {
+        i.checked = false;
+    }
+    comment_input.value = null
+    review_page.style.display = 'none';
+}
+
+// called when submit review button is clicked
+function submitReview() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/diner/profile/add_review', true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            closeReviewPage();
+            if (!this.response) {
+                alert('review has submitted');
+            } else {
+                alert('failed to submit review');
+            }
+        }
+    }
+    xhr.send(JSON.stringify({token:token, eatery_id:eatery_id, comment:comment, rating:rating}));
+}
+document.onmousedown = (e) => {
+    if ((!review_page.contains(e.target)) &&
+        review_page.style.display === 'inline') {
+        closeReviewPage();
+    }
+}
 loadPrevious();
 
 

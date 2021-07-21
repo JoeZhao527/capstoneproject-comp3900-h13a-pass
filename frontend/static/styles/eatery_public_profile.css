@@ -1,5 +1,6 @@
 :root {
     --primary-color: rgb(119, 158, 180);
+    --secondary-color: rgb(119, 158, 180);
     --btn-color: white;
     --btn-hover-color: lightskyblue;
 
@@ -8,6 +9,9 @@
     --star-background: #fc0;
 }
 
+body {
+    overflow-x: hidden;
+}
 /* containers */
 .container {
     margin: 10px;
@@ -16,12 +20,23 @@
 
 /* nav bar */
 #nav-bar {
-    background-color:var(--primary-color);
-    margin: -10px;
+    background-color:var(--secondary-color);
+    height: 50px;
+    width: 100% !important;
+    margin-left: -10px;
+    margin-top: -10px;
     box-shadow: 0 0 15px 0 black;
-    padding: 15px 0 15px 0;
 }
 
+.nav-btn:hover {
+    box-shadow: none !important;
+}
+
+#sign-up-btn, #profile-btn {
+    margin-right: 40px;
+}
+
+/*
 #nav-bar button:hover{
     cursor: pointer;
     color: black;
@@ -55,14 +70,16 @@
     background-color: white;
     transition: 0.4s;
 }
-
-
+*/
+main {
+    position: relative;
+    top: 5rem;
+}
 /* sections */
 .left-block {
     display: inline-block;
     vertical-align: top;
     width: 50%;
-    height: 60rem;
     margin-left: 40px;
 }
 
@@ -171,7 +188,7 @@
 
 .content-sub {
     display: none;
-    height: 400px;
+    height: auto;
 }
 
 #contact > div {
@@ -182,7 +199,6 @@
 }
 
 #description {
-    margin-top: 20px;
     padding: 10px 100px 0 0;
 }
 

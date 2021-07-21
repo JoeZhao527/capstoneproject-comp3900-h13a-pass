@@ -430,7 +430,7 @@ def read_reviews(eatery_id):
     #num_of_review = 0
     #sum_of_rating = 0
     if reviews is None:
-        return {"reviews": "There is no review yet"}
+        return {"reviews": []}
 
     review_with_diner_list = []
     for review, diner in reviews:
@@ -451,7 +451,7 @@ def read_reviews(eatery_id):
 # check if an eatery has already been booked by a diner before
 def previously_booked(eatery_id, diner_id):
     booked_voucher = Voucher.query.filter_by(eatery_id=eatery_id, diner_id=diner_id, if_booked=True)
-    if book_voucher:
+    if booked_voucher:
         return True
     return False
 

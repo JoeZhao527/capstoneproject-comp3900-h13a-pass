@@ -337,3 +337,57 @@ function stringifyDiscount(discount) {
 function stringifyNum(len) {
     return `Only ${len} Vouchers Left!`;
 }
+
+/* get comments for this eatery */
+const comment_container = document.getElementById('comment-container')
+
+// get reviews, avg rating and number of reviews from backend
+function getReviews() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', `/eatery/profile/${profile_id}/get_reviews`, true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.response) {
+                let res = JSON.parse(this.response)
+                let reviews = res['reviews']
+                let num_reviews = res['review_number']
+                let avg_rating = res['avg_rating']
+                loadReviews(reviews, num_reviews, avg_rating);
+            } else {
+                alert('get comment failed')
+            }
+        }
+    }
+    xhr.send()
+}
+
+const stars = document.getElementsByClassName('Stars')[0];
+const number_of_reviews  = document.getElementById('num-reviews');
+
+function loadReviews(reviews, num, avg_rating) {
+    comment_container.innerHTML = ''
+    stars.style = `--rating: ${avg_rating}`;
+    number_of_reviews.innerHTML = `${num} reviews`;
+
+    for (const rev of reviews) {
+        let div = document.createElement('div');
+        let h4 = document.createElement('h4');
+        let p = document.createElement('p');
+        let hr = document.createElement('hr')
+        let starDiv = document.createElement('div');
+        starDiv.className = 'Stars';
+        starDiv.style = `--rating: ${rev['rating']}`;
+
+        h4.innerHTML = `${rev['diner_name']} \xa0\xa0\xa0`
+        h4.appendChild(starDiv)
+        p.innerHTML = rev['comment']
+
+        div.appendChild(h4);
+        div.appendChild(p);
+        div.appendChild(hr);
+
+        comment_container.appendChild(div)
+    }
+}
+
+getReviews();
