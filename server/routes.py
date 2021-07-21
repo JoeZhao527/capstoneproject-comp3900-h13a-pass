@@ -15,7 +15,7 @@ import json
 ##                     LOAD  DATA                        ##
 ###########################################################
 # uncomment these 2 lines to see the load data effect
-#clear_db()
+clear_db()
 #load_all()
 
 ###########################################################
