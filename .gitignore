@@ -8,4 +8,5 @@ backend/valueEats.db
 backend/valueEats.db-journal
 
 # ignore load_data
+load_data
 load_data/*

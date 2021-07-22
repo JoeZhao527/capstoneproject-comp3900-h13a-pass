@@ -281,10 +281,10 @@ main {
 }
 
 /* eatery tries to book error page */
-#book-failed-page > .center {
+.book-failed-page > .center {
     position: fixed;
 }
-#book-failed-page > .center > button {
+.book-failed-page > .center > button {
     width: 80%;
     height: 50px;
     border: 1px solid;
@@ -298,7 +298,7 @@ main {
     margin: 30px 40px;
 }
 
-#book-failed-page > .center > h2 {
+.book-failed-page > .center > h2 {
     text-align: center;
 }
 /* comment section */
@@ -324,4 +324,38 @@ main {
 
 #review-filter-container {
     margin-bottom: 60px;
+}
+
+/* book page */
+#book-enter-info {
+    display: none;
+}
+
+.info-ol {
+    margin: 2rem 2rem 3rem 1rem;
+}
+
+.info-ol > li {
+    margin-bottom: 10px;
+}
+
+#enter-info {
+    width: 600px !important;
+    padding-bottom: 20px;
+}
+
+
+.left-input {
+    display: inline-block;
+    width: 45%;
+    margin-right: 8.5% !important;
+}
+
+.right-input {
+    display: inline-block;
+    width: 45%;
+}
+
+#time-label {
+    background-color: white !important;
 }

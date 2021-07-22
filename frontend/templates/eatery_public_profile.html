@@ -120,10 +120,39 @@
                 </form>
             </div>
         </section>
-        <section id="book-failed-page">
+        <section id="book-failed-page" class="book-failed-page">
             <div class="center">
                 <h2>Only Diner Can Book Vouchers!</h2>
                 <button> OK </button>
+            </div>
+        </section>
+        <section id="book-enter-info">
+            <div id="enter-info"class="center">
+                <h1>Finalize Your booking</h1>
+                <ol class="info-ol">
+                    <li>Enter your details below and hit BOOK NOW</li>
+                    <li>Arrive at the venue at the booking time and show your code to eatery</li>
+                </ol>
+                <form action="#" id="book-info-form">
+                    <div class="input-line">
+                        <div class="txt_field left-input">
+                            <input name="arrival_time" type="time" required>
+                            <span></span>
+                            <label id="time-label" for="arrival_time">Arrival time</label>
+                        </div>
+                        <div class="txt_field right-input">
+                            <input name="number_of_people" type="number" required>
+                            <label for="number_of_people">Number of people</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="txt_field">
+                        <input name="additional_request" type="text" required>
+                        <label for="additional_request">Additional requests</label>
+                        <span></span>
+                    </div>
+                    <input id="submit-book" type="submit" value="BOOK NOW!">
+                </form>
             </div>
         </section>
         {% include "footer.html" %}
