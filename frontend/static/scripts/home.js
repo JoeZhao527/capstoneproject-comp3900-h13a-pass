@@ -309,6 +309,7 @@ const eatery_section = document.getElementById('eateries');
 
 submit_filter.onclick = () => {
     getFilterAndLoad();
+    submit_filter.scrollIntoView({ behavior: 'smooth' });
 }
 
 function getFilterAndLoad() {
@@ -347,13 +348,43 @@ function searchEateryByFilter(filter_data) {
     xhr.send(JSON.stringify(filter_data))
 }
 
+
 /**
  * Load the eateries into the main page
  * @param {Array} eateries a list of eateries, with eatery name, location, images etc.
  */
+let curr_pos = 0;
+
 function loadEateries(eateries) {
+    let eatery_length = Math.floor(eateries.length / 4)
+    if (eatery_length < 1) {
+        search_scroll_right.style.visibility = 'hidden';
+    }
+
+    console.log(eatery_length)
+    search_scroll_left.onclick = () => {
+        console.log(curr_pos)
+        if (curr_pos > 0) {
+            curr_pos = curr_pos - 1;
+            eateries_section.scroll({left: 1210*curr_pos, behavior: 'smooth'})
+        }
+        if (curr_pos == 0) search_scroll_left.style.visibility = 'hidden';
+        if (curr_pos != eatery_length) search_scroll_right.style.visibility = 'visible'
+    }
+    
+    search_scroll_right.onclick = () => {
+        console.log(curr_pos)
+        if (curr_pos < eatery_length) {
+            curr_pos = curr_pos + 1;
+            eateries_section.scroll({left: 1210*curr_pos, behavior: 'smooth'})
+        }
+        if (curr_pos != 0) search_scroll_left.style.visibility = 'visible'
+        if (curr_pos == eatery_length) search_scroll_right.style.visibility = 'hidden'
+    }
+
     eatery_section.innerHTML = ''
     let default_img_src = '../static/images/food_1.jpg';
+
 
     for (let idx = 0; idx < eateries.length; idx++) {
         // address image icon 
@@ -381,6 +412,7 @@ function loadEateries(eateries) {
         let h1 = document.createElement('h1');
 
         // make eatery name element
+        if (name.length > 20) name = name.substring(0,20) + '...'
         h1.innerHTML = name;
         name_div.appendChild(h1);
 
@@ -394,6 +426,7 @@ function loadEateries(eateries) {
         let eatery_img = new Image();
         if (img_src !== '') eatery_img.src = img_src;
         else eatery_img.src = default_img_src;
+        eatery_img.className = 'eatery-img'
         img_div.appendChild(eatery_img);
 
         // address span
@@ -402,8 +435,8 @@ function loadEateries(eateries) {
         addr_span.innerHTML = addr;
 
         // make address line
-        content_divs[0].appendChild(addr_img);
-        content_divs[0].appendChild(addr_span);
+        content_divs[1].appendChild(addr_img);
+        content_divs[1].appendChild(addr_span);
 
 
         // cuisine span
@@ -411,17 +444,17 @@ function loadEateries(eateries) {
         cuisine_span.className = 'child';
         cuisine_span.innerHTML = cuisine;
 
-        content_divs[1].appendChild(cuisine_img);
-        content_divs[1].appendChild(cuisine_span);
+        content_divs[2].appendChild(cuisine_img);
+        content_divs[2].appendChild(cuisine_span);
 
 
         // rating span, currently static
         let star_div = document.createElement('div')
         star_div.className = 'Stars'
         star_div.style = `--rating: ${avg_rating}`;
-        star_div.innerHTML = `${num_review} reviews`;
+        star_div.innerHTML = `\xa0 ${num_review} reviews`;
 
-        content_divs[2].appendChild(star_div);
+        content_divs[0].appendChild(star_div);
 
         // append name, address, cusine and stars to sub_container
         sub_container.appendChild(name_div);
@@ -441,6 +474,7 @@ function loadEateries(eateries) {
 
         eatery_section.appendChild(container);
     }
+    
     /*
     <div>
         <div>
@@ -467,17 +501,11 @@ function loadEateries(eateries) {
 
 }
 
+/* scroll button logic */
+const search_scroll_left = document.getElementsByClassName('left-arrow')[0]
+const search_scroll_right = document.getElementsByClassName('right-arrow')[0]
+const eateries_section = document.getElementById('eateries');
+const total_width = eateries_section.offsetLeft;
+let cur_width = total_width;
 getFilterAndLoad();
 
-
-// fetch("../../templates/footer.html")
-//   .then(response => {
-//     return response.text()
-//   })
-//   .then(data => {
-//     document.querySelector("footer").innerHTML = data;
-//   });
-
-
-//document.getElementById("footer").innerHTML='<object type="text/html" data="footer.html" ></object>';
-    
