@@ -1,6 +1,8 @@
 :root {
     --primary-color: rgb(119, 158, 180);
     --btn-color: #2691d9;
+    --star-background: #fc0;
+    --rating-width: 400px;
 }
 
 /* nav bar */
@@ -131,25 +133,116 @@ main {
     outline: none;
 }
 
-/* add schedule form */
+/* add review form */
+#add-comment-page {
+    display: none;
+}
+
 .center {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
+    width: calc(var(--rating-width));
+    padding: 20px 25px 100px 25px;
     background: white;
     border-radius: 10px;
     box-shadow: 15px 15px 15px 15px rgba(0,0,0,0.05);
+}
+
+.review-block {
+    margin-bottom: 20px;
+}
+.rating-block {
     display: flex;
+    margin-bottom: 10px;
+}
+
+.rating-block > p {
+    vertical-align: top;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.rating {
+    border: none;
+    padding-top: 15px;
+}
+.rating:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+    clip: rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float: right;
+    width: 1em;
+    padding: 0 .1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 200%;
+    line-height: 1.2;
+    color: #ddd;
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+}
+
+.rating > label:active {
+    position: relative;
+    top: 2px;
+    left: 2px;
+}
+
+#comment {
+    width: calc(var(--rating-width));
+    font-family: "Source Sans Pro", "Arial", sans-serif;
+    font-size: large;
 }
 
 .center h1{
     text-align: center;
-    padding: 20px 0;
+    padding-bottom: 20px;
     border-bottom: 1px solid silver;
 }
 
+.center #submit-review {
+    width: 60%;
+    height: 50px;
+    border: 1px solid;
+    background: #2691d9;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #e9f4fb;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    margin: 3rem 0 3rem 0;
+}
+
+/*
 .center form{
     padding: 0 40px 100px 40px;
     box-sizing: border-box;
@@ -195,6 +288,7 @@ main {
     border: -2px;
     transition: .2s;
 }
+*/
 /* 
 table {
     border-collapse: collapse;
@@ -299,6 +393,7 @@ table .delete:hover{
     cursor: pointer;
 }
 
+/*
 .subpage > button {
     margin-top: 5rem;
     width: 10rem;
@@ -311,4 +406,22 @@ table .delete:hover{
     font-weight: 700;
     cursor: pointer;
     outline: none;
+}
+*/
+table .review{
+    background-image: url("../images/view-comment.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+table .review:hover{
+    background-color: rgb(255, 29, 123);
+    color: white;
+    cursor: pointer;
 }

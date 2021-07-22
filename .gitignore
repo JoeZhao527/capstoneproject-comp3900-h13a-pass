@@ -1,0 +1,12 @@
+# ignore valueEats.db
+backend/valueEats.db
+
+# ignore __pycache
+*/__pycache__/*
+
+# ignore backend/valueRats.bd-journal
+backend/valueEats.db-journal
+
+# ignore load_data
+load_data
+load_data/*

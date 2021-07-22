@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../static/styles/eatery_public_profile.css">
     <link rel="stylesheet" href="../../static/styles/login.css">
     <link rel="stylesheet" href="../../static/styles/search_bar.css">
+    <link rel="stylesheet" href="../../static/styles/nav_bar.css">
     <link rel="stylesheet" type="text/css" href="../../static/styles/google_map.css" />
 </head>
 <body>
@@ -23,99 +24,139 @@
         <button id="login-btn" class="nav-btn">login</button>
         <button id="logout-btn" class="nav-btn">logout</button>
     </nav>
-    <div id="image-section" class="container">
-        <div id="image-container"></div>
-        <button id="slide-right" class="arrow arrow--right"></button>
-        <button id="slide-left" class="arrow arrow--left"></button>
-    </div>
-    <div class="left-block">
-        <div id="header-section"  class="container">
-            <h1 id="eatery-name"></h1>
-            <div>
-                cuisines: <span id="cuisine"></span>
+    <main>
+
+        <div id="image-section" class="container">
+            <div id="image-container"></div>
+            <button id="slide-right" class="arrow arrow--right"></button>
+            <button id="slide-left" class="arrow arrow--left"></button>
+        </div>
+        <div class="left-block">
+            <div id="header-section"  class="container">
+                <h1 id="eatery-name"></h1>
+                <div>
+                    cuisines: <span id="cuisine"></span>
+                </div>
+                <div>
+                    rating: <div class="Stars" style="--rating: 3.3;"></div>
+                    <span id="num-reviews">0 reviews</span>
+                </div>
             </div>
-            <div>
-                rating: <div class="Stars" style="--rating: 3.3;"></div><span> 3.3</span>
+            <div id="main-section"  class="container">
+                <div id="content-section">
+                    <h1>Overview</h1>
+                    <button id="description-btn"> Description & Menu</button> /
+                    <button id="contact-btn"> Address & Contact</button> /
+                    <button id="map-btn"> View On Map</button>
+                    <div id="description" class="content-sub">
+                        <p>The eatery is too lazy, didn't write any description</p>
+                    </div>
+                    <div id="contact" class="content-sub">
+                        <div>
+                            <h3>City</h3>
+                            <p id="city"></p>
+                        </div>
+                        <div>
+                            <h3>Suburb</h3>
+                            <p id="suburb"></p>
+                        </div>
+                        <div>
+                            <h3>Address</h3>
+                            <p id="address"></p>
+                        </div>
+                        <div>
+                            <h3>Phone</h3>
+                            <p id="phone">phone</p>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p id="email">email</p>
+                        </div>
+                    </div>
+                    <div id="google-map" class="content-sub">
+                        <div id="map"></div>
+                    </div>
+                </div>
+                <div id="comment-section">
+                    <h1>What People Say</h1>
+                    <div id="review-filter-container">
+                        <label for="">sort reviews: </label>
+                        <select id="review-filter">
+                            <option value="1">positive first</option>
+                            <option value="0">negative first</option>
+                        </select>
+                    </div>
+                    <div id="comment-container"></div>
+                </div>
             </div>
         </div>
-        <div id="main-section"  class="container">
-            <div id="content-section">
-                <h1>Overview</h1>
-                <button id="description-btn"> Description & Menu</button> /
-                <button id="contact-btn"> Address & Contact</button> /
-                <button id="map-btn"> View On Map</button>
-                <div id="description" class="content-sub">
-                    <p>The eatery is too lazy, didn't write any description</p>
-                </div>
-                <div id="contact" class="content-sub">
-                    <div>
-                        <h3>City</h3>
-                        <p id="city"></p>
-                    </div>
-                    <div>
-                        <h3>Suburb</h3>
-                        <p id="suburb"></p>
-                    </div>
-                    <div>
-                        <h3>Address</h3>
-                        <p id="address"></p>
-                    </div>
-                    <div>
-                        <h3>Phone</h3>
-                        <p id="phone">phone</p>
-                    </div>
-                    <div>
-                        <h3>Email</h3>
-                        <p id="email">email</p>
-                    </div>
-                </div>
-                <div id="google-map" class="content-sub">
-                    <div id="map"></div>
-                </div>
-            </div>
-            <div id="comment-section">
-                <h1>Comment</h1>
-                comment
-            </div>
+        <div id="book-section" class="container right-block">
+            <input type="date" min="2013-06-28" max="2013-07-04">
+            <div id="voucher-container">nothing found</div>
         </div>
-    </div>
-    <div id="book-section" class="container right-block">
-        <input type="date" min="2013-06-28" max="2013-07-04">
-        <div id="voucher-container">nothing found</div>
-    </div>
-    <section id="login-page">
-        <div class="center">
-            <h1>Login</h1>
-            <p id="login-msg"></p>
-            <div id="tabs">
-                <button id="diner" class="tab">Diner</button>
-                <button id="eatery" class="tab">Eatery</button>
+        <section id="login-page">
+            <div class="center">
+                <h1>Login</h1>
+                <p id="login-msg"></p>
+                <div id="tabs">
+                    <button id="diner" class="tab">Diner</button>
+                    <button id="eatery" class="tab">Eatery</button>
+                </div>
+                <form id="login-form">
+                    <div class="txt_field">
+                        <input type="text" name="email" required>
+                        <span></span>
+                        <label>Email</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="text" name="password" required>
+                        <span></span>
+                        <label>Password</label>
+                    </div>
+                    <div id="pass">Forgot Password</div>
+                    <div class="signup_link">
+                        <input type="submit" value="Login">
+                    </div>
+                </form>
             </div>
-            <form id="login-form">
-                <div class="txt_field">
-                    <input type="text" name="email" required>
-                    <span></span>
-                    <label>Email</label>
-                </div>
-                <div class="txt_field">
-                    <input type="text" name="password" required>
-                    <span></span>
-                    <label>Password</label>
-                </div>
-                <div id="pass">Forgot Password</div>
-                <div class="signup_link">
-                    <input type="submit" value="Login">
-                </div>
-            </form>
-        </div>
-    </section>
-    <section id="book-failed-page">
-        <div class="center">
-            <h2>Only Diner Can Book Vouchers!</h2>
-            <button> OK </button>
-        </div>
-    </section>
-    {% include "footer.html" %}
+        </section>
+        <section id="book-failed-page" class="book-failed-page">
+            <div class="center">
+                <h2>Only Diner Can Book Vouchers!</h2>
+                <button> OK </button>
+            </div>
+        </section>
+        <section id="book-enter-info">
+            <div id="enter-info"class="center">
+                <h1>Finalize Your booking</h1>
+                <ol class="info-ol">
+                    <li>Enter your details below and hit BOOK NOW</li>
+                    <li>Arrive at the venue at the booking time and show your code to eatery</li>
+                </ol>
+                <form action="#" id="book-info-form">
+                    <div class="input-line">
+                        <div class="txt_field left-input">
+                            <input name="arrival_time" type="time" required>
+                            <span></span>
+                            <label id="time-label" for="arrival_time">Arrival time</label>
+                        </div>
+                        <div class="txt_field right-input">
+                            <input name="number_of_people" type="number" required>
+                            <label for="number_of_people">Number of people</label>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="txt_field">
+                        <input name="additional_request" type="text" required>
+                        <label for="additional_request">Additional requests</label>
+                        <span></span>
+                    </div>
+                    <input id="submit-book" type="submit" value="BOOK NOW!">
+                </form>
+            </div>
+        </section>
+        {% include "footer.html" %}
+    </main>
     
     <script src="../../static/scripts/google_map.js"></script>
     <script

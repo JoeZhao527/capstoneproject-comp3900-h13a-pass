@@ -48,7 +48,7 @@
         <div id="city" class="filter-input">
             <div>
                 <img id="city-icon" class="child" src="../static/images/city.png">
-                <span id="city-input" class="child">city</span>
+                <span id="city-input" class="child" title="">All cities</span>
             </div>
             <ul id="city-list"></ul>
         </div>
@@ -108,6 +108,7 @@
             </form>
         </div>
     </section>
+    {% include "footer.html" %}
     <script src="../static/scripts/home.js"></script>
     <script src="../static/scripts/login.js"></script>
     <script src="../static/scripts/logout.js"></script>
@@ -117,6 +118,5 @@
     </iframe> -->
     <!-- <link href="footer.html" rel="import" /> -->
     
-    {% include "footer.html" %}
 </body>
 </html>

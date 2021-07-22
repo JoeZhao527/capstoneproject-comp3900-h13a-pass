@@ -11,7 +11,7 @@
 .nav-btn:hover{
     cursor: pointer;
     color: var(--hover-color);
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 .nav-btn {
     border: none;

@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #f7ca36;
+    --primary-color: #2691d9;
 }
 
 /* login section */
@@ -91,7 +91,7 @@ input[type="submit"]{
     background: var(--primary-color);
     border-radius: 25px;
     font-size: 18px;
-    color: #444444;
+    color: #ffffff;
     font-weight: 700;
     cursor: pointer;
     outline: none;
