@@ -149,9 +149,19 @@ profile_form.onsubmit = (e) => {
     // menu
     data['menu'] = ''
     if (updateProfile(data) === '') {
-        console.log('success')
+        update.style.backgroundColor = 'green';
+        update.value = 'Profile is successfully updated!'
+        setTimeout(() => {
+            update.style.backgroundColor = '#2691d9';
+            update.value = 'Update Profile'
+        }, 2000)
     } else {
-        alert('sign up failed')
+        let profile_update_err_msg = document.getElementById('profile-msg')
+        profile_update_err_msg.innerHTML = "updated profile contains invalid information, failed to update"
+        profile_update_err_msg.style.color = 'red'
+        setTimeout(() => {
+            profile_update_err_msg.innerHTML = ''
+        }, 2000)
     }
 }
 
