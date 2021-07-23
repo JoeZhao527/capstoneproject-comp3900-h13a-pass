@@ -17,9 +17,13 @@ def valid_token(token):
         return False
     return True
 
-# function for get today's date, for search_by_filter only
+# function for getting today's date, for search_by_filter only
 def get_date_today():
     return date.today()
+
+# function for getting now's time
+def get_time_now():
+    return datetime.now().time()
 
 # function for finding (eateries) with discounts based on specified time range, location, or cuisine.
 # maybe need postcode for eatery
@@ -45,21 +49,21 @@ def search_by_filter(date, time, location, cuisine):
     # search by location
     elif not date and not time and location and not cuisine:
         # a list to store eatery object that fit the location
-        eateries = Eatery.query.all()
+        eateries = db.session.query(Eatery, Voucher).join(Voucher, Voucher.eatery_id==Eatery.id).all()
         result = []
-        for eatery in eateries:
+        for eatery, voucher in eateries:
             # eat_location would be "Sydney,Randwick"
             eat_location = eatery.city + "," + eatery.suburb
             # location could be "Sydney", "Randwick", "Sydney,Randwick"
-            if location in eat_location:
+            if not voucher_has_expired(voucher) and location in eat_location:
                 result.append(eatery)
     # search by cuisine
     elif not date and not time and not location and cuisine:
-        eateries = Eatery.query.all()
+        eateries = db.session.query(Eatery, Voucher).join(Voucher, Voucher.eatery_id==Eatery.id).all()
         result = []
-        for eatery in eateries:
+        for eatery, voucher in eateries:
             # cuisine = "Chinese",  eatery.cuisine = "Chinese, Hotpot"
-            if cuisine in eatery.cuisine:
+            if not voucher_has_expired(voucher) and cuisine in eatery.cuisine:
                 result.append(eatery)
     # date and time
     elif date and time and not location and not cuisine:
@@ -105,14 +109,14 @@ def search_by_filter(date, time, location, cuisine):
                 result.append(eatery)
     # location and cuisine
     elif not date and not time and location and cuisine:
-        eateries = Eatery.query.all()
+        eateries = db.session.query(Eatery, Voucher).join(Voucher, Voucher.eatery_id==Eatery.id).all()
         result = []
-        for eatery in eateries:
+        for eatery, voucher in eateries:
             # eat_location would be "Sydney,Randwick"
             eat_location = eatery.city + "," + eatery.suburb
             eat_cuisine = eatery.cuisine
             # location could be "Sydney", "Randwick", "Sydney,Randwick"
-            if location in eat_location and cuisine in eat_cuisine:
+            if not voucher_has_expired(voucher) and location in eat_location and cuisine in eat_cuisine:
                 result.append(eatery)
     # date, time and location
     elif date and time and location and not cuisine:
