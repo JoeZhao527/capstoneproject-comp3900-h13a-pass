@@ -8,15 +8,15 @@ from backend.data_access import *
 from backend.voucher import *
 from backend.image import *
 from backend.diner import *
-#from load_data.load_data import clear_db, load_all
+from load_data.load_data import clear_db, load_all
 import json
 
 ###########################################################
 ##                     LOAD  DATA                        ##
 ###########################################################
 # uncomment these 2 lines to see the load data effect
-#clear_db()
-#load_all()
+clear_db()
+load_all()
 
 ###########################################################
 ##                   COMMON ROUTES                       ##
