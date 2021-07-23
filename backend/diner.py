@@ -505,14 +505,14 @@ def get_recommendations(token):
     for eatery in eateries:
         # if a eatery has already previously booked by the diner, skip
         # at the same time, the eatery has high avg rating
-        if not previously_booked(eatery.id, diner_id): # and avg_rating(eatery.id) > 3
+        if previously_booked(eatery.id, diner_id) and avg_review(eatery.id)[1] > 3:
             # get all the info of eatery
             eatery_item = dictionary_of_eatery(eatery)
             # get the first image of the eatery
             first_image = Image.query.filter_by(eatery_id=eatery.id).first()
             eatery_item["eatery_image"] = first_image.image if first_image else ''
 
-            num_of_review, avg_rating = avg_rating(eatery.id)
+            num_of_review, avg_rating = avg_review(eatery.id)
 
             eatery_item["num_of_review"] = num_of_review
             eatery_item["avg_rating"] = avg_rating

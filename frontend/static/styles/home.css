@@ -43,6 +43,8 @@ body {
     display: flex;
     background-color: white;
     margin-top: -3rem;
+    position: sticky;
+    top: 0;
     z-index: 1;
 }
 
@@ -191,7 +193,7 @@ body {
     padding-bottom: 15px !important;
 }
 
-.eatery-img {
+#eateries .eatery-img {
     width: 280px;
     height: 180px;
     background-size: 100%;
@@ -217,24 +219,91 @@ body {
     height: auto;
 }
 
-.icon {
+#eateries .icon {
     width: 20px;
 }
 
-.content > .child {
+#eateries .content > .child {
     position: relative;
     margin: 0;
     bottom: 60%;
     transform: translate(0, 40%);
 }
 
-.content > span {
+#eateries .content > span {
     left: 1rem;
     font-size: 14px;
 }
 
-.Stars {
+#eateries .Stars {
     font-size: 16px !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+}
+
+/* eateries search result */
+
+#filtered-eateries {
+    width: 72rem;
+    margin: 0 auto;
+}
+
+#filtered-eateries > div {
+    display: inline-block;
+    width: 45%;
+    margin: 10px 0;
+    border: 1px solid rgb(175, 175, 175);
+    border-radius: 5px;
+}
+
+#filtered-eateries > div:hover {
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+
+#filtered-eateries > div:nth-child(odd) {
+    margin-right: 6% !important;
+}
+
+#filtered-eateries > div > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#filtered-eateries > div > div > img {
+    width: 220px;
+    height: 180px;
+    margin-bottom: -5px !important;
+}
+
+#filtered-eateries .icon {
+    width: 30px;
+}
+
+#filtered-eateries .content{
+    margin: 0 0 3px 30px;
+} 
+
+#filtered-eateries h1 {
+    margin: 10px 0 0 30px;
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#filtered-eateries .content > .child {
+    position: relative;
+    margin: 0;
+    bottom: 60%;
+    transform: translate(0, 40%);
+}
+
+#filtered-eateries .content > span {
+    left: 1rem;
+    font-size: 16px;
+}
+
+#filtered-eateries .Stars {
+    margin: 20px 0 5px 0 !important;
+    font-size: 18px !important;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
 }
 /* eateries */

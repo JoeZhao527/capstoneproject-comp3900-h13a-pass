@@ -95,6 +95,15 @@ def get_eatery_list():
     except InputError:
         return ''
 
+@app.route('/diner/get_eatery/recommend', methods=['POST'])
+def get_eatery_recommendation():
+    token = json.loads(request.data)['token']
+    print(token)
+    try:
+        res = get_recommendations(token)
+        return json.dumps({'eateries':res})
+    except InputError:
+        return ''
 @app.route('/diner/home/getEatery',methods=['GET'])
 def diner_getEatery():
     try:
