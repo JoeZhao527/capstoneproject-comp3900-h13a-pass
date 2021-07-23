@@ -46,8 +46,9 @@ def load_voucher(m, n):
                     diner = None
                 
                 if diner:
+                    used = random.randint(0,1)
                     voucher.diner_id = diner
-                    voucher.if_used = False
+                    voucher.if_used = False if used == 0 else True
                     voucher.if_booked = True
                 else:
                     voucher.diner_id = None

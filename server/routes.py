@@ -8,7 +8,7 @@ from backend.data_access import *
 from backend.voucher import *
 from backend.image import *
 from backend.diner import *
-from load_data.load_data import clear_db, load_all
+#from load_data.load_data import clear_db, load_all
 import json
 
 ###########################################################
@@ -95,6 +95,15 @@ def get_eatery_list():
     except InputError:
         return ''
 
+@app.route('/diner/get_eatery/recommend', methods=['POST'])
+def get_eatery_recommendation():
+    token = json.loads(request.data)['token']
+    print(token)
+    try:
+        res = get_recommendations(token)
+        return json.dumps({'eateries':res})
+    except InputError:
+        return ''
 @app.route('/diner/home/getEatery',methods=['GET'])
 def diner_getEatery():
     try:
@@ -129,15 +138,15 @@ def diner_private_profile_update():
 def diner_profile_active():
     data = json.loads(request.data)
     res = get_booked_voucher(data['token'])
-    print(res)
-    return res
+    #print(res)
+    return json.dumps(res)
     
 
 @app.route('/diner/profile/get_previous',methods = ['POST'])
 def diner_profile_previous():
     data = json.loads(request.data)
     res = get_used_voucher(data['token'])
-    return res
+    return json.dumps(res)
 
 @app.route('//diner/profile/private/delete_voucher', methods=["DELETE"])
 def diner_profile_deleate_voucher():
@@ -148,6 +157,16 @@ def diner_profile_deleate_voucher():
         return ''
     except InputError:
         print(InputError.message)
+        return 'failed'
+
+@app.route('/diner/profile/add_review', methods=['POST'])
+def diner_add_comment():
+    data = json.loads(request.data)
+    token, eatery_id, comment, rating = data['token'], data['eatery_id'], data['comment'], data['rating']
+    try:
+        add_review(token, eatery_id, comment, rating)
+        return ''
+    except:
         return 'failed'
 
 
@@ -332,7 +351,6 @@ def eatery_get_all_reservation(filter):
         if filter == 'all':
             res = get_all_diner_voucher(token)
         elif filter == 'expired':
-            print('here')
             res = get_booked_expired_voucher(token)
         elif filter == 'incomplete':
             res = get_booked_diner_voucher(token)
@@ -420,3 +438,18 @@ def diner_book_voucher(id):
         return ''
     except InputError:
         return 'failed'
+
+@app.route('/eatery/profile/<int:id>/get_reviews', methods=['POST'])
+def eatery_public_get_reviews(id):
+    sort_order = json.loads(request.data)['sort']
+    print((sort_order))
+    try:
+        res = read_reviews(id)
+        # sort order '1' for postive first, '0' for negative first
+        if sort_order == '1':
+            res['reviews'] = sorted(res['reviews'], key=lambda k: (k['rating']), reverse=True)
+        else:
+            res['reviews'] = sorted(res['reviews'], key=lambda k: (k['rating']), reverse=False)
+        return json.dumps(res)
+    except:
+        return ''

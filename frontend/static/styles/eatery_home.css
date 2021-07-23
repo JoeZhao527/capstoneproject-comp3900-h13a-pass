@@ -4,7 +4,7 @@
 }
 
 body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 /* intro */
@@ -13,7 +13,7 @@ body {
     background-size: 100%;
     background-repeat: no-repeat;
     background-position-y: top;
-    margin: -3rem -1rem;
+    margin: -3rem -1rem 0 -1rem;
     height: 54rem;
     box-shadow: inset 0rem -40rem 10rem 0rem rgba(0,0,0,0.3);
 }

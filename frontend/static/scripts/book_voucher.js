@@ -1,15 +1,16 @@
 const book_failed_page = document.getElementById('book-failed-page');
 const close_book_failed_btn = book_failed_page.getElementsByTagName('button')[0]
+const book_info_section = document.getElementById('book-enter-info');
+const book_info_form = document.getElementById('book-info-form');
 
 book_failed_page.style.visibility = 'hidden';
 close_book_failed_btn.onclick = () => {
     book_failed_page.style.visibility = 'hidden';
 }
 
-document.onmousedown = (e) => {
-    if ((!book_failed_page.contains(e.target)) && book_failed_page.style.visibility === 'visible') {
-        book_failed_page.style.visibility = 'hidden';
-    }
+document.onclick = (e) => {
+    console.log(book_info_section.style.display == 'inline')
+    
 }
 
 document.onmousedown = (e) => {
@@ -18,32 +19,57 @@ document.onmousedown = (e) => {
         (!login_btn.contains(e.target))) {
         login_sec.style.display = 'none';
     }
+    if ((!book_failed_page.contains(e.target)) && book_failed_page.style.visibility === 'visible') {
+        book_failed_page.style.visibility = 'hidden';
+    }
+    if ((!book_info_section.contains(e.target)) && book_info_section.style.display == 'inline') {
+        book_info_section.style.display = 'none';
+        for (const input of book_info_form.elements) {
+            if (input.type != 'submit') input.value = '';
+        }
+    }
 }
 
 function checkUser(utype, group_id) {
     if (typeof utype == 'undefined' || utype == null) {
         showLogin();
     } else if (utype == 'eatery') {
-        book_failed_page.style.visibility = 'visible'
+        book_failed_page.getElementsByTagName('h2')[0].innerHTML = 'Only diner can book vouchers!';
+        book_failed_page.style.visibility = 'visible';
     } else {
-        bookVoucher(group_id)
+        showBookInfo(group_id);
+        //bookVoucher(group_id)
     }
 }
 
 function bookVoucher(voucher_id) {
-    console.log(voucher_id)
     let xhr = new XMLHttpRequest();
-    xhr.open('POST', `/eatery/profile/${profile_id}/book_voucher`, true);
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log('here')
-            if (!this.response) {
-                public_loadVouchers(profile_id);
-                alert('book_success')
-            } else {
-                alert('book_failed')
-            }
-        }
-    }
+    xhr.open('POST', `/eatery/profile/${profile_id}/book_voucher`, false);
     xhr.send(JSON.stringify({ token:token, id:user_id, group_id:voucher_id }))
+
+    if (!xhr.response) {
+        public_loadVouchers(profile_id);
+        alert(xhr.response)
+    } else {
+        book_failed_page.getElementsByTagName('h2')[0].innerHTML = 'You have already booked this voucher!';
+        book_failed_page.style.visibility = 'visible';
+    }
+    book_info_section.style.display = 'none';
+}
+
+let book_data = {}
+
+/* book voucher enter info page */
+function showBookInfo(group_id) {
+    book_info_section.style.display = 'inline';
+    book_info_form.onsubmit = (e) => {
+        for (const input of book_info_form.elements) {
+            book_data[input.name] = input.value
+        }
+        bookVoucher(group_id)
+        for (const input of book_info_form.elements) {
+            if (input.type != 'submit') input.value = '';
+        }
+        return false
+    }
 }

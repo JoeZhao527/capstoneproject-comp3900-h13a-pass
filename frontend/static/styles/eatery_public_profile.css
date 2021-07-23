@@ -1,5 +1,6 @@
 :root {
     --primary-color: rgb(119, 158, 180);
+    --secondary-color: rgb(119, 158, 180);
     --btn-color: white;
     --btn-hover-color: lightskyblue;
 
@@ -8,6 +9,9 @@
     --star-background: #fc0;
 }
 
+body {
+    overflow-x: hidden;
+}
 /* containers */
 .container {
     margin: 10px;
@@ -16,12 +20,23 @@
 
 /* nav bar */
 #nav-bar {
-    background-color:var(--primary-color);
-    margin: -10px;
+    background-color:var(--secondary-color);
+    height: 50px;
+    width: 100% !important;
+    margin-left: -10px;
+    margin-top: -10px;
     box-shadow: 0 0 15px 0 black;
-    padding: 15px 0 15px 0;
 }
 
+.nav-btn:hover {
+    box-shadow: none !important;
+}
+
+#sign-up-btn, #profile-btn {
+    margin-right: 40px;
+}
+
+/*
 #nav-bar button:hover{
     cursor: pointer;
     color: black;
@@ -55,14 +70,16 @@
     background-color: white;
     transition: 0.4s;
 }
-
-
+*/
+main {
+    position: relative;
+    top: 5rem;
+}
 /* sections */
 .left-block {
     display: inline-block;
     vertical-align: top;
     width: 50%;
-    height: 60rem;
     margin-left: 40px;
 }
 
@@ -171,7 +188,7 @@
 
 .content-sub {
     display: none;
-    height: 400px;
+    height: auto;
 }
 
 #contact > div {
@@ -182,7 +199,6 @@
 }
 
 #description {
-    margin-top: 20px;
     padding: 10px 100px 0 0;
 }
 
@@ -265,10 +281,10 @@
 }
 
 /* eatery tries to book error page */
-#book-failed-page > .center {
+.book-failed-page > .center {
     position: fixed;
 }
-#book-failed-page > .center > button {
+.book-failed-page > .center > button {
     width: 80%;
     height: 50px;
     border: 1px solid;
@@ -282,10 +298,64 @@
     margin: 30px 40px;
 }
 
-#book-failed-page > .center > h2 {
+.book-failed-page > .center > h2 {
     text-align: center;
 }
 /* comment section */
 #comment-section {
+    margin-top: 5rem;
     margin-left: 30px;
+}
+
+#review-filter-container > label {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#review-filter-container > select {
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    width: 10rem;
+    height: 2rem;
+    background-color: rgb(199, 199, 199);
+    margin-left: 1rem;
+}
+
+#review-filter-container {
+    margin-bottom: 60px;
+}
+
+/* book page */
+#book-enter-info {
+    display: none;
+}
+
+.info-ol {
+    margin: 2rem 2rem 3rem 1rem;
+}
+
+.info-ol > li {
+    margin-bottom: 10px;
+}
+
+#enter-info {
+    width: 600px !important;
+    padding-bottom: 20px;
+}
+
+
+.left-input {
+    display: inline-block;
+    width: 45%;
+    margin-right: 8.5% !important;
+}
+
+.right-input {
+    display: inline-block;
+    width: 45%;
+}
+
+#time-label {
+    background-color: white !important;
 }

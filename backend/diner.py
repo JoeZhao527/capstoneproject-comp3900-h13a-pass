@@ -115,6 +115,20 @@ def search_by_filter(date, time, location, cuisine):
             # cuisine = "Chinese",  eatery.cuisine = "Chinese, Hotpot"
             if cuisine in eatery.cuisine:
                 result.append(eatery)
+    # date, location and cuisine
+    elif date and not time and location and cuisine:
+        eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.date == date).all()
+        result = []
+        for eatery in eateries:
+            # eat_location would be "Sydney,Randwick"
+            # eat_cuisine would be "Chinese, Hotpot"
+            eat_location = eatery.city + "," + eatery.suburb
+            eat_cuisine = eatery.cuisine
+            # location could be "Sydney", "Randwick", "Sydney,Randwick"
+            # cuisine could be "Chinese", "Hotpot", "Chinese, hotpot"
+            if location in eat_location and cuisine in eat_cuisine:
+                result.append(eatery)
+    
     # time, location and cuisine
     elif not date and time and location and cuisine:
         eateries = Eatery.query.join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.start_time <= time, Voucher.end_time >= time).all()
@@ -430,7 +444,7 @@ def read_reviews(eatery_id):
     #num_of_review = 0
     #sum_of_rating = 0
     if reviews is None:
-        return {"reviews": "There is no review yet"}
+        return {"reviews": []}
 
     review_with_diner_list = []
     for review, diner in reviews:
@@ -451,7 +465,7 @@ def read_reviews(eatery_id):
 # check if an eatery has already been booked by a diner before
 def previously_booked(eatery_id, diner_id):
     booked_voucher = Voucher.query.filter_by(eatery_id=eatery_id, diner_id=diner_id, if_booked=True)
-    if book_voucher:
+    if booked_voucher:
         return True
     return False
 
@@ -491,14 +505,14 @@ def get_recommendations(token):
     for eatery in eateries:
         # if a eatery has already previously booked by the diner, skip
         # at the same time, the eatery has high avg rating
-        if not previously_booked(eatery.id, diner_id): # and avg_rating(eatery.id) > 3
+        if previously_booked(eatery.id, diner_id) and avg_review(eatery.id)[1] > 3:
             # get all the info of eatery
             eatery_item = dictionary_of_eatery(eatery)
             # get the first image of the eatery
             first_image = Image.query.filter_by(eatery_id=eatery.id).first()
             eatery_item["eatery_image"] = first_image.image if first_image else ''
 
-            num_of_review, avg_rating = avg_rating(eatery.id)
+            num_of_review, avg_rating = avg_review(eatery.id)
 
             eatery_item["num_of_review"] = num_of_review
             eatery_item["avg_rating"] = avg_rating
