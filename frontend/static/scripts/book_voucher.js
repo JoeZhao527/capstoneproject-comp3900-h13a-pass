@@ -45,7 +45,14 @@ function checkUser(utype, group_id) {
 function bookVoucher(voucher_id) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', `/eatery/profile/${profile_id}/book_voucher`, false);
-    xhr.send(JSON.stringify({ token:token, id:user_id, group_id:voucher_id }))
+    xhr.send(JSON.stringify({ 
+        token:token, 
+        id:user_id, 
+        group_id:voucher_id, 
+        arrival_time:book_data['arrival_time'], 
+        number_of_people:book_data['number_of_people'],
+        request:book_data['additional_request']
+    }))
 
     if (!xhr.response) {
         public_loadVouchers(profile_id);

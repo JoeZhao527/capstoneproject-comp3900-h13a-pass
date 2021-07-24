@@ -50,6 +50,11 @@ def load_voucher(m, n):
                     voucher.diner_id = diner
                     voucher.if_used = False if used == 0 else True
                     voucher.if_booked = True
+                    voucher.arrival_time = time(10,30)
+                    voucher.num_of_guest = random.randint(3,6)
+                    voucher.special_request = "A long string to test view special request functionailty\
+                            A long string to test view special request functionailty\
+                            A long string to test view special request functionailty"
                 else:
                     voucher.diner_id = None
                     voucher.if_used = False

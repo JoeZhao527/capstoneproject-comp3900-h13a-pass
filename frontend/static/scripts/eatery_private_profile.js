@@ -206,7 +206,11 @@ function createItem(data, id, addDeleteAll) {
 function createVoucherItem(data, id) {
     let item = document.createElement('tr');
     for (const [key, value] of Object.entries(data)) {
-        const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code', 'group_id', 'amount']
+        const hidden_attr = [
+            'token', 'id', 'eatery_id', 'diner_id', 'if_used', 
+            'if_booked', 'code', 'group_id', 'amount', 
+            'arrival_time', 'num_of_guest', 'special_request'
+        ]
         if (!hidden_attr.includes(key)) {
             let td = document.createElement('td');
             td.appendChild(document.createTextNode(value));
@@ -399,7 +403,7 @@ document.onmousedown = (e) => {
     if (getCurrPage() === 'view-voucher') {
         if ((!add_voucher_page.contains(e.target)) && 
             add_voucher_page.style.display === 'inline'&&
-            (!add_voucher_page.contains(e.target))) {
+            (!add_voucher_btn.contains(e.target))) {
             add_voucher_page.style.display = 'none';
         }
     } else if (getCurrPage() === 'view-schedule'){
@@ -408,9 +412,18 @@ document.onmousedown = (e) => {
             (!add_schedule_btn.contains(e.target))) {
             add_schedule_page.style.display = 'none';
         }
-    } else if ((!checkcode_page.contains(e.target)) && 
-        checkcode_page.style.display === 'inline') {
-        checkcode_page.style.display = 'none';
+    } else if (getCurrPage() === 'view-reservation') {
+        if ((!checkcode_page.contains(e.target)) && 
+            checkcode_page.style.display === 'inline') {
+            checkcode_page.style.display = 'none';
+        } else if ((!view_detail_page.contains(e.target) && 
+            view_detail_page.style.display === 'inline') ||
+            close_view_detail_btn.contains(e.target)) {
+            view_detail_page.style.display = 'none';
+        } else if ((!view_review_page.contains(e.target)) && 
+            view_review_page.style.display === 'inline') {
+            view_review_page.style.display = 'none';
+        }
     }
 }
 

@@ -142,6 +142,9 @@ function mapWeekday(n) {
 //     schedules.appendChild(createItem(data,id,addDeleteActiveBtn));
 // }
 
+const view_detail_page = document.getElementById('view-detail-page')
+const detail_form = document.getElementById('detail-form');
+
 function loadActive() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/diner/profile/get_active', true);
@@ -179,6 +182,7 @@ function loadActive() {
                 activepart.appendChild(discountnode)
                 activepart.appendChild(codenode)
                 addDeleteActiveVoucherBtn(activepart, token, voucher['id']);
+                addViewActiveVoucherBtn(activepart, voucher);
                 thv.appendChild(activepart)    
             }
         }
@@ -187,6 +191,28 @@ function loadActive() {
     // add data to schedule list
 }
 loadActive();
+
+function addViewActiveVoucherBtn(item, voucher) {
+    let btn = document.createElement('button');
+    btn.className = 'view-info'
+    btn.onclick = () => {
+        view_detail_page.style.display = 'inline'
+        for (const i of detail_form) {
+            if (i.type != 'button') i.value = voucher[i.id]
+        }
+    }
+    item.appendChild(btn);    
+}
+
+const close_detail_btn = document.getElementById('close-view-detail')
+close_detail_btn.onclick = closeViewVoucherPage;
+
+function closeViewVoucherPage() {
+    view_detail_page.style.display = 'none';
+    for (const i of detail_form) {
+        if(i.type != 'button') i.value = ''
+    }
+}
 
 function addDeleteActiveVoucherBtn(item,token, id) {
     let deletebtn = document.createElement('button');
@@ -237,7 +263,7 @@ function loadPrevious() {
                 activepart.appendChild(timenode)
                 activepart.appendChild(discountnode)
                 activepart.appendChild(codenode)
-                addReviewBtn(activepart, voucher['eatery_id']);
+                addReviewBtn(activepart, voucher['id']);
 
                 thp.appendChild(activepart)
             }
@@ -246,11 +272,11 @@ function loadPrevious() {
     xhr.send(`{ "token":"${token}" }`)
 }
 
-function addReviewBtn(activepart, eatery_id) {
+function addReviewBtn(activepart, voucher_id) {
     let btn = document.createElement('button');
     btn.className = 'review'
     btn.onclick = () => {
-        showReviewPage(eatery_id)
+        showReviewPage(voucher_id)
     }
 
     activepart.appendChild(btn)
@@ -262,14 +288,14 @@ const submit_review = document.getElementById('submit-review');
 const comment_input = document.getElementById('comment');
 const rating_set = document.getElementById('rating').getElementsByTagName('input');
 
-function showReviewPage(eid) {
+function showReviewPage(vid) {
     review_page.style.display = 'inline';
-    eatery_id = eid;
+    voucher_id = vid;
 }
 
 let rating = null;
 let comment = null;
-let eatery_id = null;
+let voucher_id = null;
 
 for (const i of rating_set) {
     i.onclick = () => {
@@ -317,12 +343,15 @@ function submitReview() {
             }
         }
     }
-    xhr.send(JSON.stringify({token:token, eatery_id:eatery_id, comment:comment, rating:rating}));
+    xhr.send(JSON.stringify({token:token, voucher_id:voucher_id, comment:comment, rating:rating}));
 }
 document.onmousedown = (e) => {
     if ((!review_page.contains(e.target)) &&
         review_page.style.display === 'inline') {
         closeReviewPage();
+    } else if ((!view_detail_page.contains(e.target)) &&
+        view_detail_page.style.display === 'inline') {
+        closeViewVoucherPage();
     }
 }
 loadPrevious();

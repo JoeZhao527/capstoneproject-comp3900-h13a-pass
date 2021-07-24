@@ -525,14 +525,15 @@ def delete_review(token, review_id):
 # reviews with the toatl number and average rating of an eatery from the other diners
 # it works for both eatery and diner
 def read_reviews(eatery_id):
-    reviews = db.session.query(Review, Diner).join(Diner, Review.diner_id==Diner.id).filter(Review.eatery_id==eatery_id).all()
+    #reviews = db.session.query(Review, Diner).join(Diner, Review.diner_id==Diner.id).filter(Review.eatery_id==eatery_id).all()
+    reviews = db.session.query(Voucher, Review, Diner).filter(Voucher.eatery_id==eatery_id, Voucher.diner_id==Diner.id).filter(Review.voucher_id==Voucher.id, Review.diner_id==Diner.id).all()
     #num_of_review = 0
     #sum_of_rating = 0
     if reviews is None:
         return {"reviews": []}
 
     review_with_diner_list = []
-    for review, diner in reviews:
+    for voucher, review, diner in reviews:
         item = dict((col, getattr(review, col)) for col in review.__table__.columns.keys())
         item["diner_id"] = diner.id
         item["diner_name"] = diner.first_name + " " + diner.last_name
@@ -559,9 +560,11 @@ def avg_review(eatery_id):
     # get the sum of review and avg ratings of the eatery
     num_of_review = 0
     sum_of_rating = 0
-    # get a list of reviews from this eatery
-    reviews = Review.query.filter_by(eatery_id=eatery_id).all()
-    for review in reviews:
+
+    # get all used vouchers of this eatery
+    reviews = db.session.query(Voucher, Review).filter(Voucher.eatery_id==eatery_id).filter(Review.voucher_id==Voucher.id).all()
+    # get a list of reviews from this eatery use its voucher ids
+    for voucher, review in reviews:
         num_of_review += 1
         sum_of_rating += review.rating
     # if no review, then avg rating = 0, else, avg rating is normal
@@ -590,7 +593,7 @@ def get_recommendations(token):
     for eatery in eateries:
         # if a eatery has already previously booked by the diner, skip
         # at the same time, the eatery has high avg rating
-        if previously_booked(eatery.id, diner_id) and avg_review(eatery.id)[1] > 3:
+        if not previously_booked(eatery.id, diner_id) and avg_review(eatery.id)[1] > 3:
             # get all the info of eatery
             eatery_item = dictionary_of_eatery(eatery)
             # get the first image of the eatery

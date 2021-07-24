@@ -162,9 +162,9 @@ def diner_profile_deleate_voucher():
 @app.route('/diner/profile/add_review', methods=['POST'])
 def diner_add_comment():
     data = json.loads(request.data)
-    token, eatery_id, comment, rating = data['token'], data['eatery_id'], data['comment'], data['rating']
+    token, voucher_id, comment, rating = data['token'], data['voucher_id'], data['comment'], data['rating']
     try:
-        add_review(token, eatery_id, comment, rating)
+        add_review(token, voucher_id, comment, rating)
         return ''
     except:
         return 'failed'
@@ -433,8 +433,11 @@ def eatery_public_get_voucher(id):
 @app.route('/eatery/profile/<int:id>/book_voucher', methods=['POST'])
 def diner_book_voucher(id):
     data = json.loads(request.data)
+    arrival_time = data['arrival_time']
+    num_people = data['number_of_people']
+    additional_request = data['request']
     try:
-        book_voucher(data['token'], data['id'], data['group_id'])
+        book_voucher(data['token'], data['group_id'], arrival_time, num_people, additional_request)
         return ''
     except InputError:
         return 'failed'

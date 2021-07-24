@@ -12,13 +12,14 @@ def load_reviews(m):
     for eid in range(m):
         for voucher in Voucher.query.filter_by(eatery_id=eid, if_booked=True, if_used=True).all():
             add_comment = random.randint(0,1)
-            if add_comment == 1:
-                rating, comment = rev.get_review()
-                diner_id = voucher.diner_id
-                eatery_id = voucher.eatery_id
-                review = Review(diner_id, eatery_id, comment, rating)
-                db.session.add(review)
-                db.session.commit()
+            if add_comment == 0:
+                for i in range(random.randint(2,5)):
+                    rating, comment = rev.get_review()
+                    diner_id = voucher.diner_id
+                    voucher_id = voucher.id
+                    review = Review(diner_id, voucher_id, comment, rating)
+                    db.session.add(review)
+                    db.session.commit()
     pass
 
 class EateryReviews:
