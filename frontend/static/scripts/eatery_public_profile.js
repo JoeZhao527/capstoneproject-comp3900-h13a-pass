@@ -378,14 +378,18 @@ function loadReviews(reviews, num, avg_rating) {
 
     for (const rev of reviews) {
         let div = document.createElement('div');
+        let h4 = document.createElement('h4');
         let p = document.createElement('p');
         let hr = document.createElement('hr')
         let starDiv = document.createElement('div');
         starDiv.className = 'Stars';
         starDiv.style = `--rating: ${rev['rating']}`;
 
+        h4.innerHTML = `${rev['diner_name']} \xa0\xa0\xa0`
+        h4.appendChild(starDiv)
         p.innerHTML = rev['comment']
 
+        div.appendChild(h4);
         div.appendChild(p);
         div.appendChild(hr);
 
