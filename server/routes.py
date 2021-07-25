@@ -64,8 +64,6 @@ def diner_register_check():
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
     data = json.loads(request.data)
-    print("here")
-    print(data)
     try:
         res = diner_login(data['email'], data['password'])
         print(res)
@@ -249,7 +247,7 @@ def eatery_private_profile_update():
         res = eatery_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
                             data['eatery_name'], data['address'], data['menu'], data['cuisines'], 
                             data['city'], data['suburb'] ,data['description'])
-        print(res)
+
         return ''
     except InputError:
         return 'failed'
