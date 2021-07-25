@@ -57,6 +57,9 @@ const logout_btn = document.getElementById('logout-btn');
 // profile
 const profile_form = document.getElementById('profile-form');
 const profile_item = profile_form.getElementsByTagName('input');
+let menu_input =  document.getElementById('menu');
+let menu_link = document.getElementById('view-menu');
+const menu_section = document.getElementById('menu-section');
 
 // get eatery's info by its token
 function getEateryData() {
@@ -82,6 +85,13 @@ function loadEateryData(data) {
         }
     });
     if(data['cuisine']) {loadCuisines(data['cuisine'].split(','))}
+    menu_link.onclick = () => {
+        let img = document.createElement('iframe');
+        img.src = data['menu']
+        menu_section.innerHTML = ''
+        menu_section.appendChild(img)
+        menu_section.style.display = 'inline';
+    }
 }
 
 /* add cuisine */
@@ -140,20 +150,55 @@ profile_form.onsubmit = (e) => {
     e.preventDefault();
     let data = {}
     Array.from(profile_form).forEach(e => {
-        if(e.type !== `button` && e.type !== `submit` && e.name) {
+        if(e.type !== `button` && e.type !== `submit` && e.type != 'file' && e.name) {
             data[e.name] = e.value;
         }
     });
     data['cuisines'] = cuisines.join(',');
     data['token'] = token;
     // menu
-    data['menu'] = ''
-    if (updateProfile(data) === '') {
+    if (typeof menu_input.files[0] == 'undefined') {
+        data['menu'] = ''
+        updateProfile(data)
+    } else {
+        if (isPDF(menu_input.files[0])) {
+            let reader = new FileReader();
+            reader.readAsDataURL(menu_input.files[0]);
+            reader.onloadend = function () {
+                data['menu'] = reader.result;
+                updateProfile(data)
+            }
+        } else {
+            let profile_update_err_msg = document.getElementById('profile-msg')
+                profile_update_err_msg.innerHTML = "only pdf is allowed for menu"
+                profile_update_err_msg.style.color = 'red'
+                setTimeout(() => {
+                    profile_update_err_msg.innerHTML = ''
+                }, 2000)
+        }
+    }
+}
+
+function isPDF(file) {
+    if (typeof file == 'undefined') return true
+    var fileName = file.name;
+    var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+    if (ext == 'pdf') return true;
+    else return false;
+}
+
+function updateProfile(data) {
+    // send data and receive token
+    let xhr = new XMLHttpRequest();
+    xhr.open('PUT', '/eatery/profile/private/update', false);
+    xhr.send(JSON.stringify(data))
+    if (!xhr.result) {
         update.style.backgroundColor = 'green';
         update.value = 'Profile is successfully updated!'
         setTimeout(() => {
             update.style.backgroundColor = '#2691d9';
             update.value = 'Update Profile'
+            location.reload();
         }, 2000)
     } else {
         let profile_update_err_msg = document.getElementById('profile-msg')
@@ -163,14 +208,6 @@ profile_form.onsubmit = (e) => {
             profile_update_err_msg.innerHTML = ''
         }, 2000)
     }
-}
-
-function updateProfile(data) {
-    // send data and receive token
-    let xhr = new XMLHttpRequest();
-    xhr.open('PUT', '/eatery/profile/private/update', false);
-    xhr.send(JSON.stringify(data))
-    return xhr.response;
 }
 
 /* add item */
@@ -423,6 +460,11 @@ document.onmousedown = (e) => {
         } else if ((!view_review_page.contains(e.target)) && 
             view_review_page.style.display === 'inline') {
             view_review_page.style.display = 'none';
+        }
+    } else if (getCurrPage() === 'profile') {
+        if (!(menu_section.contains(e.target) &&
+            menu_section.style.display == 'inline')) {
+            menu_section.style.display = 'none';
         }
     }
 }

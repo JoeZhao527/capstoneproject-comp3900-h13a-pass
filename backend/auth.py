@@ -372,9 +372,10 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
     eatery.address = address
     eatery.city = city
     eatery.suburb = subrub
-    eatery.menu = menu
     eatery.cuisine = cuisine
     eatery.description = description
+    if menu:
+        eatery.menu = menu
     db.session.commit()
     return get_eatery_by_token(token)
 

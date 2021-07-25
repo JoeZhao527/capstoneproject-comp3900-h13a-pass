@@ -39,7 +39,7 @@ class EateryImages:
 
     def get_images(self, num):
         image_list = self.data
-        length = len(image_list)-1
+        length = len(image_list)
         num = min(num, length)
         idx_list = random.sample(range(0,length),num)
         res = []

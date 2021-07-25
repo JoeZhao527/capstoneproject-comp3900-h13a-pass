@@ -28,6 +28,9 @@ document.onmousedown = (e) => {
             if (input.type != 'submit') input.value = '';
         }
     }
+    if (!menu_section.contains(e.target) && menu_section.style.display == 'inline') {
+        menu_section.style.display = 'none';
+    }
 }
 
 function checkUser(utype, group_id) {

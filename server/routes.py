@@ -15,8 +15,8 @@ import json
 ##                     LOAD  DATA                        ##
 ###########################################################
 # uncomment these 2 lines to see the load data effect
-clear_db()
-load_all()
+#clear_db()
+#load_all()
 
 ###########################################################
 ##                   COMMON ROUTES                       ##
@@ -249,6 +249,7 @@ def eatery_private_profile_update():
         res = eatery_profile_update(data['token'], data['first_name'], data['last_name'],data['phone'],
                             data['eatery_name'], data['address'], data['menu'], data['cuisines'], 
                             data['city'], data['suburb'] ,data['description'])
+        print(res)
         return ''
     except InputError:
         return 'failed'
