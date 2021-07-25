@@ -16,6 +16,10 @@ for (let i = 0; i < switchs.length; i++) {
         displayPage(pages[i]);
     }
 }
+const home_btn = document.querySelector(".home");
+home_btn.addEventListener('click', function() {
+    window.location.href = diner_home;
+})
 
 function displayPage(page) {
     for (const p of pages) {

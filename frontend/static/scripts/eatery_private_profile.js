@@ -16,6 +16,11 @@ function loadPage() {
 
 loadPage();
 
+const home_btn = document.querySelector(".home");
+home_btn.addEventListener('click', function() {
+    window.location.href = eatery_home;
+})
+
 /* side bar swicth page logic */
 const side_bar = document.getElementById('side-bar')
 const switchs = side_bar.getElementsByTagName('div');
@@ -230,6 +235,8 @@ let schedule_data = {}
 add_schedule_btn.onclick = () => {
     add_schedule_page.style.display = 'inline';
 };
+
+
 
 schedule_form.onsubmit = (e) => {
     e.preventDefault();

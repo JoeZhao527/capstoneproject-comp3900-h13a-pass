@@ -18,6 +18,22 @@
     transition: 0.2s;
     box-shadow: 1px 1px 1px 1px black;
 }
+.home {
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    font-size: 20px;
+    font-style: italic;
+    background-color: var(--primary-color);
+    width: 16rem;
+    height: 3rem;
+    float: left;
+}
+
+.home:hover {
+    background-color: white;
+    transition: 0.4s;
+}
 #nav-bar button {
     border: none;
     font-weight: 600;

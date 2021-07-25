@@ -21,7 +21,6 @@ let data = { email: "", password: "", utype: "diner" };
 
 /* add listeners to buttons */
 
-
 Array.from(sign_up_btn).forEach(element => {
     element.addEventListener('click', function() {
         window.location.href = diner_register;
