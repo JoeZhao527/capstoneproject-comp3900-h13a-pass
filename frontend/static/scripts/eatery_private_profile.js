@@ -86,10 +86,16 @@ function loadEateryData(data) {
     });
     if(data['cuisine']) {loadCuisines(data['cuisine'].split(','))}
     menu_link.onclick = () => {
-        let img = document.createElement('iframe');
-        img.src = data['menu']
+        let iframe
+        if (data['menu']) {
+            iframe = document.createElement('iframe');
+            iframe.src = data['menu']
+        } else {
+            iframe = document.createElement('h1');
+            iframe.innerHTML = "No menu is uploaded yet, click update profile to see the change"
+        }
         menu_section.innerHTML = ''
-        menu_section.appendChild(img)
+        menu_section.appendChild(iframe)
         menu_section.style.display = 'inline';
     }
 }

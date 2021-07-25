@@ -352,6 +352,7 @@ table .delete:hover{
     width: 70%;
     height: 100%;
     box-shadow: 0 0 100px 1000px rgba(0,0,0,0.7);
+    background-color: white;
 }
 
 #menu-section > iframe {
@@ -362,4 +363,11 @@ table .delete:hover{
 
 #menu {
     width: 200px !important;
+}
+
+#menu-section > h1{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

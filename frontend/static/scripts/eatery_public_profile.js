@@ -143,8 +143,14 @@ function load_description(_description, _cuisine, menu_src) {
     let p = document.createElement('p');
     p.innerHTML = _description;
 
-    let iframe = document.createElement('iframe');
-    iframe.src = menu_src;
+    let iframe;
+    if (menu_src) {
+        iframe = document.createElement('iframe');
+        iframe.src = menu_src;
+    } else {
+        iframe = document.createElement('h1');
+        iframe.innerHTML = "No menu available for this eatery";
+    }
     
     let menu_link = document.createElement('a');
     menu_link.innerHTML = 'view menu';
