@@ -344,10 +344,10 @@ def get_used_voucher(token):
     return {"vouchers": voucher_list}
 
 # this collide with get_booked_expired_voucher in voucher.py
-'''
+
 # get diner's booked, not used but expired vouchers by diner's token
 # 3. booked, not used and expired (not available)
-def get_booked_expired_voucher(token):
+def diner_get_booked_expired_voucher(token):
     diner = Diner.query.filter_by(token=token).first()
     # check if diner exist
     if diner is None:
@@ -373,7 +373,7 @@ def get_booked_expired_voucher(token):
             item['expired'] = True
             voucher_list.append(item)
     return {"vouchers": voucher_list}
-'''
+
 # if time is not a string, conver it to a string
 # if time is a string, return t
 def convert_time_to_string(t):
@@ -505,14 +505,14 @@ def get_recommendations(token):
     for eatery in eateries:
         # if a eatery has already previously booked by the diner, skip
         # at the same time, the eatery has high avg rating
-        if not previously_booked(eatery.id, diner_id): # and avg_rating(eatery.id) > 3
+        if previously_booked(eatery.id, diner_id) and avg_review(eatery.id)[1] > 3:
             # get all the info of eatery
             eatery_item = dictionary_of_eatery(eatery)
             # get the first image of the eatery
             first_image = Image.query.filter_by(eatery_id=eatery.id).first()
             eatery_item["eatery_image"] = first_image.image if first_image else ''
 
-            num_of_review, avg_rating = avg_rating(eatery.id)
+            num_of_review, avg_rating = avg_review(eatery.id)
 
             eatery_item["num_of_review"] = num_of_review
             eatery_item["avg_rating"] = avg_rating

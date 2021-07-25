@@ -22,10 +22,13 @@ const profile_btn = document.getElementById('profile-btn');
 const logged_in_btns = [logout_btn, profile_btn];
 const logged_out_btns = [login_btn, sign_up_btn];
 
+const recommendations = document.getElementById('recommendations')
+
 function loadPage() {
     token = sessionStorage.getItem('token');
     if (token === 'undefined' || token === null) display_default();
     else display_user();
+    getRecommendations();
 }
 function display_default() {
     for (const btn of logged_in_btns) btn.style.display = 'none';
@@ -306,9 +309,18 @@ loadCuisineList();
 const submit_filter = document.getElementById('filter-submit');
 let input_list = document.getElementById('filter').getElementsByTagName('span');
 const eatery_section = document.getElementById('eateries');
+const filtered_eatery_section = document.getElementById('filtered-eateries');
 
 submit_filter.onclick = () => {
     getFilterAndLoad();
+    var element =  document.getElementById('filter-eateries-containers')
+    let filter = document.getElementById('filter')
+    var elementPosition = element.offsetTop - filter.offsetHeight - 20;
+
+    window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth"
+    });
 }
 
 function getFilterAndLoad() {
@@ -338,7 +350,7 @@ function searchEateryByFilter(filter_data) {
         if (this.readyState == 4 && this.status == 200) {
             if (this.response) {
                 let res = JSON.parse(this.response)['eateries']
-                loadEateries(res)
+                loadFilteredEateries(res);
             } else {
                 alert('filter search failed')
             }
@@ -347,13 +359,45 @@ function searchEateryByFilter(filter_data) {
     xhr.send(JSON.stringify(filter_data))
 }
 
+
 /**
- * Load the eateries into the main page
+ * Load the recommended eateries into the main page
  * @param {Array} eateries a list of eateries, with eatery name, location, images etc.
  */
+let curr_pos = 0;
+
 function loadEateries(eateries) {
+    let eatery_length = Math.floor(eateries.length / 4)
+    if (eateries.length <= 4) {
+        search_scroll_right.style.visibility = 'hidden';
+    } else {
+        search_scroll_right.style.visibility = 'visible';
+    }
+
+    console.log(eatery_length)
+    search_scroll_left.onclick = () => {
+        console.log(curr_pos)
+        if (curr_pos > 0) {
+            curr_pos = curr_pos - 1;
+            eateries_section.scroll({left: 1210*curr_pos, behavior: 'smooth'})
+        }
+        if (curr_pos == 0) search_scroll_left.style.visibility = 'hidden';
+        if (curr_pos != eatery_length) search_scroll_right.style.visibility = 'visible'
+    }
+    
+    search_scroll_right.onclick = () => {
+        console.log(curr_pos)
+        if (curr_pos < eatery_length) {
+            curr_pos = curr_pos + 1;
+            eateries_section.scroll({left: 1210*curr_pos, behavior: 'smooth'})
+        }
+        if (curr_pos != 0) search_scroll_left.style.visibility = 'visible'
+        if (curr_pos == eatery_length) search_scroll_right.style.visibility = 'hidden'
+    }
+
     eatery_section.innerHTML = ''
     let default_img_src = '../static/images/food_1.jpg';
+
 
     for (let idx = 0; idx < eateries.length; idx++) {
         // address image icon 
@@ -381,6 +425,7 @@ function loadEateries(eateries) {
         let h1 = document.createElement('h1');
 
         // make eatery name element
+        if (name.length > 20) name = name.substring(0,20) + '...'
         h1.innerHTML = name;
         name_div.appendChild(h1);
 
@@ -394,6 +439,7 @@ function loadEateries(eateries) {
         let eatery_img = new Image();
         if (img_src !== '') eatery_img.src = img_src;
         else eatery_img.src = default_img_src;
+        eatery_img.className = 'eatery-img'
         img_div.appendChild(eatery_img);
 
         // address span
@@ -402,8 +448,8 @@ function loadEateries(eateries) {
         addr_span.innerHTML = addr;
 
         // make address line
-        content_divs[0].appendChild(addr_img);
-        content_divs[0].appendChild(addr_span);
+        content_divs[1].appendChild(addr_img);
+        content_divs[1].appendChild(addr_span);
 
 
         // cuisine span
@@ -411,17 +457,17 @@ function loadEateries(eateries) {
         cuisine_span.className = 'child';
         cuisine_span.innerHTML = cuisine;
 
-        content_divs[1].appendChild(cuisine_img);
-        content_divs[1].appendChild(cuisine_span);
+        content_divs[2].appendChild(cuisine_img);
+        content_divs[2].appendChild(cuisine_span);
 
 
         // rating span, currently static
         let star_div = document.createElement('div')
         star_div.className = 'Stars'
         star_div.style = `--rating: ${avg_rating}`;
-        star_div.innerHTML = `${num_review} reviews`;
+        star_div.innerHTML = `\xa0 ${num_review} reviews`;
 
-        content_divs[2].appendChild(star_div);
+        content_divs[0].appendChild(star_div);
 
         // append name, address, cusine and stars to sub_container
         sub_container.appendChild(name_div);
@@ -441,6 +487,7 @@ function loadEateries(eateries) {
 
         eatery_section.appendChild(container);
     }
+    
     /*
     <div>
         <div>
@@ -467,17 +514,133 @@ function loadEateries(eateries) {
 
 }
 
+/* scroll button logic */
+const search_scroll_left = document.getElementsByClassName('left-arrow')[0]
+const search_scroll_right = document.getElementsByClassName('right-arrow')[0]
+const eateries_section = document.getElementById('eateries');
+const total_width = eateries_section.offsetLeft;
+let cur_width = total_width;
+
+/* get filter input and load */
 getFilterAndLoad();
 
+function getRecommendations() {
+    if (token !== null && utype == 'diner') {
+        recommendations.style.display = 'inline';
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/diner/get_eatery/recommend', true);
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.response) {
+                    let res = JSON.parse(this.response)['eateries']
+                    loadEateries(res)
+                } else {
+                    alert('filter search failed')
+                }
+            }
+        }
+        xhr.send(JSON.stringify({token:token}))
+    } else {
+        recommendations.style.display = 'none';
+    }
+}
 
-// fetch("../../templates/footer.html")
-//   .then(response => {
-//     return response.text()
-//   })
-//   .then(data => {
-//     document.querySelector("footer").innerHTML = data;
-//   });
+getRecommendations();
+
+function loadFilteredEateries(eateries) {
+    filtered_eatery_section.innerHTML = ''
+    let default_img_src = '../static/images/food_1.jpg';
 
 
-//document.getElementById("footer").innerHTML='<object type="text/html" data="footer.html" ></object>';
-    
+    for (let idx = 0; idx < eateries.length; idx++) {
+        // address image icon 
+        let addr_img = new Image();
+        addr_img.src = '../static/images/city.png';
+        addr_img.className = 'icon child';
+
+        // cuisine image icon
+        let cuisine_img = new Image();
+        cuisine_img.src = '../static/images/cuisine.png';
+        cuisine_img.className = 'icon child';
+
+        let eatery = eateries[idx];
+        let img_src = eatery['eatery_image']
+        let name = eatery['eatery_name']
+        let addr = eatery['city'] + ', ' + eatery['suburb']
+        let cuisine = eatery['cuisine']
+        let eatery_path = `/eatery/profile/${eatery['id']}`;
+        let num_review = eatery['num_of_review'];
+        let avg_rating = eatery['avg_rating'];
+        let container = document.createElement('div');
+        let sub_container = document.createElement('div');
+        let img_div = document.createElement('div');
+        let name_div = document.createElement('div');
+        let h1 = document.createElement('h1');
+
+        if (name.length > 18) name = name.substring(0,18) + '...'
+        if (cuisine.length > 18) cuisine = cuisine.substring(0,18) + '...'
+        if (addr.length > 18) addr = addr.substring(0,18) + '...'
+        // make eatery name element
+        h1.innerHTML = name;
+        name_div.appendChild(h1);
+
+        let content_divs = []
+        for (let i = 0; i < 3; i++) {
+            let div = document.createElement('div');
+            div.className = 'content';
+            content_divs.push(div)
+        }
+
+        let eatery_img = new Image();
+        if (img_src !== '') eatery_img.src = img_src;
+        else eatery_img.src = default_img_src;
+        eatery_img.className = 'eatery-img'
+        img_div.appendChild(eatery_img);
+
+        // address span
+        let addr_span = document.createElement('span');
+        addr_span.className = 'child'
+        addr_span.innerHTML = addr;
+
+        // make address line
+        content_divs[0].appendChild(addr_img);
+        content_divs[0].appendChild(addr_span);
+
+
+        // cuisine span
+        let cuisine_span = document.createElement('span');
+        cuisine_span.className = 'child';
+        cuisine_span.innerHTML = cuisine;
+
+        content_divs[1].appendChild(cuisine_img);
+        content_divs[1].appendChild(cuisine_span);
+
+
+        // rating span, currently static
+        let star_div = document.createElement('div')
+        star_div.className = 'Stars'
+        star_div.style = `--rating: ${avg_rating}`;
+        star_div.innerHTML = `\xa0 ${num_review} reviews`;
+
+        content_divs[2].appendChild(star_div);
+
+        // append name, address, cusine and stars to sub_container
+        sub_container.appendChild(name_div);
+        for (const d of content_divs) {
+            console.log(typeof d)
+            sub_container.appendChild(d);
+        }
+
+        container.appendChild(img_div);
+        container.appendChild(sub_container);
+
+        container.onclick = () => {
+            window.location.href = eatery_path;
+        }
+
+        console.log(container)
+
+        filtered_eatery_section.appendChild(container);
+    }
+}
