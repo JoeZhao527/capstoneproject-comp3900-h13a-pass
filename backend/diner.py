@@ -344,10 +344,10 @@ def get_used_voucher(token):
     return {"vouchers": voucher_list}
 
 # this collide with get_booked_expired_voucher in voucher.py
-'''
+
 # get diner's booked, not used but expired vouchers by diner's token
 # 3. booked, not used and expired (not available)
-def get_booked_expired_voucher(token):
+def diner_get_booked_expired_voucher(token):
     diner = Diner.query.filter_by(token=token).first()
     # check if diner exist
     if diner is None:
@@ -373,7 +373,7 @@ def get_booked_expired_voucher(token):
             item['expired'] = True
             voucher_list.append(item)
     return {"vouchers": voucher_list}
-'''
+
 # if time is not a string, conver it to a string
 # if time is a string, return t
 def convert_time_to_string(t):

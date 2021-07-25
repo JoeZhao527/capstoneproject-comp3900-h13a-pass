@@ -246,6 +246,48 @@ function loadPrevious() {
     xhr.send(`{ "token":"${token}" }`)
 }
 
+function loadExpired() {
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/diner/profile/get_expired', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    const thp = document.getElementById('expired')
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200 || this.status == 304) {
+            let vlist = JSON.parse(this.response)['vouchers']
+            console.log(vlist)
+            for(let i = 0; i < vlist.length; i++) {
+                let voucher = vlist[i]
+                console.log(voucher)
+                console.log(voucher['date'])
+                let activepart = document.createElement('tr')
+
+                let eaterynode = document.createElement('td')
+                let datenode = document.createElement('td')
+                let timenode = document.createElement('td')
+                let discountnode = document.createElement('td')
+                let codenode = document.createElement('td')
+
+                eaterynode.innerHTML = voucher['eatery_name']
+                datenode.innerHTML = voucher['date']
+                timenode.innerHTML = voucher['start_time']+" - "+voucher['end_time']
+                discountnode.innerHTML = voucher['discount']
+                codenode.innerHTML = voucher['code']
+
+                activepart.appendChild(eaterynode)
+                activepart.appendChild(datenode)
+                activepart.appendChild(timenode)
+                activepart.appendChild(discountnode)
+                activepart.appendChild(codenode)
+                // addReviewBtn(activepart, voucher['eatery_id']);
+
+                thp.appendChild(activepart)
+            }
+        }
+    }
+    xhr.send(`{ "token":"${token}" }`)
+}
+loadExpired()
+
 function addReviewBtn(activepart, eatery_id) {
     let btn = document.createElement('button');
     btn.className = 'review'

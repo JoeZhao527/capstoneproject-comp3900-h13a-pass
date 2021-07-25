@@ -148,6 +148,12 @@ def diner_profile_previous():
     res = get_used_voucher(data['token'])
     return json.dumps(res)
 
+@app.route('/diner/profile/get_expired',methods = ['POST'])
+def diner_profile_expired():
+    data = json.loads(request.data)
+    res = diner_get_booked_expired_voucher(data['token'])
+    return json.dumps(res)
+
 @app.route('//diner/profile/private/delete_voucher', methods=["DELETE"])
 def diner_profile_deleate_voucher():
     try:
