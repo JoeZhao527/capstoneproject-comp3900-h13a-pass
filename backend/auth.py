@@ -456,13 +456,19 @@ if __name__ == "__main__":
     #print(result1)
 
     result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
-    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123", 10086)
-    #new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "asdhkakdjqwn789", 10086)
+    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "ABCsefnm123", 10086)
+    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abchkakdjqwn789", 10086)
 
 
     Vouchers = Voucher.query.all()
+    eateries = db.session.query(Eatery, Voucher).join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.discount==0.3).all()
+    result = []
+    test_string = "ABC"
     for voucher in Vouchers:
-        print(voucher)
+        if test_string.lower() in voucher.code.lower():
+            result.append(voucher)
+
+    print(result)
     #result2 = [dictionary_of_voucher(vouch) for vouch in Vouchers]
     #result5 = dictionary_of_voucher(Vouchers)
     #print(result5["arrival_time"])

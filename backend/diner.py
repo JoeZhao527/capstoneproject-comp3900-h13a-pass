@@ -186,6 +186,9 @@ def search_by_filter(date, time, location, cuisine):
     # add the first image of the eatery into the dictionary
     # return a list of eateries with one image
     eatery_image_review = []
+
+    # make the eatery object in the result disctinct
+    result = list(set(result))
     for eat in result:
         eatery_item = dictionary_of_eatery(eat)
         # get the first image of the eatery
@@ -198,6 +201,7 @@ def search_by_filter(date, time, location, cuisine):
         eatery_item["avg_rating"] = avg_rating
 
         # add the eatery with image dictionary into the list
+        # if the eatery_item is alreayd in the list, do not append it
         eatery_image_review.append(eatery_item)
 
     return eatery_image_review
@@ -209,11 +213,10 @@ def search_by_filter(date, time, location, cuisine):
 def search_by_key(keyword):
     result = Eatery.query.all()
     eateries = []
-    
     # for all the eateries objects in the database
     for eat in result:
         # if keyword match the eatery_name
-        if (keyword in eat.eatery_name):
+        if (keyword.lower() in eat.eatery_name.lower()):
             eateries.append(dictionary_of_eatery(eat))
     return eateries
 
