@@ -17,9 +17,11 @@ submit_btn.addEventListener('click', function(e) {
             data[e.name] = e.value;
         }
     });
-    let token = register();
-    if (token !== '') {
-        sessionStorage.setItem('token', token);
+    let res = register();
+    if (res !== '') {
+        sessionStorage.setItem('token', res['token']);
+        sessionStorage.setItem('id', res['diner_id']);
+        sessionStorage.setItem('utype', 'diner');
         console.log('data')
         window.location.href = diner_home;
     } else {
@@ -35,7 +37,7 @@ function register() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/diner/register', false);
     xhr.send(JSON.stringify(data))
-    return xhr.response;
+    return JSON.parse(xhr.response);
 }
 
 /* backhome button */

@@ -578,7 +578,7 @@ function loadFilteredEateries(eateries) {
         let name_div = document.createElement('div');
         let h1 = document.createElement('h1');
 
-        if (name.length > 18) name = name.substring(0,18) + '...'
+        if (name.length > 14) name = name.substring(0,14) + '...'
         if (cuisine.length > 18) cuisine = cuisine.substring(0,18) + '...'
         if (addr.length > 18) addr = addr.substring(0,18) + '...'
         // make eatery name element

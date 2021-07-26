@@ -6,6 +6,11 @@ const filter = document.getElementById('filter-select');
 const sorter = document.getElementById('sort-select');
 const sort_order = document.getElementById('sort-order-input');
 const checkcode_page = document.getElementById('checkcode-page');
+const view_review_page = document.getElementById('view-review-page');
+const view_detail_page = document.getElementById('view-detail-page');
+const comment_container = document.getElementById('comment-container');
+
+const close_view_detail_btn = document.getElementById('close-view-detail')
 // after click complete button, the corresponding voucher id and code is stored here
 let current_voucher = {}
 
@@ -49,6 +54,7 @@ function clearReservation() {
 }
 
 function addReservationItem(voucher) {
+    console.log(voucher)
     // combine voucher time
     voucher['time'] = voucher['start_time'] + '~' + voucher['end_time']
 
@@ -70,6 +76,7 @@ function addReservationItem(voucher) {
         tr.appendChild(td)
     }
     
+    /* add first button */
     let btn = document.createElement('button')
     if (voucher['status'] == 'incomplete') {
         btn.className = 'complete-btn reservation-btn';
@@ -85,11 +92,50 @@ function addReservationItem(voucher) {
         btn.className = 'expire-btn reservation-btn';
     } else if (voucher['status'] == 'completed') {
         btn.className = 'view-feedback-btn reservation-btn';
+        btn.onclick = () => {
+            view_review_page.style.display = 'inline';
+            if ('reviews' in voucher) {
+                loadReviews(voucher['reviews'])
+            }
+        }
+    }
+    tr.appendChild(btn)
+
+    /* add second button */
+    btn = document.createElement('button')
+    btn.className = 'view-detail-btn reservation-btn';
+    btn.onclick = () => {
+        view_detail_page.style.display = 'inline';
+        let spans = document.getElementById('view-detail-page').getElementsByTagName('span')
+        for (const item of spans) {
+            item.innerHTML = voucher[item.id]
+        }
     }
     tr.appendChild(btn)
     reservation_table.appendChild(tr);
 }
 
+function loadReviews(reviews) {
+    comment_container.innerHTML = '<h3>There are No Comments For This Voucher<h3>'
+
+    for (const rev of reviews) {
+        let div = document.createElement('div');
+        let p = document.createElement('p');
+        let hr = document.createElement('hr')
+        let starDiv = document.createElement('div');
+        starDiv.className = 'Stars';
+        starDiv.style = `--rating: ${rev['rating']}`;
+
+        p.innerHTML = rev['comment']
+
+        div.appendChild(starDiv)
+        div.appendChild(p);
+        div.appendChild(hr);
+
+        comment_container.appendChild(div)
+        comment_container.removeChild(comment_container.getElementsByTagName('h3')[0]);
+    }
+}
 function completeReservation() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/eatery/profile/private/complete_booking', true);

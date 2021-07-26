@@ -23,17 +23,17 @@
             <div id="profile" class="page">
                 <div id="profile-section">
                     <form id="profile-form">
-                        <div class="txt_field left">
+                        <div class="txt_field">
                             <label for="first_name">first name:</label>
                             <input type="text" name="first_name" id="first_name" required>
                             <span></span>
                         </div>
-                        <div class="txt_field right">
+                        <div class="txt_field">
                             <label for="last_name">last name:</label>
                             <input type="text" name="last_name" id="last_name" required>
                             <span></span>
                         </div>
-                        <div class="txt_field left">
+                        <div class="txt_field">
                             <label for="phone">phone:</label>
                             <input type="text" name="phone" id="phone" required>
                             <span></span>
@@ -113,6 +113,26 @@
                     <textarea name="" id="comment" cols="30" rows="5" placeholder="How was your dinning experience?"></textarea>
                 </div>
                 <button id="submit-review">submit review</button>
+            </div>
+        </section>
+        <section id="view-detail-page">
+            <div class="center">
+                <h1>Voucher Details</h1>
+                <form id="detail-form">
+                    <div>
+                        <label for="">arrival time: </label>
+                        <input id="arrival_time" type="time">
+                    </div>
+                    <div>
+                        <label for="">number of people: </label>
+                        <input id="num_of_guest" type="number">
+                    </div>
+                    <div>
+                        <label for="">additional request: </label>
+                        <input id="special_request" type="text">
+                    </div>
+                    <input id="close-view-detail" type="button" class="submit" value="OK">
+                </form>
             </div>
         </section>
     </main>

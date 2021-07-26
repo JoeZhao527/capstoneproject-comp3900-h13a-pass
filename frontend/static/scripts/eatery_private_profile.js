@@ -62,6 +62,9 @@ const logout_btn = document.getElementById('logout-btn');
 // profile
 const profile_form = document.getElementById('profile-form');
 const profile_item = profile_form.getElementsByTagName('input');
+let menu_input =  document.getElementById('menu');
+let menu_link = document.getElementById('view-menu');
+const menu_section = document.getElementById('menu-section');
 
 // get eatery's info by its token
 function getEateryData() {
@@ -87,6 +90,19 @@ function loadEateryData(data) {
         }
     });
     if(data['cuisine']) {loadCuisines(data['cuisine'].split(','))}
+    menu_link.onclick = () => {
+        let iframe
+        if (data['menu']) {
+            iframe = document.createElement('iframe');
+            iframe.src = data['menu']
+        } else {
+            iframe = document.createElement('h1');
+            iframe.innerHTML = "No menu is uploaded yet, click update profile to see the change"
+        }
+        menu_section.innerHTML = ''
+        menu_section.appendChild(iframe)
+        menu_section.style.display = 'inline';
+    }
 }
 
 /* add cuisine */
@@ -145,19 +161,41 @@ profile_form.onsubmit = (e) => {
     e.preventDefault();
     let data = {}
     Array.from(profile_form).forEach(e => {
-        if(e.type !== `button` && e.type !== `submit` && e.name) {
+        if(e.type !== `button` && e.type !== `submit` && e.type != 'file' && e.name) {
             data[e.name] = e.value;
         }
     });
     data['cuisines'] = cuisines.join(',');
     data['token'] = token;
     // menu
-    data['menu'] = ''
-    if (updateProfile(data) === '') {
-        console.log('success')
+    if (typeof menu_input.files[0] == 'undefined') {
+        data['menu'] = ''
+        updateProfile(data)
     } else {
-        alert('sign up failed')
+        if (isPDF(menu_input.files[0])) {
+            let reader = new FileReader();
+            reader.readAsDataURL(menu_input.files[0]);
+            reader.onloadend = function () {
+                data['menu'] = reader.result;
+                updateProfile(data)
+            }
+        } else {
+            let profile_update_err_msg = document.getElementById('profile-msg')
+                profile_update_err_msg.innerHTML = "only pdf is allowed for menu"
+                profile_update_err_msg.style.color = 'red'
+                setTimeout(() => {
+                    profile_update_err_msg.innerHTML = ''
+                }, 2000)
+        }
     }
+}
+
+function isPDF(file) {
+    if (typeof file == 'undefined') return true
+    var fileName = file.name;
+    var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
+    if (ext == 'pdf') return true;
+    else return false;
 }
 
 function updateProfile(data) {
@@ -165,7 +203,22 @@ function updateProfile(data) {
     let xhr = new XMLHttpRequest();
     xhr.open('PUT', '/eatery/profile/private/update', false);
     xhr.send(JSON.stringify(data))
-    return xhr.response;
+    if (!xhr.result) {
+        update.style.backgroundColor = 'green';
+        update.value = 'Profile is successfully updated!'
+        setTimeout(() => {
+            update.style.backgroundColor = '#2691d9';
+            update.value = 'Update Profile'
+            location.reload();
+        }, 2000)
+    } else {
+        let profile_update_err_msg = document.getElementById('profile-msg')
+        profile_update_err_msg.innerHTML = "updated profile contains invalid information, failed to update"
+        profile_update_err_msg.style.color = 'red'
+        setTimeout(() => {
+            profile_update_err_msg.innerHTML = ''
+        }, 2000)
+    }
 }
 
 /* add item */
@@ -201,7 +254,11 @@ function createItem(data, id, addDeleteAll) {
 function createVoucherItem(data, id) {
     let item = document.createElement('tr');
     for (const [key, value] of Object.entries(data)) {
-        const hidden_attr = ['token', 'id', 'eatery_id', 'diner_id', 'if_used', 'if_booked', 'code', 'group_id', 'amount']
+        const hidden_attr = [
+            'token', 'id', 'eatery_id', 'diner_id', 'if_used', 
+            'if_booked', 'code', 'group_id', 'amount', 
+            'arrival_time', 'num_of_guest', 'special_request'
+        ]
         if (!hidden_attr.includes(key)) {
             let td = document.createElement('td');
             td.appendChild(document.createTextNode(value));
@@ -396,7 +453,7 @@ document.onmousedown = (e) => {
     if (getCurrPage() === 'view-voucher') {
         if ((!add_voucher_page.contains(e.target)) && 
             add_voucher_page.style.display === 'inline'&&
-            (!add_voucher_page.contains(e.target))) {
+            (!add_voucher_btn.contains(e.target))) {
             add_voucher_page.style.display = 'none';
         }
     } else if (getCurrPage() === 'view-schedule'){
@@ -405,9 +462,23 @@ document.onmousedown = (e) => {
             (!add_schedule_btn.contains(e.target))) {
             add_schedule_page.style.display = 'none';
         }
-    } else if ((!checkcode_page.contains(e.target)) && 
-        checkcode_page.style.display === 'inline') {
-        checkcode_page.style.display = 'none';
+    } else if (getCurrPage() === 'view-reservation') {
+        if ((!checkcode_page.contains(e.target)) && 
+            checkcode_page.style.display === 'inline') {
+            checkcode_page.style.display = 'none';
+        } else if ((!view_detail_page.contains(e.target) && 
+            view_detail_page.style.display === 'inline') ||
+            close_view_detail_btn.contains(e.target)) {
+            view_detail_page.style.display = 'none';
+        } else if ((!view_review_page.contains(e.target)) && 
+            view_review_page.style.display === 'inline') {
+            view_review_page.style.display = 'none';
+        }
+    } else if (getCurrPage() === 'profile') {
+        if (!(menu_section.contains(e.target) &&
+            menu_section.style.display == 'inline')) {
+            menu_section.style.display = 'none';
+        }
     }
 }
 

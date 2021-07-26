@@ -40,8 +40,8 @@ def create_schedule(eatery_id, no_vouchers, weekday, start, end, discount):
     return schedule.id
 
 # insert a review to database
-def create_review(diner_id, eatery_id, comment, rating):
-    review = Review(diner_id, eatery_id, comment, rating)
+def create_review(diner_id, voucher_id, comment, rating):
+    review = Review(diner_id, voucher_id, comment, rating)
     add_item(review)
     return review.id
 # remove a review from database

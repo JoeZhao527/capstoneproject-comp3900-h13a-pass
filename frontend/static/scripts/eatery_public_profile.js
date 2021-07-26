@@ -106,6 +106,7 @@ const google_map = document.getElementById('google-map')    // google map page
 
 const contact_item = contact.getElementsByTagName('div')
 const eatery_name = document.getElementById('eatery-name');
+const menu_section = document.getElementById('menu-section');
 
 /**
  * @param {*} eatery_id 
@@ -120,7 +121,7 @@ function getInformation(eatery_id) {
         if (this.readyState === 4 && this.status === 200) {
             let data = JSON.parse(this.response)
             // load description section
-            load_description(data['description'], data['cuisine']);
+            load_description(data['description'], data['cuisine'], data['menu']);
             // load contact section
             load_contact(data);
             // load header
@@ -136,9 +137,31 @@ function getInformation(eatery_id) {
 }
 
 // load description and cuisine to web page
-function load_description(_description, _cuisine) {
+function load_description(_description, _cuisine, menu_src) {
     cuisines.innerHTML = _cuisine;
-    description.innerHTML = _description;
+    description.innerHTML = '';
+    let p = document.createElement('p');
+    p.innerHTML = _description;
+
+    let iframe;
+    if (menu_src) {
+        iframe = document.createElement('iframe');
+        iframe.src = menu_src;
+    } else {
+        iframe = document.createElement('h1');
+        iframe.innerHTML = "No menu available for this eatery";
+    }
+    
+    let menu_link = document.createElement('a');
+    menu_link.innerHTML = 'view menu';
+    menu_link.className = 'menu-link';
+    menu_link.onclick = () => {
+        menu_section.innerHTML = ''
+        menu_section.appendChild(iframe)
+        menu_section.style.display = 'inline';
+    }
+    description.appendChild(p)
+    description.appendChild(menu_link)
 }
 
 // load contact item to web page

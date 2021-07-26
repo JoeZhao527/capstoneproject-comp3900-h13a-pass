@@ -168,6 +168,10 @@ def get_unbooked_voucher(token):
             # convert the start and end time to string
             item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
             item['date'] = convert_date_to_string(item['date'])
+            
+            # conver the arrival time to string
+            # item['arrival_time'] = convert_time_to_string(item['arrival_time'])
+            
             # add an extra attribute
             # amount of this type of voucher
             item['amount'] = 1
@@ -205,6 +209,10 @@ def get_unbooked_expired_voucher(token):
             # convert the start and end time to string
             item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
             item['date'] = convert_date_to_string(item['date'])
+            
+            # conver the arrival time to string
+            # item['arrival_time'] = convert_time_to_string(item['arrival_time'])
+            
             # add an extra attribute
             # amount of this type of voucher
             item['amount'] = 1
@@ -217,6 +225,7 @@ def get_unbooked_expired_voucher(token):
 
 # get all eatery's booked, not used and not expired vouchers by eatery's token
 # 3. booked, not used and not expired
+# add info of review
 def get_booked_diner_voucher(token):
     eatery = Eatery.query.filter_by(token=token).first()
     # check if eatery exist
@@ -234,6 +243,10 @@ def get_booked_diner_voucher(token):
             # convert the start and end time to string
             item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
             item['date'] = convert_date_to_string(item['date'])
+            
+            # convert the arrival time to string
+            item['arrival_time'] = convert_time_to_string(item['arrival_time'])
+        
             # also add the information of related diner
             item["diner_name"] = diner.first_name + " " + diner.last_name
             item["diner_phone"] = diner.phone
@@ -265,6 +278,10 @@ def get_booked_expired_voucher(token):
             # convert the start and end time to string
             item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
             item['date'] = convert_date_to_string(item['date'])
+            
+            # conver the arrival time to string
+            item['arrival_time'] = convert_time_to_string(item['arrival_time'])
+            
             # also add the information of related diner
             item["diner_name"] = diner.first_name + " " + diner.last_name
             item["diner_phone"] = diner.phone
@@ -276,6 +293,7 @@ def get_booked_expired_voucher(token):
     return {"vouchers": voucher_list}
 
 # 5. vouchers booked and used
+# (add comment(s) and rating(s) from the diner if the diner has add reviews)
 def get_booked_used_voucher(token):
     eatery = Eatery.query.filter_by(token=token).first()
     # check if eatery exist
@@ -291,16 +309,32 @@ def get_booked_used_voucher(token):
         # convert the start and end time to string
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
         item['date'] = convert_date_to_string(item['date'])
+        
+        # conver the arrival time to string
+        item['arrival_time'] = convert_time_to_string(item['arrival_time'])
+        
         # also add the information of related diner
         item["diner_name"] = diner.first_name + " " + diner.last_name
         item["diner_phone"] = diner.phone
 
-        item['expired'] = False
+        # booked and voucher can be expired or not expired
+        item['expired'] = True if voucher_has_expired(voucher) else False
+        
+        # added reviews by the diner who use the voucher to each voucher item in the voucher list (rating with comments)
+        item['reviews'] = []
+        reviews = Review.query.filter_by(voucher_id=voucher.id, diner_id=diner.id).all()
+        # if diner has add some reviews
+        # add them one by one into the voucher_item['reviews'] list
+        if reviews:
+            for review in reviews:
+                item['reviews'].append({"rating": review.rating, "comment": review.comment})
+        # else the reviews list is a empty list
         voucher_list.append(item)
     
     return {"vouchers": voucher_list}
 
-# 6. booked, not used and used
+# 6. all booked, (used or not used) and (both expired and not expired)
+# (update)
 def get_all_diner_voucher(token):
     eatery = Eatery.query.filter_by(token=token).first()
     # check if eatery exist
@@ -316,6 +350,10 @@ def get_all_diner_voucher(token):
         # convert the start and end time to string
         item['start_time'], item['end_time'] = convert_time_to_string(item['start_time']), convert_time_to_string(item['end_time'])
         item['date'] = convert_date_to_string(item['date'])
+        
+        # conver the arrival time to string
+        item['arrival_time'] = convert_time_to_string(item['arrival_time'])
+        
         # also add the information of related diner
         item["diner_name"] = diner.first_name + " " + diner.last_name
         item["diner_phone"] = diner.phone
@@ -323,6 +361,19 @@ def get_all_diner_voucher(token):
         # if voucher is expired, set expired to be true
         # this is a temporary solution, propery way should be having a expired attribute in voucher
         item['expired'] = True if voucher_has_expired(voucher) else False
+        
+        
+        # added reviews by the diner who use the voucher to each voucher item in the voucher list (rating with comments)
+        item['reviews'] = []
+        reviews = Review.query.filter_by(voucher_id=voucher.id, diner_id=diner.id).all()
+        # if diner has add some reviews
+        # add them one by one into the voucher_item['reviews'] list
+        if reviews:
+            for review in reviews:
+                item['reviews'].append({"rating": review.rating, "comment": review.comment})
+        # else the reviews list is a empty list
+        
+        
         voucher_list.append(item)
     return {"vouchers": voucher_list}
 
@@ -370,6 +421,7 @@ def convert_date_to_string(d):
 
 # for testing
 if __name__ == "__main__":
+    """
     result1 = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
     result2 = add_voucher(result1["token"], result1["eatery_id"], "2021-07-17", "08:00", "10:00", 0.5)
     print(result2)
@@ -394,3 +446,6 @@ if __name__ == "__main__":
     delete_voucher_by_group(result1["token"], 1000)
     check = get_unbooked_voucher(result1["token"])
     print(check)
+    """
+    hello = None
+    print(convert_time_to_string(hello))

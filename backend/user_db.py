@@ -84,6 +84,13 @@ class Voucher(db.Model):
     if_booked = db.Column(db.Boolean)  # add 
     code = db.Column(db.String(20))    # verify code to check if the user has booked the voucher and not used
     group_id = db.Column(db.Integer, nullable=False)   # group id for group the same vouchers 
+    # review id to make sure a diner can only comment an eatery on the voucher they've used from this eatery
+    # review_id = db.Column(db.Integer, db.Foreignkey('review.id')) # review id link to Review to make sure it can only review once.
+
+    # extra attributes for diner's arrival info
+    arrival_time = db.Column(db.Time)
+    num_of_guest = db.Column(db.Integer)
+    special_request = db.Column(db.String(200))  
 
     def __init__(self, eatery_id, date, start_time, end_time, discount, code, group_id):
         self.eatery_id = eatery_id
@@ -97,7 +104,11 @@ class Voucher(db.Model):
         # self.if_used = False
         # self.if_booked = False
         # self.weekday = date -> weekday
-
+        
+        # self.arrival_time = None
+        # self.num_of_guest = None
+        # self.special_request = None
+        # self.review_id = None
 
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -121,13 +132,13 @@ class Schedule(db.Model):
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     diner_id = db.Column(db.Integer, db.ForeignKey('diner.id'))
-    eatery_id = db.Column(db.Integer, db.ForeignKey('eatery.id'))
+    voucher_id = db.Column(db.Integer, db.ForeignKey('voucher.id'))
     comment = db.Column(db.String(20))
     rating = db.Column(db.Integer, nullable=False)
     
-    def __init__(self, diner_id, eatery_id, comment, rating):
+    def __init__(self, diner_id, voucher_id, comment, rating):
         self.diner_id = diner_id
-        self.eatery_id = eatery_id
+        self.voucher_id = voucher_id
         self.comment = comment
         self.rating = rating
 

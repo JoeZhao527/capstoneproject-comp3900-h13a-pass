@@ -19,7 +19,7 @@ from server import db
 import json
 
 # for testing
-from backend.voucher import create_voucher, add_voucher
+from backend.voucher import convert_date_to_string, create_voucher, add_voucher
 from datetime import date, datetime, time
 
 # for the eatery register and create voucher (load data from json file into the database)
@@ -268,6 +268,44 @@ def auth_password_request(email):
 
     return {}
 
+
+# given an email address of a registered diner, send them an email contain a specific reset code
+# diner trying to rest the password
+def diner_password_request(email):
+    # check if the email is valid
+    if not re.search(VALID_EMAIL, email):
+        raise InputError("Email invalid")
+    # check if the email is not registered
+    if not diner_email_used(email):
+        raise InputError("Email does not belong to a user")
+    else:
+        diner = Diner.query.filter_by(email=email).first()
+        mix = string.ascii_letters + string.digits
+        code = ''.join(random.choice(mix) for i in range(20))
+        diner.reset_code = code
+        db.session.commit()
+    
+    # set up the SMTP server
+    # set the email server and send the 'reset_code' to the "email"
+    address = "comp3900h13apass@gmail.com"
+    password = "H13APASS"
+
+    # set up the SMTP server
+    setup = smtplib.SMTP(host='smtp.gmail.com', port=587)
+    setup.starttls()
+    setup.login(address, password)
+
+    # create a message template
+    msg = EmailMessage()
+    msg['From'] = address
+    msg['To'] = email
+    msg['Subject'] = code
+
+    setup.send_message(msg)
+    setup.quit()
+
+    return {}
+
 def auth_password_reset(reset_code, new_password):
     # find a user with the same reset code
     eatery = Eatery.query.filter_by(reset_code=reset_code).first()
@@ -286,6 +324,26 @@ def auth_password_reset(reset_code, new_password):
             db.session.commit()
     return {}
     
+# function for diner to reset the password
+def diner_password_reset(reset_code, new_password):
+    # find a user with the same reset code
+    diner = Diner.query.filter_by(reset_code=reset_code).first()
+    # if reset code invalid
+    if diner is None:
+        raise InputError("Reset_code is invalid")
+    # reset code valid, change the password of eatery
+    else:
+        if len(new_password) < 6:
+            raise InputError("Invalid password")
+        else:
+            # change the password and empty the reset code
+            hashed_password = hash_password(new_password)
+            diner.password = hashed_password
+            diner.reset_code = ""
+            db.session.commit()
+    return {}
+
+
 # function for checking if the token is valid
 def eatery_valid_token(token):
     
@@ -314,9 +372,10 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
     eatery.address = address
     eatery.city = city
     eatery.suburb = subrub
-    eatery.menu = menu
     eatery.cuisine = cuisine
     eatery.description = description
+    if menu:
+        eatery.menu = menu
     db.session.commit()
     return get_eatery_by_token(token)
 
@@ -392,27 +451,48 @@ def convert_string_to_time(s):
 
 # for testing
 if __name__ == "__main__":
-    load_data()
+    #load_data()
     Eateries = Eatery.query.all()
     result1 = [dictionary_of_eatery(eat) for eat in Eateries]
     #print(result1)
 
+    result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
+    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "ABCsefnm123", 10086)
+    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abchkakdjqwn789", 10086)
+
 
     Vouchers = Voucher.query.all()
-    result2 = [dictionary_of_voucher(vouch) for vouch in Vouchers]
-    #print(result2)
+    eateries = db.session.query(Eatery, Voucher).join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.discount==0.3).all()
+    result = []
+    test_string = "ABC"
+    for voucher in Vouchers:
+        if test_string.lower() in voucher.code.lower():
+            result.append(voucher)
+
+    print(result)
+    #result2 = [dictionary_of_voucher(vouch) for vouch in Vouchers]
+    #result5 = dictionary_of_voucher(Vouchers)
+    #print(result5["arrival_time"])
+
+    #conver_res = convert_date_to_string(result5["arrival_time"])
+    #print(conver_res)
+
 
     sort_voucher = Voucher.query.order_by(Voucher.discount.desc())
     result3 = [dictionary_of_voucher(vouch) for vouch in sort_voucher]
-    print(result3)
+    #print(result3)
 
     print("!!!!!!!!!!!!!!!!")
-
-    sort_dict = sorted(result2, key=lambda voucher: voucher["discount"], reverse=True)
-    print(sort_dict)
-
-
-    print(result3 == sort_dict)
+    print(date.today())
+    #print(convert_string_to_date(""))
+    #sort_dict = sorted(result2, key=lambda voucher: voucher["discount"], reverse=True)
+    #print(sort_dict)
+    hey = None
+    if hey:
+        print("hello")
+    else:
+        print("yessir")
+    #print(result3 == sort_dict)
 
     # make an eatery and add voucher
     #result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
