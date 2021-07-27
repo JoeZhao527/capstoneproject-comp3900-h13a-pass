@@ -276,7 +276,6 @@ function loadPrevious() {
     xhr.send(`{ "token":"${token}" }`)
 }
 
-<<<<<<< HEAD
 function loadExpired() {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/diner/profile/get_expired', true);
@@ -320,9 +319,6 @@ function loadExpired() {
 loadExpired()
 
 function addReviewBtn(activepart, eatery_id) {
-=======
-function addReviewBtn(activepart, voucher_id) {
->>>>>>> 617f2046d6e6cd3ec69afa350bc203e98110d839
     let btn = document.createElement('button');
     btn.className = 'review'
     btn.onclick = () => {
