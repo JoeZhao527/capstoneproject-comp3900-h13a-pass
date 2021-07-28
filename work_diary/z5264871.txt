@@ -8,3 +8,21 @@ Revised a bit on python and flask
 
 Week 3
 Added a few functions for the backend design. Discussed implementation with group members and worked and finished the proposal with the group.
+
+Week 4
+Started working on the eatery-related backend functions for our user-stories in the first sprint.
+
+Week 5
+Continued working on the back-end for our first sprint.
+I joined and presented our progressive Demos A with Jay and Joe on Thursday and talked about the user stories within our first sprint.
+
+Week6
+Had a meeting with the team about retrospective A and started to work on the second sprint for eatery-related functionality for the backend
+
+Week7
+Talked more about the first sprint and our team finished our retrospective A. 
+Worked on the eatery-related backend functions such as booking, cancel and listing vouchers.
+
+Week8
+Our team finished the second sprint and some features of our third sprint. Jay presented for the demo which went well.
+Started working on the project report.
