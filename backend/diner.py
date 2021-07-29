@@ -391,17 +391,9 @@ def get_used_voucher(token):
     return {"vouchers": voucher_list}
 
 # this collide with get_booked_expired_voucher in voucher.py
-<<<<<<< HEAD
-
 # get diner's booked, not used but expired vouchers by diner's token
 # 3. booked, not used and expired (not available)
 def diner_get_booked_expired_voucher(token):
-=======
-# get diner's booked, not used but expired vouchers by diner's token
-# 3. booked, not used and expired (not available)
-# (update the name of the function)
-def get_diner_expired_voucher(token):
->>>>>>> 617f2046d6e6cd3ec69afa350bc203e98110d839
     diner = Diner.query.filter_by(token=token).first()
     # check if diner exist
     if diner is None:
