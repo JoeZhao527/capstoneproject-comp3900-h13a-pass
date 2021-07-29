@@ -31,6 +31,7 @@ function displayPage(page) {
 displayPage(pages[0]);
 
 /* logout */
+/*
 const logout_btn = document.getElementById('logout');
 
 logout_btn.onclick = () => {
@@ -42,9 +43,7 @@ logout_btn.onclick = () => {
     }
 }
 
-/**
- * send logout request to backend
- */
+
  function logout() {
     let xhr = new XMLHttpRequest();
     xhr.open('PUT', '/logout', false);
@@ -53,7 +52,7 @@ logout_btn.onclick = () => {
     console.log(xhr.response);
     return xhr.response
 }
-
+*/
 /* content */
 
 // profile

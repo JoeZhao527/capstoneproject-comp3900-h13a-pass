@@ -39,7 +39,8 @@ Array.from(profile_btn).forEach(element => {
  * otherwise show unlogged in page
  */
 function loadPage() {
-    let token = window.sessionStorage.getItem('token')
+    token = window.sessionStorage.getItem('token');
+    utype = window.sessionStorage.getItem('utype');
     console.log(token)
     if (token === 'undefined' || token === null) {
         displayDefault();
