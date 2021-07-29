@@ -408,6 +408,15 @@ def eatery_delete_image():
         print(InputError.message)
         return 'failed'
 
+@app.route('/eatery/profile/private/get_analytic', methods=['POST'])
+def eatery_get_analytic():
+    try:
+        token = json.loads(request.data)['token']
+        res = get_analytic(token)
+        print(res)
+        return json.dumps(res)
+    except InputError:
+        return ''
 ################ EATERY PUBLIC PROFILE ##################
 @app.route('/eatery/profile/<int:id>', methods=['GET'])
 def eatery_public_profile(id):

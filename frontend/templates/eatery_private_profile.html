@@ -22,6 +22,7 @@
             <div id="to-schedule"><img src="../../static/images/schedule_icon.png"> Schedule</div>
             <div id="to voucher"><img src="../../static/images/voucher_icon.png"> Voucher</div>
             <div id="to-reserve"><img src="../../static/images/reservation_icon.png"> Reservation</div>
+            <div id="to-analysis"><img src="../../static/images/analytic.png"> Analytic</div>
         </section>
         <section class="container">
             <div id="profile" class="page subpage">
@@ -239,6 +240,20 @@
                     </div>
                 </section>
             </div>
+            <div id="view-analysis" class="page subpage">
+                <h1>Analytics</h1>
+                <hr />
+                <section id="analysis-container">
+                    <div class="chart-container">
+                        <h3>Completed Reservation in Previous Week</h3>
+                        <canvas id="line_chart"></canvas>
+                      </div>
+                      <div class="chart-container">
+                        <h3>Completed Reservation & Expired Vouchers</h3>
+                        <canvas id="doughnut_chart"></canvas>
+                      </div>
+                </section>
+            </div>
         </section>
         <section id="checkcode-page">
             <div class="checkcode-center">
@@ -287,5 +302,7 @@
     <script src="../../static/scripts/load_vouchers.js"></script>
     <script src="../../static/scripts/logout.js"></script>
     <script src="../../static/scripts/reservation.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../static/scripts/analysis.js"></script>
 </body>
 </html>

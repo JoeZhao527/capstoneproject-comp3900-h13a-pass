@@ -4,6 +4,7 @@ const eatery_home = '/eatery/home'
 // token and id
 let token = sessionStorage.getItem('token');
 let eatery_id = sessionStorage.getItem('id');
+let utype = sessionStorage.getItem('utype');
 
 // check if there's no token
 function loadPage() {

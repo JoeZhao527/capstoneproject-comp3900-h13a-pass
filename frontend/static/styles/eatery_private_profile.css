@@ -362,3 +362,15 @@ table .delete:hover{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* chart */
+.chart-container {
+    display: inline-block;
+    width: 40%;
+    margin-left: 4%;
+    vertical-align: middle;
+}
+
+.chart-container > h3 {
+    text-align: center;
+}

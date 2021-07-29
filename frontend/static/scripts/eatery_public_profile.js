@@ -8,6 +8,7 @@ console.log(user_id)
 const eatery_home = '/eatery/home';
 const diner_home = '/diner/home';
 const eatery_private = '/eatery/profile/private';
+const diner_register = '/diner/register';
 
 /* buttons */
 const home_btn = document.getElementById('home-btn');
@@ -48,6 +49,10 @@ profile_btn.onclick = () => {
 
 home_btn.onclick = () => {
     window.location.href = diner_home;
+}
+
+sign_up_btn.onclick = () => {
+    window.location.href = diner_register;
 }
 /* load image */
 const image_section = document.getElementById('image-container');
