@@ -59,10 +59,6 @@ function bookVoucher(voucher_id) {
 
     if (!xhr.response) {
         public_loadVouchers(profile_id);
-<<<<<<< HEAD
-        // alert(xhr.response)
-=======
->>>>>>> 617f2046d6e6cd3ec69afa350bc203e98110d839
     } else {
         book_failed_page.getElementsByTagName('h2')[0].innerHTML = 'You have already booked this voucher!';
         book_failed_page.style.visibility = 'visible';
