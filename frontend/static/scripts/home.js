@@ -158,6 +158,7 @@ function loadCityList() {
         let city_input = document.getElementById('city-input');
         city_input.innerHTML = 'All cities'
         city_input.title = ""
+        loadSuburbList();
     }
 
     city_ul.appendChild(li)
@@ -175,11 +176,14 @@ function loadCityList() {
     }
 
     // load default value for city
-    loadSuburbList(city);
+    loadSuburbList();
 }
 
 function loadSuburbList(city) {
     suburb_ul.innerHTML = ''
+    let suburb_input = document.getElementById('suburb-input');
+    suburb_input.innerHTML = 'All suburb'
+    suburb_input.title = ""
     
     let li = document.createElement('li');
     li.innerHTML = 'All suburb'
