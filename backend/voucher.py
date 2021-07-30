@@ -47,7 +47,10 @@ def add_voucher(token, eatery_id, date, start, end, discount):
     # check if the voucher date and time is valid
     if date < date.today() or (date == date.today() and end < datetime.now().time()):
         raise InputError("Voucher Time invalid")
-    
+    # check if the voucher ends before it starts
+    if end <= start:
+        raise InputError("Invalid Voucher range")
+
     # creating a radom verify code for eatery and user to cehck the voucher
     mix = string.ascii_letters + string.digits
     code = ''.join(random.choice(mix) for i in range(20))
