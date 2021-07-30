@@ -381,6 +381,7 @@ main {
     width: 70%;
     height: 100%;
     box-shadow: 0 0 100px 1000px rgba(0,0,0,0.7);
+    z-index: 10;
 }
 
 #menu-section > iframe {

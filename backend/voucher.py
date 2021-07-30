@@ -6,7 +6,7 @@ import server
 from backend.auth import *
 from backend.user_db import *
 
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from server import db
 import string
 import random
@@ -47,7 +47,10 @@ def add_voucher(token, eatery_id, date, start, end, discount):
     # check if the voucher date and time is valid
     if date < date.today() or (date == date.today() and end < datetime.now().time()):
         raise InputError("Voucher Time invalid")
-    
+    # check if the voucher ends before it starts
+    if end <= start:
+        raise InputError("Invalid Voucher range")
+
     # creating a radom verify code for eatery and user to cehck the voucher
     mix = string.ascii_letters + string.digits
     code = ''.join(random.choice(mix) for i in range(20))
@@ -395,6 +398,33 @@ def complete_booking(token, voucher_id):
     db.session.commit()
     return
 
+# get analytic data for eatery, includes 2 types:
+#   1. list of number of completed reservation for past 7 days
+#   2. number of total vouchers published in the past and completed number
+def get_analytic(token):
+    eatery = Eatery.query.filter_by(token=token).first()
+    # check if eatery exist
+    if eatery is None:
+        raise InputError("Invalid token")
+    # get number of total vouchers
+    total_vouchers = len(Voucher.query.filter_by(eatery_id=eatery.id).all())
+    # get number of all completed in the past
+    completed_vouchers = len(Voucher.query.filter_by(eatery_id=eatery.id, if_used=True).all())
+    print(total_vouchers, completed_vouchers)
+
+    today = date.today()
+    # list of number of completed reservation for past 7 days
+    complete_num = []
+
+    for i in range(6,-1,-1):
+        curr_date = today - timedelta(days=i)
+        reservation_today = len(Voucher.query.filter_by(eatery_id=eatery.id, date=curr_date, if_used=True).all())
+        complete_num.append(reservation_today)
+    
+    return { 'line': complete_num, 'doughnut': [total_vouchers-completed_vouchers, completed_vouchers] }
+
+
+    pass
 # string type: "2014-06-08"     
 def convert_string_to_date(s):
     if isinstance(s, str):

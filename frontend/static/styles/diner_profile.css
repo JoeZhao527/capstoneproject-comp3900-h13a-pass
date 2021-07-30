@@ -5,36 +5,26 @@
     --rating-width: 400px;
 }
 
-/* nav bar */
 #nav-bar {
     background-color:var(--primary-color);
-    padding: 25px;
-    margin: -10px -10px 0 -10px;
-    height: 1.5rem;
+    height: 50px;
+    width: 100% !important;
+    margin-left: -10px;
+    margin-top: -10px;
     box-shadow: 0 0 15px 0 black;
 }
 
-#nav-bar button:hover{
-    cursor: pointer;
-    color: black;
-    transition: 0.2s;
-    box-shadow: 1px 1px 1px 1px black;
+.nav-btn:hover {
+    box-shadow: none !important;
 }
-#nav-bar button {
-    border: none;
-    font-weight: 600;
-    font-size: 16px;
-    color: black;
-    background-color: var(--primary-color);
-    width: 6rem;
-    height: 2.5rem;
-    margin-right: 3rem;
-    margin-top: -0.5rem;
-    float: right;
+
+#logout-btn {
+    margin-right: 40px;
 }
-/* #logout{
-    float: left;
-} */
+
+.home:hover {
+    background: transparent !important;
+}
 
 main {
     display: flex;
@@ -43,7 +33,7 @@ main {
 /* side bar */
 .side-bar {
     width: 20rem;
-    margin-top: 20px;
+    margin-top: 80px !important;
 }
 
 .side-bar div {
@@ -72,6 +62,7 @@ main {
 /* pages */
 
 .container {
+    margin-top: 80px !important;
     height: 100%;
     width: 100%;
 }
@@ -84,47 +75,40 @@ main {
 .page {
     padding-left: 20px;
 }
-.page > div{
-    float: left;
-}
 
 #profile > div {
     padding: 30px;
     margin: 14px;
     border-radius: 2.5rem;
 }
-#profile-section {
-    position: fixed;
-    top: 37%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size :28px
-}
 
-#profile  div:hover {
-    box-shadow: 10px 10px 10px 10px rgba(0,0,0,0.05);
+#profile-section {
+    width: fit-content;
+    position: relative;
+    left: 50%;
+    transform: translate(-60%, 0);
 }
 
 #profile-form label {
     display: inline-block;
     font-weight: bolder;
-    color: #4fa3db;
-    font-size: 18px;
+    font-size: 20px;
     width: 220px;
     height: 30px;
     border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 #profile-form input {
     border: 0;
     border-bottom: 1px solid #70b8e7;
     display: inline-block;
-    width: 300px;
+    font-size: 20px;
+    width: 320px;
     height: 30px;
-    font-size: 28px;
-    color: #00000071;
-    font-family: "montserrat",sans-serif;
-    /* border-radius: 5px; */
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid black;
 }
 
 #profile-form label, #profile-form input {
@@ -137,17 +121,14 @@ main {
     width: 50% !important;
     height: 40px !important;
     border: 1px solid;
-    background:#70b8e7;
-    border-radius: 25px;
-    font-size: 10px;
-    color: #000000;
+    background: var(--btn-color);;
+    border-radius: 25px !important;
+    font-size: 18px;
+    color: #e9f4fb;
     font-weight: 700;
     cursor: pointer;
     outline: none;
-    
-}
-#submit input {
-    color: #ddd;
+    border: none !important;
 }
 
 /* add review form */

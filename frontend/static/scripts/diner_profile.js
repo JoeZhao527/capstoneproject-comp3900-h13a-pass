@@ -31,6 +31,7 @@ function displayPage(page) {
 displayPage(pages[0]);
 
 /* logout */
+/*
 const logout_btn = document.getElementById('logout');
 
 logout_btn.onclick = () => {
@@ -42,9 +43,7 @@ logout_btn.onclick = () => {
     }
 }
 
-/**
- * send logout request to backend
- */
+
  function logout() {
     let xhr = new XMLHttpRequest();
     xhr.open('PUT', '/logout', false);
@@ -53,7 +52,7 @@ logout_btn.onclick = () => {
     console.log(xhr.response);
     return xhr.response
 }
-
+*/
 /* content */
 
 // profile
@@ -103,7 +102,12 @@ profile_form.onsubmit = (e) => {
     data['token'] = token;
     console.log(data)
     if (updateProfile(data) === '') {
-        console.log('success')
+        update.style.backgroundColor = "green"
+        update.value = "Profile Update Success!"
+        setTimeout(() => {
+            update.style.backgroundColor = "#2691d9"
+            update.value = "Update Profile" 
+        }, 2000)
     } else {
         alert('sign up failed')
     }

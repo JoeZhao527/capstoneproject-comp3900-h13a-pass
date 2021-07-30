@@ -26,8 +26,11 @@ const recommendations = document.getElementById('recommendations')
 
 function loadPage() {
     token = sessionStorage.getItem('token');
+    user_id = sessionStorage.getItem('id');
+    utype = sessionStorage.getItem('utype');
     if (token === 'undefined' || token === null) display_default();
     else display_user();
+    console.log(utype)
     getRecommendations();
 }
 function display_default() {
@@ -155,6 +158,7 @@ function loadCityList() {
         let city_input = document.getElementById('city-input');
         city_input.innerHTML = 'All cities'
         city_input.title = ""
+        loadSuburbList();
     }
 
     city_ul.appendChild(li)
@@ -172,11 +176,14 @@ function loadCityList() {
     }
 
     // load default value for city
-    loadSuburbList(city);
+    loadSuburbList();
 }
 
 function loadSuburbList(city) {
     suburb_ul.innerHTML = ''
+    let suburb_input = document.getElementById('suburb-input');
+    suburb_input.innerHTML = 'All suburb'
+    suburb_input.title = ""
     
     let li = document.createElement('li');
     li.innerHTML = 'All suburb'
@@ -374,9 +381,7 @@ function loadEateries(eateries) {
         search_scroll_right.style.visibility = 'visible';
     }
 
-    console.log(eatery_length)
     search_scroll_left.onclick = () => {
-        console.log(curr_pos)
         if (curr_pos > 0) {
             curr_pos = curr_pos - 1;
             eateries_section.scroll({left: 1210*curr_pos, behavior: 'smooth'})
@@ -386,7 +391,6 @@ function loadEateries(eateries) {
     }
     
     search_scroll_right.onclick = () => {
-        console.log(curr_pos)
         if (curr_pos < eatery_length) {
             curr_pos = curr_pos + 1;
             eateries_section.scroll({left: 1210*curr_pos, behavior: 'smooth'})
@@ -472,7 +476,6 @@ function loadEateries(eateries) {
         // append name, address, cusine and stars to sub_container
         sub_container.appendChild(name_div);
         for (const d of content_divs) {
-            console.log(typeof d)
             sub_container.appendChild(d);
         }
 
@@ -482,8 +485,6 @@ function loadEateries(eateries) {
         container.onclick = () => {
             window.location.href = eatery_path;
         }
-
-        console.log(container)
 
         eatery_section.appendChild(container);
     }
@@ -628,7 +629,6 @@ function loadFilteredEateries(eateries) {
         // append name, address, cusine and stars to sub_container
         sub_container.appendChild(name_div);
         for (const d of content_divs) {
-            console.log(typeof d)
             sub_container.appendChild(d);
         }
 
@@ -638,8 +638,6 @@ function loadFilteredEateries(eateries) {
         container.onclick = () => {
             window.location.href = eatery_path;
         }
-
-        console.log(container)
 
         filtered_eatery_section.appendChild(container);
     }

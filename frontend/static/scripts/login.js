@@ -77,8 +77,8 @@ function diner_login() {
                 window.sessionStorage.setItem('token', res['token']);
                 window.sessionStorage.setItem('id', res['diner_id']);
                 window.sessionStorage.setItem('utype', 'diner');
+                loadPage();
                 closeLogin();
-                window.location.href = '/diner/home';
             } else {
                 document.getElementById('login-msg').innerHTML = 'invalid email or password';
                 login_form.reset();

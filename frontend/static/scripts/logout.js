@@ -5,7 +5,7 @@ _logout.onclick = () => {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('id');
         sessionStorage.removeItem('utype');
-        loadPage();
+        window.location.href = '/';
     } else {
         alert('logout failed');
     }
