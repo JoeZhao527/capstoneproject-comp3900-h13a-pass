@@ -322,7 +322,7 @@ function loadExpired() {
 }
 loadExpired()
 
-function addReviewBtn(activepart, eatery_id) {
+function addReviewBtn(activepart, voucher_id) {
     let btn = document.createElement('button');
     btn.className = 'review'
     btn.onclick = () => {
