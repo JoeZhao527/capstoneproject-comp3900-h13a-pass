@@ -54,7 +54,6 @@ function clearReservation() {
 }
 
 function addReservationItem(voucher) {
-    console.log(voucher)
     // combine voucher time
     voucher['time'] = voucher['start_time'] + '~' + voucher['end_time']
 
@@ -78,6 +77,8 @@ function addReservationItem(voucher) {
     
     /* add first button */
     let btn = document.createElement('button')
+    let span = document.createElement('span')
+    span.className = 'tooltiptext'
     if (voucher['status'] == 'incomplete') {
         btn.className = 'complete-btn reservation-btn';
         // when click complete button, show a sub window to allow input code,
@@ -88,8 +89,14 @@ function addReservationItem(voucher) {
             current_voucher['code'] = voucher['code']
             current_voucher['id'] = voucher['id']
         }
+        span.innerHTML = "click me to enter diner's voucher code, to complete this reservation"
     } else if (voucher['status'] == 'expired') {
         btn.className = 'expire-btn reservation-btn';
+        span.innerHTML = "click me to delete this expired reservation"
+        btn.onclick = () => {
+            deleteExpiredVoucher(voucher['id']);
+            load_reservations();
+        }
     } else if (voucher['status'] == 'completed') {
         btn.className = 'view-feedback-btn reservation-btn';
         btn.onclick = () => {
@@ -98,12 +105,17 @@ function addReservationItem(voucher) {
                 loadReviews(voucher['reviews'])
             }
         }
+        span.innerHTML = "click me to view diner's feed back for this reservation"
     }
+    btn.appendChild(span)
     tr.appendChild(btn)
 
     /* add second button */
     btn = document.createElement('button')
     btn.className = 'view-detail-btn reservation-btn';
+    span = document.createElement('span');
+    span.className = 'tooltiptext';
+    span.innerHTML = "click me to view more details of this reservation"
     btn.onclick = () => {
         view_detail_page.style.display = 'inline';
         let spans = document.getElementById('view-detail-page').getElementsByTagName('span')
@@ -111,8 +123,22 @@ function addReservationItem(voucher) {
             item.innerHTML = voucher[item.id]
         }
     }
+    btn.appendChild(span)
     tr.appendChild(btn)
     reservation_table.appendChild(tr);
+}
+
+function deleteExpiredVoucher(voucher_id) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('DELETE', '/eatery/profile/private/delete_voucher_by_id', true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.response) {
+                alert('failed to delete voucher')
+            }
+        }
+    }
+    xhr.send(JSON.stringify({ token:token, voucher_id:voucher_id }))
 }
 
 function loadReviews(reviews) {

@@ -31,21 +31,24 @@ function load_line(_data) {
             data: _data,
         }]
     };
-    let config = {type: 'bar', data, options: {}};
+    let config = {type: 'line', data, options: {}};
 
     let line_chart = new Chart(chart, config);
 }
 
 function load_doughnut(_data) {
     let chart = document.getElementById('doughnut_chart')
-    let labels = ['expired vouchers', 'completed vouchers'];
+    let labels = ['1 star ', '2 star ','3 star ','4 star ','5 star '];
     let data = {
         labels: labels,
         datasets: [{
-            label: labels,
+            label: 'Ratings of Reviews',
             backgroundColor: [
-                'rgb(255, 205, 86)',
-                'rgb(54, 162, 235)'
+                'rgb(224, 54, 54)',
+                'rgb(232, 175, 51)',
+                'rgb(90, 188, 237)',
+                'rgb(202, 111, 237)',
+                'rgb(109, 237, 109)'
               ],
             data: _data,
         }]

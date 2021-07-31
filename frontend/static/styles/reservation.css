@@ -292,3 +292,43 @@ table .view-detail-btn:hover {background-color: coral;}
 #comment-container h3 {
     text-align: center;
 }
+
+/* tooltip */
+.reservation-btn {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+  
+.reservation-btn .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: -50%;
+    left: -180px;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+  
+.reservation-btn .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 25%;
+    left: 100%;
+    margin-right: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #555;
+}
+  
+.reservation-btn:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

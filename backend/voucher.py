@@ -149,6 +149,14 @@ def delete_voucher_by_group(token, group_id):
     voucher = Voucher.query.filter_by(group_id=group_id, eatery_id=eatery.id).first()
     delete_item(voucher)
 
+def delete_voucher_by_id(token, voucher_id):
+    eatery = Eatery.query.filter_by(token=token).first()
+    if eatery is None:
+        raise InputError("invalid token")
+
+    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
+    delete_item(voucher)
+
 # function for checking if a voucher has expired or not
 # by given a voucher item, check if this voucher has expired
 def voucher_has_expired(voucher):
@@ -435,20 +443,26 @@ def complete_booking(token, voucher_id):
     db.session.commit()
     return
 
-# get analytic data for eatery, includes 2 types:
-#   1. list of number of completed reservation for past 7 days
-#   2. number of total vouchers published in the past and completed number
+# get analytic data for eatery
 def get_analytic(token):
     eatery = Eatery.query.filter_by(token=token).first()
     # check if eatery exist
     if eatery is None:
         raise InputError("Invalid token")
+    '''
     # get number of total vouchers
     total_vouchers = len(Voucher.query.filter_by(eatery_id=eatery.id).all())
     # get number of all completed in the past
     completed_vouchers = len(Voucher.query.filter_by(eatery_id=eatery.id, if_used=True).all())
     print(total_vouchers, completed_vouchers)
-
+    '''
+    rating_num = []
+    for i in range(1,6):
+        review_num = len(db.session.query(Voucher, Review)
+            .join(Voucher, Review.voucher_id==Voucher.id).
+            filter(Voucher.eatery_id==eatery.id, Review.rating==i).
+            all())
+        rating_num.append(review_num)
     today = date.today()
     # list of number of completed reservation for past 7 days
     complete_num = []
@@ -458,7 +472,7 @@ def get_analytic(token):
         reservation_today = len(Voucher.query.filter_by(eatery_id=eatery.id, date=curr_date, if_used=True).all())
         complete_num.append(reservation_today)
     
-    return { 'line': complete_num, 'doughnut': [total_vouchers-completed_vouchers, completed_vouchers] }
+    return { 'line': complete_num, 'doughnut': rating_num }
 
 
     pass

@@ -331,6 +331,15 @@ def eatery_delete_voucher():
         print(InputError.message)
         return 'failed'
 
+@app.route('/eatery/profile/private/delete_voucher_by_id', methods=['DELETE'])
+def eatery_delete_expired_reservation():
+    try:
+        info = json.loads(request.data)
+        delete_voucher_by_id(info['token'], info['voucher_id'])
+        return ''
+    except InputError:
+        return 'failed'
+        
 @app.route('/eatery/profile/private/get_schedule', methods=['POST'])
 def eatery_get_schedule():
     data = json.loads(request.data)
