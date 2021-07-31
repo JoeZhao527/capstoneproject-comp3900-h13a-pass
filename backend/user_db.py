@@ -84,8 +84,8 @@ class Voucher(db.Model):
     if_booked = db.Column(db.Boolean)  # add 
     code = db.Column(db.String(20))    # verify code to check if the user has booked the voucher and not used
     group_id = db.Column(db.Integer, nullable=False)   # group id for group the same vouchers 
-    # review id to make sure a diner can only comment an eatery on the voucher they've used from this eatery
-    # review_id = db.Column(db.Integer, db.Foreignkey('review.id')) # review id link to Review to make sure it can only review once.
+    # scheuld_id to check if the voucher is add by a schedule
+    schedule_id = db.Column(db.Integer)
 
     # extra attributes for diner's arrival info
     arrival_time = db.Column(db.Time)

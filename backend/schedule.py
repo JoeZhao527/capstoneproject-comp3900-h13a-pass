@@ -10,7 +10,7 @@ from backend.errors import *
 from backend.data_access import create_schedule, get_eatery_id
 from backend.user_db import *
 from backend.voucher import *
-from datetime import date, timedelta, time
+from datetime import date, timedelta, time, datetime
 
 # import schedule
 
@@ -51,7 +51,7 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
     print(type(voucher_date))
     # Add vouchers with given voucher number
     for _ in range(int(no_vouchers)):
-        add_voucher(token, eatery_id, voucher_date, start, end, discount)
+        add_voucher_by_schedule(eatery_id, voucher_date, start, end, discount, schedule_id)
 
     return {'schedule_id': schedule_id}
 
@@ -70,9 +70,34 @@ while True:
     time.sleep(1)
 """
 # function for checking if the voucher is up to date by the schedule
-def add_voucher_by_schedule():
-    return
+def update_voucher_by_schedule():
+    # loop through the schedule list, update this week's voucher by schedule one by one.
+    schedules = Schedule.query.all()
+    # check if the next 7 day's voucher is updated by this shedule
+    for schedule in schedules:
+        schedule_id = schedule.id
+        weekday = schedule.weekday
+        # calculate the date for the voucher add this week or nxt week by given a weekday
+        interval = date.today().weekday() - weekdays[weekday]
+        # today's weekday is after the given weekday, add the voucher to the next weekday
+        if interval > 0:
+            voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
+        # today's weekday is before or on the given weekday, add the voucher on the weekday this week
+        else:
+            voucher_date = date.today() + timedelta(abs(interval))
 
+        # check if these vouchers are already added into the database by this schedule
+        # by given the schedule id and date
+        voucher = Voucher.query.filter_by(schedule_id=schedule_id, date=voucher_date).first()
+        # if there's no voucher added by this schedule of the next 7 days, then add them into the voucher database
+        if not voucher:
+            no_vouchers = schedule.no_vouchers
+            eatery_id = schedule.eatery_id
+            start = schedule.start_time
+            end = schedule.end_time
+            discount = schedule.discount
+            for _ in range(int(no_vouchers)):
+                add_voucher_by_schedule(eatery_id, voucher_date, start, end, discount, schedule_id)
 
 
 
@@ -108,6 +133,19 @@ def update_schedule(token, schedule_id, no_vouchers, weekday, start, end, discou
     db.session.commit()
     return {}
 
+def voucher_has_expired(voucher):
+    # to check if the voucher is after or equal to today's date
+    if voucher.date < date.today():
+        return True
+    # now the date is good, check the end time
+    else:
+        # the voucher today is expired
+        if voucher.date == date.today() and voucher.end_time <= datetime.now().time():
+            return True
+        # the voucher has not expired yet
+        else: 
+            return False
+
 # function for removing the schedule
 def remove_schedule(token, schedule_id):
     # check if token is valid
@@ -118,6 +156,14 @@ def remove_schedule(token, schedule_id):
     schedule = Schedule.query.filter_by(id=schedule_id, eatery_id=eatery.id).first()
     if schedule is None:
         raise InputError("Invalid schedule")
+
+    # delete all the related voucher in the database
+    vouchers = Voucher.query.filter_by(schedule_id=schedule_id).all()
+    for voucher in vouchers:
+        # if the voucher has not been booked and the voucher is future voucher, not expired yet
+        if voucher.if_booked == False and not voucher_has_expired(voucher):
+            delete_item(voucher)
+
 
     delete_item(schedule)
     return {}

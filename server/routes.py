@@ -311,8 +311,7 @@ def eatery_delete_schedule():
     print('delete schedule')
     try:
         info = json.loads(request.data)
-        for id in info['id']:
-            remove_schedule(token=info['token'], schedule_id=id)
+        remove_schedule(token=info['token'], schedule_id=info['id'])
         return ''
     except InputError:
         print(InputError.message)

@@ -72,7 +72,44 @@ def add_voucher(token, eatery_id, date, start, end, discount):
     voucher.weekday = weekdays[date.weekday()] # datetime.datime.today().weekday()
     db.session.commit()
 
-    return {'voucher_id': voucher.id, 'group_id': group_id}
+    return {"voucher_id": voucher.id, "group_id": group_id}
+
+# function for generating voucher without token
+def add_voucher_by_schedule(eatery_id, date, start, end, discount, schedule_id):
+    start, end = convert_string_to_time(start), convert_string_to_time(end)
+    date = convert_string_to_date(date)
+    # check if the voucher date and time is valid
+    if date < date.today() or (date == date.today() and end < datetime.now().time()):
+        raise InputError("Voucher Time invalid")
+    # check if the voucher ends before it starts
+    if end <= start:
+        raise InputError("Invalid Voucher range")
+
+    # creating a radom verify code for eatery and user to cehck the voucher
+    mix = string.ascii_letters + string.digits
+    code = ''.join(random.choice(mix) for i in range(20))
+
+    # check if the voucher already had a group
+    voucher_group_id = db.session.query(Voucher.group_id).filter(Voucher.eatery_id == eatery_id, Voucher.date == date, Voucher.start_time == start, Voucher.end_time == end, Voucher.discount == discount).first()
+    # if voucher does not belong to any of the group, generate a new group id
+    if voucher_group_id is None:
+        num_vouchers = len(Voucher.query.all())
+        group_id = 1000 + num_vouchers
+    # if voucher belongs to one of the group, add the group id
+    else:
+        group_id = voucher_group_id[0]
+    # eatery and the other info are valid
+    # create the voucher (convert the date into weekday)
+    voucher = create_voucher(eatery_id, date, start, end, discount, code, group_id)
+    voucher.if_used = False
+    voucher.if_booked = False
+    voucher.weekday = weekdays[date.weekday()] # datetime.datime.today().weekday()
+    voucher.schedule_id = schedule_id
+    db.session.commit()
+
+    return {"voucher_id": voucher.id, "group_id": group_id}
+
+
 
 # function for updating the voucher, date-> weekday, start time, end time, discount etc.
 # not rlly got used, but if need to use, remember to update group id
