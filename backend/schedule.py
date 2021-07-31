@@ -71,33 +71,36 @@ while True:
 """
 # function for checking if the voucher is up to date by the schedule
 def update_voucher_by_schedule():
-    # loop through the schedule list, update this week's voucher by schedule one by one.
-    schedules = Schedule.query.all()
-    # check if the next 7 day's voucher is updated by this shedule
-    for schedule in schedules:
-        schedule_id = schedule.id
-        weekday = schedule.weekday
-        # calculate the date for the voucher add this week or nxt week by given a weekday
-        interval = date.today().weekday() - weekdays[weekday]
-        # today's weekday is after the given weekday, add the voucher to the next weekday
-        if interval > 0:
-            voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
-        # today's weekday is before or on the given weekday, add the voucher on the weekday this week
-        else:
-            voucher_date = date.today() + timedelta(abs(interval))
+    try:
+        # loop through the schedule list, update this week's voucher by schedule one by one.
+        schedules = Schedule.query.all()
+        # check if the next 7 day's voucher is updated by this shedule
+        for schedule in schedules:
+            schedule_id = schedule.id
+            weekday = schedule.weekday
+            # calculate the date for the voucher add this week or nxt week by given a weekday
+            interval = date.today().weekday() - weekdays[weekday]
+            # today's weekday is after the given weekday, add the voucher to the next weekday
+            if interval > 0:
+                voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
+            # today's weekday is before or on the given weekday, add the voucher on the weekday this week
+            else:
+                voucher_date = date.today() + timedelta(abs(interval))
 
-        # check if these vouchers are already added into the database by this schedule
-        # by given the schedule id and date
-        voucher = Voucher.query.filter_by(schedule_id=schedule_id, date=voucher_date).first()
-        # if there's no voucher added by this schedule of the next 7 days, then add them into the voucher database
-        if not voucher:
-            no_vouchers = schedule.no_vouchers
-            eatery_id = schedule.eatery_id
-            start = schedule.start_time
-            end = schedule.end_time
-            discount = schedule.discount
-            for _ in range(int(no_vouchers)):
-                add_voucher_by_schedule(eatery_id, voucher_date, start, end, discount, schedule_id)
+            # check if these vouchers are already added into the database by this schedule
+            # by given the schedule id and date
+            voucher = Voucher.query.filter_by(schedule_id=schedule_id, date=voucher_date).first()
+            # if there's no voucher added by this schedule of the next 7 days, then add them into the voucher database
+            if not voucher:
+                no_vouchers = schedule.no_vouchers
+                eatery_id = schedule.eatery_id
+                start = schedule.start_time
+                end = schedule.end_time
+                discount = schedule.discount
+                for _ in range(int(no_vouchers)):
+                    add_voucher_by_schedule(eatery_id, voucher_date, start, end, discount, schedule_id)
+    except:
+        print('failed to update voucher')
 
 
 

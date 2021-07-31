@@ -43,10 +43,7 @@ def search_eatery_by_key():
 ###########################################################
 @app.route('/diner/home')
 def diner_home_load():
-    try:
-        update_voucher_by_schedule()
-    except:
-        print('failed to update voucher')
+    update_voucher_by_schedule()
     return render_template('home.html')
 
 @app.route('/diner/register')
@@ -185,10 +182,7 @@ def diner_add_comment():
 ################# EATERY AUTHENTICATION ###################
 @app.route('/eatery/home')
 def eatery_home():
-    try:
-        update_voucher_by_schedule()
-    except:
-        print('failed to update voucher')
+    update_voucher_by_schedule()
     return render_template('eatery_home.html')
 
 @app.route('/eatery/register')
@@ -346,6 +340,7 @@ def eatery_get_schedule():
 
 @app.route('/eatery/profile/private/get_voucher', methods=['POST'])
 def eatery_get_voucher():
+    update_voucher_by_schedule()
     data = json.loads(request.data)
     token = data['token']
     res = get_unbooked_voucher(token)
@@ -445,6 +440,7 @@ def eatery_public_get_info(id):
 
 @app.route('/eatery/profile/<int:id>/get_vouchers', methods=['GET'])
 def eatery_public_get_voucher(id):
+    update_voucher_by_schedule()
     try:
         res = json.dumps(get_unbooked_voucher(id))
         return res
