@@ -43,6 +43,10 @@ def search_eatery_by_key():
 ###########################################################
 @app.route('/diner/home')
 def diner_home_load():
+    try:
+        update_voucher_by_schedule()
+    except:
+        print('failed to update voucher')
     return render_template('home.html')
 
 @app.route('/diner/register')
@@ -181,6 +185,10 @@ def diner_add_comment():
 ################# EATERY AUTHENTICATION ###################
 @app.route('/eatery/home')
 def eatery_home():
+    try:
+        update_voucher_by_schedule()
+    except:
+        print('failed to update voucher')
     return render_template('eatery_home.html')
 
 @app.route('/eatery/register')

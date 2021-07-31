@@ -258,7 +258,8 @@ function createVoucherItem(data, id) {
         const hidden_attr = [
             'token', 'id', 'eatery_id', 'diner_id', 'if_used', 
             'if_booked', 'code', 'group_id', 'amount', 
-            'arrival_time', 'num_of_guest', 'special_request'
+            'arrival_time', 'num_of_guest', 'special_request',
+            'schedule_id'
         ]
         if (!hidden_attr.includes(key)) {
             let td = document.createElement('td');

@@ -4,9 +4,6 @@ backend/valueEats.db
 # ignore __pycache
 __pycache__/
 
-# ignore pytest_cache
-.pytest_cache
-
 # ignore backend/valueRats.bd-journal
 backend/valueEats.db-journal
 

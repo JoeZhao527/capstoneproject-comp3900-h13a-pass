@@ -20,7 +20,7 @@ const logout_btn = document.getElementById('logout-btn');
 const profile_btn = document.getElementById('profile-btn');
 
 const logged_in_btns = [logout_btn, profile_btn];
-const logged_out_btns = [login_btn, sign_up_btn];
+const logged_out_btns = [login_btn, sign_up_btn, for_eatery_btn];
 
 const recommendations = document.getElementById('recommendations')
 
@@ -41,6 +41,7 @@ function display_default() {
 function display_user() {
     for (const btn of logged_in_btns) btn.style.display = 'inline';
     for (const btn of logged_out_btns) btn.style.display = 'none';
+    if (utype === 'eatery') for_eatery_btn.style.display = 'inline';
 }
 
 loadPage();
