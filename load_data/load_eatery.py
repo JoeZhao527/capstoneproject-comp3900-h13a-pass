@@ -8,6 +8,9 @@ from backend.user_db import *
 from backend.auth import *
 import random
 
+from .progression_bar import printProgressBar
+import time
+
 # generate n eatery 
 def load_eatery(n):
     loc = Location()
@@ -16,8 +19,10 @@ def load_eatery(n):
     en = EateryName()
     des = Description()
 
+    printProgressBar(0, n, prefix = 'Progress:', suffix = '', length = 50)
     # add n eatery to database
     for i in range(1, n):
+        time.sleep(0.1)
         fname, lname = name.get_name()
         email = str(i).zfill(8) + '@gmail.com'
         password = hash_password('12345678')
@@ -32,6 +37,8 @@ def load_eatery(n):
         eatery = Eatery(fname, lname, email, password, phone, ename, address, menu, cuisine, city, suburb, description, token)
         db.session.add(eatery)
         db.session.commit()
+
+        printProgressBar(i + 1, n, prefix = 'Loading Eateries:', suffix = '', length = 50)
     return
 
 # classes for eateries

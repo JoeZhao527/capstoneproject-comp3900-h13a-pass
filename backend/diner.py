@@ -662,7 +662,3 @@ def sort_eateries(sort_by, eatery_list):
     else:  # sort_by == "negative_first":
         sorted_eatery = sorted(eatery_list, key=lambda eatery: eatery["avg_rating"], reverse=True)
         return sorted_eatery
-
-if __name__ == "__main__":
-    date_1 = "12345"
-    print(date.today())

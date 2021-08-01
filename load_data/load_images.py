@@ -8,15 +8,21 @@ from backend.auth import *
 import random
 import base64
 
+from .progression_bar import printProgressBar
+import time
+
 image_dir = 'data/images'
 
 def load_image(n):
     images = EateryImages()
+    printProgressBar(0, n, prefix = 'Progress:', suffix = '', length = 50)
     for eid in range(0,n):
+        time.sleep(0.1)
         for img in images.get_images(8):
             image = Image(eid, img)
             db.session.add(image)
             db.session.commit()
+        printProgressBar(eid + 1, n, prefix = 'Loading Images:', suffix = '', length = 50)
     pass
 
 class EateryImages:

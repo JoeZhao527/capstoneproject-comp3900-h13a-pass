@@ -10,11 +10,17 @@ from datetime import date, timedelta
 from backend.voucher import convert_string_to_time, weekdays
 import random
 
+from .progression_bar import printProgressBar
+import time as _time
+
 # load vouchers for m eateries, n diners
 def load_voucher(m, n):
+
     # for each eatery
     gid = 1000
+    printProgressBar(0, n, prefix = 'Progress:', suffix = '', length = 50)
     for eid in range(0,m):
+        _time.sleep(0.1)
         # 3 days in future, 4 days in past
         dl = Date().get_dates(3,4)
         v_data = []
@@ -63,6 +69,7 @@ def load_voucher(m, n):
                 
                 db.session.add(voucher)
                 db.session.commit()
+        printProgressBar(eid + 1, m, prefix = 'Loading Vouchers:', suffix = '', length = 50)
     pass
 
 class Date:
