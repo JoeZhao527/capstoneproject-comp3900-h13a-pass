@@ -162,3 +162,8 @@ form button {
     font-weight: bold;
     cursor: pointer;
 }
+
+#signup-msg {
+    font-size: 18px;
+    color:red;
+}

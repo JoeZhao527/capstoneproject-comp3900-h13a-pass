@@ -15,8 +15,8 @@ import json
 ##                     LOAD  DATA                        ##
 ###########################################################
 # uncomment these 2 lines to see the load data effect
-clear_db()
-load_all()
+#clear_db()
+#load_all()
 
 ###########################################################
 ##                   COMMON ROUTES                       ##
@@ -58,9 +58,8 @@ def diner_register_check():
         res = diner_register(data['email'], data['password'],
                             data['fname'], data['lname'],data['phone'])
         return json.dumps(res)
-    except InputError:
-        print(InputError.message)
-        return ''
+    except InputError as e:
+        return e.message
 
 @app.route('/diner/login', methods=['POST'])
 def diner_login_info():
