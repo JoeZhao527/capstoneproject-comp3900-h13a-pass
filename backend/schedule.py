@@ -45,7 +45,15 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
     # today's weekday is after the given weekday, add the voucher to the next weekday
     if interval > 0:
         voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
-    # today's weekday is before or on the given weekday, add the voucher on the weekday this week
+    # weekday is equal to today's weekday, compare the time
+    elif interval == 0:
+        # if the voucher's end time is before the time now
+        # add the voucher to next week
+        if end <= datetime.now().time():
+            voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
+        else:
+            voucher_date = date.today() + timedelta(abs(interval))
+    # today's weekday is before the given weekday, add the voucher on the weekday this week
     else:
         voucher_date = date.today() + timedelta(abs(interval))
     print(type(voucher_date))
@@ -83,7 +91,15 @@ def update_voucher_by_schedule():
             # today's weekday is after the given weekday, add the voucher to the next weekday
             if interval > 0:
                 voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
-            # today's weekday is before or on the given weekday, add the voucher on the weekday this week
+            # weekday is equal to today's weekday, compare the time
+            elif interval == 0:
+                # if the voucher's end time is before the time now
+                # add the voucher to next week
+                if end <= datetime.now().time():
+                    voucher_date = date.today() - timedelta(abs(interval)) + timedelta(7)
+                else:
+                    voucher_date = date.today() + timedelta(abs(interval))
+            # today's weekday is before the given weekday, add the voucher on the weekday this week
             else:
                 voucher_date = date.today() + timedelta(abs(interval))
 

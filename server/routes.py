@@ -15,8 +15,8 @@ import json
 ##                     LOAD  DATA                        ##
 ###########################################################
 # uncomment these 2 lines to see the load data effect
-clear_db()
-load_all()
+#clear_db()
+#load_all()
 
 ###########################################################
 ##                   COMMON ROUTES                       ##
