@@ -2,7 +2,7 @@
 backend/valueEats.db
 
 # ignore __pycache
-__pycache__/
+__pycache__
 
 # ignore backend/valueRats.bd-journal
 backend/valueEats.db-journal
