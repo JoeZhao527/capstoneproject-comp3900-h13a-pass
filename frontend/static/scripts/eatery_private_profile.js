@@ -182,7 +182,7 @@ profile_form.onsubmit = (e) => {
             }
         } else {
             let profile_update_err_msg = document.getElementById('profile-msg')
-                profile_update_err_msg.innerHTML = "only pdf is allowed for menu"
+                profile_update_err_msg.innerHTML = "please upload pdf file less than 150Kb for menu only"
                 profile_update_err_msg.style.color = 'red'
                 setTimeout(() => {
                     profile_update_err_msg.innerHTML = ''
@@ -195,7 +195,7 @@ function isPDF(file) {
     if (typeof file == 'undefined') return true
     var fileName = file.name;
     var ext = fileName.substring(fileName.lastIndexOf('.') + 1);
-    if (ext == 'pdf') return true;
+    if (ext == 'pdf' && file.size < 150000) return true;
     else return false;
 }
 

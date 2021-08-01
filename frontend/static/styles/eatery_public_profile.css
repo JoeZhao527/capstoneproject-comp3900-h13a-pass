@@ -326,10 +326,6 @@ main {
     margin-bottom: 60px;
 }
 
-#comment-container {
-    height: 600px;
-    overflow-y: scroll;
-}
 /* book page */
 #book-enter-info {
     display: none;
