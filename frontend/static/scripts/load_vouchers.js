@@ -42,8 +42,7 @@ function private_loadVouchers() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
             
             for (const data of JSON.parse(this.response)['vouchers']) {
-                console.log(data)
-                addVoucherItem(data, data['group_id'])
+                if (!data['schedule_id']) addVoucherItem(data, data['group_id'])
             }
         }
     }
