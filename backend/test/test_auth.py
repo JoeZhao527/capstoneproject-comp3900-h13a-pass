@@ -56,6 +56,25 @@ def test_eatery_register_invalid_email():
         eatery_register(email, password, first_name, last_name, phone, eatery_name, address, 
             menu, cuisine, city, suburb, description)
 
+def test_eatery_register_invalid_email2():
+    clear_db()
+    email = ""
+    password = "12345678"
+    first_name = "joe"
+    last_name = "zhao"
+    phone = "061726371"
+    eatery_name = "joe's dinning"
+    address = "21-2 My Street"
+    menu = ''
+    cuisine = ''
+    city = "Syndey"
+    suburb = "Kensington"
+    description = ''
+    with pytest.raises(InputError):
+        eatery_register(email, password, first_name, last_name, phone, eatery_name, address, 
+            menu, cuisine, city, suburb, description)
+
+
 # test for trying to register with repeated email
 def test_eatery_register_repeated_email():
     clear_db()
