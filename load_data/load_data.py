@@ -26,8 +26,13 @@ def clear_db():
 
 def load_all():
     load_eatery(eatery_number)
+    print('')
     load_diner(diner_number)
-    load_voucher(90,diner_number)
+    print('')
+    load_voucher(100,diner_number)
+    print('')
     load_image(eatery_number)
-    load_reviews(90)
+    print('')
+    load_reviews(97)
+    print('\nLoading data completed, enjoy your Value Eats trip!')
     pass

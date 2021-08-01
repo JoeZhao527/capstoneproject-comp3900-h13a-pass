@@ -7,8 +7,12 @@ from backend.user_db import *
 from backend.auth import *
 import random
 
+from .progression_bar import printProgressBar
+import time
+
 def load_reviews(m):
     rev = EateryReviews()
+    printProgressBar(0, m, prefix = 'Progress:', suffix = '', length = 50)
     for eid in range(m):
         for voucher in Voucher.query.filter_by(eatery_id=eid, if_booked=True, if_used=True).all():
             add_comment = random.randint(0,1)
@@ -20,6 +24,7 @@ def load_reviews(m):
                     review = Review(diner_id, voucher_id, comment, rating)
                     db.session.add(review)
                     db.session.commit()
+        printProgressBar(eid + 1, m, prefix = 'Loading Reviews:', suffix = '', length = 50)
     pass
 
 class EateryReviews:

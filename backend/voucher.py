@@ -135,7 +135,7 @@ def delete_all_vouchers(token, group_id):
     if eatery is None:
         raise InputError("Invalid token")
     # get the voucher and delete it 
-    vouchers = Voucher.query.filter_by(group_id=group_id, eatery_id=eatery.id).all()
+    vouchers = Voucher.query.filter_by(group_id=group_id, eatery_id=eatery.id, if_booked=False).all()
     for voucher in vouchers:
         delete_item(voucher)
 
@@ -449,13 +449,7 @@ def get_analytic(token):
     # check if eatery exist
     if eatery is None:
         raise InputError("Invalid token")
-    '''
-    # get number of total vouchers
-    total_vouchers = len(Voucher.query.filter_by(eatery_id=eatery.id).all())
-    # get number of all completed in the past
-    completed_vouchers = len(Voucher.query.filter_by(eatery_id=eatery.id, if_used=True).all())
-    print(total_vouchers, completed_vouchers)
-    '''
+
     rating_num = []
     for i in range(1,6):
         review_num = len(db.session.query(Voucher, Review)
@@ -499,34 +493,3 @@ def convert_time_to_string(t):
 # if date is a string, return date
 def convert_date_to_string(d):
     return str(d) if not isinstance(d, str) else d
-
-# for testing
-if __name__ == "__main__":
-    """
-    result1 = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
-    result2 = add_voucher(result1["token"], result1["eatery_id"], "2021-07-17", "08:00", "10:00", 0.5)
-    print(result2)
-    result3 = add_voucher(result1["token"], result1["eatery_id"], "2021-07-17", "08:00", "10:00", 0.5)
-    # print(result1)
-    print(result3)
-
-    result4 = add_voucher(result1["token"], result1["eatery_id"], "2021-07-17", "08:00", "10:00", 0.5)
-    print(result4)
-
-    result5 = add_voucher(result1["token"], result1["eatery_id"], "2021-08-17", "08:00", "10:00", 0.5)
-    print(result5)
-
-    result6 = add_voucher(result1["token"], result1["eatery_id"], "2021-08-17", "08:00", "10:00", 0.5)
-    print(result6)
-
-    check = get_unbooked_voucher(result1["token"])
-    
-    print(check)
-    
-    delete_voucher_by_group(result1["token"], 1000)
-    delete_voucher_by_group(result1["token"], 1000)
-    check = get_unbooked_voucher(result1["token"])
-    print(check)
-    """
-    hello = None
-    print(convert_time_to_string(hello))

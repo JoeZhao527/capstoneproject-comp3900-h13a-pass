@@ -381,18 +381,16 @@ def eatery_profile_update(token, first_name, last_name, phone, eatery_name, addr
 
 # function for updating the diner profile (eaterie's info), can seperate the function if necessary
 def diner_profile_update(token, first_name, last_name, phone):
-    print('2')
-    print(token)
     if not diner_valid_token(token):
         raise InputError("Invalid token")
     # get eatery by token, update the info
     diner = Diner.query.filter_by(token=token).first()
-    print("11111")
+
     diner.first_name = first_name
     diner.last_name = last_name
     diner.phone = phone
     db.session.commit()
-    print("1")
+
     return get_diner_by_token(token)
 
 
@@ -448,97 +446,3 @@ def convert_string_to_time(s):
         h, m = s.split(':')[0], s.split(':')[1]
         return time(int(h), int(m))
     return s
-
-# for testing
-if __name__ == "__main__":
-    #load_data()
-    Eateries = Eatery.query.all()
-    result1 = [dictionary_of_eatery(eat) for eat in Eateries]
-    #print(result1)
-
-    result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
-    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "ABCsefnm123", 10086)
-    new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abchkakdjqwn789", 10086)
-
-
-    Vouchers = Voucher.query.all()
-    eateries = db.session.query(Eatery, Voucher).join(Voucher, Voucher.eatery_id==Eatery.id).filter(Voucher.discount==0.3).all()
-    result = []
-    test_string = "ABC"
-    for voucher in Vouchers:
-        if test_string.lower() in voucher.code.lower():
-            result.append(voucher)
-
-    print(result)
-    #result2 = [dictionary_of_voucher(vouch) for vouch in Vouchers]
-    #result5 = dictionary_of_voucher(Vouchers)
-    #print(result5["arrival_time"])
-
-    #conver_res = convert_date_to_string(result5["arrival_time"])
-    #print(conver_res)
-
-
-    sort_voucher = Voucher.query.order_by(Voucher.discount.desc())
-    result3 = [dictionary_of_voucher(vouch) for vouch in sort_voucher]
-    #print(result3)
-
-    print("!!!!!!!!!!!!!!!!")
-    print(date.today())
-    #print(convert_string_to_date(""))
-    #sort_dict = sorted(result2, key=lambda voucher: voucher["discount"], reverse=True)
-    #print(sort_dict)
-    hey = None
-    if hey:
-        print("hello")
-    else:
-        print("yessir")
-    #print(result3 == sort_dict)
-
-    # make an eatery and add voucher
-    #result = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
-    # eatery_register("jianjunjchen@gmail", )
-    #new_voucher = create_voucher(result["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123", 10086)
-
-    #checks = db.session.query(Eatery, Voucher).filter(Voucher.eatery_id == Eatery.id).all()
-    #checks = db.session.query(Eatery, Voucher).join(Voucher, Eatery.id == Voucher.eatery_id).filter_by(code="abcsefnm123")
-    #
-    #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
-    #checks = Eatery.query.filter_by(first_name = "JJI").first().email
-    #print(checks)
-    
-
-"""
-if __name__ == "__main__":
-    # make an eatery and add voucher
-    r4 = eatery_register("5678@gmail.com", "3936Cjj", "JJI", "ASSA", "04703977", "mR.cHEN", "HHHHH RAOD", "", "", "", "" ,"")
-    print(r4)
-    # eatery_register("jianjunjchen@gmail", )
-    new_voucher = create_voucher(r4["eatery_id"], datetime(2021, 7, 18), time(9, 50, 0), time(11, 50, 0), 0.3, "abcsefnm123", 10086)
-    print(str(new_voucher.id) + "!!!!!!" + str(new_voucher.discount) + str(new_voucher.start_time))
-    
-    result1 = diner_register("jay123@gmail.com", "123Cjj", "Jay", "Chen", "0470397745")
-    print(result1)
-
-    result2 = diner_register("jay12345@gmail.com", "123Cjj", "Hayden", "Chen", "3000800")
-    print(result2)
-    #diners = Diner.query.filter_by(last_name="Chen").all()
-    #for diner in diners:
-    #    print(diner.email)
-
-    #checks = db.session.query(Eatery, Voucher).filter(Voucher.eatery_id == Eatery.id).filter(Voucher.id == 1).all()
-    checks = db.session.query(Eatery, Voucher).join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0))
-    #
-    #checks = Eatery.query.join(Voucher).filter(Eatery.last_name == "ASSA", Voucher.discount == 0.3, Voucher.end_time <= time(11, 50, 0)).all()
-    print(checks)
-
-    diners = Diner.query.all()
-    print(diners)
-    result = [dict((col, getattr(diner, col)) for col in diner.__table__.columns.keys()) for diner in diners]
-    print(result)
-    result2 = [dictionary_of_eatery(eat) for eat in diners]
-    print(result2)
-    
-    diners_id = db.session.query(Diner.id).first()
-    print(diners_id[0])
-    
-"""
