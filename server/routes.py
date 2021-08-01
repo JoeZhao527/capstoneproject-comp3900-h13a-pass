@@ -8,15 +8,7 @@ from backend.data_access import *
 from backend.voucher import *
 from backend.image import *
 from backend.diner import *
-from load_data.load_data import clear_db, load_all
 import json
-
-###########################################################
-##                     LOAD  DATA                        ##
-###########################################################
-# uncomment these 2 lines to see the load data effect
-#clear_db()
-#load_all()
 
 ###########################################################
 ##                   COMMON ROUTES                       ##
@@ -35,7 +27,6 @@ def eatery_logout():
 def search_eatery_by_key():
     keyword = json.loads(request.data)['keyword']
     res = search_by_key(keyword)
-    print(res)
     return json.dumps({'data':res})
 
 ###########################################################
@@ -53,7 +44,6 @@ def diner_register_load():
 @app.route('/diner/register', methods=['POST'])
 def diner_register_check():
     data = json.loads(request.data)
-    print(data)
     try:
         res = diner_register(data['email'], data['password'],
                             data['fname'], data['lname'],data['phone'])
@@ -66,10 +56,8 @@ def diner_login_info():
     data = json.loads(request.data)
     try:
         res = diner_login(data['email'], data['password'])
-        print(res)
         return json.dumps(res)
     except InputError:
-        print(InputError.message)
         return ''
 
 @app.route('/diner/home/get_location', methods=['GET'])
@@ -96,7 +84,6 @@ def get_eatery_list():
 @app.route('/diner/get_eatery/recommend', methods=['POST'])
 def get_eatery_recommendation():
     token = json.loads(request.data)['token']
-    print(token)
     try:
         res = get_recommendations(token)
         return json.dumps({'eateries':res})
@@ -106,7 +93,6 @@ def get_eatery_recommendation():
 def diner_getEatery():
     try:
         data = get_all_eatery()
-        # print(data)
         return json.dumps(data)
     except:
         return ''
@@ -117,7 +103,6 @@ def diner_private_profile():
 
 @app.route('/diner/profile/private/info', methods=['POST'])
 def diner_private_profile_info():
-    print("1")
     data = json.loads(request.data)
     res = get_diner_by_token(data['token'])
     # returns json string if res is not empty, otherwise returns an empty string
@@ -136,7 +121,6 @@ def diner_private_profile_update():
 def diner_profile_active():
     data = json.loads(request.data)
     res = get_booked_voucher(data['token'])
-    #print(res)
     return json.dumps(res)
     
 
@@ -157,10 +141,8 @@ def diner_profile_deleate_voucher():
     try:
         info = json.loads(request.data)
         cancel_voucher(token=info['token'], voucher_id=info['id'])
-        print("delete success")
         return ''
     except InputError:
-        print(InputError.message)
         return 'failed'
 
 @app.route('/diner/profile/add_review', methods=['POST'])
@@ -193,10 +175,8 @@ def eatery_login_info():
     data = json.loads(request.data)
     try:
         res = eatery_login(data['email'], data['password'])
-        print(res)
         return json.dumps(res)
     except InputError:
-        print(InputError.message)
         return ''
 
 @app.route('/reset_pass', methods=['GET'])
@@ -260,7 +240,6 @@ def eatery_private_profile_update():
     
 @app.route('/eatery/profile/private/add_schedule', methods=['POST'])
 def eatery_add_schedule():
-    print(request.data)
     info = json.loads(request.data)
     token = info['token']
     eatery_id = get_eatery_id(token)
@@ -275,7 +254,6 @@ def eatery_add_schedule():
 
 @app.route('/eatery/profile/private/add_voucher', methods=['POST'])
 def eatery_add_voucher():
-    print(request.data)
     info = json.loads(request.data)
     token = info['token']
     eatery_id = get_eatery_id(token)
@@ -308,25 +286,20 @@ def eatery_update_schedule():
 
 @app.route('/eatery/profile/private/remove_schedule', methods=['DELETE'])
 def eatery_delete_schedule():
-    print('delete schedule')
     try:
         info = json.loads(request.data)
         remove_schedule(token=info['token'], schedule_id=info['id'])
         return ''
     except InputError:
-        print(InputError.message)
         return 'failed'
 
 @app.route('/eatery/profile/private/delete_all_vouchers', methods=["DELETE"])
 def eatery_delete_voucher():
-    print('delete voucher')
     try:
         info = json.loads(request.data)
-        print(info)
         delete_all_vouchers(token=info['token'], group_id=info['id'])
         return ''
     except InputError:
-        print(InputError.message)
         return 'failed'
 
 @app.route('/eatery/profile/private/delete_voucher_by_id', methods=['DELETE'])
@@ -356,7 +329,6 @@ def eatery_get_voucher():
 @app.route('/eatery/profile/private/get_reservation/<filter>', methods=['POST'])
 def eatery_get_all_reservation(filter):
     data = json.loads(request.data)
-    print(data)
     token = data['token']
     sort_method = data['sort_method']
     sort_reverse = data['sort_reverse']
@@ -414,7 +386,6 @@ def eatery_delete_image():
         delete_image(token=info['token'], image_id=info['id'])
         return ''
     except InputError:
-        print(InputError.message)
         return 'failed'
 
 @app.route('/eatery/profile/private/get_analytic', methods=['POST'])
@@ -422,7 +393,6 @@ def eatery_get_analytic():
     try:
         token = json.loads(request.data)['token']
         res = get_analytic(token)
-        print(res)
         return json.dumps(res)
     except InputError:
         return ''
@@ -469,7 +439,6 @@ def diner_book_voucher(id):
 @app.route('/eatery/profile/<int:id>/get_reviews', methods=['POST'])
 def eatery_public_get_reviews(id):
     sort_order = json.loads(request.data)['sort']
-    print((sort_order))
     try:
         res = read_reviews(id)
         # sort order '1' for postive first, '0' for negative first

@@ -16,8 +16,8 @@ from load_data.load_reviews import load_reviews
 
 # simply change these two value to set eatery and diner number in db
 # vouchers, comment and reservations will be randomly generated from these values
-eatery_number = 100
-diner_number = 50
+eatery_number = 30
+diner_number = 20
 
 # clear up database
 def clear_db():
@@ -26,8 +26,13 @@ def clear_db():
 
 def load_all():
     load_eatery(eatery_number)
+    print('')
     load_diner(diner_number)
-    load_voucher(90,diner_number)
+    print('')
+    load_voucher(30,diner_number)
+    print('')
     load_image(eatery_number)
-    load_reviews(90)
+    print('')
+    load_reviews(30)
+    print('\nLoading data completed, enjoy your Value Eats trip!')
     pass

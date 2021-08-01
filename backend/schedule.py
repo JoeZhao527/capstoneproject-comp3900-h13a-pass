@@ -56,7 +56,7 @@ def add_schedule(token, eatery_id, no_vouchers, weekday, start, end, discount):
     # today's weekday is before the given weekday, add the voucher on the weekday this week
     else:
         voucher_date = date.today() + timedelta(abs(interval))
-    print(type(voucher_date))
+
     # Add vouchers with given voucher number
     for _ in range(int(no_vouchers)):
         add_voucher_by_schedule(eatery_id, voucher_date, start, end, discount, schedule_id)
@@ -211,7 +211,3 @@ def convert_string_to_time(s):
 
 def convert_time_to_string(t):
     return str(t)[:-3]
-    
-if __name__ == "__main__":
-    print(convert_string_to_time('00:00'))
-    

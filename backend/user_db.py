@@ -141,16 +141,3 @@ class Review(db.Model):
         self.voucher_id = voucher_id
         self.comment = comment
         self.rating = rating
-
-"""
-CREATE DOMAIN Weekdays AS 
-   CHECK (VALUE IN ('Mon','Tues','Wed','Thurs','Fri', 'Sat', 'Sun'));
-CREATE DOMAIN Ratings AS 
-   CHECK (VALUE > 0 AND VALUE < 6);
-CREATE DOMAIN Discount AS 
-   CHECK (VALUE > 0 AND VALUE <= 100);
-"""
-
-# clear up and create tables when the app run
-#db.drop_all() # use for backend testing
-db.create_all()
