@@ -368,7 +368,7 @@ table .delete:hover{
     display: inline-block;
     width: 40%;
     margin-left: 4%;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 .chart-container > h3 {

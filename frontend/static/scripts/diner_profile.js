@@ -49,7 +49,6 @@ logout_btn.onclick = () => {
     xhr.open('PUT', '/logout', false);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(`{"token":"${token}"}`);
-    console.log(xhr.response);
     return xhr.response
 }
 */
@@ -58,6 +57,8 @@ logout_btn.onclick = () => {
 // profile
 const profile_form = document.getElementById('profile-form');
 const profile_item = profile_form.getElementsByTagName('input');
+
+if (!localStorage.getItem('diner_profile_img')) localStorage.setItem('diner_profile_img', true)
 
 // get diner's info by its token
 function getDinerData() {
@@ -69,7 +70,6 @@ function getDinerData() {
             for (const [key, value] of Object.entries(JSON.parse(this.response))) {
                 _data[key] = value;
             }
-            console.log(_data);
             loadDinerData(_data);
         }
     }
@@ -79,28 +79,50 @@ getDinerData();
 
 // load diner data to profile
 function loadDinerData(data) {
+    console.log(data)
     Array.from(profile_item).forEach(e => {
         if (e.name) {
             e.value = data[e.name]
         }
     });
+    let msg = document.getElementById('welcome-msg')
+    let email = document.getElementById('welcome-email')
+    msg.innerHTML = `Welcome, ${data['first_name']}!`
+    email.innerHTML = data['email']
+
+    let gender = localStorage.getItem('diner_profile_img')
+    let profile_img = document.getElementById('welcome-img');
+    console.log(gender)
+    if (gender == 'true') {
+        profile_switch.checked = true
+        profile_img.src = '../../static/images/person_male.png'
+    } else {
+        profile_img.src = '../../static/images/person_female.png'
+        profile_switch.checked = false
+    }
 }
 
-
+/* profile image switch */
+const profile_switch = document.getElementById('profile-switch')
+profile_switch.onchange = () => {
+    let gender = window.localStorage.getItem('diner_profile_img')
+    if (gender === 'false') gender = true
+    else gender = false
+    window.localStorage.setItem('diner_profile_img', gender)
+    getDinerData();
+}
 /* update profile */
 const update = document.getElementById('submit');
 
 profile_form.onsubmit = (e) => {
     e.preventDefault();
     let data = {}
-    console.log(profile_form)
     Array.from(profile_form).forEach(e => {
         if(e.type !== `button` && e.type !== `submit` && e.name) {
             data[e.name] = e.value;
         }
     });
     data['token'] = token;
-    console.log(data)
     if (updateProfile(data) === '') {
         update.style.backgroundColor = "green"
         update.value = "Profile Update Success!"
@@ -115,11 +137,9 @@ profile_form.onsubmit = (e) => {
 
 function updateProfile(data) {
     // send data and receive token
-    console.log(data)
     let xhr = new XMLHttpRequest();
     xhr.open('PUT', '/diner_private_profile/update', false);
     xhr.send(JSON.stringify(data))
-    console.log(xhr.response)
     return xhr.response;
 }
 
@@ -165,11 +185,8 @@ function loadActive() {
             //     addActiveItem(data, data['id']);
             // }
             let vlist = JSON.parse(this.response)['vouchers']
-            console.log(vlist)
             for(let i = 0; i < vlist.length; i++) {
                 let voucher = vlist[i]
-                console.log(voucher)
-                console.log(voucher['date'])
                 let activepart = document.createElement('tr')
 
                 let eaterynode = document.createElement('td')
@@ -247,11 +264,8 @@ function loadPrevious() {
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
             let vlist = JSON.parse(this.response)['vouchers']
-            console.log(vlist)
             for(let i = 0; i < vlist.length; i++) {
                 let voucher = vlist[i]
-                console.log(voucher)
-                console.log(voucher['date'])
                 let activepart = document.createElement('tr')
 
                 let eaterynode = document.createElement('td')
@@ -288,11 +302,8 @@ function loadExpired() {
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200 || this.status == 304) {
             let vlist = JSON.parse(this.response)['vouchers']
-            console.log(vlist)
             for(let i = 0; i < vlist.length; i++) {
                 let voucher = vlist[i]
-                console.log(voucher)
-                console.log(voucher['date'])
                 let activepart = document.createElement('tr')
 
                 let eaterynode = document.createElement('td')

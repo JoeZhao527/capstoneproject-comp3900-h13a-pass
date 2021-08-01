@@ -81,13 +81,13 @@ def create_diner(first_name, last_name, email, password, phone, token):
 def eatery_register(email, password, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
-        raise InputError("Email invalid")
+        raise InputError("Email is invalid")
     # check if the email addess is being used by another eatery
     if eatery_email_used(email):
         raise InputError("Email being used")
     # check if the password entered is less than 6 character(or empty)
     if len(password) < 6:
-        raise InputError("Password invalid")
+        raise InputError("Password cannot be less than 6 digit")
     # check if first name or last name is empty
     if not first_name:
         raise InputError("First name is empty")
@@ -95,23 +95,23 @@ def eatery_register(email, password, first_name, last_name, phone, eatery_name, 
         raise InputError("Last name is empty")
     # check if first name or last name is invalid
     if len(first_name) > 50:
-        raise InputError("First name invalid")
+        raise InputError("First name is too long")
     if len(last_name) > 50:
-        raise InputError("Last name invalid")
+        raise InputError("Last name is too long")
 
     # check if the eatery_name, address, menu, desciption is valid...
     if len(eatery_name) > 50:
-        raise InputError("Eatery name invalid")
+        raise InputError("Eatery name is too long")
     if len(address) > 50:
-        raise InputError("Eatery address invalid")
+        raise InputError("Eatery address is too long")
     if len(menu) > 50:
         raise InputError("Eatery menu invalid")
     if len(description) > 1000:
-        raise InputError("description invalid")
+        raise InputError("description is too long")
     if len(city) > 20:
-        raise InputError("Eatery city invalid")
+        raise InputError("Eatery city is too long")
     if len(suburb) > 20:
-        raise InputError("Eatery suburb invalid")
+        raise InputError("Eatery suburb is too long")
 
     # hash the password for security
     hashed_password = hash_password(password)

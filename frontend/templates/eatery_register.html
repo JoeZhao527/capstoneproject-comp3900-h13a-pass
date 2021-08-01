@@ -10,44 +10,44 @@
     <section class="container">
         <div class="content">
             <button id="back-home" class="back-home">X</button>
-            <h1>Register Form</h1>
+            <h1>Eatery Register Form</h1>
             <form id="sign-up-form" class="sign-up-form" name="sign-up-form">
                 <div class="txt_field left">
                     <input type="text" name="fname" id="fname" required>
                     <span></span>
-                    <label for="fname">first name:</label>
+                    <label for="fname">* first name:</label>
                 </div>
                 <div class="txt_field right">
                     <input type="text" name="lname" id="lname" required>
                     <span></span>
-                    <label for="lname">last name:</label>
+                    <label for="lname">* last name:</label>
                 </div>
                 <div class="txt_field left">
                     <input type="email" name="email" id="email" required>
                     <span></span>
-                    <label for="email">email:</label>
+                    <label for="email">* email:</label>
                 </div>
                 <div class="txt_field right">
                     <input type="text" name="phone" id="phone" required>
                     <span></span>
-                    <label for="phone">phone:</label>
+                    <label for="phone">* phone:</label>
                 </div>
                 <div class="txt_field left">
                     <input type="text" name="password" id="password" required>
                     <span></span> 
-                    <label for="password">password:</label>
+                    <label for="password">* password:</label>
                 </div>
                 <div class="txt_field right">
                     <input type="text" name="ename" id="ename" required>
                     <span></span>
-                    <label for="ename">eatery name:</label>
+                    <label for="ename">* eatery name:</label>
                 </div>
                 <h4>cuisine types</h4>
                 <div class="btn_field whole">
                     <span id="cuisines"></span>
                 </div>
                 <div class="txt_field left">
-                    <input type="text" id="cuisine" required>
+                    <input type="text" id="cuisine" />
                     <span></span>
                     <label for="cuisine">enter one cuisine:</label>
                 </div>
@@ -57,17 +57,17 @@
                 <div class="txt_field left">
                     <input type="text" name="city" id="city" required>
                     <span></span>
-                    <label for="city">city:</label>
+                    <label for="city">* city:</label>
                 </div>
                 <div class="txt_field right">
                     <input type="text" name="suburb" id="suburb" required>
                     <span></span>
-                    <label for="suburb">suburb:</label>
+                    <label for="suburb">* suburb:</label>
                 </div>
                 <div class="txt_field whole">
                     <input type="text" name="address" id="address" required>
                     <span></span>
-                    <label for="address">address:</label>
+                    <label for="address">* address:</label>
                 </div>
                 <div class="file_field whole" style="display: none;">
                     <label for="menu">menu:</label>
@@ -75,7 +75,7 @@
                     <span></span>
                 </div>
                 <div class="txt_field whole">
-                    <input type="text" name="description" id="description" required>
+                    <input type="text" name="description" id="description">
                     <span></span>
                     <label for="description">description:</label>
                 </div>
@@ -84,6 +84,11 @@
             </form>
         </div>
         <div class="img"></div>
+        <section id="signup-failed-page" class="signup-failed-page">
+            <div class="center">
+                <h3 id="signup-failed-msg"></h3>
+            </div>
+        </section>
     </section>
     
     <script src="../static/scripts/eatery_register.js"></script>

@@ -15,8 +15,8 @@ import json
 ##                     LOAD  DATA                        ##
 ###########################################################
 # uncomment these 2 lines to see the load data effect
-clear_db()
-load_all()
+#clear_db()
+#load_all()
 
 ###########################################################
 ##                   COMMON ROUTES                       ##
@@ -232,9 +232,8 @@ def eatery_register_check():
                             data['cuisines'], data['city'], data['suburb'],
                             data['description'])
         return json.dumps(res)
-    except InputError:
-        print(InputError.message)
-        return ''
+    except InputError as e:
+        return e.message
 
 ################# EATERY PRIVATE PROFILE ###################
 @app.route('/eatery/profile/private', methods=['GET'])
