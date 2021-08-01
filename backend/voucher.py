@@ -150,12 +150,15 @@ def delete_voucher_by_group(token, group_id):
     delete_item(voucher)
 
 def delete_voucher_by_id(token, voucher_id):
-    eatery = Eatery.query.filter_by(token=token).first()
-    if eatery is None:
-        raise InputError("invalid token")
+    try:
+        eatery = Eatery.query.filter_by(token=token).first()
+        if eatery is None:
+            raise InputError("invalid token")
 
-    voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
-    delete_item(voucher)
+        voucher = Voucher.query.filter_by(id=voucher_id, eatery_id=eatery.id).first()
+        delete_item(voucher)
+    except:
+        pass
 
 # function for checking if a voucher has expired or not
 # by given a voucher item, check if this voucher has expired
