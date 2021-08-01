@@ -30,7 +30,7 @@ or
 ```
 python3 -m flask run
 ```
-or if address 5000 is being used, use the other ports
+or if port 5000 is being used, use the other ports
 eg:
 ```
 flask run -p 5001
