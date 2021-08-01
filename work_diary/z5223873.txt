@@ -1,2 +1,26 @@
 Week1
-We formed the group, discuss about 
+We formed the group and joined Jira. we have meeting and choose Value Eats as our project. 
+
+Week2
+I start writing user stories. Then we split the task to different people. Joe and I doing the frontend.
+
+Week3
+Editing user stories and start design the UI diagram. Also start self learning frontend html, css and javascript.
+
+Week4
+Finish the UI design and write part of the project proposal.
+
+Week 5 
+Self learning frontend, start sprint 1. Writing the frontend, make the website homepage.
+
+Week 6 
+Start the sprint 2. start making diner related webpage. keep self learning about javascript.
+
+week 7 
+Keep doing sprint 2. implement different function on frontend. Keep communicate with joe on frontend. And have meeting about retrospective.
+
+week 8
+Start doing sprint 3, have meeting with group members about demo. finish the booking vouchers part on frontend.
+
+week 9 
+fix the bugs, improve the UI design and start adding test for backend.
