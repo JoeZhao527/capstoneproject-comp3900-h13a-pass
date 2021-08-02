@@ -455,10 +455,7 @@ def get_analytic(token):
 
     rating_num = []
     for i in range(1,6):
-        review_num = len(db.session.query(Voucher, Review)
-            .join(Voucher, Review.voucher_id==Voucher.id).
-            filter(Voucher.eatery_id==eatery.id, Review.rating==i).
-            all())
+        review_num = len(db.session.query(Voucher, Review).join(Review, Review.voucher_id==Voucher.id).filter(Voucher.eatery_id==eatery.id, Review.rating==i).all())
         rating_num.append(review_num)
     today = date.today()
     # list of number of completed reservation for past 7 days
