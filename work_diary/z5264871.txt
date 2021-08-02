@@ -26,3 +26,7 @@ Worked on the eatery-related backend functions such as booking, cancel and listi
 Week8
 Our team finished the second sprint and some features of our third sprint. Jay presented for the demo which went well.
 Started working on the project report.
+
+Week9
+Worked on the report for overview and functionalities and implementation challenges sections. Had a meeting with members to discuss
+final changes and what else needs to be done.
