@@ -25,7 +25,7 @@ pip3 install -r requirements.txt
 python3 load_data.py
 ```
 if sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) disk I/O error
-remove the existing database file from the backend directory.
+*remove the existing database file from the backend directory.
 ```
 rm valueEats.db
 rm valueEats.db-journal
