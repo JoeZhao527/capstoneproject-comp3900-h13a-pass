@@ -250,7 +250,7 @@ def auth_password_request(email):
     # set up the SMTP server
     # set the email server and send the 'reset_code' to the "email"
     address = "comp3900h13apass@gmail.com"
-    password = "H13APASS"
+    password = "H13APASSCOMP3900"
 
     # set up the SMTP server
     setup = smtplib.SMTP(host='smtp.gmail.com', port=587)
