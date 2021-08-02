@@ -86,6 +86,7 @@ def update_voucher_by_schedule():
         for schedule in schedules:
             schedule_id = schedule.id
             weekday = schedule.weekday
+            end = schedule.end_time
             # calculate the date for the voucher add this week or nxt week by given a weekday
             interval = date.today().weekday() - weekdays[weekday]
             # today's weekday is after the given weekday, add the voucher to the next weekday
@@ -116,8 +117,7 @@ def update_voucher_by_schedule():
                 for _ in range(int(no_vouchers)):
                     add_voucher_by_schedule(eatery_id, voucher_date, start, end, discount, schedule_id)
     except:
-        print('failed to update voucher')
-
+        print("update voucher failed")
 
 
 
