@@ -27,4 +27,13 @@ Had a meeting talked about the restrospective, summary and review for our perfor
 Week7 (7.12 - 7.18)
 I discuessd more about the Retrospective A with my group members. Provided and updated some ideas of what went well so far, as well as what didn't go so well and things to try to improve the team's work process for the next sprint. 
 Completed the functions for Diner such as search eateries by filter and keyword. Helped updating and fixing fucntions such as book voucher and cancel voucher with Nicholas.
+
+Week8 (7.19 - 7.25)
+We finished the sprtin2 and create more feature for sprint3, I presented the demo. 
+Nicholas started working on the draft of the project report.
+
+Week9 (7.25 - 8.1)
+Updated the final version of ER, UML and UI design, worked on final fixing of the backend code and functionalities. 
+Had a meeting with members to discuss final changes and updated report.
+
 ....
