@@ -8,3 +8,27 @@ Jay and Nicolas work on backend design, Karen works on database design
 week 3
 further self study on javascript, write some documentation for frontend design, draw the ui, discuss some functionailty and
 database design with teammates
+
+week 4
+start working on sprint 1 frontend and server. Complete initial version of eatery login, register and profile, successfully
+connected with backend. Regular meeting discuss progression and implementation details
+
+week 5
+Complete functionality of the first sprint, present the demo for first sprint
+
+week 6
+fixing some bugs in eatery related functionalities, improve the frontend ui and flowness, start working on diner related frontend
+regular meeting to discuss progress, and additional meetings for retrospective
+
+week 7
+finalizing diner related functionalities. Complete functionalities like eatery releases and delete vouchers, diner books and cancel bookings
+sprint 2 is almost finished 
+
+week 8
+Complete sprint 2 and most functionalities in sprint 3. Now diner can make comments, view recommendations and search eateries by filter
+Made a fake data generator, to randomly load some valid data to database, for demo and testing. demo B successfully done, meeting for 
+retrospective B
+
+week 9
+finalizing everything, fix minor bugs and slightly improve ui. Working on testing. Regular meetings to discuss progress ad final details
+
