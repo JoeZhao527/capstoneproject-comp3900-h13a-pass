@@ -237,54 +237,26 @@ def auth_password_request(email):
     # check if the email is valid
     if not re.search(VALID_EMAIL, email):
         raise InputError("Email invalid")
-    # check if the email is not registered
-    if not eatery_email_used(email):
+
+    # check if the email is not registered by diner or eatery
+    eatery = Eatery.query.filter_by(email=email).first()
+    diner = Diner.query.filter_by(email=email).first() 
+    
+    
+    if eatery is None and diner is None:
         raise InputError("Email does not belong to a user")
-    else:
-        eatery = Eatery.query.filter_by(email=email).first()
+    # eatery is not none, email belongs to an eatery
+    elif eatery:
         mix = string.ascii_letters + string.digits
         code = ''.join(random.choice(mix) for i in range(20))
         eatery.reset_code = code
         db.session.commit()
-    
-    # set up the SMTP server
-    # set the email server and send the 'reset_code' to the "email"
-    address = "comp3900h13apass@gmail.com"
-    password = "H13APASSCOMP3900"
-
-    # set up the SMTP server
-    setup = smtplib.SMTP(host='smtp.gmail.com', port=587)
-    setup.starttls()
-    setup.login(address, password)
-
-    # create a message template
-    msg = EmailMessage()
-    msg['From'] = address
-    msg['To'] = email
-    msg['Subject'] = code
-
-    setup.send_message(msg)
-    setup.quit()
-
-    return {}
-
-
-# given an email address of a registered diner, send them an email contain a specific reset code
-# diner trying to rest the password
-def diner_password_request(email):
-    # check if the email is valid
-    if not re.search(VALID_EMAIL, email):
-        raise InputError("Email invalid")
-    # check if the email is not registered
-    if not diner_email_used(email):
-        raise InputError("Email does not belong to a user")
-    else:
-        diner = Diner.query.filter_by(email=email).first()
+    elif diner:
         mix = string.ascii_letters + string.digits
         code = ''.join(random.choice(mix) for i in range(20))
         diner.reset_code = code
         db.session.commit()
-    
+
     # set up the SMTP server
     # set the email server and send the 'reset_code' to the "email"
     address = "comp3900h13apass@gmail.com"
@@ -309,11 +281,12 @@ def diner_password_request(email):
 def auth_password_reset(reset_code, new_password):
     # find a user with the same reset code
     eatery = Eatery.query.filter_by(reset_code=reset_code).first()
+    diner = Diner.query.filter_by(reset_code=reset_code).first()
     # if reset code invalid
-    if eatery is None:
+    if eatery is None and diner is None:
         raise InputError("Reset_code is invalid")
     # reset code valid, change the password of eatery
-    else:
+    elif eatery:
         if len(new_password) < 6:
             raise InputError("Invalid password")
         else:
@@ -322,17 +295,8 @@ def auth_password_reset(reset_code, new_password):
             eatery.password = hashed_password
             eatery.reset_code = ""
             db.session.commit()
-    return {}
-    
-# function for diner to reset the password
-def diner_password_reset(reset_code, new_password):
-    # find a user with the same reset code
-    diner = Diner.query.filter_by(reset_code=reset_code).first()
-    # if reset code invalid
-    if diner is None:
-        raise InputError("Reset_code is invalid")
-    # reset code valid, change the password of eatery
-    else:
+    # reset code valid, change the password of diner
+    elif diner:
         if len(new_password) < 6:
             raise InputError("Invalid password")
         else:
