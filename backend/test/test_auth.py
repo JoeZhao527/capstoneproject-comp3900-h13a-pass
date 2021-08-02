@@ -499,13 +499,7 @@ def test_diner_update_success():
     first_name = "joe"
     last_name = "zhao"
     phone = "061726371"
-    eatery_name = "joe's dinning"
-    address = "21-2 My Street"
-    menu = ''
-    cuisine = ''
-    city = "Syndey"
-    suburb = "Kensington"
-    description = ''
+    
     # eatery_register(email, password, first_name, last_name, phone, eatery_name, address, 
     #     menu, cuisine, city, suburb, description)
     diner_register(email, password, first_name, last_name, phone)
@@ -517,6 +511,36 @@ def test_diner_update_success():
     res = diner_profile_update(token, first_name, last_name, phone)
     assert res['first_name'] == "oje"
 
+def test_eatery_update_fail():
+    # clear up database
+    clear_db()
+    # sign up a eatery use backend functions
+    email = "12345678@gmail.com"
+    password = "12345678"
+    first_name = "joe"
+    last_name = "zhao"
+    phone = "061726371"
+    eatery_name = "joe's dinning"
+    address = "21-2 My Street"
+    menu = ''
+    cuisine = ''
+    city = "Syndey"
+    suburb = "Kensington"
+    description = ''
+    eatery_register(email, password, first_name, last_name, phone, eatery_name, address, 
+         menu, cuisine, city, suburb, description)
+    # diner_register(email, password, first_name, last_name, phone)
+    res = eatery_login(email, password)
+    token = res["token"]
+    # with pytest.raises(InputError):
+    # res = diner_login(email, password)
+    first_name = "oje"
+    with pytest.raises(InputError):
+        
+        # res = eatery_profile_update('1', first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
+    
+        res = eatery_profile_update('1', first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
+    # assert res['first_name'] == "oje"
 def test_eatery_update_success():
     # clear up database
     clear_db()
@@ -543,3 +567,57 @@ def test_eatery_update_success():
     first_name = "oje"
     res = eatery_profile_update(token, first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
     assert res['first_name'] == "oje"
+def test_eatery_update_fail():
+    # clear up database
+    clear_db()
+    # sign up a eatery use backend functions
+    email = "12345678@gmail.com"
+    password = "12345678"
+    first_name = "joe"
+    last_name = "zhao"
+    phone = "061726371"
+    eatery_name = "joe's dinning"
+    address = "21-2 My Street"
+    menu = ''
+    cuisine = ''
+    city = "Syndey"
+    suburb = "Kensington"
+    description = ''
+    eatery_register(email, password, first_name, last_name, phone, eatery_name, address, 
+         menu, cuisine, city, suburb, description)
+    # diner_register(email, password, first_name, last_name, phone)
+    res = eatery_login(email, password)
+    token = res["token"]
+    # with pytest.raises(InputError):
+    # res = diner_login(email, password)
+    first_name = "oje"
+    with pytest.raises(InputError):
+        
+        res = eatery_profile_update('1', first_name, last_name, phone, eatery_name, address, menu, cuisine, city, suburb, description)
+    # assert res['first_name'] == "oje"
+
+def test_diner_profile_update():
+    clear_db()
+    # sign up a eatery use backend functions
+    email = "12345678@gmail.com"
+    password = "12345678"
+    first_name = "joe"
+    last_name = "zhao"
+    phone = "061726371"
+    
+    # eatery_register(email, password, first_name, last_name, phone, eatery_name, address, 
+    #     menu, cuisine, city, suburb, description)
+    diner_register(email, password, first_name, last_name, phone)
+    res = diner_login(email, password)
+    token = res["token"]
+    # with pytest.raises(InputError):
+    # res = diner_login(email, password)
+    first_name = "o"
+    res = diner_profile_update(token, first_name, last_name, phone)
+    assert res['first_name']=='o'
+
+def test_diner_valid_token():
+    assert diner_valid_token("1")==False
+
+def test_eatery_valid_token():
+    assert eatery_valid_token("1")==False

@@ -66,3 +66,53 @@ def test_add_vocher_invalid_time():
         add_voucher(token, eatery_id, _date, start, end, discount)
 
 # TODO: ADD MORE TEST
+
+def test_add_vocher_invalid_time2():
+    clear_db()
+    eatery = create_eatery_for_test()
+    token = eatery['token']
+    eatery_id = eatery['eatery_id']
+    _date = date.today() + timedelta(days=-1) # tomorrow's date
+    start = time(10,30)    # 10:30
+    end = time(12,00)    
+    discount = 20
+    with pytest.raises(InputError):
+        add_voucher(token, eatery_id, _date, start, end, discount)
+
+def test_add_vocher_invalid_eat():
+    clear_db()
+    eatery = create_eatery_for_test()
+    token = 'eatery'
+    eatery_id = eatery['eatery_id']
+    _date = date.today() + timedelta(days=1) # tomorrow's date
+    start = time(10,30)    # 10:30
+    end = time(12,00)    
+    discount = 20
+    with pytest.raises(InputError):
+        add_voucher(token, eatery_id, _date, start, end, discount)
+
+def test_add_vocher_invalid_time3():
+    clear_db()
+    eatery = create_eatery_for_test()
+    token = eatery['token']
+    eatery_id = eatery['eatery_id']
+    _date = date.today() + timedelta(days=-1) # tomorrow's date
+    start = time(12,30)    # 10:30
+    end = time(12,29)    
+    discount = 20
+    with pytest.raises(InputError):
+        add_voucher(token, eatery_id, _date, start, end, discount)
+
+def test_add_voucher_success():
+    clear_db()
+    eatery = create_eatery_for_test()
+    token = eatery['token']
+    eatery_id = eatery['eatery_id']
+    _date = date.today() + timedelta(days=1) # tomorrow's date
+    start = time(10,30)    # 10:30
+    end = time(11,30)      # 11:30
+    discount = 20
+    res = add_voucher(token, eatery_id, _date, start, end, discount)
+    voucher_id =1
+    update_voucher(token, voucher_id, _date, start, end, discount)
+    assert res['voucher_id'] == 1 and res['group_id'] == 1000   # voucher group id start with 1000
