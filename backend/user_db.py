@@ -141,3 +141,5 @@ class Review(db.Model):
         self.voucher_id = voucher_id
         self.comment = comment
         self.rating = rating
+# if user run 'flask run' without "python3 load_data.py", create database here
+db.create_all()
