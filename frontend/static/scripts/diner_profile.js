@@ -398,7 +398,6 @@ function submitReview() {
         if (this.readyState == 4 && this.status == 200) {
             closeReviewPage();
             if (!this.response) {
-                alert('review has submitted');
             } else {
                 alert('failed to submit review');
             }

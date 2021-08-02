@@ -4,5 +4,8 @@ backend/valueEats.db
 # ignore __pycache
 __pycache__
 
+# ignore .DS_Store
+.DS_Store
+
 # ignore backend/valueRats.bd-journal
 backend/valueEats.db-journal
